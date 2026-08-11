@@ -65,29 +65,34 @@ export default function Contact() {
       <div className="container mx-auto px-4 max-w-4xl">
 
         {/* Header */}
-        <div className="text-center mb-16">
+        <div className="mb-16 flex flex-col md:flex-row items-center gap-8 md:gap-12">
+          {/* Graphic — left */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="flex flex-col items-center"
+            initial={{ opacity: 0, x: -24 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7 }}
+            className="shrink-0 flex justify-center"
           >
-            {/* Hero illustration */}
-            <motion.img
+            <img
               src="/assets/contact-hero.svg"
               alt=""
               aria-hidden="true"
-              initial={{ opacity: 0, scale: 0.92 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.1, duration: 0.6 }}
-              className="pointer-events-none select-none mb-2"
-              style={{ width: 'clamp(180px, 30vw, 320px)' }}
+              className="pointer-events-none select-none"
+              style={{ width: 'clamp(180px, 28vw, 300px)' }}
             />
+          </motion.div>
 
+          {/* Text — right */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center md:text-left"
+          >
             <h1 className="text-4xl md:text-5xl font-display text-primary mb-4">
               Get In Touch
             </h1>
-            <div className="w-24 h-1 bg-accent mx-auto mb-6" />
-            <p className="font-body text-foreground/70 text-lg max-w-xl mx-auto">
+            <div className="w-24 h-1 bg-accent mb-6 mx-auto md:mx-0" />
+            <p className="font-body text-foreground/70 text-lg max-w-xl">
               We'd love to hear from you. Reach out on any of the platforms below and we'll get back to you as soon as possible, InshaAllah.
             </p>
           </motion.div>
