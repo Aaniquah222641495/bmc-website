@@ -1,59 +1,59 @@
 import { Link } from 'wouter';
 import { motion } from 'framer-motion';
-import {
-  Wifi, ShieldCheck, BadgeDollarSign,
-  GraduationCap, Heart, BookOpen, BookMarked, Star, Lightbulb,
-  type LucideIcon,
-} from 'lucide-react';
+import { Wifi, ShieldCheck, BadgeDollarSign, BookOpen } from 'lucide-react';
 
-const PROGRAMMES: { title: string; path: string; desc: string; price: string; Icon: LucideIcon; color: string }[] = [
+const PROGRAMMES: { title: string; path: string; desc: string; price: string; tag: string; image?: string; gradient: string }[] = [
   {
     title: "Women's Online Madrasah",
     path: "/womens-classes",
-    desc: "Beginner-friendly Islamic studies for women 18+. Pre-recorded lessons on Google Classroom — learn at your own pace. Covers Aqaaid, Fiqh, Tajweed, Seerah, Akhlaaq, Hadith & Du'as.",
+    desc: "Beginner-friendly Islamic studies for women 18+. Pre-recorded lessons on Google Classroom — learn at your own pace.",
     price: "R150/month",
-    Icon: GraduationCap,
-    color: 'bg-emerald-50 text-emerald-700 group-hover:bg-emerald-700 group-hover:text-white',
+    tag: "Online · Self-paced",
+    image: "/assets/womens-classes-illustration.png",
+    gradient: "from-emerald-800 to-emerald-950",
   },
   {
     title: "In-Person Workshops",
     path: "/revert-classes",
     desc: "Interactive face-to-face workshops on important Islamic topics, with open discussion and practical learning.",
     price: "From R100",
-    Icon: Heart,
-    color: 'bg-rose-50 text-rose-600 group-hover:bg-rose-600 group-hover:text-white',
+    tag: "In-Person",
+    image: "/assets/workshop-teaching.png",
+    gradient: "from-rose-800 to-rose-950",
   },
   {
     title: "Get Into Qur'an – In Person",
     path: "/quran-classes",
-    desc: "A Qur'an programme for complete beginners. Step-by-step guidance toward confidently reading the Mushaf. Every Saturday morning in Mitchell's Plain, Cape Town.",
+    desc: "A Qur'an programme for complete beginners. Step-by-step guidance toward confidently reading the Mushaf.",
     price: "R200/month",
-    Icon: BookOpen,
-    color: 'bg-amber-50 text-amber-700 group-hover:bg-amber-700 group-hover:text-white',
+    tag: "In-Person · Cape Town",
+    image: "/assets/quran-lesson.png",
+    gradient: "from-amber-800 to-amber-950",
   },
   {
     title: "Women's Hifdh Programme",
     path: "/hifdh-classes",
-    desc: "Structured online Qur'an memorisation for women. Live classes Mon, Wed & Fri via Microsoft Teams — covering memorisation, revision and recitation.",
+    desc: "Structured online Qur'an memorisation for women. Live classes Mon, Wed & Fri via Microsoft Teams.",
     price: "R200/month",
-    Icon: BookMarked,
-    color: 'bg-violet-50 text-violet-700 group-hover:bg-violet-700 group-hover:text-white',
+    tag: "Online · Live classes",
+    gradient: "from-violet-800 to-violet-950",
   },
   {
     title: "Children's Online Madrasah",
     path: "/childrens-classes",
-    desc: "Live online Islamic classes for children aged 6–13, three times a week via Microsoft Teams. Covers Qur'an, Surahs, Aqaaid, Fiqh, Akhlaaq, Islamic History & Du'as.",
+    desc: "Live online Islamic classes for children aged 6–13, three times a week via Microsoft Teams.",
     price: "R150/month",
-    Icon: Star,
-    color: 'bg-sky-50 text-sky-600 group-hover:bg-sky-600 group-hover:text-white',
+    tag: "Online · Ages 6–13",
+    gradient: "from-sky-800 to-sky-950",
   },
   {
     title: "Online Workshops & Short Courses",
     path: "/workshops",
-    desc: "Once-off online workshops on specific Islamic topics — Women in Islam, Salaah, Wudhu & Ghusl, Ramadan preparation and more.",
+    desc: "Once-off online workshops on specific Islamic topics — Women in Islam, Salaah, Wudhu & Ghusl, and more.",
     price: "From R100",
-    Icon: Lightbulb,
-    color: 'bg-orange-50 text-orange-600 group-hover:bg-orange-600 group-hover:text-white',
+    tag: "Online · Once-off",
+    image: "/assets/workshops-illustration.png",
+    gradient: "from-[#1B4332] to-[#0d2419]",
   },
 ];
 
@@ -272,27 +272,52 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {PROGRAMMES.map(({ title, path, desc, price, Icon, color }, i) => (
+            {PROGRAMMES.map(({ title, path, desc, price, tag, image, gradient }, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
+                transition={{ delay: i * 0.08 }}
+                className="h-full"
               >
                 <Link href={`/programmes${path}`}>
-                  <div className="bg-white rounded-2xl p-8 border border-border hover:border-accent hover:shadow-xl transition-all cursor-pointer h-full flex flex-col group">
-                    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-5 transition-colors ${color}`}>
-                      <Icon size={22} strokeWidth={1.6} />
-                    </div>
-                    <h3 className="text-xl font-display text-primary mb-3">{title}</h3>
-                    <p className="text-foreground/70 font-body mb-4 flex-1 text-sm leading-relaxed">{desc}</p>
-                    <div className="flex items-center justify-between mt-auto">
-                      <span className="font-utility text-xs font-bold text-accent bg-accent/10 px-3 py-1 rounded-full">{price}</span>
-                      <span className="text-primary font-utility font-bold group-hover:text-accent transition-colors flex items-center gap-1 text-sm">
-                        Learn More <span className="group-hover:translate-x-1 transition-transform">&rarr;</span>
+                  <div className="bg-card rounded-2xl border border-border hover:border-accent hover:shadow-xl transition-all cursor-pointer h-full flex flex-col group overflow-hidden">
+
+                    {/* Image block */}
+                    <div className={`relative w-full h-48 overflow-hidden bg-gradient-to-br ${gradient} shrink-0`}>
+                      {image ? (
+                        <img
+                          src={image}
+                          alt={title}
+                          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                        />
+                      ) : (
+                        /* Placeholder: Islamic pattern overlay on gradient */
+                        <div className="absolute inset-0 flex items-center justify-center opacity-20"
+                          style={{
+                            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 6 L32.5 16 L42 13 L36 21 L46 25 L36 29 L42 37 L32.5 34 L30 44 L27.5 34 L18 37 L24 29 L14 25 L24 21 L18 13 L27.5 16 Z' fill='none' stroke='%23C9A84C' stroke-width='0.8'/%3E%3C/svg%3E")`,
+                          }}
+                        />
+                      )}
+                      {/* Tag pill */}
+                      <span className="absolute top-3 left-3 bg-black/40 backdrop-blur-sm text-white font-utility text-[0.65rem] uppercase tracking-widest px-2.5 py-1 rounded-full">
+                        {tag}
                       </span>
                     </div>
+
+                    {/* Content */}
+                    <div className="p-6 flex flex-col flex-1">
+                      <h3 className="text-lg font-display text-primary mb-2 leading-snug">{title}</h3>
+                      <p className="text-foreground/65 font-body text-sm leading-relaxed flex-1">{desc}</p>
+                      <div className="flex items-center justify-between mt-5 pt-4 border-t border-border">
+                        <span className="font-utility text-xs font-bold text-accent bg-accent/10 px-3 py-1 rounded-full">{price}</span>
+                        <span className="text-primary font-utility font-bold group-hover:text-accent transition-colors flex items-center gap-1 text-sm">
+                          Learn More <span className="group-hover:translate-x-1 transition-transform inline-block">&rarr;</span>
+                        </span>
+                      </div>
+                    </div>
+
                   </div>
                 </Link>
               </motion.div>
