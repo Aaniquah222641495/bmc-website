@@ -31,7 +31,12 @@ export default function About() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-16"
         >
-          <div className="text-accent text-3xl mb-4">☽</div>
+          <img
+            src="/assets/deco-bismillah.png"
+            alt="Bismillah"
+            className="mx-auto mb-4 pointer-events-none select-none"
+            style={{ width: 'clamp(140px, 18vw, 220px)', opacity: 0.9 }}
+          />
           <h1 className="text-4xl md:text-5xl font-display text-primary mb-4">Our Story</h1>
           <div className="w-24 h-1 bg-accent mx-auto mb-6" />
           <p className="font-body text-foreground/60 text-lg max-w-xl mx-auto">
@@ -75,6 +80,11 @@ export default function About() {
               <p className="font-body text-foreground/80 leading-relaxed text-[1.05rem]">{text}</p>
             </motion.div>
           ))}
+        </div>
+
+        {/* Decorative divider */}
+        <div className="flex justify-center my-2" aria-hidden="true">
+          <img src="/assets/deco-divider.png" alt="" className="pointer-events-none select-none" style={{ width: 'clamp(200px, 40vw, 380px)', opacity: 0.6 }} />
         </div>
 
         {/* Growth stat highlight */}

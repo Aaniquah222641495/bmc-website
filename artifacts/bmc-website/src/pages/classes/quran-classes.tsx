@@ -22,12 +22,21 @@ export default function QuranClasses() {
         transition={{ delay: 0.3 }}
         className="space-y-10"
       >
-        {/* Photo */}
-        <div className="rounded-2xl overflow-hidden shadow-lg border border-border">
+        {/* Photo + Quran book accent */}
+        <div className="relative">
+          <div className="rounded-2xl overflow-hidden shadow-lg border border-border">
+            <img
+              src="/assets/quran-lesson.png"
+              alt="One-on-one Quran lesson at Beginners Madrasah Classes"
+              className="w-full h-64 md:h-80 object-cover object-center"
+            />
+          </div>
           <img
-            src="/assets/quran-lesson.png"
-            alt="One-on-one Quran lesson at Beginners Madrasah Classes"
-            className="w-full h-64 md:h-80 object-cover object-center"
+            src="/assets/deco-quran.png"
+            alt=""
+            aria-hidden="true"
+            className="absolute -bottom-10 -right-6 pointer-events-none select-none hidden md:block"
+            style={{ width: '110px', opacity: 0.85 }}
           />
         </div>
 
