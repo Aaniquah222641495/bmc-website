@@ -6,46 +6,52 @@ import {
   type LucideIcon,
 } from 'lucide-react';
 
-const PROGRAMMES: { title: string; path: string; desc: string; Icon: LucideIcon; color: string }[] = [
+const PROGRAMMES: { title: string; path: string; desc: string; price: string; Icon: LucideIcon; color: string }[] = [
   {
-    title: "Women's Classes",
+    title: "Women's Online Madrasah",
     path: "/womens-classes",
-    desc: "Online Madrasah covering Fiqh, Aqeedah, Seerah and more. Self-paced via Google Classroom.",
+    desc: "Beginner-friendly Islamic studies for women 18+. Pre-recorded lessons on Google Classroom — learn at your own pace. Covers Aqaaid, Fiqh, Tajweed, Seerah, Akhlaaq, Hadith & Du'as.",
+    price: "R150/month",
     Icon: GraduationCap,
     color: 'bg-emerald-50 text-emerald-700 group-hover:bg-emerald-700 group-hover:text-white',
   },
   {
-    title: "Revert Classes",
+    title: "In-Person Workshops",
     path: "/revert-classes",
-    desc: "A gentle, welcoming introduction to Islamic practice for those new to the faith.",
+    desc: "Interactive face-to-face workshops on important Islamic topics, with open discussion and practical learning.",
+    price: "From R100",
     Icon: Heart,
     color: 'bg-rose-50 text-rose-600 group-hover:bg-rose-600 group-hover:text-white',
   },
   {
-    title: "Quran Classes",
+    title: "Get Into Qur'an – In Person",
     path: "/quran-classes",
-    desc: "In-person Quran reading from the Arabic alphabet to the Mushaf. Saturdays in Mitchell's Plain.",
+    desc: "A Qur'an programme for complete beginners. Step-by-step guidance toward confidently reading the Mushaf. Every Saturday morning in Mitchell's Plain, Cape Town.",
+    price: "R200/month",
     Icon: BookOpen,
     color: 'bg-amber-50 text-amber-700 group-hover:bg-amber-700 group-hover:text-white',
   },
   {
-    title: "Hifdh Classes",
+    title: "Women's Hifdh Programme",
     path: "/hifdh-classes",
-    desc: "Women's Quran memorisation programme. Live sessions on Microsoft Teams three times a week.",
+    desc: "Structured online Qur'an memorisation for women. Live classes Mon, Wed & Fri via Microsoft Teams — covering memorisation, revision and recitation.",
+    price: "R200/month",
     Icon: BookMarked,
     color: 'bg-violet-50 text-violet-700 group-hover:bg-violet-700 group-hover:text-white',
   },
   {
-    title: "Children's Classes",
+    title: "Children's Online Madrasah",
     path: "/childrens-classes",
-    desc: "General Maktab for ages 6–13. Live classes on Teams covering Quran, Du'as, and Islamic basics.",
+    desc: "Live online Islamic classes for children aged 6–13, three times a week via Microsoft Teams. Covers Qur'an, Surahs, Aqaaid, Fiqh, Akhlaaq, Islamic History & Du'as.",
+    price: "R150/month",
     Icon: Star,
     color: 'bg-sky-50 text-sky-600 group-hover:bg-sky-600 group-hover:text-white',
   },
   {
-    title: "Workshops",
+    title: "Online Workshops & Short Courses",
     path: "/workshops",
-    desc: "Once-off focused sessions on topics like Women in Islam, Salaah, Wudhu, and Ramadan.",
+    desc: "Once-off online workshops on specific Islamic topics — Women in Islam, Salaah, Wudhu & Ghusl, Ramadan preparation and more.",
+    price: "From R100",
     Icon: Lightbulb,
     color: 'bg-orange-50 text-orange-600 group-hover:bg-orange-600 group-hover:text-white',
   },
@@ -131,7 +137,7 @@ export default function Home() {
             <div className="flex items-center gap-8 mt-12 pt-8 border-t border-border">
               {[
                 { num: '200+', label: 'Students enrolled' },
-                { num: '5',   label: 'Programmes' },
+                { num: '6',   label: 'Programmes' },
                 { num: '2+',  label: 'Years teaching' },
               ].map(({ num, label }) => (
                 <div key={label}>
@@ -200,7 +206,7 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {PROGRAMMES.map(({ title, path, desc, Icon, color }, i) => (
+            {PROGRAMMES.map(({ title, path, desc, price, Icon, color }, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, scale: 0.95 }}
@@ -213,11 +219,14 @@ export default function Home() {
                     <div className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-5 transition-colors ${color}`}>
                       <Icon size={22} strokeWidth={1.6} />
                     </div>
-                    <h3 className="text-2xl font-display text-primary mb-3">{title}</h3>
-                    <p className="text-foreground/70 font-body mb-6 flex-1 text-sm leading-relaxed">{desc}</p>
-                    <span className="text-primary font-utility font-bold group-hover:text-accent transition-colors flex items-center gap-2 text-sm">
-                      Learn More <span className="group-hover:translate-x-1 transition-transform">&rarr;</span>
-                    </span>
+                    <h3 className="text-xl font-display text-primary mb-3">{title}</h3>
+                    <p className="text-foreground/70 font-body mb-4 flex-1 text-sm leading-relaxed">{desc}</p>
+                    <div className="flex items-center justify-between mt-auto">
+                      <span className="font-utility text-xs font-bold text-accent bg-accent/10 px-3 py-1 rounded-full">{price}</span>
+                      <span className="text-primary font-utility font-bold group-hover:text-accent transition-colors flex items-center gap-1 text-sm">
+                        Learn More <span className="group-hover:translate-x-1 transition-transform">&rarr;</span>
+                      </span>
+                    </div>
                   </div>
                 </Link>
               </motion.div>
