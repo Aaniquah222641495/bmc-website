@@ -75,25 +75,9 @@ export default function Home() {
           }}
         />
 
-        {/* Full-width arch — no max-w so it touches both screen edges */}
+        {/* Hero content */}
         <motion.div
-          className="w-full overflow-hidden arch-shimmer"
-          initial={{ opacity: 0, y: -60, scale: 1.04 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <img
-            src="/assets/arch-full-trimmed.png"
-            alt=""
-            aria-hidden="true"
-            className="w-full h-auto block select-none"
-            draggable={false}
-          />
-        </motion.div>
-
-        {/* Hero content — tucked into the arch gateway */}
-        <motion.div
-          className="flex flex-col items-center text-center px-6 -mt-32 max-w-2xl mx-auto w-full relative z-10"
+          className="flex flex-col items-center text-center px-6 max-w-2xl mx-auto w-full relative z-10"
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.3, ease: 'easeOut' }}
