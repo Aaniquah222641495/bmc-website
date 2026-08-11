@@ -159,7 +159,7 @@ export default function Home() {
               src="/assets/bmc-logo-final.png"
               alt="Beginners Madrasah Classes — illustrated mascot"
               className="w-full max-w-sm lg:max-w-md xl:max-w-lg"
-              style={{ mixBlendMode: 'multiply' }}
+
               draggable={false}
               animate={{ y: [0, -14, 0] }}
               transition={{ repeat: Infinity, duration: 4.5, ease: "easeInOut" }}
