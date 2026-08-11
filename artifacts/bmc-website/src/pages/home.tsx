@@ -106,7 +106,7 @@ export default function Home() {
           style={{ width: 'clamp(140px, 16vw, 240px)', opacity: 0.6, transform: 'translateX(-50%)' }}
         />
 
-        <div className="container mx-auto px-8 md:px-16 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="container mx-auto px-4 md:px-16 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
 
           {/* ── Left: Text ─────────────────────────────────────── */}
           <motion.div
@@ -183,7 +183,7 @@ export default function Home() {
             <motion.img
               src="/assets/bmc-logo-final.png"
               alt="Beginners Madrasah Classes — illustrated mascot"
-              className="w-full max-w-sm lg:max-w-md xl:max-w-lg"
+              className="w-full max-w-[260px] sm:max-w-sm lg:max-w-md xl:max-w-lg mx-auto"
 
               draggable={false}
               animate={{ y: [0, -14, 0] }}
@@ -227,7 +227,8 @@ export default function Home() {
             viewport={{ once: true }}
             className="flex flex-col md:flex-row items-center gap-10 bg-card border border-border rounded-2xl overflow-hidden shadow-lg"
           >
-            {/* Accent bar */}
+            {/* Accent bar — top on mobile, left on desktop */}
+            <div className="md:hidden h-1.5 w-full bg-accent shrink-0" />
             <div className="hidden md:block w-1.5 self-stretch bg-accent shrink-0" />
 
             <div className="flex-1 py-10 px-8 md:pl-0 md:pr-12">
@@ -246,7 +247,7 @@ export default function Home() {
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-2 gap-px bg-border md:w-72 shrink-0 self-stretch">
+            <div className="grid grid-cols-2 gap-px bg-border w-full md:w-72 shrink-0 md:self-stretch">
               {[
                 { num: '300+', label: 'Students' },
                 { num: '6',    label: 'Programmes' },

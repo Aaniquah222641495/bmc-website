@@ -89,7 +89,10 @@ function FaqItem({ q, a, index }: { q: string; a: string; index: number }) {
 
 export default function Faq() {
   return (
-    <div className="min-h-screen bg-background pt-32 pb-24">
+    <div className="min-h-screen bg-background pt-32 pb-24 relative overflow-hidden">
+      <img src="/assets/deco-corner.png" alt="" aria-hidden="true" className="absolute top-0 left-0 pointer-events-none select-none" style={{ width: 'clamp(120px, 14vw, 220px)', opacity: 0.4 }} />
+      <img src="/assets/deco-corner.png" alt="" aria-hidden="true" className="absolute bottom-0 right-0 pointer-events-none select-none" style={{ width: 'clamp(120px, 14vw, 220px)', opacity: 0.4, transform: 'rotate(180deg)' }} />
+      <img src="/assets/deco-lanterns.png" alt="" aria-hidden="true" className="absolute top-0 left-1/2 pointer-events-none select-none" style={{ width: 'clamp(120px, 14vw, 200px)', opacity: 0.5, transform: 'translateX(-50%)' }} />
       <div className="container mx-auto px-4 max-w-3xl">
 
         {/* Header */}
@@ -113,7 +116,7 @@ export default function Faq() {
         <div className="relative">
           <img src="/assets/deco-window.png" alt="" aria-hidden="true"
             className="absolute top-1/2 left-1/2 pointer-events-none select-none"
-            style={{ width: '340px', opacity: 0.06, transform: 'translate(-50%, -50%)' }} />
+            style={{ width: 'min(340px, 80vw)', opacity: 0.06, transform: 'translate(-50%, -50%)' }} />
           <div className="relative space-y-4">
             {FAQS.map((item, i) => (
               <FaqItem key={i} q={item.q} a={item.a} index={i} />

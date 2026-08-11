@@ -13,7 +13,10 @@ const FORM_URL = 'https://forms.gle/7tFCxqL8Ypgv9Jps5';
 
 export function ClassPageLayout({ title, description, children, illustration }: ClassPageLayoutProps) {
   return (
-    <div className="min-h-screen bg-background pt-32 pb-20">
+    <div className="min-h-screen bg-background pt-32 pb-20 relative overflow-hidden">
+      <img src="/assets/deco-corner.png" alt="" aria-hidden="true" className="absolute top-0 left-0 pointer-events-none select-none" style={{ width: 'clamp(120px, 14vw, 220px)', opacity: 0.4 }} />
+      <img src="/assets/deco-corner.png" alt="" aria-hidden="true" className="absolute bottom-0 right-0 pointer-events-none select-none" style={{ width: 'clamp(120px, 14vw, 220px)', opacity: 0.4, transform: 'rotate(180deg)' }} />
+      <img src="/assets/deco-lanterns.png" alt="" aria-hidden="true" className="absolute top-0 left-1/2 pointer-events-none select-none" style={{ width: 'clamp(120px, 14vw, 200px)', opacity: 0.5, transform: 'translateX(-50%)' }} />
       <div className="container mx-auto px-4 max-w-4xl">
         <div className="mb-8">
           <Link href="/programmes">
@@ -37,12 +40,12 @@ export function ClassPageLayout({ title, description, children, illustration }: 
                   <h1 className="text-4xl md:text-5xl font-display mb-4 text-white">{title}</h1>
                   <p className="text-lg font-body" style={{ color: '#F5F0E8' }}>{description}</p>
                 </div>
-                <div className="w-full md:w-72 flex-shrink-0 flex items-end justify-center px-4 pt-4 md:pt-0">
+                <div className="w-full md:w-64 lg:w-72 flex-shrink-0 flex items-end justify-center px-4 pt-2 md:pt-0 max-h-56 md:max-h-none overflow-hidden">
                   <img
                     src={illustration}
                     alt=""
                     aria-hidden="true"
-                    className="w-full max-w-[260px] md:max-w-full h-auto object-contain drop-shadow-xl"
+                    className="w-full max-w-[200px] md:max-w-full h-auto object-contain object-bottom drop-shadow-xl"
                     draggable={false}
                   />
                 </div>

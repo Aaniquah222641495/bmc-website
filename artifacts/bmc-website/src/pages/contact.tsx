@@ -68,7 +68,7 @@ export default function Contact() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <div className="text-4xl text-accent mb-4">☽</div>
+            <img src="/assets/deco-bismillah.png" alt="Bismillah" className="mx-auto mb-4 pointer-events-none select-none" style={{ width: 'clamp(120px, 16vw, 200px)', opacity: 0.9 }} />
             <h1 className="text-4xl md:text-5xl font-display text-primary mb-4">
               Get In Touch
             </h1>
