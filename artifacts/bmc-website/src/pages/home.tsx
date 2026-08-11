@@ -63,78 +63,105 @@ export default function Home() {
     <div className="flex flex-col min-h-screen">
 
       {/* ── Hero Section ─────────────────────────────────────── */}
-      <section className="relative flex flex-col items-center pt-20 pb-20 bg-background overflow-hidden">
+      <section className="relative min-h-[calc(100vh-80px)] flex items-center bg-background pt-20 overflow-hidden">
 
-        {/* Faint gold 8-pointed star tiling across the hero bg */}
+        {/* Faint tiling gold star texture */}
         <div
           className="absolute inset-0 pointer-events-none"
           aria-hidden="true"
           style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 8 L43.5 22 L57 18 L48 29 L62 33 L48 37 L57 48 L43.5 44 L40 58 L36.5 44 L23 48 L32 37 L18 33 L32 29 L23 18 L36.5 22 Z' fill='none' stroke='%23C9A84C' stroke-width='0.6'/%3E%3C/svg%3E")`,
-            opacity: 0.06,
+            opacity: 0.05,
           }}
         />
 
-        {/* Hero content */}
-        <motion.div
-          className="flex flex-col items-center text-center px-6 max-w-2xl mx-auto w-full relative z-10"
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.3, ease: 'easeOut' }}
-        >
-          {/* Illustrated logo */}
-          <img
-            src="/assets/bmc-logo-v2.png"
-            alt="Beginners Madrasah Classes"
-            style={{ width: 'clamp(120px, 13vw, 170px)', height: 'auto' }}
-            className="object-contain mb-2"
-          />
+        <div className="container mx-auto px-8 md:px-16 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
-          {/* Gold star ornaments above title */}
-          <div className="flex items-center gap-2 mb-3">
-            <span className="text-accent" style={{ fontSize: '0.5rem' }}>✦</span>
-            <span className="text-accent" style={{ fontSize: '0.9rem' }}>✦</span>
-            <span className="text-accent" style={{ fontSize: '0.5rem' }}>✦</span>
-          </div>
+          {/* ── Left: Text ─────────────────────────────────────── */}
+          <motion.div
+            className="flex flex-col items-start"
+            initial={{ opacity: 0, x: -32 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <div className="flex items-center gap-2 mb-6">
+              <div className="w-6 h-px bg-accent" />
+              <span className="font-utility uppercase tracking-[0.2em] text-accent/80" style={{ fontSize: '0.65rem' }}>
+                Est 2024 · Foundations of Islamic Knowledge
+              </span>
+            </div>
 
-          <h1 className="font-display text-primary leading-[1.15] mb-4" style={{ fontSize: 'clamp(2rem, 4.5vw, 3.4rem)' }}>
-            Beginners Madrasah<br />
-            <span className="text-accent italic">Classes</span>
-          </h1>
+            <h1 className="font-display text-primary leading-[1.1] mb-6" style={{ fontSize: 'clamp(2.4rem, 4.5vw, 4rem)' }}>
+              Beginners<br />
+              Madrasah<br />
+              <span className="text-accent italic">Classes</span>
+            </h1>
 
-          <p className="font-utility text-primary/40 uppercase tracking-[0.22em] mb-5" style={{ fontSize: '0.62rem' }}>
-            Foundations of Islamic Knowledge &nbsp;·&nbsp; Est 2024
-          </p>
+            {/* Gold diamond rule — anchored left */}
+            <div className="flex items-center gap-3 mb-6 w-48">
+              <div className="h-px flex-1" style={{ background: 'linear-gradient(to right, #C9A84C, transparent)' }} />
+              <div className="w-2 h-2 rotate-45 shrink-0 bg-accent" />
+              <div className="h-px flex-1" style={{ background: 'linear-gradient(to left, #C9A84C, transparent)' }} />
+            </div>
 
-          {/* Gold diamond rule */}
-          <div className="flex items-center gap-3 mb-6 w-48">
-            <div className="h-px flex-1" style={{ background: 'linear-gradient(to right, transparent, #C9A84C)' }} />
-            <div className="w-2 h-2 rotate-45 shrink-0 bg-accent" />
-            <div className="h-px flex-1" style={{ background: 'linear-gradient(to left, transparent, #C9A84C)' }} />
-          </div>
+            <p className="font-body text-foreground/65 leading-relaxed mb-10" style={{ fontSize: 'clamp(1rem, 1.4vw, 1.1rem)', maxWidth: '38ch' }}>
+              A warm, safe, beginner-friendly Islamic learning space for women and children — online and in-person.
+            </p>
 
-          <p className="font-body text-foreground/65 leading-relaxed mb-8" style={{ fontSize: 'clamp(0.9rem, 1.35vw, 1.05rem)', maxWidth: '30ch' }}>
-            A warm, safe, beginner-friendly Islamic learning space for women and children.
-          </p>
-
-          <div className="flex flex-wrap gap-4 items-center justify-center">
-            <Link
-              href="/programmes"
-              className="rounded-full border-2 border-primary text-primary font-utility font-bold px-8 py-3 hover:bg-primary hover:text-white transition-all"
-              style={{ fontSize: '0.85rem', letterSpacing: '0.06em' }}
-            >
-              View Programmes
-            </Link>
-            <a href="https://wa.me/27686498593" target="_blank" rel="noreferrer">
-              <button
-                className="rounded-full bg-accent text-primary font-utility font-bold px-8 py-3 hover:bg-accent/90 transition-all"
-                style={{ fontSize: '0.85rem', letterSpacing: '0.06em', boxShadow: '0 6px 20px rgba(201,168,76,0.35)' }}
+            <div className="flex flex-wrap gap-4 items-center">
+              <Link
+                href="/programmes"
+                className="rounded-full border-2 border-primary text-primary font-utility font-bold px-8 py-3 hover:bg-primary hover:text-white transition-all"
+                style={{ fontSize: '0.88rem', letterSpacing: '0.06em' }}
               >
-                Register Now
-              </button>
-            </a>
-          </div>
-        </motion.div>
+                View Programmes
+              </Link>
+              <a href="https://wa.me/27686498593" target="_blank" rel="noreferrer">
+                <button
+                  className="rounded-full bg-accent text-primary font-utility font-bold px-8 py-3 hover:bg-accent/90 transition-all"
+                  style={{ fontSize: '0.88rem', letterSpacing: '0.06em', boxShadow: '0 6px 24px rgba(201,168,76,0.38)' }}
+                >
+                  Register Now
+                </button>
+              </a>
+            </div>
+
+            {/* Stats strip */}
+            <div className="flex items-center gap-8 mt-12 pt-8 border-t border-border">
+              {[
+                { num: '200+', label: 'Students enrolled' },
+                { num: '5',   label: 'Programmes' },
+                { num: '2+',  label: 'Years teaching' },
+              ].map(({ num, label }) => (
+                <div key={label}>
+                  <p className="font-display text-primary text-2xl font-bold leading-none mb-1">{num}</p>
+                  <p className="font-utility text-foreground/50 text-xs tracking-wide">{label}</p>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* ── Right: Illustration ────────────────────────────── */}
+          <motion.div
+            className="relative flex justify-center items-center"
+            initial={{ opacity: 0, x: 32 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          >
+            {/* Soft gold radial glow */}
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{ background: 'radial-gradient(circle at center, rgba(201,168,76,0.13) 0%, transparent 68%)' }}
+            />
+            <img
+              src="/assets/bmc-logo-v2-clean.png"
+              alt="Beginners Madrasah Classes — illustrated mascot"
+              className="relative w-full max-w-sm lg:max-w-md xl:max-w-lg drop-shadow-2xl"
+              draggable={false}
+            />
+          </motion.div>
+
+        </div>
       </section>
 
       {/* ── Why Choose BMC ───────────────────────────────────── */}
