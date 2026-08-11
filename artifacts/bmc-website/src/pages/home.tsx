@@ -84,18 +84,19 @@ export default function Home() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
           >
-            <div className="flex items-center gap-2 mb-6">
-              <div className="w-6 h-px bg-accent" />
-              <span className="font-utility uppercase tracking-[0.2em] text-accent/80" style={{ fontSize: '0.65rem' }}>
-                Est 2024 · Foundations of Islamic Knowledge
-              </span>
-            </div>
-
-            <h1 className="font-display text-primary leading-[1.1] mb-6" style={{ fontSize: 'clamp(2.4rem, 4.5vw, 4rem)' }}>
+            <h1 className="font-display text-primary leading-[1.1] mb-3" style={{ fontSize: 'clamp(2.4rem, 4.5vw, 4rem)' }}>
               Beginners<br />
               Madrasah<br />
               <span className="text-accent italic">Classes</span>
             </h1>
+
+            {/* EST badge — sits directly under the title */}
+            <div className="flex items-center gap-2 mb-5">
+              <div className="w-5 h-px bg-accent" />
+              <span className="font-utility uppercase tracking-[0.2em] text-accent/70" style={{ fontSize: '0.62rem' }}>
+                Est 2024 · Foundations of Islamic Knowledge
+              </span>
+            </div>
 
             {/* Gold diamond rule — anchored left */}
             <div className="flex items-center gap-3 mb-6 w-48">
@@ -153,11 +154,13 @@ export default function Home() {
               className="absolute inset-0 pointer-events-none"
               style={{ background: 'radial-gradient(circle at center, rgba(201,168,76,0.13) 0%, transparent 68%)' }}
             />
-            <img
+            <motion.img
               src="/assets/bmc-logo-v2-clean.png"
               alt="Beginners Madrasah Classes — illustrated mascot"
               className="relative w-full max-w-sm lg:max-w-md xl:max-w-lg drop-shadow-2xl"
               draggable={false}
+              animate={{ y: [0, -14, 0] }}
+              transition={{ repeat: Infinity, duration: 4.5, ease: "easeInOut" }}
             />
           </motion.div>
 
