@@ -81,6 +81,31 @@ export default function Home() {
           }}
         />
 
+        {/* Corner lace — top-left */}
+        <img
+          src="/assets/deco-corner.png"
+          alt=""
+          aria-hidden="true"
+          className="absolute top-0 left-0 pointer-events-none select-none"
+          style={{ width: 'clamp(160px, 18vw, 280px)', opacity: 0.55 }}
+        />
+        {/* Corner lace — bottom-right (rotated 180°) */}
+        <img
+          src="/assets/deco-corner.png"
+          alt=""
+          aria-hidden="true"
+          className="absolute bottom-0 right-0 pointer-events-none select-none"
+          style={{ width: 'clamp(160px, 18vw, 280px)', opacity: 0.55, transform: 'rotate(180deg)' }}
+        />
+        {/* Hanging lanterns — top-centre */}
+        <img
+          src="/assets/deco-lanterns.png"
+          alt=""
+          aria-hidden="true"
+          className="absolute top-0 left-1/2 pointer-events-none select-none"
+          style={{ width: 'clamp(140px, 16vw, 240px)', opacity: 0.6, transform: 'translateX(-50%)' }}
+        />
+
         <div className="container mx-auto px-8 md:px-16 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
           {/* ── Left: Text ─────────────────────────────────────── */}
