@@ -150,6 +150,39 @@ export default function Workshops() {
           </div>
         </motion.div>
 
+        {/* In-Person Workshops */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.35 }}
+          className="mb-16"
+        >
+          <div className="flex items-center gap-3 mb-6">
+            <div className="h-px bg-accent flex-1" />
+            <span className="font-utility text-sm text-accent uppercase tracking-widest font-bold whitespace-nowrap">Also Available</span>
+            <div className="h-px bg-accent flex-1" />
+          </div>
+
+          <div className="bg-card border border-border rounded-2xl p-8 flex flex-col md:flex-row items-start md:items-center gap-6">
+            <div className="flex-1">
+              <div className="text-accent text-2xl mb-3">☽</div>
+              <h2 className="font-display text-2xl text-primary mb-2">In-Person Workshops</h2>
+              <p className="font-body text-foreground/70 leading-relaxed mb-3">
+                Interactive face-to-face workshops covering important Islamic topics, with opportunities for discussion, questions and practical learning.
+              </p>
+              <div className="flex flex-wrap gap-4 text-sm font-utility">
+                <span className="bg-muted rounded-full px-4 py-1 text-primary border border-border">In-Person</span>
+                <span className="bg-muted rounded-full px-4 py-1 text-primary border border-border">From R100</span>
+              </div>
+            </div>
+            <Link href="/programmes/revert-classes">
+              <span className="inline-flex items-center gap-2 border border-primary text-primary hover:bg-primary hover:text-white font-utility font-bold px-6 py-3 rounded-full transition-all cursor-pointer whitespace-nowrap">
+                View In-Person &rarr;
+              </span>
+            </Link>
+          </div>
+        </motion.div>
+
         {/* Stay Updated */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
