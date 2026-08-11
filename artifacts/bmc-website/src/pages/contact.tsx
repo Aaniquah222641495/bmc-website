@@ -71,13 +71,6 @@ export default function Contact() {
             animate={{ opacity: 1, y: 0 }}
             className="flex flex-col items-center"
           >
-            <img
-              src="/assets/deco-bismillah.png"
-              alt="Bismillah"
-              className="mx-auto mb-4 pointer-events-none select-none"
-              style={{ width: 'clamp(120px, 16vw, 200px)', opacity: 0.9 }}
-            />
-
             {/* Hero illustration */}
             <motion.img
               src="/assets/contact-hero.svg"
