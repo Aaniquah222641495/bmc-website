@@ -30,15 +30,13 @@ export function ClassPageLayout({ title, description, children, illustration }: 
           className="bg-card rounded-2xl shadow-xl overflow-hidden border border-border"
         >
           {/* Header — marble arch for standard pages, split layout when illustration provided */}
-          {illustration ? (
-            <div className="islamic-pattern relative overflow-hidden">
+          <div className="islamic-pattern relative overflow-hidden">
+            {illustration ? (
               <div className="flex flex-col md:flex-row items-center gap-0">
-                {/* Text side */}
                 <div className="flex-1 py-12 px-8 text-center md:text-left relative z-10">
                   <h1 className="text-4xl md:text-5xl font-display mb-4 text-white">{title}</h1>
                   <p className="text-lg font-body" style={{ color: '#F5F0E8' }}>{description}</p>
                 </div>
-                {/* Illustration side */}
                 <div className="w-full md:w-72 flex-shrink-0 flex items-end justify-center px-4 pt-4 md:pt-0">
                   <img
                     src={illustration}
@@ -49,26 +47,13 @@ export function ClassPageLayout({ title, description, children, illustration }: 
                   />
                 </div>
               </div>
-            </div>
-          ) : (
-            <>
-              <div className="w-full overflow-hidden leading-none">
-                <img
-                  src="/assets/arch-marble-header-trimmed.png"
-                  alt=""
-                  aria-hidden="true"
-                  className="w-full h-auto block"
-                  draggable={false}
-                />
+            ) : (
+              <div className="py-12 px-8 text-center relative z-10">
+                <h1 className="text-4xl md:text-5xl font-display mb-4 text-white">{title}</h1>
+                <p className="text-lg md:text-xl font-body max-w-2xl mx-auto" style={{ color: '#F5F0E8' }}>{description}</p>
               </div>
-              <div className="islamic-pattern py-10 px-8 text-center text-primary-foreground relative overflow-hidden">
-                <div className="relative z-10">
-                  <h1 className="text-4xl md:text-5xl font-display mb-4 text-white">{title}</h1>
-                  <p className="text-lg md:text-xl font-body max-w-2xl mx-auto" style={{ color: '#F5F0E8' }}>{description}</p>
-                </div>
-              </div>
-            </>
-          )}
+            )}
+          </div>
 
           {/* Content */}
           <div className="p-8 md:p-12">

@@ -218,16 +218,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Arch border transition ───────────────────────────── */}
-      <div className="w-full overflow-hidden leading-none" aria-hidden="true">
-        <img
-          src="/assets/deco-arch-border.png"
-          alt=""
-          className="w-full pointer-events-none select-none"
-          style={{ opacity: 0.7, marginTop: '-1px' }}
-        />
-      </div>
-
       {/* ── Our Story Teaser ─────────────────────────────────── */}
       <section className="py-20 bg-background">
         <div className="container mx-auto px-4 max-w-5xl">
