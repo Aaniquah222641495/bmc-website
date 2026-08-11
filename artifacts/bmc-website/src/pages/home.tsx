@@ -63,17 +63,27 @@ export default function Home() {
     <div className="flex flex-col min-h-screen">
 
       {/* ── Hero Section ─────────────────────────────────────── */}
-      <section className="relative flex flex-col items-center pt-20 pb-16 bg-background overflow-hidden">
+      <section className="relative flex flex-col items-center pt-20 pb-20 bg-background overflow-hidden">
 
-        {/* Arch canopy — sized so it + content both fit in the viewport */}
+        {/* Faint gold 8-pointed star tiling across the hero bg */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          aria-hidden="true"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 8 L43.5 22 L57 18 L48 29 L62 33 L48 37 L57 48 L43.5 44 L40 58 L36.5 44 L23 48 L32 37 L18 33 L32 29 L23 18 L36.5 22 Z' fill='none' stroke='%23C9A84C' stroke-width='0.6'/%3E%3C/svg%3E")`,
+            opacity: 0.06,
+          }}
+        />
+
+        {/* Full-width arch — no max-w so it touches both screen edges */}
         <motion.div
-          className="w-full max-w-3xl mx-auto px-6"
-          initial={{ opacity: 0, y: -16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, ease: 'easeOut' }}
+          className="w-full overflow-hidden arch-shimmer"
+          initial={{ opacity: 0, y: -60, scale: 1.04 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
         >
           <img
-            src="/assets/arch-marble-header-trimmed.png"
+            src="/assets/arch-full-trimmed.png"
             alt=""
             aria-hidden="true"
             className="w-full h-auto block select-none"
@@ -81,48 +91,60 @@ export default function Home() {
           />
         </motion.div>
 
-        {/* Content tucked into the arch opening with negative margin */}
+        {/* Hero content — tucked into the arch gateway */}
         <motion.div
-          className="flex flex-col items-center text-center px-4 -mt-16 max-w-xl mx-auto w-full"
-          initial={{ opacity: 0, y: 20 }}
+          className="flex flex-col items-center text-center px-6 -mt-32 max-w-2xl mx-auto w-full relative z-10"
+          initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.25, ease: 'easeOut' }}
+          transition={{ duration: 1, delay: 0.3, ease: 'easeOut' }}
         >
-          {/* Logo — multiply blend merges white bg into cream background */}
+          {/* Illustrated logo */}
           <img
-            src="/assets/bmc-logo-illustrated.png"
+            src="/assets/bmc-logo-transparent.png"
             alt="Beginners Madrasah Classes"
-            style={{ mixBlendMode: 'multiply', width: 'clamp(110px, 14vw, 180px)', height: 'auto' }}
-            className="object-contain mb-4"
+            style={{ width: 'clamp(110px, 12vw, 155px)', height: 'auto' }}
+            className="object-contain mb-2"
           />
 
-          <h1 className="font-display text-primary leading-tight mb-3" style={{ fontSize: 'clamp(1.8rem, 4vw, 3rem)' }}>
+          {/* Gold star ornaments above title */}
+          <div className="flex items-center gap-2 mb-3">
+            <span className="text-accent" style={{ fontSize: '0.5rem' }}>✦</span>
+            <span className="text-accent" style={{ fontSize: '0.9rem' }}>✦</span>
+            <span className="text-accent" style={{ fontSize: '0.5rem' }}>✦</span>
+          </div>
+
+          <h1 className="font-display text-primary leading-[1.15] mb-4" style={{ fontSize: 'clamp(2rem, 4.5vw, 3.4rem)' }}>
             Beginners Madrasah<br />
             <span className="text-accent italic">Classes</span>
           </h1>
 
-          <p className="font-utility text-primary/50 uppercase tracking-widest mb-3" style={{ fontSize: 'clamp(0.55rem, 1vw, 0.7rem)' }}>
-            Foundations of Islamic Knowledge — Est 2024
+          <p className="font-utility text-primary/40 uppercase tracking-[0.22em] mb-5" style={{ fontSize: '0.62rem' }}>
+            Foundations of Islamic Knowledge &nbsp;·&nbsp; Est 2024
           </p>
 
-          <div className="w-10 h-px bg-accent mb-5" />
+          {/* Gold diamond rule */}
+          <div className="flex items-center gap-3 mb-6 w-48">
+            <div className="h-px flex-1" style={{ background: 'linear-gradient(to right, transparent, #C9A84C)' }} />
+            <div className="w-2 h-2 rotate-45 shrink-0 bg-accent" />
+            <div className="h-px flex-1" style={{ background: 'linear-gradient(to left, transparent, #C9A84C)' }} />
+          </div>
 
-          <p className="font-body text-foreground/70 leading-relaxed mb-7" style={{ fontSize: 'clamp(0.85rem, 1.3vw, 1rem)', maxWidth: '34ch' }}>
+          <p className="font-body text-foreground/65 leading-relaxed mb-8" style={{ fontSize: 'clamp(0.9rem, 1.35vw, 1.05rem)', maxWidth: '30ch' }}>
             A warm, safe, beginner-friendly Islamic learning space for women and children.
           </p>
 
           <div className="flex flex-wrap gap-4 items-center justify-center">
             <Link
               href="/programmes"
-              className="rounded-full border-2 border-primary text-primary font-utility font-bold px-7 py-2.5 hover:bg-primary hover:text-white transition-all"
-              style={{ fontSize: 'clamp(0.75rem, 1.1vw, 0.9rem)' }}
+              className="rounded-full border-2 border-primary text-primary font-utility font-bold px-8 py-3 hover:bg-primary hover:text-white transition-all"
+              style={{ fontSize: '0.85rem', letterSpacing: '0.06em' }}
             >
               View Programmes
             </Link>
             <a href="https://wa.me/27686498593" target="_blank" rel="noreferrer">
               <button
-                className="rounded-full bg-accent text-primary font-utility font-bold px-7 py-2.5 hover:bg-accent/90 hover:shadow-lg transition-all"
-                style={{ fontSize: 'clamp(0.75rem, 1.1vw, 0.9rem)' }}
+                className="rounded-full bg-accent text-primary font-utility font-bold px-8 py-3 hover:bg-accent/90 transition-all"
+                style={{ fontSize: '0.85rem', letterSpacing: '0.06em', boxShadow: '0 6px 20px rgba(201,168,76,0.35)' }}
               >
                 Register Now
               </button>
