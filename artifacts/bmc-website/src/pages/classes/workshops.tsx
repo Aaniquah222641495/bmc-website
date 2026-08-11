@@ -1,143 +1,200 @@
-import { ClassPageLayout } from '@/components/class-page-layout';
+import { Link } from 'wouter';
 import { motion } from 'framer-motion';
 
-const ONLINE_TOPICS = [
-  'Ramadan Preparation — get ready spiritually and practically',
-  'Salaah — understanding and perfecting your prayer',
-  'Wudhu & Ghusl — step-by-step with confidence',
-  'Women in Islam — our honoured role and beautiful rights',
-  'The Month of Rajab & Sha\'ban — spiritual preparation',
-  'And more — topics announced throughout the year',
-];
-
-const INPERSON_TOPICS = [
-  'Interactive face-to-face learning and discussion',
-  'Opportunities to ask questions in a safe space',
-  'Practical demonstrations for acts of worship',
-  'Community and sisterhood with fellow students',
-  'Certificate of attendance (where applicable)',
+const PAST_WORKSHOPS = [
+  {
+    title: 'Women in Islam',
+    type: 'Online',
+    description:
+      'An empowering exploration of the role, rights, and honour of women in Islam — grounded in Quran and Sunnah.',
+  },
+  {
+    title: 'Wudhu & Ghusl',
+    type: 'Online & In-Person',
+    description:
+      'A practical, step-by-step guide to ritual purification — covering common mistakes and frequently asked questions.',
+  },
+  {
+    title: 'The Complete Guide to Salaah',
+    type: 'Online',
+    description:
+      'A comprehensive breakdown of the daily prayer — its conditions, pillars, obligations, and the common errors to avoid.',
+  },
+  {
+    title: 'Ramadan Preparation',
+    type: 'Online',
+    description:
+      'How to enter Ramadan spiritually and practically prepared — fasting rules, Taraweeh, Laylatul Qadr, Zakat, and more.',
+  },
 ];
 
 export default function Workshops() {
   return (
-    <ClassPageLayout
-      title="Workshops & Short Courses"
-      description="Focused once-off sessions on essential Islamic topics, available both online and in person."
-    >
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.3 }}
-        className="space-y-12"
-      >
-        {/* Description */}
-        <div>
-          <p className="font-body text-lg text-foreground/80 leading-relaxed">
-            Our workshops are perfect for deepening your knowledge of specific Islamic topics without committing to an ongoing programme. Each workshop is a focused, standalone session or short course that leaves you with practical knowledge you can use right away.
-          </p>
+    <div className="min-h-screen bg-background pt-32 pb-24">
+      <div className="container mx-auto px-4 max-w-5xl">
+
+        {/* Back link */}
+        <div className="mb-8">
+          <Link href="/programmes">
+            <span className="text-primary hover:text-accent font-utility text-sm inline-flex items-center gap-2 cursor-pointer transition-colors">
+              &larr; Back to Programmes
+            </span>
+          </Link>
         </div>
 
-        {/* Online Workshops */}
-        <div className="bg-card rounded-2xl border border-border p-8">
-          <div className="flex items-center gap-3 mb-6">
-            <span className="text-accent text-2xl">☽</span>
-            <h2 className="font-display text-2xl text-primary">Online Workshops & Short Courses</h2>
-          </div>
-          <p className="font-body text-foreground/70 mb-6">
-            Join from the comfort of your home. Once-off online workshops focusing on specific Islamic topics.
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center mb-16"
+        >
+          <div className="text-4xl text-accent mb-4">☽</div>
+          <h1 className="text-4xl md:text-5xl font-display text-primary mb-4">Workshops & Short Courses</h1>
+          <div className="w-24 h-1 bg-accent mx-auto mb-6" />
+          <p className="font-body text-lg text-foreground/70 max-w-2xl mx-auto">
+            Focused, once-off sessions on essential Islamic topics — available online and in person. Each workshop is practical, accessible, and designed to leave you with knowledge you can use straight away.
           </p>
-          <ul className="space-y-3 mb-6">
-            {ONLINE_TOPICS.map((item, i) => (
-              <motion.li
-                key={i}
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.4 + i * 0.06 }}
-                className="flex items-start gap-3 font-body text-foreground/80"
-              >
-                <span className="text-accent text-lg flex-shrink-0 leading-6">★</span>
-                <span>{item}</span>
-              </motion.li>
-            ))}
-          </ul>
-          <div className="flex gap-6 text-sm font-utility pt-4 border-t border-border">
-            <div>
-              <span className="text-foreground/50 uppercase tracking-widest text-xs block mb-1">Format</span>
-              <span className="text-primary font-medium">Online</span>
-            </div>
-            <div>
-              <span className="text-foreground/50 uppercase tracking-widest text-xs block mb-1">Price</span>
-              <span className="text-primary font-medium">From R100 per workshop</span>
-            </div>
-          </div>
-        </div>
+        </motion.div>
 
-        {/* In-Person Workshops */}
-        <div className="bg-primary rounded-2xl p-8 text-white">
+        {/* Currently Available */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15 }}
+          className="mb-16"
+        >
           <div className="flex items-center gap-3 mb-6">
-            <span className="text-accent text-2xl">★</span>
-            <h2 className="font-display text-2xl text-white">In-Person Workshops</h2>
+            <div className="h-px bg-accent flex-1" />
+            <span className="font-utility text-sm text-accent uppercase tracking-widest font-bold whitespace-nowrap">Available Now</span>
+            <div className="h-px bg-accent flex-1" />
           </div>
-          <p className="mb-6" style={{ color: '#F5F0E8' }}>
-            There is something irreplaceable about learning together in the same room. Our in-person workshops offer the added richness of community, discussion, and real connection.
-          </p>
-          <ul className="space-y-3 mb-6">
-            {INPERSON_TOPICS.map((item, i) => (
-              <motion.li
-                key={i}
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.5 + i * 0.06 }}
-                className="flex items-start gap-3 font-body"
-                style={{ color: '#F5F0E8' }}
+
+          <div className="bg-primary rounded-2xl overflow-hidden shadow-xl">
+            <div className="p-8 md:p-12 text-white">
+              <div className="flex items-start justify-between gap-4 flex-wrap mb-6">
+                <div>
+                  <span className="inline-block bg-accent text-primary font-utility text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest mb-4">
+                    Online Workshop
+                  </span>
+                  <h2 className="font-display text-3xl md:text-4xl text-white mb-3">Women in Islam</h2>
+                  <p className="font-body text-lg leading-relaxed" style={{ color: '#F5F0E8' }}>
+                    An empowering exploration of the role, rights, and honour of women in Islam — grounded in Quran and Sunnah. Discover what Allah and His Messenger truly said about Muslim women, and leave feeling seen, valued, and inspired.
+                  </p>
+                </div>
+              </div>
+
+              <div className="grid sm:grid-cols-3 gap-4 mb-8">
+                {[
+                  { label: 'Format', value: 'Online' },
+                  { label: 'Duration', value: 'Once-off session' },
+                  { label: 'Investment', value: 'From R100' },
+                ].map(({ label, value }) => (
+                  <div key={label} className="bg-white/10 rounded-xl p-4">
+                    <p className="font-utility text-xs uppercase tracking-widest mb-1" style={{ color: '#C9A84C' }}>{label}</p>
+                    <p className="font-display text-white text-lg">{value}</p>
+                  </div>
+                ))}
+              </div>
+
+              <a
+                href="https://forms.gle/7tFCxqL8Ypgv9Jps5"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 bg-accent hover:bg-accent/90 text-primary font-utility font-bold px-8 py-4 rounded-full transition-all hover:-translate-y-1 hover:shadow-lg"
               >
-                <span className="text-accent text-lg flex-shrink-0 leading-6">☽</span>
-                <span>{item}</span>
-              </motion.li>
-            ))}
-          </ul>
-          <div className="flex gap-6 text-sm font-utility pt-4 border-t border-white/20">
-            <div>
-              <span className="uppercase tracking-widest text-xs block mb-1" style={{ color: '#C9A84C' }}>Format</span>
-              <span className="text-white font-medium">In-Person</span>
-            </div>
-            <div>
-              <span className="uppercase tracking-widest text-xs block mb-1" style={{ color: '#C9A84C' }}>Location</span>
-              <span className="text-white font-medium">Varies by workshop</span>
-            </div>
-            <div>
-              <span className="uppercase tracking-widest text-xs block mb-1" style={{ color: '#C9A84C' }}>Price</span>
-              <span className="text-white font-medium">From R100 per workshop</span>
+                Register Now &rarr;
+              </a>
             </div>
           </div>
-        </div>
+        </motion.div>
+
+        {/* Past Workshops */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.25 }}
+          className="mb-16"
+        >
+          <div className="flex items-center gap-3 mb-6">
+            <div className="h-px bg-border flex-1" />
+            <span className="font-utility text-sm text-foreground/50 uppercase tracking-widest whitespace-nowrap">Previous Workshops</span>
+            <div className="h-px bg-border flex-1" />
+          </div>
+
+          <p className="font-body text-foreground/60 text-center mb-8">
+            These workshops have been run before and may return in future. Follow us to be notified when they open again.
+          </p>
+
+          <div className="grid md:grid-cols-2 gap-5">
+            {PAST_WORKSHOPS.map((workshop, i) => (
+              <motion.div
+                key={workshop.title}
+                initial={{ opacity: 0, scale: 0.97 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.3 + i * 0.08 }}
+                className="bg-card border border-border rounded-2xl p-7 relative overflow-hidden group"
+              >
+                {/* Subtle past indicator */}
+                <div className="absolute top-4 right-4">
+                  <span className="font-utility text-xs text-foreground/30 uppercase tracking-widest border border-border rounded-full px-3 py-1">
+                    Past
+                  </span>
+                </div>
+
+                <div className="text-accent text-xl mb-3">☽</div>
+                <h3 className="font-display text-xl text-primary mb-2">{workshop.title}</h3>
+                <p className="font-utility text-xs text-foreground/50 uppercase tracking-widest mb-3">{workshop.type}</p>
+                <p className="font-body text-foreground/70 text-sm leading-relaxed">{workshop.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
 
         {/* Stay Updated */}
-        <div className="text-center bg-muted rounded-2xl p-7 border border-border">
-          <p className="font-body text-foreground/80 mb-4">
-            Workshop dates and topics are announced throughout the year. Follow us on Instagram and TikTok to stay updated.
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center bg-muted rounded-2xl p-10 border border-border"
+        >
+          <div className="text-3xl text-accent mb-4">★</div>
+          <h2 className="font-display text-2xl text-primary mb-3">Stay Updated</h2>
+          <p className="font-body text-foreground/70 mb-6 max-w-md mx-auto">
+            New workshop dates are announced on Instagram and TikTok. Follow along so you don't miss the next one.
           </p>
-          <div className="flex justify-center gap-4 flex-wrap">
+          <div className="flex justify-center gap-6 flex-wrap mb-6">
             <a
               href="https://instagram.com/beginners_classes"
               target="_blank"
               rel="noreferrer"
-              className="font-utility text-sm font-bold text-primary hover:text-accent transition-colors underline"
+              className="font-utility font-bold text-primary hover:text-accent transition-colors underline"
             >
               @beginners_classes
             </a>
-            <span className="text-border">|</span>
             <a
               href="https://tiktok.com/@rukeyabaradien_"
               target="_blank"
               rel="noreferrer"
-              className="font-utility text-sm font-bold text-primary hover:text-accent transition-colors underline"
+              className="font-utility font-bold text-primary hover:text-accent transition-colors underline"
             >
               @rukeyabaradien_
             </a>
           </div>
-        </div>
-      </motion.div>
-    </ClassPageLayout>
+          <p className="font-body text-sm text-foreground/50">
+            Or send us a{' '}
+            <a
+              href="https://wa.me/27686498593?text=Slm%2C%20please%20let%20me%20know%20about%20upcoming%20workshops"
+              target="_blank"
+              rel="noreferrer"
+              className="text-primary underline hover:text-accent transition-colors"
+            >
+              WhatsApp message
+            </a>
+            {' '}to be added to the notification list.
+          </p>
+        </motion.div>
+
+      </div>
+    </div>
   );
 }
