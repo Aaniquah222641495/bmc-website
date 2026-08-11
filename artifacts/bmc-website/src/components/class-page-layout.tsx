@@ -28,12 +28,21 @@ export function ClassPageLayout({ title, description, children }: ClassPageLayou
           transition={{ duration: 0.5 }}
           className="bg-card rounded-2xl shadow-xl overflow-hidden border border-border"
         >
-          {/* Header */}
-          <div className="islamic-pattern py-12 px-8 text-center text-primary-foreground relative overflow-hidden">
+          {/* Marble arch header topper — cream marble with geometric stars,
+              arch cutout at the bottom opens visually into the green section */}
+          <div className="w-full overflow-hidden leading-none">
+            <img
+              src="/assets/arch-marble-header-trimmed.png"
+              alt=""
+              aria-hidden="true"
+              className="w-full h-auto block"
+              draggable={false}
+            />
+          </div>
+
+          {/* Green header section */}
+          <div className="islamic-pattern py-10 px-8 text-center text-primary-foreground relative overflow-hidden">
             <div className="relative z-10">
-              <div className="flex justify-center mb-4">
-                <span className="text-accent text-3xl">☽</span>
-              </div>
               <h1 className="text-4xl md:text-5xl font-display mb-4 text-white">{title}</h1>
               <p className="text-lg md:text-xl font-body max-w-2xl mx-auto" style={{ color: '#F5F0E8' }}>{description}</p>
             </div>
