@@ -22,10 +22,7 @@ const STORY_SECTIONS = [
 
 export default function About() {
   return (
-    <div className="min-h-screen bg-background pt-32 pb-20 relative overflow-hidden">
-      <img src="/assets/deco-corner.png" alt="" aria-hidden="true" className="absolute top-0 left-0 pointer-events-none select-none" style={{ width: 'clamp(120px, 14vw, 220px)', opacity: 0.4 }} />
-      <img src="/assets/deco-corner.png" alt="" aria-hidden="true" className="absolute bottom-0 right-0 pointer-events-none select-none" style={{ width: 'clamp(120px, 14vw, 220px)', opacity: 0.4, transform: 'rotate(180deg)' }} />
-      <img src="/assets/deco-lanterns.png" alt="" aria-hidden="true" className="absolute top-0 left-1/2 pointer-events-none select-none" style={{ width: 'clamp(120px, 14vw, 200px)', opacity: 0.5, transform: 'translateX(-50%)' }} />
+    <div className="min-h-screen bg-background pt-32 pb-20">
       <div className="container mx-auto px-4 max-w-4xl">
 
         {/* Header */}
