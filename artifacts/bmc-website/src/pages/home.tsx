@@ -63,81 +63,72 @@ export default function Home() {
     <div className="flex flex-col min-h-screen">
 
       {/* ── Hero Section ─────────────────────────────────────── */}
-      <section className="relative flex items-start justify-center pt-20 pb-0 bg-background">
-        <div className="w-full max-w-lg mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, ease: 'easeOut' }}
-            className="relative w-full"
-          >
-            {/*
-              Marble frame arch — 436×586 trimmed PNG with full alpha.
-              Sits on cream bg naturally; no blend mode needed on the frame itself.
-            */}
-            <img
-              src="/assets/arch-marble-frame-trimmed.png"
-              alt=""
-              aria-hidden="true"
-              className="w-full h-auto block select-none"
-              draggable={false}
-            />
+      <section className="relative flex flex-col items-center pt-20 pb-16 bg-background overflow-hidden">
 
-            {/*
-              Content padding relative to marble frame's inner arch opening:
-              - top 28%: clears the carved ornamental spandrel / arch head
-              - left/right 12%: clears the outer frame border columns
-              - bottom 5%: clears the lower frame border
-            */}
-            <div
-              className="absolute inset-0 flex flex-col items-center justify-start text-center"
-              style={{ padding: '28% 12% 5%', overflow: 'hidden' }}
+        {/* Arch canopy — sized so it + content both fit in the viewport */}
+        <motion.div
+          className="w-full max-w-3xl mx-auto px-6"
+          initial={{ opacity: 0, y: -16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, ease: 'easeOut' }}
+        >
+          <img
+            src="/assets/arch-marble-header-trimmed.png"
+            alt=""
+            aria-hidden="true"
+            className="w-full h-auto block select-none"
+            draggable={false}
+          />
+        </motion.div>
+
+        {/* Content tucked into the arch opening with negative margin */}
+        <motion.div
+          className="flex flex-col items-center text-center px-4 -mt-16 max-w-xl mx-auto w-full"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.25, ease: 'easeOut' }}
+        >
+          {/* Logo — multiply blend merges white bg into cream background */}
+          <img
+            src="/assets/bmc-logo-illustrated.png"
+            alt="Beginners Madrasah Classes"
+            style={{ mixBlendMode: 'multiply', width: 'clamp(110px, 14vw, 180px)', height: 'auto' }}
+            className="object-contain mb-4"
+          />
+
+          <h1 className="font-display text-primary leading-tight mb-3" style={{ fontSize: 'clamp(1.8rem, 4vw, 3rem)' }}>
+            Beginners Madrasah<br />
+            <span className="text-accent italic">Classes</span>
+          </h1>
+
+          <p className="font-utility text-primary/50 uppercase tracking-widest mb-3" style={{ fontSize: 'clamp(0.55rem, 1vw, 0.7rem)' }}>
+            Foundations of Islamic Knowledge — Est 2024
+          </p>
+
+          <div className="w-10 h-px bg-accent mb-5" />
+
+          <p className="font-body text-foreground/70 leading-relaxed mb-7" style={{ fontSize: 'clamp(0.85rem, 1.3vw, 1rem)', maxWidth: '34ch' }}>
+            A warm, safe, beginner-friendly Islamic learning space for women and children.
+          </p>
+
+          <div className="flex flex-wrap gap-4 items-center justify-center">
+            <Link
+              href="/programmes"
+              className="rounded-full border-2 border-primary text-primary font-utility font-bold px-7 py-2.5 hover:bg-primary hover:text-white transition-all"
+              style={{ fontSize: 'clamp(0.75rem, 1.1vw, 0.9rem)' }}
             >
-              {/* mix-blend-mode:multiply blends logo's white into marble texture */}
-              <img
-                src="/assets/bmc-logo-illustrated.png"
-                alt="Beginners Madrasah Classes"
-                style={{ mixBlendMode: 'multiply', height: 'clamp(90px, 18%, 150px)', width: 'auto' }}
-                className="object-contain shrink-0 mb-2"
-              />
-
-              {/* Three lines so each word fits safely within the narrow arch opening */}
-              <h1 className="font-display text-primary leading-tight mb-2" style={{ fontSize: 'clamp(0.95rem, 2.5vw, 1.5rem)' }}>
-                Beginners<br />
-                Madrasah<br />
-                <span className="text-accent italic">Classes</span>
-              </h1>
-
-              <p className="font-utility text-primary/50 uppercase tracking-widest mb-2" style={{ fontSize: 'clamp(0.38rem, 0.7vw, 0.5rem)' }}>
-                Foundations of Islamic Knowledge — EST 2024
-              </p>
-
-              <div className="w-6 h-px bg-accent mb-2" />
-
-              <p className="font-body text-foreground/70 leading-snug mb-3" style={{ fontSize: 'clamp(0.58rem, 1vw, 0.75rem)' }}>
-                A warm, safe, beginner-friendly Islamic learning space for women and children.
-              </p>
-
-              <div className="flex flex-col gap-1.5 items-center w-full">
-                <Link
-                  href="/programmes"
-                  className="rounded-full border-2 border-primary text-primary font-utility font-bold hover:bg-primary hover:text-white transition-all w-full text-center"
-                  style={{ fontSize: 'clamp(0.5rem, 0.95vw, 0.7rem)', padding: '0.4em 0' }}
-                >
-                  View Programmes
-                </Link>
-                <a href="https://wa.me/27686498593" target="_blank" rel="noreferrer" className="w-full">
-                  <button
-                    className="rounded-full bg-accent text-primary font-utility font-bold hover:bg-accent/90 hover:shadow-lg transition-all w-full"
-                    style={{ fontSize: 'clamp(0.5rem, 0.95vw, 0.7rem)', padding: '0.4em 0' }}
-                  >
-                    Register Now
-                  </button>
-                </a>
-              </div>
-            </div>
-          </motion.div>
-        </div>
+              View Programmes
+            </Link>
+            <a href="https://wa.me/27686498593" target="_blank" rel="noreferrer">
+              <button
+                className="rounded-full bg-accent text-primary font-utility font-bold px-7 py-2.5 hover:bg-accent/90 hover:shadow-lg transition-all"
+                style={{ fontSize: 'clamp(0.75rem, 1.1vw, 0.9rem)' }}
+              >
+                Register Now
+              </button>
+            </a>
+          </div>
+        </motion.div>
       </section>
 
       {/* ── Why Choose BMC ───────────────────────────────────── */}
