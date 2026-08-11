@@ -155,7 +155,7 @@ export default function Home() {
               style={{ background: 'radial-gradient(circle at center, rgba(201,168,76,0.13) 0%, transparent 68%)' }}
             />
             <motion.img
-              src="/assets/bmc-logo-v2-clean.png"
+              src="/assets/bmc-logo-final.png"
               alt="Beginners Madrasah Classes — illustrated mascot"
               className="relative w-full max-w-sm lg:max-w-md xl:max-w-lg drop-shadow-2xl"
               draggable={false}
