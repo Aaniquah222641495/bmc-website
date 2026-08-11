@@ -46,14 +46,27 @@ export default function Workshops() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-16"
+          className="mb-16 bg-card rounded-2xl overflow-hidden border border-border shadow-xl"
         >
-          <div className="text-4xl text-accent mb-4">☽</div>
-          <h1 className="text-4xl md:text-5xl font-display text-primary mb-4">Online Workshops & Short Courses</h1>
-          <div className="w-24 h-1 bg-accent mx-auto mb-6" />
-          <p className="font-body text-lg text-foreground/70 max-w-2xl mx-auto">
-            Focused, once-off online sessions on essential Islamic topics. Each workshop is practical, accessible, and designed to leave you with knowledge you can use straight away — from wherever you are.
-          </p>
+          <div className="islamic-pattern flex flex-col md:flex-row items-center">
+            {/* Text */}
+            <div className="flex-1 py-12 px-8 md:px-12">
+              <div className="text-3xl text-accent mb-4">☽</div>
+              <h1 className="text-4xl md:text-5xl font-display text-white mb-4">Online Workshops & Short Courses</h1>
+              <div className="w-20 h-1 bg-accent mb-6" />
+              <p className="font-body text-lg leading-relaxed" style={{ color: '#F5F0E8' }}>
+                Focused, once-off online sessions on essential Islamic topics — practical, accessible, and designed to leave you with knowledge you can use straight away.
+              </p>
+            </div>
+            {/* Illustration */}
+            <div className="w-full md:w-80 flex-shrink-0">
+              <img
+                src="/assets/workshops-illustration.png"
+                alt="Women in an Islamic study circle"
+                className="w-full h-64 md:h-full object-cover object-top"
+              />
+            </div>
+          </div>
         </motion.div>
 
         {/* Currently Available */}
