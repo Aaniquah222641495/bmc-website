@@ -155,15 +155,10 @@ export default function Home() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           >
-            {/* Soft gold radial glow */}
-            <div
-              className="absolute inset-0 pointer-events-none"
-              style={{ background: 'radial-gradient(circle at center, rgba(201,168,76,0.13) 0%, transparent 68%)' }}
-            />
             <motion.img
               src="/assets/bmc-logo-final.png"
               alt="Beginners Madrasah Classes — illustrated mascot"
-              className="relative w-full max-w-sm lg:max-w-md xl:max-w-lg drop-shadow-2xl"
+              className="w-full max-w-sm lg:max-w-md xl:max-w-lg"
               draggable={false}
               animate={{ y: [0, -14, 0] }}
               transition={{ repeat: Infinity, duration: 4.5, ease: "easeInOut" }}
