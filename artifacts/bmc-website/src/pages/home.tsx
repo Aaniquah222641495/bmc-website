@@ -29,11 +29,13 @@ export default function Home() {
 
             {/* Content sits inside the arch opening */}
             {/* Horizontal padding ~15% keeps text inside the arch sides; top padding clears the tip */}
-            <div className="relative z-10 flex flex-col items-center justify-center text-center px-[15%] pt-[14%] pb-16">
+            <div className="relative z-10 flex flex-col items-center justify-center text-center px-[16%] pt-[16%] pb-16">
+              {/* Small transparent icon mark — no white box */}
               <img
-                src="/assets/bmc-logo-illustrated.png"
-                alt="Beginners Madrasah Classes"
-                className="w-48 md:w-64 h-auto object-contain mb-4"
+                src="/assets/bmc-logo.png"
+                alt=""
+                aria-hidden="true"
+                className="h-16 md:h-20 w-auto object-contain mb-6 opacity-90"
               />
 
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-display text-primary mb-4 leading-tight">
