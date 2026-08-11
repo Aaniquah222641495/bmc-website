@@ -218,6 +218,51 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── Our Story Teaser ─────────────────────────────────── */}
+      <section className="py-20 bg-background">
+        <div className="container mx-auto px-4 max-w-5xl">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="flex flex-col md:flex-row items-center gap-10 bg-card border border-border rounded-2xl overflow-hidden shadow-lg"
+          >
+            {/* Accent bar */}
+            <div className="hidden md:block w-1.5 self-stretch bg-accent shrink-0" />
+
+            <div className="flex-1 py-10 px-8 md:pl-0 md:pr-12">
+              <p className="font-utility text-xs text-accent uppercase tracking-widest mb-3">Our Story</p>
+              <h2 className="font-display text-3xl md:text-4xl text-primary mb-5 leading-snug">
+                Born from a passion<br className="hidden md:block" /> for teaching
+              </h2>
+              <p className="font-body text-foreground/70 leading-relaxed mb-6" style={{ maxWidth: '52ch' }}>
+                Alhamdulillah, what started as a small class has grown into a thriving learning community — offering six programmes to hundreds of students across South Africa and beyond.
+              </p>
+              <Link href="/about">
+                <span className="inline-flex items-center gap-2 text-accent font-utility font-bold text-sm hover:gap-3 transition-all cursor-pointer uppercase tracking-widest">
+                  Read Our Story &rarr;
+                </span>
+              </Link>
+            </div>
+
+            {/* Stats */}
+            <div className="grid grid-cols-2 gap-px bg-border md:w-72 shrink-0 self-stretch">
+              {[
+                { num: '300+', label: 'Students' },
+                { num: '6',    label: 'Programmes' },
+                { num: '2024', label: 'Established' },
+                { num: '2+',   label: 'Years teaching' },
+              ].map(({ num, label }) => (
+                <div key={label} className="bg-muted flex flex-col items-center justify-center p-6">
+                  <p className="font-display text-2xl text-accent font-bold">{num}</p>
+                  <p className="font-utility text-xs text-foreground/50 uppercase tracking-wide mt-1">{label}</p>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* ── Featured Programmes ──────────────────────────────── */}
       <section className="py-24 bg-background">
         <div className="container mx-auto px-4 max-w-6xl">
