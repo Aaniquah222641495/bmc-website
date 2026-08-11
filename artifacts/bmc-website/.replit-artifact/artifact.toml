@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Beginners Madrasah Classes"
+description = "A premium Islamic education website for Beginners Madrasah Classes by Mualimah Rukeya. Features a warm, elegant design with gold and forest green branding, dedicated pages for 6 class types with Google Form registration embeds, About, FAQ, and Contact pages."
+version = "1.0.0"
+id = "artifacts/bmc-website"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23255
+
+[services.development]
+run = "pnpm --filter @workspace/bmc-website run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/bmc-website", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/bmc-website/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23255"
+BASE_PATH = "/"

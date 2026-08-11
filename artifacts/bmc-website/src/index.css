@@ -1,0 +1,228 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-card-border: hsl(var(--card-border));
+
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-popover-border: hsl(var(--popover-border));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-primary-border: hsl(var(--primary-border));
+
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-secondary-border: hsl(var(--secondary-border));
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-muted-border: hsl(var(--muted-border));
+
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-accent-border: hsl(var(--accent-border));
+
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-destructive-border: hsl(var(--destructive-border));
+
+  --color-sidebar: hsl(var(--sidebar));
+  --color-sidebar-foreground: hsl(var(--sidebar-foreground));
+  --color-sidebar-border: hsl(var(--sidebar-border));
+  --color-sidebar-primary: hsl(var(--sidebar-primary));
+  --color-sidebar-primary-foreground: hsl(var(--sidebar-primary-foreground));
+  --color-sidebar-primary-border: hsl(var(--sidebar-primary-border));
+  --color-sidebar-accent: hsl(var(--sidebar-accent));
+  --color-sidebar-accent-foreground: hsl(var(--sidebar-accent-foreground));
+  --color-sidebar-accent-border: hsl(var(--sidebar-accent-border));
+  --color-sidebar-ring: hsl(var(--sidebar-ring));
+
+  --font-sans: var(--app-font-sans);
+  --font-serif: var(--app-font-serif);
+  --font-mono: var(--app-font-mono);
+  
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --font-utility: var(--font-utility);
+
+  --color-bmc-cream: hsl(39 30% 93%);
+  --color-bmc-forest-green: hsl(155 42% 18%);
+  --color-bmc-sage-green: hsl(153 40% 30%);
+  --color-bmc-gold: hsl(44 53% 54%);
+  --color-bmc-gold-light: hsl(43 80% 72%);
+  --color-bmc-charcoal: hsl(0 0% 17%);
+  --color-bmc-white: hsl(0 0% 100%);
+  --color-bmc-cream-dark: hsl(42 28% 89%);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+:root {
+  /* BMC Colors */
+  --bmc-cream: 39 30% 93%; /* #F5F0E8 */
+  --bmc-forest-green: 155 42% 18%; /* #1B4332 */
+  --bmc-sage-green: 153 40% 30%; /* #2D6A4F */
+  --bmc-gold: 44 53% 54%; /* #C9A84C */
+  --bmc-gold-light: 43 80% 72%; /* #F0D080 */
+  --bmc-charcoal: 0 0% 17%; /* #2C2C2C */
+  --bmc-white: 0 0% 100%; /* #FFFFFF */
+  --bmc-cream-dark: 42 28% 89%; /* #EDE8DC */
+
+  --background: var(--bmc-cream);
+  --foreground: var(--bmc-charcoal);
+
+  --border: var(--bmc-cream-dark);
+
+  --card: var(--bmc-white);
+  --card-foreground: var(--bmc-charcoal);
+  --card-border: var(--bmc-cream-dark);
+
+  --popover: var(--bmc-white);
+  --popover-foreground: var(--bmc-charcoal);
+  --popover-border: var(--bmc-cream-dark);
+
+  --primary: var(--bmc-forest-green);
+  --primary-foreground: var(--bmc-white);
+  --primary-border: var(--bmc-sage-green);
+
+  --secondary: var(--bmc-sage-green);
+  --secondary-foreground: var(--bmc-white);
+  --secondary-border: var(--bmc-forest-green);
+
+  --muted: var(--bmc-cream-dark);
+  --muted-foreground: var(--bmc-charcoal);
+  --muted-border: 42 20% 80%;
+
+  --accent: var(--bmc-gold);
+  --accent-foreground: var(--bmc-forest-green);
+  --accent-border: var(--bmc-gold-light);
+
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+  --destructive-border: 0 84% 50%;
+
+  --input: var(--bmc-cream-dark);
+  --ring: var(--bmc-gold);
+
+  --app-font-sans: 'DM Sans', sans-serif;
+  --app-font-serif: 'Lora', serif;
+  --app-font-mono: Menlo, monospace;
+  
+  --font-display: 'Playfair Display', serif;
+  --font-body: 'Lora', serif;
+  --font-utility: 'DM Sans', sans-serif;
+
+  --radius: 0.5rem;
+}
+
+.dark {
+  /* Optional dark mode, but we will mostly stick to the brand colors. We will default to the same. */
+  --background: var(--bmc-forest-green);
+  --foreground: var(--bmc-cream);
+
+  --border: var(--bmc-sage-green);
+
+  --card: var(--bmc-sage-green);
+  --card-foreground: var(--bmc-cream);
+  --card-border: var(--bmc-forest-green);
+
+  --popover: var(--bmc-forest-green);
+  --popover-foreground: var(--bmc-cream);
+  --popover-border: var(--bmc-sage-green);
+
+  --primary: var(--bmc-cream);
+  --primary-foreground: var(--bmc-forest-green);
+  --primary-border: var(--bmc-cream-dark);
+
+  --secondary: var(--bmc-gold);
+  --secondary-foreground: var(--bmc-forest-green);
+  --secondary-border: var(--bmc-gold-light);
+
+  --muted: var(--bmc-sage-green);
+  --muted-foreground: var(--bmc-cream);
+  --muted-border: var(--bmc-forest-green);
+
+  --accent: var(--bmc-gold);
+  --accent-foreground: var(--bmc-forest-green);
+  --accent-border: var(--bmc-gold-light);
+
+  --input: var(--bmc-sage-green);
+  --ring: var(--bmc-gold);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-body antialiased bg-background text-foreground;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-bold;
+  }
+}
+
+/* Islamic Geometric Pattern */
+.islamic-pattern {
+  background-color: hsl(var(--bmc-forest-green));
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%232D6A4F' fill-opacity='0.2'%3E%3Cpath d='M30 0l30 30-30 30L0 30zM15 15l15 15-15 15L0 30zM45 15l15 15-15 15L30 30zM30 15l15 15-15 15L15 30z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* CSS Drawn Arch */
+.islamic-arch {
+  position: relative;
+  background-color: transparent;
+  border: 2px solid hsl(var(--bmc-gold));
+  border-bottom: none;
+  border-top-left-radius: 50% 100%;
+  border-top-right-radius: 50% 100%;
+  padding: 4rem 2rem;
+  margin: 0 auto;
+  box-shadow: 0 -10px 30px rgba(0,0,0,0.05);
+}
+.islamic-arch::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 20px;
+  background-color: hsl(var(--bmc-cream));
+  border: 2px solid hsl(var(--bmc-gold));
+  border-radius: 50%;
+}
+.islamic-arch-inner {
+  border: 1px solid hsl(var(--bmc-gold-light));
+  border-bottom: none;
+  border-top-left-radius: 50% 100%;
+  border-top-right-radius: 50% 100%;
+  padding: 3rem 1rem;
+  height: 100%;
+}
+
+.gold-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, hsl(var(--bmc-gold)), transparent);
+  width: 100%;
+  margin: 2rem 0;
+}
