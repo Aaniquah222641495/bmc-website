@@ -16,6 +16,7 @@ export default function WomensClasses() {
     <ClassPageLayout
       title="Women's Online Madrasah"
       description="A structured, beginner-friendly Islamic studies programme for women 18+, designed to fit around your life."
+      illustration="/assets/womens-classes-illustration.png"
     >
       <motion.div
         initial={{ opacity: 0 }}
