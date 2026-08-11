@@ -1,5 +1,6 @@
 import { Link } from 'wouter';
 import { motion } from 'framer-motion';
+import { MughalArch } from '../components/mughal-arch';
 
 const PROGRAMMES = [
   { title: "Women's Classes", path: "/womens-classes", desc: "Foundational and advanced learning for women." },
@@ -15,37 +16,50 @@ export default function Home() {
     <div className="flex flex-col min-h-screen">
       
       {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center justify-center pt-24 pb-12 overflow-hidden bg-background">
-        <div className="container mx-auto px-4 relative z-10 text-center">
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
+      <section className="relative min-h-[92vh] flex items-center justify-center pt-28 pb-16 overflow-hidden bg-background">
+        <div className="container mx-auto px-4 relative z-10 flex justify-center">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.97 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="islamic-arch max-w-3xl"
+            transition={{ duration: 0.9, ease: 'easeOut' }}
+            className="relative w-full max-w-2xl"
           >
-            <div className="islamic-arch-inner bg-white/50 backdrop-blur-sm flex flex-col items-center justify-center">
-              <img src="/assets/bmc-logo.png" alt="BMC Logo" className="h-32 md:h-48 w-auto object-contain mb-8" />
-              
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-display text-primary mb-4 leading-tight">
-                Beginners Madrasah <br/><span className="text-accent italic">Classes</span>
+            {/* Mughal arch SVG frame — absolute overlay */}
+            <MughalArch className="absolute inset-0 w-full h-full" />
+
+            {/* Content sits inside the arch opening */}
+            {/* Horizontal padding ~15% keeps text inside the arch sides; top padding clears the tip */}
+            <div className="relative z-10 flex flex-col items-center justify-center text-center px-[15%] pt-[14%] pb-16">
+              <img
+                src="/assets/bmc-logo-illustrated.png"
+                alt="Beginners Madrasah Classes"
+                className="w-48 md:w-64 h-auto object-contain mb-4"
+              />
+
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-display text-primary mb-4 leading-tight">
+                Beginners Madrasah <br />
+                <span className="text-accent italic">Classes</span>
               </h1>
-              
-              <p className="text-sm md:text-base font-utility text-primary/60 tracking-[0.2em] uppercase mb-6">
+
+              <p className="text-xs md:text-sm font-utility text-primary/55 tracking-[0.2em] uppercase mb-5">
                 Foundations of Islamic Knowledge — EST 2024
               </p>
-              
-              <div className="w-16 h-px bg-accent mb-6" />
-              
-              <p className="text-lg md:text-xl font-body text-foreground/80 max-w-xl mx-auto mb-10 leading-relaxed">
+
+              <div className="w-14 h-px bg-accent mb-5" />
+
+              <p className="text-base md:text-lg font-body text-foreground/75 max-w-xs md:max-w-sm mx-auto mb-10 leading-relaxed">
                 A warm, safe, beginner-friendly Islamic learning space for women and children.
               </p>
-              
+
               <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
-                <Link href="/programmes" className="w-full sm:w-auto px-8 py-4 rounded-full border-2 border-primary text-primary font-utility font-bold hover:bg-primary hover:text-white transition-all inline-block">
-                    View Programmes
+                <Link
+                  href="/programmes"
+                  className="w-full sm:w-auto px-7 py-3.5 rounded-full border-2 border-primary text-primary font-utility font-bold hover:bg-primary hover:text-white transition-all inline-block text-sm"
+                >
+                  View Programmes
                 </Link>
                 <a href="https://wa.me/27686498593" target="_blank" rel="noreferrer">
-                  <button className="w-full sm:w-auto px-8 py-4 rounded-full bg-accent text-primary font-utility font-bold hover:bg-accent/90 hover:shadow-lg hover:-translate-y-1 transition-all">
+                  <button className="w-full sm:w-auto px-7 py-3.5 rounded-full bg-accent text-primary font-utility font-bold hover:bg-accent/90 hover:shadow-lg hover:-translate-y-1 transition-all text-sm">
                     Register Now
                   </button>
                 </a>
@@ -121,13 +135,16 @@ export default function Home() {
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="flex flex-col lg:flex-row gap-12 items-center">
             <div className="w-full lg:w-1/2">
-              <div className="aspect-[4/5] bg-primary/5 rounded-[2rem] border-2 border-accent/20 relative overflow-hidden flex items-center justify-center">
-                {/* Illustration Placeholder */}
-                <div className="absolute inset-0 islamic-pattern opacity-5" />
-                <div className="relative z-10 text-center px-8">
-                  <div className="text-6xl text-accent mb-4">☽</div>
-                  <h3 className="font-display text-2xl text-primary mb-2">Mualimah Rukeya</h3>
-                  <p className="font-utility text-sm text-primary/60 tracking-wider">FOUNDER & TEACHER</p>
+              <div className="aspect-[4/5] rounded-[2rem] border-2 border-accent/30 relative overflow-hidden shadow-xl">
+                <img
+                  src="/assets/workshop-teaching.png"
+                  alt="Mualimah Rukeya teaching a workshop"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+                {/* Caption bar */}
+                <div className="absolute bottom-0 left-0 right-0 bg-primary/80 backdrop-blur-sm px-6 py-4">
+                  <h3 className="font-display text-lg text-white">Mualimah Rukeya</h3>
+                  <p className="font-utility text-xs text-accent uppercase tracking-widest">Founder & Teacher</p>
                 </div>
               </div>
             </div>

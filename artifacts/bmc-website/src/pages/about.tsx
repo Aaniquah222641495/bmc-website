@@ -24,6 +24,20 @@ export default function About() {
           transition={{ delay: 0.1 }}
           className="bg-card rounded-2xl shadow-xl overflow-hidden border border-border"
         >
+          {/* Hero photo */}
+          <div className="relative w-full h-64 md:h-96 overflow-hidden">
+            <img
+              src="/assets/workshop-teaching.png"
+              alt="Mualimah Rukeya teaching a workshop"
+              className="w-full h-full object-cover object-center"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-primary/70 via-transparent to-transparent" />
+            <div className="absolute bottom-6 left-8">
+              <p className="font-utility text-xs text-accent uppercase tracking-widest mb-1">Founder & Teacher</p>
+              <h2 className="font-display text-2xl md:text-3xl text-white">Mualimah Rukeya</h2>
+            </div>
+          </div>
+
           <div className="p-8 md:p-16">
             <div className="prose prose-lg prose-headings:font-display prose-headings:text-primary prose-p:font-body prose-p:text-foreground/80 max-w-none">
               <p className="lead text-2xl text-primary font-display mb-8 text-center italic">

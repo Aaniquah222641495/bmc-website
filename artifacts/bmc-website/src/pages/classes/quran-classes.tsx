@@ -22,6 +22,15 @@ export default function QuranClasses() {
         transition={{ delay: 0.3 }}
         className="space-y-10"
       >
+        {/* Photo */}
+        <div className="rounded-2xl overflow-hidden shadow-lg border border-border">
+          <img
+            src="/assets/quran-lesson.png"
+            alt="One-on-one Quran lesson at Beginners Madrasah Classes"
+            className="w-full h-64 md:h-80 object-cover object-center"
+          />
+        </div>
+
         {/* Description */}
         <div>
           <p className="font-body text-lg text-foreground/80 leading-relaxed mb-4">
