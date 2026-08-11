@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 160" fill="none">
+  <!-- Subtle arch silhouette background fill -->
+  <path d="M148 156 Q148 72 200 18 Q252 72 252 156 Z" fill="#1B4332" opacity="0.06"/>
+  <!-- Arch outline (pointed Mughal arch) -->
+  <path d="M148 156 Q148 72 200 18 Q252 72 252 156" fill="none" stroke="#C9A84C" stroke-width="1.5" opacity="0.55"/>
+
+  <!-- Lantern hanger wire -->
+  <line x1="200" y1="18" x2="200" y2="48" stroke="#C9A84C" stroke-width="1.2" opacity="0.7"/>
+
+  <!-- Lantern top cap -->
+  <polygon points="200,44 209,52 209,58 191,58 191,52" fill="#C9A84C" opacity="0.85"/>
+
+  <!-- Lantern body -->
+  <rect x="186" y="58" width="28" height="52" rx="3" ry="3" fill="#1B4332" opacity="0.12"/>
+  <rect x="186" y="58" width="28" height="52" rx="3" ry="3" fill="none" stroke="#C9A84C" stroke-width="1.5" opacity="0.8"/>
+
+  <!-- Lantern body decorative grid lines (vertical) -->
+  <line x1="195" y1="58" x2="195" y2="110" stroke="#C9A84C" stroke-width="0.8" opacity="0.5"/>
+  <line x1="200" y1="58" x2="200" y2="110" stroke="#C9A84C" stroke-width="0.8" opacity="0.5"/>
+  <line x1="205" y1="58" x2="205" y2="110" stroke="#C9A84C" stroke-width="0.8" opacity="0.5"/>
+  <!-- Lantern body decorative grid lines (horizontal) -->
+  <line x1="186" y1="74" x2="214" y2="74" stroke="#C9A84C" stroke-width="0.8" opacity="0.5"/>
+  <line x1="186" y1="90" x2="214" y2="90" stroke="#C9A84C" stroke-width="0.8" opacity="0.5"/>
+
+  <!-- Lantern bottom cap -->
+  <polygon points="191,110 209,110 211,117 200,124 189,117" fill="#C9A84C" opacity="0.8"/>
+  <!-- Lantern bottom pendant teardrop -->
+  <ellipse cx="200" cy="130" rx="4" ry="7" fill="#C9A84C" opacity="0.65"/>
+
+  <!-- Eight-pointed star — left flanking, large -->
+  <g transform="translate(72,80)">
+    <polygon points="0,-22 6,-6 22,0 6,6 0,22 -6,6 -22,0 -6,-6" fill="#C9A84C" opacity="0.8"/>
+    <polygon points="0,-15 4.2,-4.2 15,0 4.2,4.2 0,15 -4.2,4.2 -15,0 -4.2,-4.2" fill="#C9A84C" opacity="0.45" transform="rotate(22.5)"/>
+    <circle cx="0" cy="0" r="5" fill="#C9A84C" opacity="0.55"/>
+  </g>
+
+  <!-- Eight-pointed star — right flanking, large -->
+  <g transform="translate(328,80)">
+    <polygon points="0,-22 6,-6 22,0 6,6 0,22 -6,6 -22,0 -6,-6" fill="#C9A84C" opacity="0.8"/>
+    <polygon points="0,-15 4.2,-4.2 15,0 4.2,4.2 0,15 -4.2,4.2 -15,0 -4.2,-4.2" fill="#C9A84C" opacity="0.45" transform="rotate(22.5)"/>
+    <circle cx="0" cy="0" r="5" fill="#C9A84C" opacity="0.55"/>
+  </g>
+
+  <!-- Small star — left inner -->
+  <g transform="translate(122,56)">
+    <polygon points="0,-11 3,-3 11,0 3,3 0,11 -3,3 -11,0 -3,-3" fill="#C9A84C" opacity="0.6"/>
+    <polygon points="0,-7.5 2,-2 7.5,0 2,2 0,7.5 -2,2 -7.5,0 -2,-2" fill="#C9A84C" opacity="0.3" transform="rotate(22.5)"/>
+  </g>
+
+  <!-- Small star — right inner -->
+  <g transform="translate(278,56)">
+    <polygon points="0,-11 3,-3 11,0 3,3 0,11 -3,3 -11,0 -3,-3" fill="#C9A84C" opacity="0.6"/>
+    <polygon points="0,-7.5 2,-2 7.5,0 2,2 0,7.5 -2,2 -7.5,0 -2,-2" fill="#C9A84C" opacity="0.3" transform="rotate(22.5)"/>
+  </g>
+
+  <!-- Tiny accent stars scattered -->
+  <g transform="translate(40,46)">
+    <polygon points="0,-7 1.7,-1.7 7,0 1.7,1.7 0,7 -1.7,1.7 -7,0 -1.7,-1.7" fill="#C9A84C" opacity="0.45"/>
+  </g>
+  <g transform="translate(360,46)">
+    <polygon points="0,-7 1.7,-1.7 7,0 1.7,1.7 0,7 -1.7,1.7 -7,0 -1.7,-1.7" fill="#C9A84C" opacity="0.45"/>
+  </g>
+  <g transform="translate(28,110)">
+    <polygon points="0,-5 1.2,-1.2 5,0 1.2,1.2 0,5 -1.2,1.2 -5,0 -1.2,-1.2" fill="#C9A84C" opacity="0.3"/>
+  </g>
+  <g transform="translate(372,110)">
+    <polygon points="0,-5 1.2,-1.2 5,0 1.2,1.2 0,5 -1.2,1.2 -5,0 -1.2,-1.2" fill="#C9A84C" opacity="0.3"/>
+  </g>
+
+  <!-- Diamond connectors between star and arch -->
+  <rect x="95" y="77" width="7" height="7" transform="rotate(45,98.5,80.5)" fill="#C9A84C" opacity="0.28"/>
+  <rect x="298" y="77" width="7" height="7" transform="rotate(45,301.5,80.5)" fill="#C9A84C" opacity="0.28"/>
+
+  <!-- Thin horizontal baseline rules -->
+  <line x1="30" y1="150" x2="370" y2="150" stroke="#C9A84C" stroke-width="0.75" opacity="0.35"/>
+  <line x1="50" y1="154" x2="350" y2="154" stroke="#C9A84C" stroke-width="0.5" opacity="0.2"/>
+
+  <!-- Fade overlay so edges dissolve -->
+  <defs>
+    <linearGradient id="heroFade" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#F5F0E8" stop-opacity="1"/>
+      <stop offset="12%" stop-color="#F5F0E8" stop-opacity="0"/>
+      <stop offset="88%" stop-color="#F5F0E8" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#F5F0E8" stop-opacity="1"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="400" height="160" fill="url(#heroFade)"/>
+</svg>

@@ -99,10 +99,11 @@ export default function Faq() {
             animate={{ opacity: 1, y: 0 }}
           >
             <img
-              src="/assets/deco-bismillah.png"
-              alt="Bismillah"
+              src="/assets/faq-hero.svg"
+              alt=""
+              aria-hidden="true"
               className="mx-auto mb-4 pointer-events-none select-none"
-              style={{ width: 'clamp(130px, 16vw, 210px)', opacity: 0.9 }}
+              style={{ width: 'clamp(220px, 40vw, 380px)' }}
             />
             <h1 className="text-4xl md:text-5xl font-display text-primary mb-4">
               Frequently Asked Questions
@@ -113,10 +114,10 @@ export default function Faq() {
             </p>
             <div className="flex justify-center mt-8" aria-hidden="true">
               <img
-                src="/assets/deco-divider.png"
+                src="/assets/faq-divider.svg"
                 alt=""
                 className="pointer-events-none select-none"
-                style={{ width: 'clamp(180px, 35vw, 320px)', opacity: 0.55 }}
+                style={{ width: 'clamp(220px, 60vw, 520px)', opacity: 0.7 }}
               />
             </div>
           </motion.div>
