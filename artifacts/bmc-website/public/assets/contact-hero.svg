@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 280" fill="none">
+  <!-- Background arch frame (Mughal-style pointed arch silhouette) -->
+  <path d="M200 10 C140 10 90 50 80 110 L80 260 L320 260 L320 110 C310 50 260 10 200 10 Z" fill="#1B4332" opacity="0.07"/>
+  <!-- Arch outline -->
+  <path d="M200 18 C145 18 97 56 87 114 L87 255 L313 255 L313 114 C303 56 255 18 200 18 Z" fill="none" stroke="#C9A84C" stroke-width="1.5" opacity="0.5"/>
+
+  <!-- Envelope body -->
+  <rect x="100" y="130" width="200" height="130" rx="8" ry="8" fill="#F5F0E8" stroke="#C9A84C" stroke-width="2"/>
+  <!-- Envelope flap -->
+  <path d="M100 138 L200 195 L300 138" fill="none" stroke="#C9A84C" stroke-width="2" stroke-linejoin="round"/>
+  <!-- Envelope bottom V -->
+  <path d="M100 260 L190 205 M300 260 L210 205" stroke="#C9A84C" stroke-width="1.5" opacity="0.5"/>
+  <!-- Inner envelope glow line -->
+  <rect x="100" y="130" width="200" height="130" rx="8" ry="8" fill="none" stroke="#C9A84C" stroke-width="0.5" opacity="0.4"/>
+
+  <!-- Crescent moon (upper left of envelope, floating above) -->
+  <g transform="translate(128, 88)">
+    <circle cx="0" cy="0" r="28" fill="#C9A84C" opacity="0.9"/>
+    <circle cx="10" cy="-6" r="22" fill="#1B4332" opacity="1"/>
+    <!-- Star next to crescent -->
+    <g transform="translate(30, -18)">
+      <!-- Eight-pointed star -->
+      <polygon points="0,-10 2.4,-2.4 10,0 2.4,2.4 0,10 -2.4,2.4 -10,0 -2.4,-2.4" fill="#C9A84C" opacity="0.9"/>
+      <polygon points="0,-7 1.7,-1.7 7,0 1.7,1.7 0,7 -1.7,1.7 -7,0 -1.7,-1.7" fill="#C9A84C" opacity="0.6" transform="rotate(22.5)"/>
+    </g>
+  </g>
+
+  <!-- Second star (upper right) -->
+  <g transform="translate(260, 78)">
+    <polygon points="0,-8 1.9,-1.9 8,0 1.9,1.9 0,8 -1.9,1.9 -8,0 -1.9,-1.9" fill="#C9A84C" opacity="0.7"/>
+    <polygon points="0,-5.5 1.3,-1.3 5.5,0 1.3,1.3 0,5.5 -1.3,1.3 -5.5,0 -1.3,-1.3" fill="#C9A84C" opacity="0.45" transform="rotate(22.5)"/>
+  </g>
+
+  <!-- Small decorative dots / knot pattern below arch top -->
+  <circle cx="200" cy="38" r="3" fill="#C9A84C" opacity="0.6"/>
+  <circle cx="188" cy="46" r="2" fill="#C9A84C" opacity="0.4"/>
+  <circle cx="212" cy="46" r="2" fill="#C9A84C" opacity="0.4"/>
+
+  <!-- Geometric corner rosettes -->
+  <!-- Bottom left -->
+  <g transform="translate(108, 252)" opacity="0.35">
+    <polygon points="0,-7 1.7,-1.7 7,0 1.7,1.7 0,7 -1.7,1.7 -7,0 -1.7,-1.7" fill="#C9A84C"/>
+  </g>
+  <!-- Bottom right -->
+  <g transform="translate(292, 252)" opacity="0.35">
+    <polygon points="0,-7 1.7,-1.7 7,0 1.7,1.7 0,7 -1.7,1.7 -7,0 -1.7,-1.7" fill="#C9A84C"/>
+  </g>
+
+  <!-- Thin horizontal rule lines at bottom of envelope interior -->
+  <line x1="130" y1="220" x2="270" y2="220" stroke="#C9A84C" stroke-width="0.8" opacity="0.3"/>
+  <line x1="145" y1="232" x2="255" y2="232" stroke="#C9A84C" stroke-width="0.8" opacity="0.2"/>
+
+  <!-- Side decorative vines / arabesque flourishes -->
+  <path d="M82 150 Q70 165 78 180 Q86 195 74 210 Q62 225 78 240" stroke="#C9A84C" stroke-width="1.2" fill="none" opacity="0.4" stroke-linecap="round"/>
+  <path d="M318 150 Q330 165 322 180 Q314 195 326 210 Q338 225 322 240" stroke="#C9A84C" stroke-width="1.2" fill="none" opacity="0.4" stroke-linecap="round"/>
+</svg>

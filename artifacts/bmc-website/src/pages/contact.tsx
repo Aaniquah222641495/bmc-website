@@ -57,9 +57,11 @@ const CONTACTS = [
 export default function Contact() {
   return (
     <div className="min-h-screen bg-background pt-32 pb-24 relative overflow-hidden">
+      {/* Existing deco-window accent */}
       <img src="/assets/deco-window.png" alt="" aria-hidden="true"
         className="absolute top-24 right-0 pointer-events-none select-none hidden lg:block"
         style={{ width: '180px', opacity: 0.12, transform: 'translateX(30%)' }} />
+
       <div className="container mx-auto px-4 max-w-4xl">
 
         {/* Header */}
@@ -67,8 +69,27 @@ export default function Contact() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
+            className="flex flex-col items-center"
           >
-            <img src="/assets/deco-bismillah.png" alt="Bismillah" className="mx-auto mb-4 pointer-events-none select-none" style={{ width: 'clamp(120px, 16vw, 200px)', opacity: 0.9 }} />
+            <img
+              src="/assets/deco-bismillah.png"
+              alt="Bismillah"
+              className="mx-auto mb-4 pointer-events-none select-none"
+              style={{ width: 'clamp(120px, 16vw, 200px)', opacity: 0.9 }}
+            />
+
+            {/* Hero illustration */}
+            <motion.img
+              src="/assets/contact-hero.svg"
+              alt=""
+              aria-hidden="true"
+              initial={{ opacity: 0, scale: 0.92 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.1, duration: 0.6 }}
+              className="pointer-events-none select-none mb-2"
+              style={{ width: 'clamp(180px, 30vw, 320px)' }}
+            />
+
             <h1 className="text-4xl md:text-5xl font-display text-primary mb-4">
               Get In Touch
             </h1>
@@ -84,12 +105,28 @@ export default function Contact() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15 }}
-          className="bg-accent/10 border border-accent/30 rounded-2xl p-5 mb-12 text-center"
+          className="bg-accent/10 border border-accent/30 rounded-2xl p-5 mb-10 text-center"
         >
           <p className="font-utility text-sm text-primary">
             <span className="text-accent font-bold">Note:</span> For class registrations, please use the{' '}
             <a href="/programmes" className="underline hover:text-accent transition-colors">Register</a> button on the relevant class page.
           </p>
+        </motion.div>
+
+        {/* Geometric divider between note and cards */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
+          className="mb-10"
+          aria-hidden="true"
+        >
+          <img
+            src="/assets/contact-divider.svg"
+            alt=""
+            className="w-full pointer-events-none select-none"
+            style={{ height: '48px', objectFit: 'cover' }}
+          />
         </motion.div>
 
         {/* Contact Cards */}
@@ -102,7 +139,7 @@ export default function Contact() {
               rel="noreferrer"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 + i * 0.1 }}
+              transition={{ delay: 0.25 + i * 0.1 }}
               className="group bg-card border border-border hover:border-accent rounded-2xl p-8 flex items-start gap-5 transition-all hover:shadow-xl hover:-translate-y-1"
             >
               <div
@@ -122,30 +159,40 @@ export default function Contact() {
           ))}
         </div>
 
-        {/* WhatsApp Primary CTA */}
+        {/* WhatsApp Primary CTA — with geometric pattern texture */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center bg-primary rounded-2xl p-10 text-white"
+          className="text-center bg-primary rounded-2xl p-10 text-white relative overflow-hidden"
+          style={{
+            backgroundImage: 'url(/assets/contact-cta-pattern.svg)',
+            backgroundSize: '120px 120px',
+            backgroundRepeat: 'repeat',
+            backgroundColor: '#1B4332',
+          }}
         >
-          <div className="text-3xl text-accent mb-4">★</div>
-          <h2 className="font-display text-2xl mb-3">Ready to start your journey?</h2>
-          <p className="font-body text-white/80 mb-6 max-w-md mx-auto">
-            Send us a WhatsApp message and we'll guide you to the right programme for you.
-          </p>
-          <a
-            href="https://wa.me/27686498593?text=Slm%2C%20I%27d%20like%20to%20find%20out%20more%20about%20your%20programmes"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-3 bg-[#25D366] hover:bg-[#20bd5a] text-white font-utility font-bold px-8 py-4 rounded-full transition-all hover:-translate-y-1 hover:shadow-lg"
-          >
-            <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
-              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-              <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.557 4.123 1.532 5.853L0 24l6.305-1.654A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.655-.516-5.167-1.416l-.371-.22-3.742.982.998-3.649-.24-.378A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
-            </svg>
-            Chat on WhatsApp
-          </a>
+          {/* Slight overlay to keep text readable */}
+          <div className="absolute inset-0 bg-primary/60 rounded-2xl" aria-hidden="true" />
+          <div className="relative z-10">
+            <div className="text-3xl text-accent mb-4">★</div>
+            <h2 className="font-display text-2xl mb-3">Ready to start your journey?</h2>
+            <p className="font-body text-white/80 mb-6 max-w-md mx-auto">
+              Send us a WhatsApp message and we'll guide you to the right programme for you.
+            </p>
+            <a
+              href="https://wa.me/27686498593?text=Slm%2C%20I%27d%20like%20to%20find%20out%20more%20about%20your%20programmes"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-3 bg-[#25D366] hover:bg-[#20bd5a] text-white font-utility font-bold px-8 py-4 rounded-full transition-all hover:-translate-y-1 hover:shadow-lg"
+            >
+              <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+                <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.557 4.123 1.532 5.853L0 24l6.305-1.654A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.655-.516-5.167-1.416l-.371-.22-3.742.982.998-3.649-.24-.378A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+              </svg>
+              Chat on WhatsApp
+            </a>
+          </div>
         </motion.div>
 
       </div>
