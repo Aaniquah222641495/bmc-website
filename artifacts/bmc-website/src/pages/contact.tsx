@@ -56,7 +56,10 @@ const CONTACTS = [
 
 export default function Contact() {
   return (
-    <div className="min-h-screen bg-background pt-32 pb-24">
+    <div className="min-h-screen bg-background pt-32 pb-24 relative overflow-hidden">
+      <img src="/assets/deco-window.png" alt="" aria-hidden="true"
+        className="absolute top-24 right-0 pointer-events-none select-none hidden lg:block"
+        style={{ width: '180px', opacity: 0.12, transform: 'translateX(30%)' }} />
       <div className="container mx-auto px-4 max-w-4xl">
 
         {/* Header */}
