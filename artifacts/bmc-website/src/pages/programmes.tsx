@@ -3,46 +3,46 @@ import { motion } from 'framer-motion';
 
 const PROGRAMMES = [
   {
-    title: "Women's Classes",
+    title: "Women's Online Madrasah",
     path: "/womens-classes",
-    desc: "Foundational and advanced learning in a supportive sisterhood community. Available online and in-person.",
-    format: "Online & In-Person",
-    price: "R100–R200"
-  },
-  {
-    title: "Revert Classes",
-    path: "/revert-classes",
-    desc: "Specially designed for those new to Islam. A gentle, safe, and judgement-free introduction to Islamic practice.",
-    format: "Online",
-    price: "Contact Us"
-  },
-  {
-    title: "Quran Classes",
-    path: "/quran-classes",
-    desc: "Learn to read the Quran with correct tajweed, starting from the basics of the Arabic alphabet.",
-    format: "Online",
-    price: "Contact Us"
-  },
-  {
-    title: "Hifdh Classes",
-    path: "/hifdh-classes",
-    desc: "A structured memorisation plan with regular revision sessions and personal spiritual encouragement.",
-    format: "Online",
-    price: "Contact Us"
-  },
-  {
-    title: "Children's Classes",
-    path: "/childrens-classes",
-    desc: "General Maktab programme covering Quran, Aqeedah, Fiqh, Hadith, and Akhlaaq.",
-    format: "Live Online",
+    desc: "Structured, beginner-friendly Islamic studies for women 18+. Pre-recorded lessons on Google Classroom, learn at your own pace. Covers Aqaaid, Fiqh, Tajweed, Seerah, Akhlaaq, Hadith, Du'as and more.",
+    format: "Online — Google Classroom",
     price: "R150/month"
   },
   {
-    title: "Workshops",
+    title: "In-Person Workshops",
+    path: "/revert-classes",
+    desc: "Interactive face-to-face workshops covering important Islamic topics, with opportunities for discussion, questions and practical learning.",
+    format: "In-Person",
+    price: "From R100"
+  },
+  {
+    title: "Get Into Qur'an – In Person",
+    path: "/quran-classes",
+    desc: "A Qur'an programme for complete beginners or those wanting to start again from the basics. Step-by-step guidance toward confidently reciting from the Mushaf. Every Saturday morning in Mitchell's Plain, Cape Town.",
+    format: "In-Person — Mitchell's Plain",
+    price: "R200/month"
+  },
+  {
+    title: "Women's Hifdh Programme",
+    path: "/hifdh-classes",
+    desc: "A structured online Qur'an memorisation programme for women. Live classes three times a week — Monday, Wednesday & Friday via Microsoft Teams. Includes guidance on memorisation, revision and recitation.",
+    format: "Live Online — Microsoft Teams",
+    price: "R200/month"
+  },
+  {
+    title: "Children's Online Madrasah",
+    path: "/childrens-classes",
+    desc: "Live online Islamic classes for children aged 6–13, held three times a week — Monday, Tuesday & Thursday via Microsoft Teams. Covers Qur'an, Surahs, Aqaaid, Fiqh, Akhlaaq, Islamic History, Hadith and Du'as.",
+    format: "Live Online — Microsoft Teams",
+    price: "R150/month"
+  },
+  {
+    title: "Online Workshops & Short Courses",
     path: "/workshops",
-    desc: "Interactive sessions on essential topics like Ramadan preparation, Wudhu, Ghusl, and more.",
-    format: "Online & In-Person",
-    price: "Contact Us"
+    desc: "Once-off online workshops focusing on specific Islamic topics. Topics include Women in Islam, Salaah, Wudhu & Ghusl, Ramadan preparation and other practical areas of the Deen.",
+    format: "Online",
+    price: "From R100"
   }
 ];
 

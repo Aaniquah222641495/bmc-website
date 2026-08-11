@@ -49,10 +49,10 @@ export default function Workshops() {
           className="text-center mb-16"
         >
           <div className="text-4xl text-accent mb-4">☽</div>
-          <h1 className="text-4xl md:text-5xl font-display text-primary mb-4">Workshops & Short Courses</h1>
+          <h1 className="text-4xl md:text-5xl font-display text-primary mb-4">Online Workshops & Short Courses</h1>
           <div className="w-24 h-1 bg-accent mx-auto mb-6" />
           <p className="font-body text-lg text-foreground/70 max-w-2xl mx-auto">
-            Focused, once-off sessions on essential Islamic topics — available online and in person. Each workshop is practical, accessible, and designed to leave you with knowledge you can use straight away.
+            Focused, once-off online sessions on essential Islamic topics. Each workshop is practical, accessible, and designed to leave you with knowledge you can use straight away — from wherever you are.
           </p>
         </motion.div>
 
