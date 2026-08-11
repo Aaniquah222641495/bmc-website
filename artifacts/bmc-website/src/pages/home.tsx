@@ -100,9 +100,9 @@ export default function Home() {
         >
           {/* Illustrated logo */}
           <img
-            src="/assets/bmc-logo-transparent.png"
+            src="/assets/bmc-logo-v2.png"
             alt="Beginners Madrasah Classes"
-            style={{ width: 'clamp(110px, 12vw, 155px)', height: 'auto' }}
+            style={{ width: 'clamp(120px, 13vw, 170px)', height: 'auto' }}
             className="object-contain mb-2"
           />
 
