@@ -17,6 +17,7 @@ export default function ChildrensClasses() {
     <ClassPageLayout
       title="Children's Online Madrasah"
       description="Live Islamic classes for children aged 6–13, held three times a week via Microsoft Teams in a fun and structured environment."
+      formUrl="https://docs.google.com/forms/d/e/1FAIpQLSdmyJNXuxXONvtvW_LEeLVPgMLSYhdI8eh3ZRJWtabzwPeSzQ/viewform"
     >
       <motion.div
         initial={{ opacity: 0 }}

@@ -6,12 +6,14 @@ interface ClassPageLayoutProps {
   title: string;
   description: string;
   children: ReactNode;
-  illustration?: string; // optional hero image shown in the header instead of the marble arch
+  illustration?: string;
+  formUrl?: string; // per-class registration form URL
 }
 
-const FORM_URL = 'https://forms.gle/7tFCxqL8Ypgv9Jps5';
+const DEFAULT_FORM_URL = 'https://forms.gle/7tFCxqL8Ypgv9Jps5';
 
-export function ClassPageLayout({ title, description, children, illustration }: ClassPageLayoutProps) {
+export function ClassPageLayout({ title, description, children, illustration, formUrl }: ClassPageLayoutProps) {
+  const FORM_URL = formUrl ?? DEFAULT_FORM_URL;
   return (
     <div className="min-h-screen bg-background pt-32 pb-20">
       <div className="container mx-auto px-4 max-w-4xl">

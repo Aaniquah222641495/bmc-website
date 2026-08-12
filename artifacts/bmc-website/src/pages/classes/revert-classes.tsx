@@ -14,6 +14,7 @@ export default function InPersonWorkshops() {
     <ClassPageLayout
       title="In-Person Workshops"
       description="Interactive face-to-face workshops covering important Islamic topics, with opportunities for discussion, questions and practical learning."
+      formUrl="https://forms.gle/qSg93UZRpjdA9dE96"
     >
       <motion.div
         initial={{ opacity: 0 }}

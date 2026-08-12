@@ -110,7 +110,7 @@ export default function Workshops() {
               </div>
 
               <a
-                href="https://forms.gle/7tFCxqL8Ypgv9Jps5"
+                href="https://forms.gle/GX8ZQRMdNRKJq7T89"
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-2 bg-accent hover:bg-accent/90 text-primary font-utility font-bold px-8 py-4 rounded-full transition-all hover:-translate-y-1 hover:shadow-lg"

@@ -9,7 +9,7 @@ const PROGRAMMES: { title: string; path: string; desc: string; price: string; ta
     desc: "Beginner-friendly Islamic studies for women 18+. Pre-recorded lessons on Google Classroom — learn at your own pace.",
     price: "R150/month",
     tag: "Online · Self-paced",
-    image: "/assets/womens-classes-illustration.png",
+    image: "/assets/photo-womens-madrasah.jpg",
     gradient: "from-emerald-800 to-emerald-950",
   },
   {
@@ -18,7 +18,7 @@ const PROGRAMMES: { title: string; path: string; desc: string; price: string; ta
     desc: "Interactive face-to-face workshops on important Islamic topics, with open discussion and practical learning.",
     price: "From R100",
     tag: "In-Person",
-    image: "/assets/workshop-teaching.png",
+    image: "/assets/photo-wudhu-workshop-2.jpg",
     gradient: "from-rose-800 to-rose-950",
   },
   {
@@ -27,7 +27,7 @@ const PROGRAMMES: { title: string; path: string; desc: string; price: string; ta
     desc: "A Qur'an programme for complete beginners. Step-by-step guidance toward confidently reading the Mushaf.",
     price: "R200/month",
     tag: "In-Person · Cape Town",
-    image: "/assets/quran-lesson.png",
+    image: "/assets/photo-quran-lesson.jpg",
     gradient: "from-amber-800 to-amber-950",
   },
   {
@@ -36,6 +36,7 @@ const PROGRAMMES: { title: string; path: string; desc: string; price: string; ta
     desc: "Structured online Qur'an memorisation for women. Live classes Mon, Wed & Fri via Microsoft Teams.",
     price: "R200/month",
     tag: "Online · Live classes",
+    image: "/assets/photo-quran-completion.jpg",
     gradient: "from-violet-800 to-violet-950",
   },
   {
@@ -44,6 +45,7 @@ const PROGRAMMES: { title: string; path: string; desc: string; price: string; ta
     desc: "Live online Islamic classes for children aged 6–13, three times a week via Microsoft Teams.",
     price: "R150/month",
     tag: "Online · Ages 6–13",
+    image: "/assets/photo-childrens-class.jpg",
     gradient: "from-sky-800 to-sky-950",
   },
   {
@@ -52,7 +54,7 @@ const PROGRAMMES: { title: string; path: string; desc: string; price: string; ta
     desc: "Once-off online workshops on specific Islamic topics — Women in Islam, Salaah, Wudhu & Ghusl, and more.",
     price: "From R100",
     tag: "Online · Once-off",
-    image: "/assets/workshops-illustration.png",
+    image: "/assets/photo-workshop-stage.jpg",
     gradient: "from-[#1B4332] to-[#0d2419]",
   },
 ];
@@ -291,7 +293,7 @@ export default function Home() {
                         <img
                           src={image}
                           alt={title}
-                          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                          className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
                         />
                       ) : (
                         /* Placeholder: Islamic pattern overlay on gradient */

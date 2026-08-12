@@ -12,7 +12,7 @@ const PROGRAMMES = [
     tag: "Online · Self-paced",
     price: "R150/month",
     type: "online" as Tab,
-    image: "/assets/womens-classes-illustration.png",
+    image: "/assets/photo-womens-madrasah.jpg",
     gradient: "from-emerald-800 to-emerald-950",
   },
   {
@@ -22,6 +22,7 @@ const PROGRAMMES = [
     tag: "Online · Live classes",
     price: "R200/month",
     type: "online" as Tab,
+    image: "/assets/photo-quran-completion.jpg",
     gradient: "from-violet-800 to-violet-950",
   },
   {
@@ -31,6 +32,7 @@ const PROGRAMMES = [
     tag: "Online · Ages 6–13",
     price: "R150/month",
     type: "online" as Tab,
+    image: "/assets/photo-childrens-class.jpg",
     gradient: "from-sky-800 to-sky-950",
   },
   {
@@ -40,7 +42,7 @@ const PROGRAMMES = [
     tag: "Online · Once-off",
     price: "From R100",
     type: "online" as Tab,
-    image: "/assets/workshops-illustration.png",
+    image: "/assets/photo-workshop-stage.jpg",
     gradient: "from-[#1B4332] to-[#0d2419]",
   },
   {
@@ -50,7 +52,7 @@ const PROGRAMMES = [
     tag: "In-Person · Cape Town",
     price: "R200/month",
     type: "inperson" as Tab,
-    image: "/assets/quran-lesson.png",
+    image: "/assets/photo-quran-lesson.jpg",
     gradient: "from-amber-800 to-amber-950",
   },
   {
@@ -60,7 +62,7 @@ const PROGRAMMES = [
     tag: "In-Person",
     price: "From R100",
     type: "inperson" as Tab,
-    image: "/assets/workshop-teaching.png",
+    image: "/assets/photo-wudhu-workshop-2.jpg",
     gradient: "from-rose-800 to-rose-950",
   },
 ];
@@ -152,7 +154,7 @@ export default function Programmes() {
                         <img
                           src={image}
                           alt={title}
-                          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                          className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
                         />
                       ) : (
                         <div

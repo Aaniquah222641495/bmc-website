@@ -17,6 +17,7 @@ export default function WomensClasses() {
       title="Women's Online Madrasah"
       description="A structured, beginner-friendly Islamic studies programme for women 18+, designed to fit around your life."
       illustration="/assets/womens-classes-illustration.png"
+      formUrl="https://forms.gle/UQoRpDfaXptJrMXj8"
     >
       <motion.div
         initial={{ opacity: 0 }}
