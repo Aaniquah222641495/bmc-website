@@ -6,7 +6,6 @@ import { cn } from '@/lib/utils';
 const CATEGORIES = [
   {
     label: 'Getting Started',
-    icon: '☽',
     items: [
       {
         q: 'Are classes suitable for complete beginners?',
@@ -24,7 +23,6 @@ const CATEGORIES = [
   },
   {
     label: 'Classes & Logistics',
-    icon: '★',
     items: [
       {
         q: 'How do online classes work?',
@@ -46,7 +44,6 @@ const CATEGORIES = [
   },
   {
     label: 'Payments & Policies',
-    icon: '✦',
     items: [
       {
         q: 'How do I pay for my class?',
@@ -143,7 +140,7 @@ export default function Faq() {
               className="relative bg-card border border-border rounded-2xl shadow-sm px-7 md:px-8 py-2"
             >
               <div className="flex items-center gap-3 pt-5 pb-1">
-                <span className="text-accent text-lg">{category.icon}</span>
+                <img src="/assets/bullet.webp" alt="" width={16} height={16} loading="lazy" decoding="async" className="flex-shrink-0" />
                 <h2 className="font-utility text-xs text-accent uppercase tracking-widest font-bold">
                   {category.label}
                 </h2>

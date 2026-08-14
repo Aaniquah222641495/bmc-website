@@ -40,28 +40,28 @@ export default function Home() {
           }}
         />
 
-        {/* Corner lace — top-left */}
+        {/* Corner lace arch — top-left (hidden on mobile/tablet, where it crowds the heading) */}
         <img
           src="/assets/deco-corner.webp"
           alt=""
           aria-hidden="true"
-          className="absolute top-0 left-0 pointer-events-none select-none"
+          className="absolute top-0 left-0 pointer-events-none select-none hidden lg:block"
           style={{ width: 'clamp(160px, 18vw, 280px)', opacity: 0.55 }}
         />
-        {/* Corner lace — bottom-right (rotated 180°) */}
+        {/* Corner lace arch — bottom-right (rotated 180°, hidden on mobile/tablet) */}
         <img
           src="/assets/deco-corner.webp"
           alt=""
           aria-hidden="true"
-          className="absolute bottom-0 right-0 pointer-events-none select-none"
+          className="absolute bottom-0 right-0 pointer-events-none select-none hidden lg:block"
           style={{ width: 'clamp(160px, 18vw, 280px)', opacity: 0.55, transform: 'rotate(180deg)' }}
         />
-        {/* Hanging lanterns — top-centre */}
+        {/* Hanging lanterns — top-centre (hidden on mobile/tablet, where there isn't room above the heading) */}
         <img
           src="/assets/deco-lanterns.webp"
           alt=""
           aria-hidden="true"
-          className="absolute top-0 left-1/2 pointer-events-none select-none"
+          className="absolute top-0 left-1/2 pointer-events-none select-none hidden lg:block"
           style={{ width: 'clamp(140px, 16vw, 240px)', opacity: 0.6, transform: 'translateX(-50%)' }}
         />
 
@@ -74,11 +74,20 @@ export default function Home() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
           >
-            <h1 className="font-display text-primary leading-[1.1] mb-3" style={{ fontSize: 'clamp(2.4rem, 4.5vw, 4rem)' }}>
-              Beginners<br />
-              Madrasah<br />
-              <span className="text-accent italic">Classes</span>
-            </h1>
+            <div className="relative w-full">
+              {/* Small illustration, top-right of the heading — mobile/tablet only; lg+ uses the full-size illustration column */}
+              <img
+                src="/assets/bmc-logo-final.webp"
+                alt="Beginners Madrasah Classes illustrated mascot"
+                className="absolute top-0 right-0 w-16 sm:w-20 lg:hidden"
+                draggable={false}
+              />
+              <h1 className="font-display text-primary leading-[1.1] mb-3 pr-20 sm:pr-24 lg:pr-0" style={{ fontSize: 'clamp(2.4rem, 4.5vw, 4rem)' }}>
+                Beginners<br />
+                Madrasah<br />
+                <span className="text-accent italic">Classes</span>
+              </h1>
+            </div>
 
             {/* EST badge — sits directly under the title */}
             <div className="flex items-center gap-2 mb-5">
@@ -132,9 +141,9 @@ export default function Home() {
             </div>
           </motion.div>
 
-          {/* ── Right: Illustration ────────────────────────────── */}
+          {/* ── Right: Illustration (lg+ only — mobile/tablet use the small version beside the heading) ── */}
           <motion.div
-            className="relative flex justify-center items-center"
+            className="relative hidden lg:flex justify-center items-center"
             initial={{ opacity: 0, x: 32 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
