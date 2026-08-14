@@ -3,68 +3,80 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-const FAQS = [
+const CATEGORIES = [
   {
-    q: 'How do online classes work?',
-    a: 'Classes are held live via Microsoft Teams or Google Classroom, depending on the programme. You will receive all access details before your first session. Some programmes also have pre-recorded lessons available on Google Classroom so you can learn at your own pace.',
+    label: 'Getting Started',
+    icon: '☽',
+    items: [
+      {
+        q: 'Are classes suitable for complete beginners?',
+        a: 'Absolutely. That is exactly what we are here for. Our programmes are designed from the ground up for beginners. No prior knowledge of Arabic, Quran, or Islamic studies is required. You are welcome exactly as you are.',
+      },
+      {
+        q: 'I am a revert. Where do I start?',
+        a: "Welcome to Islam. May Allah make your journey beautiful. Our Women's Online Madrasah is an excellent starting point. It covers all the foundational knowledge a new Muslim needs, in a gentle, supportive, and completely judgement-free environment. Feel free to reach out on WhatsApp and we will guide you personally.",
+      },
+      {
+        q: 'What do I need to get started?',
+        a: "Just a stable internet connection, a device to join class on, and an open heart. We provide all learning materials. For the in-person Quran programme, you will need to be able to travel to Mitchell's Plain, Cape Town on Saturday mornings.",
+      },
+    ],
   },
   {
-    q: 'What platform are classes held on?',
-    a: "Children's Online Madrasah and the Women's Hifdh Programme are held live via Microsoft Teams. The Women's Online Madrasah uses Google Classroom with pre-recorded lessons. The in-person Quran programme takes place every Saturday morning in Mitchell's Plain, Cape Town.",
+    label: 'Classes & Logistics',
+    icon: '★',
+    items: [
+      {
+        q: 'How do online classes work?',
+        a: 'Classes are held live via Microsoft Teams or Google Classroom, depending on the programme. You will receive all access details before your first session. Some programmes also have pre-recorded lessons available on Google Classroom so you can learn at your own pace.',
+      },
+      {
+        q: 'What platform are classes held on?',
+        a: "Children's Online Madrasah and the Women's Hifdh Programme are held live via Microsoft Teams. The Women's Online Madrasah uses Google Classroom with pre-recorded lessons. The in-person Quran programme takes place every Saturday morning in Mitchell's Plain, Cape Town.",
+      },
+      {
+        q: 'What if I miss a session?',
+        a: "We understand life gets busy. The Women's Online Madrasah has pre-recorded lessons you can access at any time. For live programmes, please contact Mualimah Rukeya directly and she will do her best to assist with missed session queries.",
+      },
+      {
+        q: "How do I join the Children's Classes?",
+        a: "Register via the Children's Classes page. Once your registration is confirmed and the fee is paid, your child's spot is secured. You will receive the Microsoft Teams link and all class details before the first session.",
+      },
+    ],
   },
   {
-    q: 'How do I pay for my class?',
-    a: 'Payment details are provided upon registration. Please complete the registration form and Mualimah Rukeya will follow up with payment options. You can also contact us directly on WhatsApp for assistance.',
-  },
-  {
-    q: 'What if I miss a session?',
-    a: "We understand life gets busy. The Women's Online Madrasah has pre-recorded lessons you can access at any time. For live programmes, please contact Mualimah Rukeya directly and she will do her best to assist with missed session queries.",
-  },
-  {
-    q: 'Are classes suitable for complete beginners?',
-    a: 'Absolutely — that is exactly what we are here for. Our programmes are designed from the ground up for beginners. No prior knowledge of Arabic, Quran, or Islamic studies is required. You are welcome exactly as you are.',
-  },
-  {
-    q: 'What is the refund policy?',
-    a: 'Please reach out to us on WhatsApp if you have any concerns about your registration or payment. We handle each situation with care and understanding, and we will always try to find a solution that works for you.',
-  },
-  {
-    q: "How do I join the Children's Classes?",
-    a: "Register via the Children's Classes page. Once your registration is confirmed and the fee is paid, your child's spot is secured. You will receive the Microsoft Teams link and all class details before the first session.",
-  },
-  {
-    q: 'I am a revert — where do I start?',
-    a: "Welcome to Islam — may Allah make your journey beautiful. Our Women's Online Madrasah is an excellent starting point. It covers all the foundational knowledge a new Muslim needs, in a gentle, supportive, and completely judgement-free environment. Feel free to reach out on WhatsApp and we will guide you personally.",
-  },
-  {
-    q: 'What do I need to get started?',
-    a: "Just a stable internet connection, a device to join class on, and an open heart. We provide all learning materials. For the in-person Quran programme, you will need to be able to travel to Mitchell's Plain, Cape Town on Saturday mornings.",
+    label: 'Payments & Policies',
+    icon: '✦',
+    items: [
+      {
+        q: 'How do I pay for my class?',
+        a: 'Payment details are provided upon registration. Please complete the registration form and Mualimah Rukeya will follow up with payment options. You can also contact us directly on WhatsApp for assistance.',
+      },
+      {
+        q: 'What is the refund policy?',
+        a: 'Please reach out to us on WhatsApp if you have any concerns about your registration or payment. We handle each situation with care and understanding, and we will always try to find a solution that works for you.',
+      },
+    ],
   },
 ];
 
-function FaqItem({ q, a, index }: { q: string; a: string; index: number }) {
+function FaqItem({ q, a }: { q: string; a: string }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: index * 0.06 }}
-      className="border border-border rounded-2xl overflow-hidden bg-card"
-    >
+    <div className="border-b border-border/60 last:border-b-0">
       <button
         onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between gap-4 px-7 py-6 text-left group"
+        className="w-full flex items-center justify-between gap-4 py-5 text-left group"
       >
-        <span className="font-display text-lg text-primary group-hover:text-accent transition-colors leading-snug">
+        <span className="font-display text-base md:text-lg text-primary group-hover:text-accent transition-colors leading-snug">
           {q}
         </span>
         <span className={cn(
-          'flex-shrink-0 w-8 h-8 rounded-full border border-accent/40 flex items-center justify-center text-accent transition-all',
+          'flex-shrink-0 w-7 h-7 rounded-full border border-accent/40 flex items-center justify-center text-accent transition-all',
           open ? 'bg-accent text-primary rotate-180' : 'group-hover:border-accent'
         )}>
-          <ChevronDown className="w-4 h-4" />
+          <ChevronDown className="w-3.5 h-3.5" />
         </span>
       </button>
 
@@ -77,20 +89,30 @@ function FaqItem({ q, a, index }: { q: string; a: string; index: number }) {
             transition={{ duration: 0.3, ease: 'easeInOut' }}
             className="overflow-hidden"
           >
-            <div className="px-7 pb-7 border-t border-border/50 pt-4">
-              <p className="font-body text-foreground/80 leading-relaxed">{a}</p>
-            </div>
+            <p className="font-body text-foreground/75 leading-relaxed pb-5 pr-11">{a}</p>
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.div>
+    </div>
   );
 }
 
 export default function Faq() {
   return (
     <div className="min-h-screen bg-background pt-32 pb-24 relative overflow-hidden">
-      <div className="container mx-auto px-4 max-w-3xl">
+
+      {/* Hanging lanterns — bleeds off the right edge, alongside the cards */}
+      <motion.img
+        initial={{ opacity: 0, y: -16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.1, duration: 0.6 }}
+        src="/assets/faq-lanterns.webp"
+        alt=""
+        aria-hidden="true"
+        className="hidden lg:block absolute top-16 right-0 xl:right-6 w-80 xl:w-[26rem] pointer-events-none select-none"
+      />
+
+      <div className="container mx-auto px-4 max-w-3xl relative">
 
         {/* Header */}
         <div className="text-center mb-16">
@@ -98,13 +120,7 @@ export default function Faq() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <img
-              src="/assets/faq-hero.svg"
-              alt=""
-              aria-hidden="true"
-              className="mx-auto mb-4 pointer-events-none select-none"
-              style={{ width: 'clamp(220px, 40vw, 380px)' }}
-            />
+            <p className="font-utility text-xs text-accent uppercase tracking-widest mb-3">Need help?</p>
             <h1 className="text-4xl md:text-5xl font-display text-primary mb-4">
               Frequently Asked Questions
             </h1>
@@ -112,27 +128,33 @@ export default function Faq() {
             <p className="font-body text-foreground/70 text-lg">
               Can't find your answer here? We're always happy to help.
             </p>
-            <div className="flex justify-center mt-8" aria-hidden="true">
-              <img
-                src="/assets/faq-divider.svg"
-                alt=""
-                className="pointer-events-none select-none"
-                style={{ width: 'clamp(220px, 60vw, 520px)', opacity: 0.7 }}
-              />
-            </div>
           </motion.div>
         </div>
 
-        {/* FAQ List */}
-        <div className="relative">
-          <img src="/assets/deco-window.png" alt="" aria-hidden="true"
-            className="absolute top-1/2 left-1/2 pointer-events-none select-none"
-            style={{ width: 'min(340px, 80vw)', opacity: 0.06, transform: 'translate(-50%, -50%)' }} />
-          <div className="relative space-y-4">
-            {FAQS.map((item, i) => (
-              <FaqItem key={i} q={item.q} a={item.a} index={i} />
-            ))}
-          </div>
+        {/* FAQ Categories */}
+        <div className="relative space-y-8">
+          {CATEGORIES.map((category, ci) => (
+            <motion.div
+              key={category.label}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: ci * 0.08 }}
+              className="relative bg-card border border-border rounded-2xl shadow-sm px-7 md:px-8 py-2"
+            >
+              <div className="flex items-center gap-3 pt-5 pb-1">
+                <span className="text-accent text-lg">{category.icon}</span>
+                <h2 className="font-utility text-xs text-accent uppercase tracking-widest font-bold">
+                  {category.label}
+                </h2>
+              </div>
+              <div>
+                {category.items.map((item, i) => (
+                  <FaqItem key={i} q={item.q} a={item.a} />
+                ))}
+              </div>
+            </motion.div>
+          ))}
         </div>
 
         {/* CTA */}

@@ -1,30 +1,33 @@
-import { type ReactNode, useEffect } from 'react';
+import { type ReactNode, Suspense, lazy, useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ErrorBoundary } from '@/components/error-boundary';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
-import NotFound from '@/pages/not-found';
 import { Nav } from '@/components/nav';
 import { Footer } from '@/components/footer';
 import {
+  Redirect,
   Route,
   Switch,
   useLocation,
   Router as WouterRouter,
 } from 'wouter';
 
-// Pages
+// Home loads eagerly since it's the most common entry point.
 import Home from '@/pages/home';
-import About from '@/pages/about';
-import Programmes from '@/pages/programmes';
-import WomensClasses from '@/pages/classes/womens-classes';
-import RevertClasses from '@/pages/classes/revert-classes';
-import QuranClasses from '@/pages/classes/quran-classes';
-import HifdhClasses from '@/pages/classes/hifdh-classes';
-import ChildrensClasses from '@/pages/classes/childrens-classes';
-import Workshops from '@/pages/classes/workshops';
-import Faq from '@/pages/faq';
-import Contact from '@/pages/contact';
+
+// Every other route is code-split so visitors only download the page they land on.
+const About = lazy(() => import('@/pages/about'));
+const Programmes = lazy(() => import('@/pages/programmes'));
+const WomensClasses = lazy(() => import('@/pages/classes/womens-classes'));
+const InPersonWorkshops = lazy(() => import('@/pages/classes/in-person-workshops'));
+const QuranClasses = lazy(() => import('@/pages/classes/quran-classes'));
+const HifdhClasses = lazy(() => import('@/pages/classes/hifdh-classes'));
+const ChildrensClasses = lazy(() => import('@/pages/classes/childrens-classes'));
+const Workshops = lazy(() => import('@/pages/classes/workshops'));
+const Faq = lazy(() => import('@/pages/faq'));
+const Contact = lazy(() => import('@/pages/contact'));
+const NotFound = lazy(() => import('@/pages/not-found'));
 
 const queryClient = new QueryClient();
 
@@ -34,6 +37,14 @@ function ScrollToTop() {
   return null;
 }
 
+function RouteFallback() {
+  return (
+    <div className="flex items-center justify-center py-40">
+      <div className="w-2.5 h-2.5 rounded-full bg-accent animate-pulse" />
+    </div>
+  );
+}
+
 function Router() {
   return (
     <div className="flex flex-col min-h-[100dvh]">
@@ -41,20 +52,26 @@ function Router() {
       <Nav />
       <main className="flex-1">
         <RoutedErrorBoundary>
-          <Switch>
-            <Route path="/" component={Home} />
-            <Route path="/about" component={About} />
-            <Route path="/programmes" component={Programmes} />
-            <Route path="/programmes/womens-classes" component={WomensClasses} />
-            <Route path="/programmes/revert-classes" component={RevertClasses} />
-            <Route path="/programmes/quran-classes" component={QuranClasses} />
-            <Route path="/programmes/hifdh-classes" component={HifdhClasses} />
-            <Route path="/programmes/childrens-classes" component={ChildrensClasses} />
-            <Route path="/programmes/workshops" component={Workshops} />
-            <Route path="/faq" component={Faq} />
-            <Route path="/contact" component={Contact} />
-            <Route component={NotFound} />
-          </Switch>
+          <Suspense fallback={<RouteFallback />}>
+            <Switch>
+              <Route path="/" component={Home} />
+              <Route path="/about" component={About} />
+              <Route path="/programmes" component={Programmes} />
+              <Route path="/programmes/womens-classes" component={WomensClasses} />
+              <Route path="/programmes/in-person-workshops" component={InPersonWorkshops} />
+              {/* Old URL, kept working for anyone with a bookmarked/shared link. */}
+              <Route path="/programmes/revert-classes">
+                <Redirect to="/programmes/in-person-workshops" />
+              </Route>
+              <Route path="/programmes/quran-classes" component={QuranClasses} />
+              <Route path="/programmes/hifdh-classes" component={HifdhClasses} />
+              <Route path="/programmes/childrens-classes" component={ChildrensClasses} />
+              <Route path="/programmes/workshops" component={Workshops} />
+              <Route path="/faq" component={Faq} />
+              <Route path="/contact" component={Contact} />
+              <Route component={NotFound} />
+            </Switch>
+          </Suspense>
         </RoutedErrorBoundary>
       </main>
       <Footer />

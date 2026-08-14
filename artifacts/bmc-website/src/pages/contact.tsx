@@ -58,7 +58,7 @@ export default function Contact() {
   return (
     <div className="min-h-screen bg-background pt-32 pb-24 relative overflow-hidden">
       {/* Existing deco-window accent */}
-      <img src="/assets/deco-window.png" alt="" aria-hidden="true"
+      <img src="/assets/deco-window.webp" alt="" aria-hidden="true"
         className="absolute top-24 right-0 pointer-events-none select-none hidden lg:block"
         style={{ width: '180px', opacity: 0.12, transform: 'translateX(30%)' }} />
 
@@ -167,7 +167,6 @@ export default function Contact() {
             backgroundImage: 'url(/assets/contact-cta-pattern.svg)',
             backgroundSize: '120px 120px',
             backgroundRepeat: 'repeat',
-            backgroundColor: '#1B4332',
           }}
         >
           {/* Slight overlay to keep text readable */}

@@ -1,5 +1,50 @@
-import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'wouter';
+
+const GALLERY_IMAGES = [
+  '/assets/photo-founder-teaching.webp',
+  '/assets/photo-wudhu-workshop-1.webp',
+  '/assets/photo-wudhu-workshop-2.webp',
+  '/assets/photo-workshop-audience.webp',
+  '/assets/photo-workshop-stage.webp',
+  '/assets/photo-workshop-awards.webp',
+  '/assets/photo-achievement.webp',
+  '/assets/photo-quran-completion.webp',
+  '/assets/photo-quran-lesson.webp',
+];
+
+function AutoSlideshow({ images, startIndex = 0 }: { images: string[]; startIndex?: number }) {
+  const [index, setIndex] = useState(startIndex % images.length);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setIndex((prev) => (prev + 1) % images.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, [images.length]);
+
+  return (
+    <div className="mt-auto pt-6">
+      <div className="relative w-full aspect-[3/4] rounded-xl overflow-hidden border border-border">
+        <AnimatePresence mode="wait">
+          <motion.img
+            key={images[index]}
+            src={images[index]}
+            alt="Beginners Madrasah Classes community"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.8, ease: 'easeInOut' }}
+            className="absolute inset-0 w-full h-full object-cover"
+            draggable={false}
+            loading="lazy"
+          />
+        </AnimatePresence>
+      </div>
+    </div>
+  );
+}
 
 const STORY_SECTIONS = [
   {
@@ -16,7 +61,7 @@ const STORY_SECTIONS = [
   },
   {
     label: 'Our Solution',
-    text: 'With this in mind, Beginners Madrasah Classes was established in 2024 with one simple goal: to make authentic Islamic knowledge accessible, welcoming, flexible, and affordable. We began with live online classes via Microsoft Teams at just R150 per month, ensuring that cost wouldn\'t become a barrier to seeking knowledge. I later introduced Google Classroom, where students can access pre-recorded lessons in their own time — so whether they\'re a busy mother, a full-time student, or someone with a demanding work schedule, they can learn when it suits them.',
+    text: 'With this in mind, Beginners Madrasah Classes was established in 2024 with one simple goal: to make authentic Islamic knowledge accessible, welcoming, flexible, and affordable. We began with live online classes via Microsoft Teams at just R150 per month, ensuring that cost wouldn\'t become a barrier to seeking knowledge. I later introduced Google Classroom, where students can access pre-recorded lessons in their own time, so whether they\'re a busy mother, a full-time student, or someone with a demanding work schedule, they can learn when it suits them.',
   },
 ];
 
@@ -32,7 +77,7 @@ export default function About() {
           className="text-center mb-16"
         >
           <img
-            src="/assets/deco-bismillah.png"
+            src="/assets/deco-bismillah.webp"
             alt="Bismillah"
             className="mx-auto mb-4 pointer-events-none select-none"
             style={{ width: 'clamp(140px, 18vw, 220px)', opacity: 0.9 }}
@@ -53,7 +98,7 @@ export default function About() {
         >
           <div className="relative w-full h-56 md:h-80 overflow-hidden">
             <img
-              src="/assets/workshop-teaching.png"
+              src="/assets/photo-founder-teaching.webp"
               alt="Mualimah Rukeya teaching"
               className="w-full h-full object-cover object-center"
             />
@@ -65,27 +110,20 @@ export default function About() {
           </div>
         </motion.div>
 
-        {/* Story sections */}
-        <div className="space-y-6 mb-12">
-          {STORY_SECTIONS.map(({ label, text }, i) => (
-            <motion.div
-              key={label}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.08 }}
-              className="bg-card rounded-xl border border-border p-8"
-            >
-              <p className="font-utility text-xs text-accent uppercase tracking-widest mb-3">{label}</p>
+        {/* Story */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="bg-card rounded-2xl border border-border p-8 md:p-12 mb-12 space-y-8"
+        >
+          {STORY_SECTIONS.map(({ label, text }) => (
+            <div key={label}>
+              <p className="font-utility text-xs text-accent uppercase tracking-widest mb-2">{label}</p>
               <p className="font-body text-foreground/80 leading-relaxed text-[1.05rem]">{text}</p>
-            </motion.div>
+            </div>
           ))}
-        </div>
-
-        {/* Decorative divider */}
-        <div className="flex justify-center my-2" aria-hidden="true">
-          <img src="/assets/deco-divider.png" alt="" className="pointer-events-none select-none" style={{ width: 'clamp(200px, 40vw, 380px)', opacity: 0.6 }} />
-        </div>
+        </motion.div>
 
         {/* Growth stat highlight */}
         <motion.div
@@ -114,19 +152,21 @@ export default function About() {
           viewport={{ once: true }}
           className="grid md:grid-cols-2 gap-6 mb-12"
         >
-          <div className="bg-muted p-8 rounded-xl border border-border relative overflow-hidden">
+          <div className="bg-muted p-8 rounded-xl border border-border relative overflow-hidden flex flex-col">
             <div className="absolute top-3 right-4 text-accent/15 text-5xl font-display">★</div>
             <h3 className="font-display text-2xl text-primary mb-3">Our Mission</h3>
             <p className="font-body text-foreground/75 leading-relaxed">
-              To make authentic Islamic education accessible to every woman and child, wherever they are on their journey — affordable, flexible, and always welcoming.
+              To make authentic Islamic education accessible to every woman and child, wherever they are on their journey: affordable, flexible, and always welcoming.
             </p>
+            <AutoSlideshow images={GALLERY_IMAGES} startIndex={0} />
           </div>
-          <div className="bg-muted p-8 rounded-xl border border-border relative overflow-hidden">
+          <div className="bg-muted p-8 rounded-xl border border-border relative overflow-hidden flex flex-col">
             <div className="absolute top-3 right-4 text-accent/15 text-5xl font-display">☽</div>
             <h3 className="font-display text-2xl text-primary mb-3">Our Vision</h3>
             <p className="font-body text-foreground/75 leading-relaxed">
               A world where no Muslim woman or child feels too late, too lost, or too busy to begin learning their deen.
             </p>
+            <AutoSlideshow images={GALLERY_IMAGES} startIndex={5} />
           </div>
         </motion.div>
 
@@ -137,10 +177,10 @@ export default function About() {
           viewport={{ once: true }}
           className="islamic-pattern rounded-2xl p-10 md:p-14 text-center relative overflow-hidden"
         >
-          <p className="font-body text-lg md:text-xl leading-relaxed mb-6" style={{ color: '#F5F0E8' }}>
+          <p className="font-body text-lg md:text-xl leading-relaxed mb-6 text-bmc-cream">
             "Alhamdulillah for how far Allah has brought us, and we pray that this is only the beginning. We ask Allah to accept this effort, place barakah in it, and allow Beginners Madrasah Classes to continue benefiting communities for many years to come."
           </p>
-          <span className="font-utility text-accent uppercase tracking-widest text-sm">— Mualimah Rukeya</span>
+          <span className="font-utility text-accent uppercase tracking-widest text-sm">Mualimah Rukeya</span>
 
           <div className="mt-10">
             <Link href="/programmes">

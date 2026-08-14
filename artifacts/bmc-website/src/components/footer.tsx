@@ -8,7 +8,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
           {/* Brand */}
           <div className="flex flex-col items-center md:items-start gap-4">
-            <img src="/assets/bmc-logo-final.png" alt="BMC Logo" className="h-24 w-auto object-contain mb-2" />
+            <img src="/assets/bmc-logo-final.webp" alt="BMC Logo" loading="lazy" className="h-24 w-auto object-contain mb-2" />
             <p className="font-body text-primary-foreground/80 max-w-sm">
               Foundations of Islamic Knowledge. A warm, safe, beginner-friendly Islamic learning space for women and children.
             </p>

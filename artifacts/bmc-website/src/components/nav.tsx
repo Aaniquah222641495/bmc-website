@@ -36,8 +36,7 @@ export function Nav() {
         <div className="container mx-auto px-4 md:px-8 flex items-center justify-between">
           <Link href="/">
             <div className="flex items-center gap-3 cursor-pointer group">
-              <img src="/assets/bmc-logo.png" alt="BMC Logo" className="h-10 w-auto object-contain transition-transform group-hover:scale-105" />
-              <span className="font-display font-bold text-primary text-xl hidden sm:block tracking-wide">BMC</span>
+              <img src="/assets/bmc-logo.webp" alt="BMC Logo" className="h-10 w-auto object-contain transition-transform group-hover:scale-105" />
             </div>
           </Link>
 

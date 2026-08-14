@@ -1,71 +1,9 @@
 import { useState } from 'react';
 import { Link } from 'wouter';
 import { motion, AnimatePresence } from 'framer-motion';
+import { PROGRAMMES, type ProgrammeType } from '@/data/programmes';
 
-type Tab = 'online' | 'inperson';
-
-const PROGRAMMES = [
-  {
-    title: "Women's Online Madrasah",
-    path: "/womens-classes",
-    desc: "Beginner-friendly Islamic studies for women 18+. Pre-recorded lessons on Google Classroom — learn at your own pace. Covers Aqaaid, Fiqh, Tajweed, Seerah, Akhlaaq, Hadith & Du'as.",
-    tag: "Online · Self-paced",
-    price: "R150/month",
-    type: "online" as Tab,
-    image: "/assets/photo-womens-madrasah.jpg",
-    gradient: "from-emerald-800 to-emerald-950",
-  },
-  {
-    title: "Women's Hifdh Programme",
-    path: "/hifdh-classes",
-    desc: "Structured online Qur'an memorisation for women. Live classes Mon, Wed & Fri via Microsoft Teams — covering memorisation, revision and recitation.",
-    tag: "Online · Live classes",
-    price: "R200/month",
-    type: "online" as Tab,
-    image: "/assets/photo-quran-completion.jpg",
-    gradient: "from-violet-800 to-violet-950",
-  },
-  {
-    title: "Children's Online Madrasah",
-    path: "/childrens-classes",
-    desc: "Live online Islamic classes for children aged 6–13, three times a week via Microsoft Teams. Covers Qur'an, Surahs, Aqaaid, Fiqh, Akhlaaq, Islamic History & Du'as.",
-    tag: "Online · Ages 6–13",
-    price: "R150/month",
-    type: "online" as Tab,
-    image: "/assets/photo-childrens-class.jpg",
-    gradient: "from-sky-800 to-sky-950",
-  },
-  {
-    title: "Online Workshops & Short Courses",
-    path: "/workshops",
-    desc: "Once-off online workshops on specific Islamic topics — Women in Islam, Salaah, Wudhu & Ghusl, Ramadan preparation and more.",
-    tag: "Online · Once-off",
-    price: "From R100",
-    type: "online" as Tab,
-    image: "/assets/photo-workshop-stage.jpg",
-    gradient: "from-[#1B4332] to-[#0d2419]",
-  },
-  {
-    title: "Get Into Qur'an – In Person",
-    path: "/quran-classes",
-    desc: "A Qur'an programme for complete beginners. Step-by-step guidance toward confidently reading the Mushaf. Every Saturday morning in Mitchell's Plain, Cape Town.",
-    tag: "In-Person · Cape Town",
-    price: "R200/month",
-    type: "inperson" as Tab,
-    image: "/assets/photo-quran-lesson.jpg",
-    gradient: "from-amber-800 to-amber-950",
-  },
-  {
-    title: "In-Person Workshops",
-    path: "/revert-classes",
-    desc: "Interactive face-to-face workshops on important Islamic topics, with open discussion and practical learning.",
-    tag: "In-Person",
-    price: "From R100",
-    type: "inperson" as Tab,
-    image: "/assets/photo-wudhu-workshop-2.jpg",
-    gradient: "from-rose-800 to-rose-950",
-  },
-];
+type Tab = ProgrammeType;
 
 const TABS: { id: Tab; label: string; sub: string }[] = [
   { id: 'online',   label: 'Online Classes',   sub: '4 programmes' },
@@ -89,7 +27,7 @@ export default function Programmes() {
           <h1 className="text-4xl md:text-5xl font-display text-primary mb-4">Our Programmes</h1>
           <div className="w-24 h-1 bg-accent mx-auto mb-6" />
           <p className="font-body text-lg text-foreground/70 leading-relaxed">
-            Designed to meet you wherever you are on your journey — whether you're taking your very first steps or looking to deepen your knowledge. <span className="text-accent">☽</span>
+            Designed to meet you wherever you are on your journey, whether you're taking your very first steps or looking to deepen your knowledge. <span className="text-accent">☽</span>
           </p>
         </motion.div>
 
@@ -137,7 +75,7 @@ export default function Programmes() {
             transition={{ duration: 0.25 }}
             className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
           >
-            {visible.map(({ title, path, desc, tag, price, image, gradient }, i) => (
+            {visible.map(({ title, path, descLong: desc, tag, price, image, imagePosition, gradient }, i) => (
               <motion.div
                 key={path}
                 initial={{ opacity: 0, y: 16 }}
@@ -154,7 +92,9 @@ export default function Programmes() {
                         <img
                           src={image}
                           alt={title}
-                          className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                          loading="lazy"
+                          style={{ objectPosition: imagePosition ?? 'top' }}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         />
                       ) : (
                         <div

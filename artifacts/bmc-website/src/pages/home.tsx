@@ -1,67 +1,24 @@
 import { Link } from 'wouter';
 import { motion } from 'framer-motion';
 import { Wifi, ShieldCheck, BadgeDollarSign, BookOpen } from 'lucide-react';
+import { PROGRAMMES as ALL_PROGRAMMES } from '@/data/programmes';
 
-const PROGRAMMES: { title: string; path: string; desc: string; price: string; tag: string; image?: string; gradient: string }[] = [
-  {
-    title: "Women's Online Madrasah",
-    path: "/womens-classes",
-    desc: "Beginner-friendly Islamic studies for women 18+. Pre-recorded lessons on Google Classroom — learn at your own pace.",
-    price: "R150/month",
-    tag: "Online · Self-paced",
-    image: "/assets/photo-womens-madrasah.jpg",
-    gradient: "from-emerald-800 to-emerald-950",
-  },
-  {
-    title: "In-Person Workshops",
-    path: "/revert-classes",
-    desc: "Interactive face-to-face workshops on important Islamic topics, with open discussion and practical learning.",
-    price: "From R100",
-    tag: "In-Person",
-    image: "/assets/photo-wudhu-workshop-2.jpg",
-    gradient: "from-rose-800 to-rose-950",
-  },
-  {
-    title: "Get Into Qur'an – In Person",
-    path: "/quran-classes",
-    desc: "A Qur'an programme for complete beginners. Step-by-step guidance toward confidently reading the Mushaf.",
-    price: "R200/month",
-    tag: "In-Person · Cape Town",
-    image: "/assets/photo-quran-lesson.jpg",
-    gradient: "from-amber-800 to-amber-950",
-  },
-  {
-    title: "Women's Hifdh Programme",
-    path: "/hifdh-classes",
-    desc: "Structured online Qur'an memorisation for women. Live classes Mon, Wed & Fri via Microsoft Teams.",
-    price: "R200/month",
-    tag: "Online · Live classes",
-    image: "/assets/photo-quran-completion.jpg",
-    gradient: "from-violet-800 to-violet-950",
-  },
-  {
-    title: "Children's Online Madrasah",
-    path: "/childrens-classes",
-    desc: "Live online Islamic classes for children aged 6–13, three times a week via Microsoft Teams.",
-    price: "R150/month",
-    tag: "Online · Ages 6–13",
-    image: "/assets/photo-childrens-class.jpg",
-    gradient: "from-sky-800 to-sky-950",
-  },
-  {
-    title: "Online Workshops & Short Courses",
-    path: "/workshops",
-    desc: "Once-off online workshops on specific Islamic topics — Women in Islam, Salaah, Wudhu & Ghusl, and more.",
-    price: "From R100",
-    tag: "Online · Once-off",
-    image: "/assets/photo-workshop-stage.jpg",
-    gradient: "from-[#1B4332] to-[#0d2419]",
-  },
+// Curated order for the homepage teaser (alternates online/in-person for variety).
+const FEATURED_PATHS = [
+  '/womens-classes',
+  '/in-person-workshops',
+  '/quran-classes',
+  '/hifdh-classes',
+  '/childrens-classes',
+  '/workshops',
 ];
+const PROGRAMMES = FEATURED_PATHS.map(
+  (path) => ALL_PROGRAMMES.find((p) => p.path === path)!,
+);
 
 const PILLARS = [
   { Icon: Wifi,            title: 'Learn from Anywhere',  desc: 'Online classes accessible from home, anywhere in the world.' },
-  { Icon: BookOpen,        title: 'Beginner Friendly',     desc: 'No prior knowledge needed — we start from absolute zero.' },
+  { Icon: BookOpen,        title: 'Beginner Friendly',     desc: 'No prior knowledge needed. We start from absolute zero.' },
   { Icon: ShieldCheck,     title: 'Safe Environment',      desc: 'A warm, nurturing space where every question is welcome.' },
   { Icon: BadgeDollarSign, title: 'Affordable Learning',   desc: 'Quality Islamic education from just R150 per month.' },
 ];
@@ -85,7 +42,7 @@ export default function Home() {
 
         {/* Corner lace — top-left */}
         <img
-          src="/assets/deco-corner.png"
+          src="/assets/deco-corner.webp"
           alt=""
           aria-hidden="true"
           className="absolute top-0 left-0 pointer-events-none select-none"
@@ -93,7 +50,7 @@ export default function Home() {
         />
         {/* Corner lace — bottom-right (rotated 180°) */}
         <img
-          src="/assets/deco-corner.png"
+          src="/assets/deco-corner.webp"
           alt=""
           aria-hidden="true"
           className="absolute bottom-0 right-0 pointer-events-none select-none"
@@ -101,7 +58,7 @@ export default function Home() {
         />
         {/* Hanging lanterns — top-centre */}
         <img
-          src="/assets/deco-lanterns.png"
+          src="/assets/deco-lanterns.webp"
           alt=""
           aria-hidden="true"
           className="absolute top-0 left-1/2 pointer-events-none select-none"
@@ -133,13 +90,13 @@ export default function Home() {
 
             {/* Gold diamond rule — anchored left */}
             <div className="flex items-center gap-3 mb-6 w-48">
-              <div className="h-px flex-1" style={{ background: 'linear-gradient(to right, #C9A84C, transparent)' }} />
+              <div className="h-px flex-1 bg-gradient-to-r from-accent to-transparent" />
               <div className="w-2 h-2 rotate-45 shrink-0 bg-accent" />
-              <div className="h-px flex-1" style={{ background: 'linear-gradient(to left, #C9A84C, transparent)' }} />
+              <div className="h-px flex-1 bg-gradient-to-l from-accent to-transparent" />
             </div>
 
             <p className="font-body text-foreground/65 leading-relaxed mb-10" style={{ fontSize: 'clamp(1rem, 1.4vw, 1.1rem)', maxWidth: '38ch' }}>
-              A warm, safe, beginner-friendly Islamic learning space for women and children — online and in-person.
+              A warm, safe, beginner-friendly Islamic learning space for women and children, online and in-person.
             </p>
 
             <div className="flex flex-wrap gap-4 items-center">
@@ -183,10 +140,10 @@ export default function Home() {
             transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           >
             <motion.img
-              src="/assets/bmc-logo-final.png"
-              alt="Beginners Madrasah Classes — illustrated mascot"
+              src="/assets/bmc-logo-final.webp"
+              alt="Beginners Madrasah Classes illustrated mascot"
               className="w-full max-w-[260px] sm:max-w-sm lg:max-w-md xl:max-w-lg mx-auto"
-
+              fetchPriority="high"
               draggable={false}
               animate={{ y: [0, -14, 0] }}
               transition={{ repeat: Infinity, duration: 4.5, ease: "easeInOut" }}
@@ -239,7 +196,7 @@ export default function Home() {
                 Born from a passion<br className="hidden md:block" /> for teaching
               </h2>
               <p className="font-body text-foreground/70 leading-relaxed mb-6" style={{ maxWidth: '52ch' }}>
-                Alhamdulillah, what started as a small class has grown into a thriving learning community — offering six programmes to hundreds of students across South Africa and beyond.
+                Alhamdulillah, what started as a small class has grown into a thriving learning community, offering six programmes to hundreds of students across South Africa and beyond.
               </p>
               <Link href="/about">
                 <span className="inline-flex items-center gap-2 text-accent font-utility font-bold text-sm hover:gap-3 transition-all cursor-pointer uppercase tracking-widest">
@@ -275,7 +232,7 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {PROGRAMMES.map(({ title, path, desc, price, tag, image, gradient }, i) => (
+            {PROGRAMMES.map(({ title, path, descShort: desc, price, tag, image, imagePosition, gradient }, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
@@ -293,7 +250,9 @@ export default function Home() {
                         <img
                           src={image}
                           alt={title}
-                          className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                          loading="lazy"
+                          style={{ objectPosition: imagePosition ?? 'top' }}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         />
                       ) : (
                         /* Placeholder: Islamic pattern overlay on gradient */
@@ -336,8 +295,9 @@ export default function Home() {
             <div className="w-full lg:w-1/2">
               <div className="aspect-[4/5] rounded-[2rem] border-2 border-accent/30 relative overflow-hidden shadow-xl">
                 <img
-                  src="/assets/workshop-teaching.png"
+                  src="/assets/photo-founder-teaching.webp"
                   alt="Mualimah Rukeya teaching a workshop"
+                  loading="lazy"
                   className="absolute inset-0 w-full h-full object-cover"
                 />
                 <div className="absolute bottom-0 left-0 right-0 bg-primary/80 backdrop-blur-sm px-6 py-4">
@@ -367,7 +327,6 @@ export default function Home() {
       <section className="islamic-pattern py-24 text-center text-white relative">
         <div className="absolute inset-0 bg-primary/40 mix-blend-multiply" />
         <div className="container mx-auto px-4 relative z-10">
-          <div className="text-5xl text-accent mb-6">☽</div>
           <h2 className="text-4xl md:text-5xl font-display mb-6 max-w-2xl mx-auto leading-tight">
             A Safe Space for Growth
           </h2>

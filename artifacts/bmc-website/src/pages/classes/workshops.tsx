@@ -1,30 +1,15 @@
 import { Link } from 'wouter';
 import { motion } from 'framer-motion';
+import { PastWorkshopsGrid } from '@/components/class-page-blocks';
 
 const PAST_WORKSHOPS = [
-  {
-    title: 'Women in Islam',
-    type: 'Online',
-    description:
-      'An empowering exploration of the role, rights, and honour of women in Islam — grounded in Quran and Sunnah.',
-  },
-  {
-    title: 'Wudhu & Ghusl',
-    type: 'Online & In-Person',
-    description:
-      'A practical, step-by-step guide to ritual purification — covering common mistakes and frequently asked questions.',
-  },
-  {
-    title: 'The Complete Guide to Salaah',
-    type: 'Online',
-    description:
-      'A comprehensive breakdown of the daily prayer — its conditions, pillars, obligations, and the common errors to avoid.',
-  },
   {
     title: 'Ramadan Preparation',
     type: 'Online',
     description:
-      'How to enter Ramadan spiritually and practically prepared — fasting rules, Taraweeh, Laylatul Qadr, Zakat, and more.',
+      'How to enter Ramadan spiritually and practically prepared: fasting rules, Taraweeh, Laylatul Qadr, Zakat, and more.',
+    image: '/assets/photo-ramadan-preparation.webp',
+    imageAlt: 'A bowl of dates beside an open Qur’an, prepared for Ramadan',
   },
 ];
 
@@ -48,24 +33,12 @@ export default function Workshops() {
           animate={{ opacity: 1, y: 0 }}
           className="mb-16 bg-card rounded-2xl overflow-hidden border border-border shadow-xl"
         >
-          <div className="islamic-pattern flex flex-col md:flex-row items-center">
-            {/* Text */}
-            <div className="flex-1 py-12 px-8 md:px-12">
-              <div className="text-3xl text-accent mb-4">☽</div>
-              <h1 className="text-4xl md:text-5xl font-display text-white mb-4">Online Workshops & Short Courses</h1>
-              <div className="w-20 h-1 bg-accent mb-6" />
-              <p className="font-body text-lg leading-relaxed" style={{ color: '#F5F0E8' }}>
-                Focused, once-off online sessions on essential Islamic topics — practical, accessible, and designed to leave you with knowledge you can use straight away.
-              </p>
-            </div>
-            {/* Illustration */}
-            <div className="w-full md:w-80 flex-shrink-0">
-              <img
-                src="/assets/workshops-illustration.png"
-                alt="Women in an Islamic study circle"
-                className="w-full h-64 md:h-full object-cover object-top"
-              />
-            </div>
+          <div className="islamic-pattern py-12 px-8 md:px-12">
+            <h1 className="text-4xl md:text-5xl font-display text-white mb-4">Online Workshops & Short Courses</h1>
+            <div className="w-20 h-1 bg-accent mb-6" />
+            <p className="font-body text-lg leading-relaxed max-w-2xl text-bmc-cream">
+              Focused, once-off online sessions on essential Islamic topics: practical, accessible, and designed to leave you with knowledge you can use straight away.
+            </p>
           </div>
         </motion.div>
 
@@ -83,30 +56,63 @@ export default function Workshops() {
           </div>
 
           <div className="bg-primary rounded-2xl overflow-hidden shadow-xl">
+            <div>
+              {/* Hero image — spans the full width of the card */}
+              <div className="relative w-full h-64 md:h-80 overflow-hidden">
+                <img
+                  src="/assets/photo-women-in-islam.webp"
+                  alt="Women in an Islamic study circle"
+                  loading="lazy"
+                  className="w-full h-full object-cover object-center"
+                />
+                <span className="absolute top-3 left-3 bg-black/40 backdrop-blur-sm text-white font-utility text-[0.65rem] uppercase tracking-widest px-2.5 py-1 rounded-full">
+                  Online Workshop
+                </span>
+              </div>
+
             <div className="p-8 md:p-12 text-white">
               <div className="flex items-start justify-between gap-4 flex-wrap mb-6">
                 <div>
-                  <span className="inline-block bg-accent text-primary font-utility text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest mb-4">
-                    Online Workshop
-                  </span>
                   <h2 className="font-display text-3xl md:text-4xl text-white mb-3">Women in Islam</h2>
-                  <p className="font-body text-lg leading-relaxed" style={{ color: '#F5F0E8' }}>
-                    An empowering exploration of the role, rights, and honour of women in Islam — grounded in Quran and Sunnah. Discover what Allah and His Messenger truly said about Muslim women, and leave feeling seen, valued, and inspired.
+                  <p className="font-body text-lg leading-relaxed text-bmc-cream">
+                    Join us for a beneficial morning exploring the role, value and identity of Muslim women through faith, family, spirituality and everyday life.
                   </p>
                 </div>
               </div>
 
-              <div className="grid sm:grid-cols-3 gap-4 mb-8">
+              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
                 {[
-                  { label: 'Format', value: 'Online' },
-                  { label: 'Duration', value: 'Once-off session' },
-                  { label: 'Investment', value: 'From R100' },
+                  { label: 'Format', value: 'Via Zoom' },
+                  { label: 'Date', value: '29 August 2026' },
+                  { label: 'Time', value: '09:00 – 11:30' },
+                  { label: 'Investment', value: 'R100 per person' },
                 ].map(({ label, value }) => (
                   <div key={label} className="bg-white/10 rounded-xl p-4">
-                    <p className="font-utility text-xs uppercase tracking-widest mb-1" style={{ color: '#C9A84C' }}>{label}</p>
+                    <p className="font-utility text-xs uppercase tracking-widest mb-1 text-accent">{label}</p>
                     <p className="font-display text-white text-lg">{value}</p>
                   </div>
                 ))}
+              </div>
+
+              <div className="mb-8">
+                <p className="font-utility text-xs uppercase tracking-widest mb-3 text-accent">Topics Covered</p>
+                <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-2">
+                  {[
+                    'The spiritual role of women',
+                    'Marriage & Motherhood',
+                    'Modesty & Character',
+                    'Rights of women in Islam',
+                    'Balancing Dunya & Deen',
+                    'Building a peaceful home',
+                    'Self-worth & Identity',
+                    'Women in Islamic history',
+                  ].map((topic) => (
+                    <li key={topic} className="font-body text-sm leading-relaxed flex items-start gap-2 text-bmc-cream">
+                      <img src="/assets/bullet.webp" alt="" width={16} height={16} loading="lazy" decoding="async" className="flex-shrink-0 mt-1" />
+                      {topic}
+                    </li>
+                  ))}
+                </ul>
               </div>
 
               <a
@@ -117,6 +123,7 @@ export default function Workshops() {
               >
                 Register Now &rarr;
               </a>
+            </div>
             </div>
           </div>
         </motion.div>
@@ -138,29 +145,7 @@ export default function Workshops() {
             These workshops have been run before and may return in future. Follow us to be notified when they open again.
           </p>
 
-          <div className="grid md:grid-cols-2 gap-5">
-            {PAST_WORKSHOPS.map((workshop, i) => (
-              <motion.div
-                key={workshop.title}
-                initial={{ opacity: 0, scale: 0.97 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.3 + i * 0.08 }}
-                className="bg-card border border-border rounded-2xl p-7 relative overflow-hidden group"
-              >
-                {/* Subtle past indicator */}
-                <div className="absolute top-4 right-4">
-                  <span className="font-utility text-xs text-foreground/30 uppercase tracking-widest border border-border rounded-full px-3 py-1">
-                    Past
-                  </span>
-                </div>
-
-                <div className="text-accent text-xl mb-3">☽</div>
-                <h3 className="font-display text-xl text-primary mb-2">{workshop.title}</h3>
-                <p className="font-utility text-xs text-foreground/50 uppercase tracking-widest mb-3">{workshop.type}</p>
-                <p className="font-body text-foreground/70 text-sm leading-relaxed">{workshop.description}</p>
-              </motion.div>
-            ))}
-          </div>
+          <PastWorkshopsGrid workshops={PAST_WORKSHOPS} delayBase={0.3} gridClassName="md:grid-cols-2" />
         </motion.div>
 
         {/* In-Person Workshops */}
@@ -178,7 +163,6 @@ export default function Workshops() {
 
           <div className="bg-card border border-border rounded-2xl p-8 flex flex-col md:flex-row items-start md:items-center gap-6">
             <div className="flex-1">
-              <div className="text-accent text-2xl mb-3">☽</div>
               <h2 className="font-display text-2xl text-primary mb-2">In-Person Workshops</h2>
               <p className="font-body text-foreground/70 leading-relaxed mb-3">
                 Interactive face-to-face workshops covering important Islamic topics, with opportunities for discussion, questions and practical learning.
@@ -188,7 +172,7 @@ export default function Workshops() {
                 <span className="bg-muted rounded-full px-4 py-1 text-primary border border-border">From R100</span>
               </div>
             </div>
-            <Link href="/programmes/revert-classes">
+            <Link href="/programmes/in-person-workshops">
               <span className="inline-flex items-center gap-2 border border-primary text-primary hover:bg-primary hover:text-white font-utility font-bold px-6 py-3 rounded-full transition-all cursor-pointer whitespace-nowrap">
                 View In-Person &rarr;
               </span>
@@ -203,7 +187,6 @@ export default function Workshops() {
           viewport={{ once: true }}
           className="text-center bg-muted rounded-2xl p-10 border border-border"
         >
-          <div className="text-3xl text-accent mb-4">★</div>
           <h2 className="font-display text-2xl text-primary mb-3">Stay Updated</h2>
           <p className="font-body text-foreground/70 mb-6 max-w-md mx-auto">
             New workshop dates are announced on Instagram and TikTok. Follow along so you don't miss the next one.
