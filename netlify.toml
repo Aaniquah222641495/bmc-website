@@ -19,6 +19,14 @@
   BASE_PATH = "/"
   PORT = "5000"
 
+# Static images/fonts under /assets don't have hashed filenames, so cache them for a
+# week (not "immutable") — long enough to speed up repeat visits, short enough that a
+# swapped-in file with the same name isn't stuck stale for a year.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
 # wouter does client-side routing, so /about, /contact etc. must all serve index.html
 # or they 404 on hard refresh and direct links.
 [[redirects]]

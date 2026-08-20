@@ -79,6 +79,8 @@ export default function About() {
           <img
             src="/assets/deco-bismillah.webp"
             alt="Bismillah"
+            fetchPriority="high"
+            decoding="async"
             className="mx-auto mb-4 pointer-events-none select-none"
             style={{ width: 'clamp(140px, 18vw, 220px)', opacity: 0.9 }}
           />
@@ -100,6 +102,8 @@ export default function About() {
             <img
               src="/assets/photo-founder-teaching.webp"
               alt="Mualimah Rukeya teaching"
+              loading="lazy"
+              decoding="async"
               className="w-full h-full object-cover object-center"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/20 to-transparent" />

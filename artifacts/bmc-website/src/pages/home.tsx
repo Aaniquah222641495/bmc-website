@@ -63,6 +63,8 @@ export default function Home() {
           src="/assets/deco-corner.webp"
           alt=""
           aria-hidden="true"
+          loading="lazy"
+          decoding="async"
           className="absolute top-0 left-0 pointer-events-none select-none hidden lg:block"
           style={{ width: 'clamp(160px, 18vw, 280px)', opacity: 0.55 }}
         />
@@ -71,6 +73,8 @@ export default function Home() {
           src="/assets/deco-corner.webp"
           alt=""
           aria-hidden="true"
+          loading="lazy"
+          decoding="async"
           className="absolute bottom-0 right-0 pointer-events-none select-none hidden lg:block"
           style={{ width: 'clamp(160px, 18vw, 280px)', opacity: 0.55, transform: 'rotate(180deg)' }}
         />
@@ -79,6 +83,8 @@ export default function Home() {
           src="/assets/deco-lanterns.webp"
           alt=""
           aria-hidden="true"
+          loading="lazy"
+          decoding="async"
           className="absolute top-0 left-1/2 pointer-events-none select-none hidden lg:block"
           style={{ width: 'clamp(140px, 16vw, 240px)', opacity: 0.6, transform: 'translateX(-50%)' }}
         />
@@ -97,10 +103,12 @@ export default function Home() {
               <img
                 src="/assets/mascot-2.webp"
                 alt="Beginners Madrasah Classes illustrated mascot"
-                className="absolute top-0 right-0 w-16 sm:w-20 lg:hidden"
+                className="absolute top-1/2 -translate-y-1/2 right-0 w-24 sm:w-28 lg:hidden"
+                fetchPriority="high"
+                decoding="async"
                 draggable={false}
               />
-              <h1 className="font-display text-primary leading-[1.1] mb-3 pr-20 sm:pr-24 lg:pr-0" style={{ fontSize: 'clamp(2.4rem, 4.5vw, 4rem)' }}>
+              <h1 className="font-display text-primary leading-[1.1] mb-3 pr-28 sm:pr-32 lg:pr-0" style={{ fontSize: 'clamp(2.4rem, 4.5vw, 4rem)' }}>
                 Beginners<br />
                 Madrasah<br />
                 <span className="text-accent italic">Classes</span>
@@ -171,6 +179,7 @@ export default function Home() {
               alt="Beginners Madrasah Classes illustrated mascot"
               className="w-full max-w-[260px] sm:max-w-sm lg:max-w-md xl:max-w-lg mx-auto"
               fetchPriority="high"
+              decoding="async"
               draggable={false}
               animate={{ y: [0, -14, 0] }}
               transition={{ repeat: Infinity, duration: 4.5, ease: "easeInOut" }}

@@ -58,7 +58,7 @@ export default function Contact() {
   return (
     <div className="min-h-screen bg-background pt-32 pb-24 relative overflow-hidden">
       {/* Existing deco-window accent */}
-      <img src="/assets/deco-window.webp" alt="" aria-hidden="true"
+      <img src="/assets/deco-window.webp" alt="" aria-hidden="true" loading="lazy" decoding="async"
         className="absolute top-24 right-0 pointer-events-none select-none hidden lg:block"
         style={{ width: '180px', opacity: 0.12, transform: 'translateX(30%)' }} />
 
