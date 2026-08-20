@@ -1,0 +1,27 @@
+# Place this file at the ROOT of the repo (next to package.json / pnpm-workspace.yaml)
+
+[build]
+  # Netlify runs its own `pnpm install` first (it detects pnpm-lock.yaml),
+  # so this command only needs to run the Vite build.
+  command = "cd artifacts/bmc-website && ./node_modules/.bin/vite build --config vite.config.ts"
+  publish = "artifacts/bmc-website/dist/public"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+  # Your lockfile is out of sync with the `overrides` block in pnpm-workspace.yaml.
+  # Netlify sets CI=true, which makes pnpm use --frozen-lockfile by default,
+  # so without this the install fails before the build even starts.
+  # strictDepBuilds=false stops the ignored esbuild build script from failing install.
+  PNPM_FLAGS = "--no-frozen-lockfile --config.strictDepBuilds=false"
+
+  # vite.config.ts throws if either of these is missing.
+  BASE_PATH = "/"
+  PORT = "5000"
+
+# wouter does client-side routing, so /about, /contact etc. must all serve index.html
+# or they 404 on hard refresh and direct links.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
