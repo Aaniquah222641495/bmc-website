@@ -26,6 +26,7 @@ const HifdhClasses = lazy(() => import('@/pages/classes/hifdh-classes'));
 const ChildrensClasses = lazy(() => import('@/pages/classes/childrens-classes'));
 const Workshops = lazy(() => import('@/pages/classes/workshops'));
 const Faq = lazy(() => import('@/pages/faq'));
+const Testimonials = lazy(() => import('@/pages/testimonials'));
 const Contact = lazy(() => import('@/pages/contact'));
 const NotFound = lazy(() => import('@/pages/not-found'));
 
@@ -68,6 +69,7 @@ function Router() {
               <Route path="/programmes/childrens-classes" component={ChildrensClasses} />
               <Route path="/programmes/workshops" component={Workshops} />
               <Route path="/faq" component={Faq} />
+              <Route path="/testimonials" component={Testimonials} />
               <Route path="/contact" component={Contact} />
               <Route component={NotFound} />
             </Switch>

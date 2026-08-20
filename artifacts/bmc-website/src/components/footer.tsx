@@ -21,6 +21,7 @@ export function Footer() {
               <li><Link href="/"><span className="hover:text-accent transition-colors cursor-pointer">Home</span></Link></li>
               <li><Link href="/about"><span className="hover:text-accent transition-colors cursor-pointer">About Mualimah Rukeya</span></Link></li>
               <li><Link href="/programmes"><span className="hover:text-accent transition-colors cursor-pointer">Programmes</span></Link></li>
+              <li><Link href="/testimonials"><span className="hover:text-accent transition-colors cursor-pointer">Testimonials</span></Link></li>
               <li><Link href="/faq"><span className="hover:text-accent transition-colors cursor-pointer">FAQ</span></Link></li>
               <li><Link href="/contact"><span className="hover:text-accent transition-colors cursor-pointer">Contact Us</span></Link></li>
             </ul>

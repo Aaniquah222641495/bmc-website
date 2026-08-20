@@ -21,6 +21,7 @@ export function Nav() {
     { label: 'Home', href: '/' },
     { label: 'About', href: '/about' },
     { label: 'Programmes', href: '/programmes' },
+    { label: 'Testimonials', href: '/testimonials' },
     { label: 'FAQ', href: '/faq' },
     { label: 'Contact', href: '/contact' },
   ];

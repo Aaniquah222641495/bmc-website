@@ -3,6 +3,24 @@ import { motion } from 'framer-motion';
 import { Wifi, ShieldCheck, BadgeDollarSign, BookOpen } from 'lucide-react';
 import { PROGRAMMES as ALL_PROGRAMMES } from '@/data/programmes';
 
+const TESTIMONIALS_PREVIEW = [
+  {
+    name: 'Naadhirah Gilbert',
+    quote:
+      "Mualimah takes her time with each topic and always makes sure that everyone is on the same page. The class is perfect for beginners, reverts or even just a refresher course.",
+  },
+  {
+    name: 'Aaliyah Arendse',
+    quote:
+      "Even though I'm a very shy and nervous person, she makes you feel comfortable in every class. Best decision I've made.",
+  },
+  {
+    name: 'Yasmeen Zingitwa',
+    quote:
+      "I've been amazed at how much I've learned over such a short period of time. I encourage anyone considering joining to take this step!",
+  },
+];
+
 // Curated order for the homepage teaser (alternates online/in-person for variety).
 const FEATURED_PATHS = [
   '/womens-classes',
@@ -77,7 +95,7 @@ export default function Home() {
             <div className="relative w-full">
               {/* Small illustration, top-right of the heading — mobile/tablet only; lg+ uses the full-size illustration column */}
               <img
-                src="/assets/bmc-logo-final.webp"
+                src="/assets/mascot-2.webp"
                 alt="Beginners Madrasah Classes illustrated mascot"
                 className="absolute top-0 right-0 w-16 sm:w-20 lg:hidden"
                 draggable={false}
@@ -149,7 +167,7 @@ export default function Home() {
             transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           >
             <motion.img
-              src="/assets/bmc-logo-final.webp"
+              src="/assets/mascot-2.webp"
               alt="Beginners Madrasah Classes illustrated mascot"
               className="w-full max-w-[260px] sm:max-w-sm lg:max-w-md xl:max-w-lg mx-auto"
               fetchPriority="high"
@@ -329,6 +347,60 @@ export default function Home() {
               </Link>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* ── Testimonials Preview ─────────────────────────────── */}
+      <section className="py-24 bg-background">
+        <div className="container mx-auto px-4 max-w-6xl">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16 max-w-xl mx-auto"
+          >
+            <p className="font-utility text-xs text-accent uppercase tracking-widest mb-3">In their own words</p>
+            <h2 className="text-4xl font-display text-primary mb-4">What Our Students Say</h2>
+            <div className="w-24 h-1 bg-accent mx-auto" />
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            {TESTIMONIALS_PREVIEW.map((t, i) => (
+              <motion.div
+                key={t.name}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.08, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                whileHover={{ y: -6 }}
+                className="relative overflow-hidden bg-card border border-border rounded-2xl shadow-sm hover:shadow-xl hover:border-accent/40 transition-shadow duration-300 p-7 flex flex-col"
+              >
+                <span className="absolute -top-2 right-4 font-display text-7xl leading-none text-accent/10 select-none pointer-events-none" aria-hidden="true">
+                  &rdquo;
+                </span>
+                <p className="font-body text-foreground/80 leading-relaxed flex-1 mb-6 relative">"{t.quote}"</p>
+                <div className="flex items-center gap-3 pt-4 border-t border-border/60 relative">
+                  <div className="w-9 h-9 rounded-full bg-accent/15 text-accent font-display font-bold flex items-center justify-center flex-shrink-0">
+                    {t.name.charAt(0)}
+                  </div>
+                  <span className="font-utility text-sm text-primary font-medium">{t.name}</span>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="text-center"
+          >
+            <Link href="/testimonials">
+              <span className="inline-flex items-center gap-2 text-accent font-utility font-bold text-sm hover:gap-3 transition-all cursor-pointer uppercase tracking-widest">
+                Read All Stories &rarr;
+              </span>
+            </Link>
+          </motion.div>
         </div>
       </section>
 
