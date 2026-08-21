@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'wouter';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PROGRAMMES, type ProgrammeType } from '@/data/programmes';
+import { Seo } from '@/components/seo';
 
 type Tab = ProgrammeType;
 
@@ -15,7 +16,13 @@ export default function Programmes() {
   const visible = PROGRAMMES.filter(p => p.type === active);
 
   return (
-    <div className="min-h-screen bg-background pt-32 pb-20">
+    <>
+      <Seo
+        title="Our Programmes"
+        description="Six beginner-friendly Islamic programmes for women and children — online and in-person classes in Cape Town, from R100 once-off to R200 per month."
+        path="/programmes"
+      />
+      <div className="min-h-screen bg-background pt-32 pb-20">
       <div className="container mx-auto px-4 max-w-6xl">
 
         {/* Header */}
@@ -131,6 +138,7 @@ export default function Programmes() {
         </AnimatePresence>
 
       </div>
-    </div>
+      </div>
+    </>
   );
 }

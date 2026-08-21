@@ -1,9 +1,17 @@
 import { Link } from "wouter";
 import { motion } from "framer-motion";
+import { Seo } from "@/components/seo";
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center pt-24 pb-12">
+    <>
+      <Seo
+        title="Page Not Found"
+        description="The page you're looking for has been moved or no longer exists — head back to the Beginners Madrasah Classes homepage to find your next class."
+        path="/404"
+        noIndex
+      />
+      <div className="min-h-screen bg-background flex items-center justify-center pt-24 pb-12">
       <div className="container mx-auto px-4 text-center max-w-xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -23,6 +31,7 @@ export default function NotFound() {
           </div>
         </motion.div>
       </div>
-    </div>
+      </div>
+    </>
   );
 }

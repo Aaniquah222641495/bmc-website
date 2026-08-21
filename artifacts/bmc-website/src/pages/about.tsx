@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'wouter';
+import { Seo } from '@/components/seo';
 
 const GALLERY_IMAGES = [
   '/assets/photo-founder-teaching.webp',
@@ -67,7 +68,13 @@ const STORY_SECTIONS = [
 
 export default function About() {
   return (
-    <div className="min-h-screen bg-background pt-32 pb-20">
+    <>
+      <Seo
+        title="Our Story"
+        description="Meet Mualimah Rukeya, founder of Beginners Madrasah Classes since 2024 — making Islamic education accessible, flexible and welcoming for all."
+        path="/about"
+      />
+      <div className="min-h-screen bg-background pt-32 pb-20">
       <div className="container mx-auto px-4 max-w-4xl">
 
         {/* Header */}
@@ -197,6 +204,7 @@ export default function About() {
         </motion.div>
 
       </div>
-    </div>
+      </div>
+    </>
   );
 }

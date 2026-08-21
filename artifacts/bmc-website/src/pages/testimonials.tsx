@@ -2,6 +2,7 @@ import { type ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import { Quote } from 'lucide-react';
 import { Link } from 'wouter';
+import { Seo } from '@/components/seo';
 
 interface Testimonial {
   quote: string;
@@ -106,7 +107,13 @@ function SectionLabel({ children }: { children: ReactNode }) {
 
 export default function Testimonials() {
   return (
-    <div className="min-h-screen bg-background pt-32 pb-24 relative overflow-hidden">
+    <>
+      <Seo
+        title="Student Testimonials"
+        description="Real stories from women who found their footing through Beginners Madrasah Classes — reverts, beginners and mothers sharing their own journeys."
+        path="/testimonials"
+      />
+      <div className="min-h-screen bg-background pt-32 pb-24 relative overflow-hidden">
 
       {/* Faint tiling gold star texture, echoes the homepage hero */}
       <div
@@ -282,6 +289,7 @@ export default function Testimonials() {
           </Link>
         </motion.div>
       </div>
-    </div>
+      </div>
+    </>
   );
 }

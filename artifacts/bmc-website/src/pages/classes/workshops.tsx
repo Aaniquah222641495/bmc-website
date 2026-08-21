@@ -1,6 +1,7 @@
 import { Link } from 'wouter';
 import { motion } from 'framer-motion';
 import { PastWorkshopsGrid } from '@/components/class-page-blocks';
+import { Seo } from '@/components/seo';
 
 const PAST_WORKSHOPS = [
   {
@@ -15,7 +16,13 @@ const PAST_WORKSHOPS = [
 
 export default function Workshops() {
   return (
-    <div className="min-h-screen bg-background pt-32 pb-24">
+    <>
+      <Seo
+        title="Online Workshops & Short Courses"
+        description="Once-off online workshops on Islamic topics like Women in Islam, Salaah, Wudhu, Ghusl and Ramadan preparation — practical, accessible, from R100."
+        path="/programmes/workshops"
+      />
+      <div className="min-h-screen bg-background pt-32 pb-24">
       <div className="container mx-auto px-4 max-w-5xl">
 
         {/* Back link */}
@@ -224,6 +231,7 @@ export default function Workshops() {
         </motion.div>
 
       </div>
-    </div>
+      </div>
+    </>
   );
 }

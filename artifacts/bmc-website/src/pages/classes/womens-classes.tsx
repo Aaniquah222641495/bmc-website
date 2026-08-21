@@ -1,6 +1,7 @@
 import { ClassPageLayout } from '@/components/class-page-layout';
 import { IncludedList, DetailsGrid } from '@/components/class-page-blocks';
 import { motion } from 'framer-motion';
+import { Seo } from '@/components/seo';
 
 const INCLUDED = [
   'Aqaaid (Islamic Belief): understand the foundations of faith',
@@ -14,7 +15,13 @@ const INCLUDED = [
 
 export default function WomensClasses() {
   return (
-    <ClassPageLayout
+    <>
+      <Seo
+        title="Women's Online Madrasah"
+        description="Beginner-friendly, self-paced Islamic studies for women 18+ via Google Classroom — Aqaaid, Fiqh, Tajweed, Seerah, Akhlaaq, Hadith and more, R150/month."
+        path="/programmes/womens-classes"
+      />
+      <ClassPageLayout
       title="Women's Online Madrasah"
       description="A structured, beginner-friendly Islamic studies programme for women 18+, designed to fit around your life."
       formUrl="https://forms.gle/UQoRpDfaXptJrMXj8"
@@ -44,5 +51,6 @@ export default function WomensClasses() {
         />
       </motion.div>
     </ClassPageLayout>
+    </>
   );
 }

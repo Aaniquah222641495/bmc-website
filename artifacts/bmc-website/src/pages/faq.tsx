@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Seo } from '@/components/seo';
 
 const CATEGORIES = [
   {
@@ -96,7 +97,13 @@ function FaqItem({ q, a }: { q: string; a: string }) {
 
 export default function Faq() {
   return (
-    <div className="min-h-screen bg-background pt-32 pb-24 relative overflow-hidden">
+    <>
+      <Seo
+        title="Frequently Asked Questions"
+        description="Answers to common questions about getting started, class platforms, schedules, payments and policies at Beginners Madrasah Classes, online and in-person."
+        path="/faq"
+      />
+      <div className="min-h-screen bg-background pt-32 pb-24 relative overflow-hidden">
 
       {/* Hanging lanterns — bleeds off the right edge, alongside the cards */}
       <motion.img
@@ -176,6 +183,7 @@ export default function Faq() {
           </a>
         </motion.div>
       </div>
-    </div>
+      </div>
+    </>
   );
 }

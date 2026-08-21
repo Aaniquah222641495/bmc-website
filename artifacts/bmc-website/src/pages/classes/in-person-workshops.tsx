@@ -3,6 +3,7 @@ import { ClassPageLayout } from '@/components/class-page-layout';
 import { IncludedList, DetailsGrid, PastWorkshopsGrid } from '@/components/class-page-blocks';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { Seo } from '@/components/seo';
 
 const INCLUDED = [
   'Interactive, face-to-face learning with real discussion',
@@ -104,7 +105,13 @@ function WorkshopGallery() {
 
 export default function InPersonWorkshops() {
   return (
-    <ClassPageLayout
+    <>
+      <Seo
+        title="In-Person Workshops"
+        description="Interactive face-to-face Islamic workshops with open discussion and practical learning — topics include Wudhu, Ghusl, Salaah and more, from R100."
+        path="/programmes/in-person-workshops"
+      />
+      <ClassPageLayout
       title="In-Person Workshops"
       description="Interactive face-to-face workshops covering important Islamic topics, with opportunities for discussion, questions and practical learning."
       heroImage="/assets/workshop-teaching.webp"
@@ -170,5 +177,6 @@ export default function InPersonWorkshops() {
         </div>
       </motion.div>
     </ClassPageLayout>
+    </>
   );
 }

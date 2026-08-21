@@ -1,6 +1,7 @@
 import { ClassPageLayout } from '@/components/class-page-layout';
 import { IncludedList, DetailsGrid } from '@/components/class-page-blocks';
 import { motion } from 'framer-motion';
+import { Seo } from '@/components/seo';
 
 const INCLUDED = [
   'Quran recitation: building a strong foundation in reading',
@@ -15,7 +16,13 @@ const INCLUDED = [
 
 export default function ChildrensClasses() {
   return (
-    <ClassPageLayout
+    <>
+      <Seo
+        title="Children's Online Madrasah"
+        description="Live Islamic classes for children aged 6-13, three times a week via Microsoft Teams — Quran, Aqaaid, Fiqh, Akhlaaq and Islamic History, R150/month."
+        path="/programmes/childrens-classes"
+      />
+      <ClassPageLayout
       title="Children's Online Madrasah"
       description="Live Islamic classes for children aged 6–13, held three times a week via Microsoft Teams in a fun and structured environment."
       formUrl="https://docs.google.com/forms/d/e/1FAIpQLSdmyJNXuxXONvtvW_LEeLVPgMLSYhdI8eh3ZRJWtabzwPeSzQ/viewform"
@@ -61,5 +68,6 @@ export default function ChildrensClasses() {
         </div>
       </motion.div>
     </ClassPageLayout>
+    </>
   );
 }

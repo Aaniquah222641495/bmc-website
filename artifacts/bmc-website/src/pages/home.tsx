@@ -2,6 +2,7 @@ import { Link } from 'wouter';
 import { motion } from 'framer-motion';
 import { Wifi, ShieldCheck, BadgeDollarSign, BookOpen } from 'lucide-react';
 import { PROGRAMMES as ALL_PROGRAMMES } from '@/data/programmes';
+import { Seo } from '@/components/seo';
 
 const TESTIMONIALS_PREVIEW = [
   {
@@ -43,7 +44,13 @@ const PILLARS = [
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen">
+    <>
+      <Seo
+        title="Beginners Madrasah Classes | Islamic Learning"
+        description="A warm, safe, beginner-friendly Islamic learning space for women and children, online and in-person. Six programmes from R150/month, est. 2024."
+        path="/"
+      />
+      <div className="flex flex-col min-h-screen">
 
       {/* ── Hero Section ─────────────────────────────────────── */}
       <section className="relative min-h-[calc(100vh-80px)] flex items-center bg-background pt-20 overflow-hidden">
@@ -429,6 +436,7 @@ export default function Home() {
         </div>
       </section>
 
-    </div>
+      </div>
+    </>
   );
 }
