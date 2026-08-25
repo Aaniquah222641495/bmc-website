@@ -57,9 +57,9 @@ export const PROGRAMMES: Programme[] = [
   {
     title: "Online Workshops & Short Courses",
     path: "/workshops",
-    descShort: "Once-off online workshops on specific Islamic topics: Women in Islam, Salaah, Wudhu & Ghusl, and more.",
-    descLong: "Once-off online workshops on specific Islamic topics: Women in Islam, Salaah, Wudhu & Ghusl, Ramadan preparation and more.",
-    tag: "Online · Once-off",
+    descShort: "Online workshops and short courses on specific Islamic topics: Women in Islam, the Nikah Series, Wudhu & Ghusl, and more.",
+    descLong: "Online workshops and short courses on specific Islamic topics: Women in Islam, the Nikah Series, Wudhu & Ghusl, Ramadan preparation and more.",
+    tag: "Online · Workshops",
     price: "From R100",
     type: "online",
     image: "/assets/photo-workshop-stage.webp",

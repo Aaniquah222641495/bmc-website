@@ -3,6 +3,78 @@ import { motion } from 'framer-motion';
 import { PastWorkshopsGrid } from '@/components/class-page-blocks';
 import { Seo } from '@/components/seo';
 
+interface CurrentWorkshop {
+  badge: string;
+  title: string;
+  subtitle?: string;
+  description: string;
+  image?: string;
+  imageAlt?: string;
+  details: { label: string; value: string }[];
+  topicsLabel: string;
+  topics: string[];
+  includes?: string[];
+  formUrl: string;
+}
+
+const CURRENT_WORKSHOPS: CurrentWorkshop[] = [
+  {
+    badge: 'Online Workshop',
+    title: 'Women in Islam',
+    description:
+      'Join us for a beneficial morning exploring the role, value and identity of Muslim women through faith, family, spirituality and everyday life.',
+    image: '/assets/photo-women-in-islam.webp',
+    imageAlt: 'Women in an Islamic study circle',
+    details: [
+      { label: 'Format', value: 'Via Zoom' },
+      { label: 'Date', value: '29 August 2026' },
+      { label: 'Time', value: '09:00 – 11:30' },
+      { label: 'Investment', value: 'R100 per person' },
+    ],
+    topicsLabel: 'Topics Covered',
+    topics: [
+      'The spiritual role of women',
+      'Marriage & Motherhood',
+      'Modesty & Character',
+      'Rights of women in Islam',
+      'Balancing Dunya & Deen',
+      'Building a peaceful home',
+      'Self-worth & Identity',
+      'Women in Islamic history',
+    ],
+    formUrl: 'https://forms.gle/GX8ZQRMdNRKJq7T89',
+  },
+  {
+    badge: '4-Week Online Course · Women Only',
+    title: 'The Nikah Series',
+    subtitle: 'What Every Muslim Woman Should Know About Marriage',
+    description:
+      'From preparing for marriage to navigating married life — learn the Islamic guidance every Muslim woman should know.',
+    image: '/assets/photo-nikah-series.webp',
+    imageAlt: 'Newlywed couple\'s hands, wearing wedding rings, resting on a bouquet of white roses',
+    details: [
+      { label: 'Format', value: 'Microsoft Teams (Online)' },
+      { label: 'Dates', value: '4, 11, 18 & 25 October 2026' },
+      { label: 'Time', value: 'Sundays, 10:00 – 11:00' },
+      { label: 'Investment', value: 'R150 for the full series' },
+    ],
+    topicsLabel: 'Topics Include',
+    topics: [
+      'Before the Nikah',
+      'Choosing a Spouse',
+      'The Nikah & Mahr',
+      'Rights & Responsibilities',
+      'Married Life',
+      'Intimacy',
+      'In-Laws',
+      'and more',
+    ],
+    includes: ['4 live sessions', 'Digital course notes', 'Anonymous Q&A', 'Access to recordings'],
+    // Public fill-out link — the shared URL was the form owner's /edit link, not for respondents.
+    formUrl: 'https://docs.google.com/forms/d/1wpWHAWtaP3Y5p4O7tQQpg8tbf1e3GdiXrflgj2iE0DA/viewform',
+  },
+];
+
 const PAST_WORKSHOPS = [
   {
     title: 'Ramadan Preparation',
@@ -19,7 +91,7 @@ export default function Workshops() {
     <>
       <Seo
         title="Online Workshops & Short Courses"
-        description="Once-off online workshops on Islamic topics like Women in Islam, Salaah, Wudhu, Ghusl and Ramadan preparation — practical, accessible, from R100."
+        description="Online workshops and short courses on Islamic topics — Women in Islam, the Nikah Series, Wudhu, Ghusl and Ramadan preparation — accessible, from R100."
         path="/programmes/workshops"
       />
       <div className="min-h-screen bg-background pt-32 pb-24">
@@ -44,7 +116,7 @@ export default function Workshops() {
             <h1 className="text-4xl md:text-5xl font-display text-white mb-4">Online Workshops & Short Courses</h1>
             <div className="w-20 h-1 bg-accent mb-6" />
             <p className="font-body text-lg leading-relaxed max-w-2xl text-bmc-cream">
-              Focused, once-off online sessions on essential Islamic topics: practical, accessible, and designed to leave you with knowledge you can use straight away.
+              Focused online sessions and short courses on essential Islamic topics: practical, accessible, and designed to leave you with knowledge you can use straight away.
             </p>
           </div>
         </motion.div>
@@ -62,76 +134,89 @@ export default function Workshops() {
             <div className="h-px bg-accent flex-1" />
           </div>
 
-          <div className="bg-primary rounded-2xl overflow-hidden shadow-xl">
-            <div>
-              {/* Hero image — spans the full width of the card */}
-              <div className="relative w-full h-64 md:h-80 overflow-hidden">
-                <img
-                  src="/assets/photo-women-in-islam.webp"
-                  alt="Women in an Islamic study circle"
-                  loading="lazy"
-                  className="w-full h-full object-cover object-center"
-                />
-                <span className="absolute top-3 left-3 bg-black/40 backdrop-blur-sm text-white font-utility text-[0.65rem] uppercase tracking-widest px-2.5 py-1 rounded-full">
-                  Online Workshop
-                </span>
-              </div>
+          <div className="space-y-8">
+            {CURRENT_WORKSHOPS.map((workshop) => (
+              <div key={workshop.title} className="bg-primary rounded-2xl overflow-hidden shadow-xl">
+                {workshop.image ? (
+                  /* Hero image — spans the full width of the card */
+                  <div className="relative w-full h-64 md:h-80 overflow-hidden">
+                    <img
+                      src={workshop.image}
+                      alt={workshop.imageAlt ?? workshop.title}
+                      loading="lazy"
+                      className="w-full h-full object-cover object-center"
+                    />
+                    <span className="absolute top-3 left-3 bg-black/40 backdrop-blur-sm text-white font-utility text-[0.65rem] uppercase tracking-widest px-2.5 py-1 rounded-full">
+                      {workshop.badge}
+                    </span>
+                  </div>
+                ) : (
+                  <div className="islamic-pattern px-8 md:px-12 py-8">
+                    <span className="inline-block bg-accent/90 text-primary font-utility text-[0.65rem] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full">
+                      {workshop.badge}
+                    </span>
+                  </div>
+                )}
 
-            <div className="p-8 md:p-12 text-white">
-              <div className="flex items-start justify-between gap-4 flex-wrap mb-6">
-                <div>
-                  <h2 className="font-display text-3xl md:text-4xl text-white mb-3">Women in Islam</h2>
-                  <p className="font-body text-lg leading-relaxed text-bmc-cream">
-                    Join us for a beneficial morning exploring the role, value and identity of Muslim women through faith, family, spirituality and everyday life.
-                  </p>
+                <div className="p-8 md:p-12 text-white">
+                  <div className="flex items-start justify-between gap-4 flex-wrap mb-6">
+                    <div>
+                      <h2 className="font-display text-3xl md:text-4xl text-white mb-1">{workshop.title}</h2>
+                      {workshop.subtitle && (
+                        <p className="font-body italic text-accent/90 mb-3">{workshop.subtitle}</p>
+                      )}
+                      <p className="font-body text-lg leading-relaxed text-bmc-cream">
+                        {workshop.description}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                    {workshop.details.map(({ label, value }) => (
+                      <div key={label} className="bg-white/10 rounded-xl p-4">
+                        <p className="font-utility text-xs uppercase tracking-widest mb-1 text-accent">{label}</p>
+                        <p className="font-display text-white text-lg">{value}</p>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="mb-8">
+                    <p className="font-utility text-xs uppercase tracking-widest mb-3 text-accent">{workshop.topicsLabel}</p>
+                    <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-2">
+                      {workshop.topics.map((topic) => (
+                        <li key={topic} className="font-body text-sm leading-relaxed flex items-start gap-2 text-bmc-cream">
+                          <img src="/assets/bullet.webp" alt="" width={16} height={16} loading="lazy" decoding="async" className="flex-shrink-0 mt-1" />
+                          {topic}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {workshop.includes && (
+                    <div className="mb-8">
+                      <p className="font-utility text-xs uppercase tracking-widest mb-3 text-accent">What You'll Receive</p>
+                      <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-2">
+                        {workshop.includes.map((item) => (
+                          <li key={item} className="font-body text-sm leading-relaxed flex items-start gap-2 text-bmc-cream">
+                            <img src="/assets/bullet.webp" alt="" width={16} height={16} loading="lazy" decoding="async" className="flex-shrink-0 mt-1" />
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  <a
+                    href={workshop.formUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 bg-accent hover:bg-accent/90 text-primary font-utility font-bold px-8 py-4 rounded-full transition-all hover:-translate-y-1 hover:shadow-lg"
+                  >
+                    Register Now &rarr;
+                  </a>
                 </div>
               </div>
-
-              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-                {[
-                  { label: 'Format', value: 'Via Zoom' },
-                  { label: 'Date', value: '29 August 2026' },
-                  { label: 'Time', value: '09:00 – 11:30' },
-                  { label: 'Investment', value: 'R100 per person' },
-                ].map(({ label, value }) => (
-                  <div key={label} className="bg-white/10 rounded-xl p-4">
-                    <p className="font-utility text-xs uppercase tracking-widest mb-1 text-accent">{label}</p>
-                    <p className="font-display text-white text-lg">{value}</p>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mb-8">
-                <p className="font-utility text-xs uppercase tracking-widest mb-3 text-accent">Topics Covered</p>
-                <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-2">
-                  {[
-                    'The spiritual role of women',
-                    'Marriage & Motherhood',
-                    'Modesty & Character',
-                    'Rights of women in Islam',
-                    'Balancing Dunya & Deen',
-                    'Building a peaceful home',
-                    'Self-worth & Identity',
-                    'Women in Islamic history',
-                  ].map((topic) => (
-                    <li key={topic} className="font-body text-sm leading-relaxed flex items-start gap-2 text-bmc-cream">
-                      <img src="/assets/bullet.webp" alt="" width={16} height={16} loading="lazy" decoding="async" className="flex-shrink-0 mt-1" />
-                      {topic}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <a
-                href="https://forms.gle/GX8ZQRMdNRKJq7T89"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 bg-accent hover:bg-accent/90 text-primary font-utility font-bold px-8 py-4 rounded-full transition-all hover:-translate-y-1 hover:shadow-lg"
-              >
-                Register Now &rarr;
-              </a>
-            </div>
-            </div>
+            ))}
           </div>
         </motion.div>
 
