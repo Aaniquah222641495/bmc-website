@@ -5,7 +5,13 @@
   # TINA_CLIENT_ID is only set once a Tina Cloud project exists (see
   # artifacts/bmc-website/TINA.md); until then this skips straight to the
   # plain Vite build so the site keeps deploying, just without /admin.
-  command = "cd artifacts/bmc-website && if [ -n \"$TINA_CLIENT_ID\" ]; then ./node_modules/.bin/tinacms build; else echo 'TINA_CLIENT_ID unset — skipping CMS admin build'; fi && ./node_modules/.bin/vite build --config vite.config.ts"
+  #
+  # --skip-cloud-checks: the deploy webhook and Tina Cloud's re-index of the
+  # branch race each other, so a schema change (e.g. adding a field type) fails
+  # the build with ERR_CLOUD_CHECK_FAILED until the next index catches up. The
+  # admin still builds against the live client; Tina Cloud indexes content on
+  # its own schedule regardless.
+  command = "cd artifacts/bmc-website && if [ -n \"$TINA_CLIENT_ID\" ]; then ./node_modules/.bin/tinacms build --skip-cloud-checks; else echo 'TINA_CLIENT_ID unset — skipping CMS admin build'; fi && ./node_modules/.bin/vite build --config vite.config.ts"
   publish = "artifacts/bmc-website/dist/public"
 
 [build.environment]
