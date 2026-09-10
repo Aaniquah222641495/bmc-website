@@ -1,9 +1,11 @@
 # Place this file at the ROOT of the repo (next to package.json / pnpm-workspace.yaml)
 
 [build]
-  # Netlify runs its own `pnpm install` first (it detects pnpm-lock.yaml),
-  # so this command only needs to run the Vite build.
-  command = "cd artifacts/bmc-website && ./node_modules/.bin/vite build --config vite.config.ts"
+  # Netlify runs its own `pnpm install` first (it detects pnpm-lock.yaml).
+  # TINA_CLIENT_ID is only set once a Tina Cloud project exists (see
+  # artifacts/bmc-website/TINA.md); until then this skips straight to the
+  # plain Vite build so the site keeps deploying, just without /admin.
+  command = "cd artifacts/bmc-website && if [ -n \"$TINA_CLIENT_ID\" ]; then ./node_modules/.bin/tinacms build; else echo 'TINA_CLIENT_ID unset — skipping CMS admin build'; fi && ./node_modules/.bin/vite build --config vite.config.ts"
   publish = "artifacts/bmc-website/dist/public"
 
 [build.environment]
@@ -26,6 +28,19 @@
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=604800"
+
+# Tina's admin is its own static single-page app built to public/admin — route
+# it there before the wouter catchall below claims everything. Only present
+# when the build ran `tinacms build` (see [build] above).
+[[redirects]]
+  from = "/admin"
+  to = "/admin/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/admin/*"
+  to = "/admin/index.html"
+  status = 200
 
 # wouter does client-side routing, so /about, /contact etc. must all serve index.html
 # or they 404 on hard refresh and direct links.

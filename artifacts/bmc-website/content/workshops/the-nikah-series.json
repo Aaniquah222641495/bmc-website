@@ -1,0 +1,36 @@
+{
+  "title": "The Nikah Series",
+  "page": "online",
+  "status": "available",
+  "order": 2,
+  "badge": "2-Week Online Course · Women Only",
+  "subtitle": "What Every Muslim Woman Should Know About Marriage",
+  "description": "From preparing for marriage to navigating married life — learn the Islamic guidance every Muslim woman should know.",
+  "image": "/assets/photo-nikah-series.webp",
+  "imageAlt": "Newlywed couple's hands, wearing wedding rings, resting on a bouquet of white roses",
+  "typeLabel": "Online",
+  "details": [
+    { "label": "Format", "value": "Microsoft Teams (Online)" },
+    { "label": "Dates", "value": "18 & 25 October 2026" },
+    { "label": "Time", "value": "Sundays, 10:00 – 11:00" },
+    { "label": "Investment", "value": "R150 for the full series" }
+  ],
+  "topicsLabel": "Topics Include",
+  "topics": [
+    "Before the Nikah",
+    "Choosing a Spouse",
+    "The Nikah & Mahr",
+    "Rights & Responsibilities",
+    "Married Life",
+    "Intimacy",
+    "In-Laws",
+    "and more"
+  ],
+  "includes": [
+    "2 live sessions",
+    "Digital course notes",
+    "Anonymous Q&A",
+    "Access to recordings"
+  ],
+  "registrationUrl": "https://docs.google.com/forms/d/1wpWHAWtaP3Y5p4O7tQQpg8tbf1e3GdiXrflgj2iE0DA/viewform"
+}

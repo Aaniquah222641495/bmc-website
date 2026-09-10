@@ -4,6 +4,7 @@ import { IncludedList, DetailsGrid, PastWorkshopsGrid } from '@/components/class
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Seo } from '@/components/seo';
+import { PAST_IN_PERSON_WORKSHOPS } from '@/data/workshops';
 
 const INCLUDED = [
   'Interactive, face-to-face learning with real discussion',
@@ -20,16 +21,15 @@ const GALLERY_IMAGES = [
   '/assets/workshop-teaching.webp',
 ];
 
-const PAST_WORKSHOPS = [
-  {
-    title: 'Wudhu, Ghusl & Salaah',
-    type: 'In-Person',
-    description:
-      'A simple and practical workshop to help sisters learn Wudhu, Ghusl and Salaah properly in an easy and comfortable way, perfect for beginners or anyone wanting to refresh their knowledge.',
-    image: '/assets/photo-wudhu-ghusl-salaah.webp',
-    imageAlt: 'A woman performing Salaah on a prayer mat',
-  },
-];
+// Past in-person workshops are authored as files under content/workshops/
+// (directly, or via the CMS at /admin) — see src/data/workshops.ts.
+const PAST_WORKSHOPS = PAST_IN_PERSON_WORKSHOPS.map((w) => ({
+  title: w.title,
+  type: w.typeLabel ?? 'In-Person',
+  description: w.description,
+  image: w.image,
+  imageAlt: w.imageAlt,
+}));
 
 function WorkshopGallery() {
   const [index, setIndex] = useState(0);
