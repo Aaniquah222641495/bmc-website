@@ -170,16 +170,33 @@ export default defineConfig({
             name: 'status',
             label: 'Status',
             required: true,
+            description:
+              "'Available now' workshops move to 'Past' automatically the day after their end date. Choose 'Past' to archive one early.",
             options: [
               { value: 'available', label: 'Available now' },
               { value: 'past', label: 'Past workshop' },
             ],
           },
           {
+            type: 'datetime',
+            name: 'startDate',
+            label: 'Start date',
+            ui: { dateFormat: 'D MMMM YYYY' },
+            description:
+              "The workshop's date (the first session if it runs over several days). Drives the running order and the automatic move to 'Past'. The 'Date' chip below is still what shows on the card.",
+          },
+          {
+            type: 'datetime',
+            name: 'endDate',
+            label: 'End date (multi-session only)',
+            ui: { dateFormat: 'D MMMM YYYY' },
+            description: "The last session's date. Leave blank for a single-day workshop.",
+          },
+          {
             type: 'number',
             name: 'order',
             label: 'Sort order',
-            description: 'Lower numbers show first within their section.',
+            description: 'Tie-breaker when workshops share a date (or have none). Lower shows first.',
           },
           {
             type: 'string',
