@@ -2,89 +2,18 @@ import { Link } from 'wouter';
 import { motion } from 'framer-motion';
 import { PastWorkshopsGrid } from '@/components/class-page-blocks';
 import { Seo } from '@/components/seo';
+import { CURRENT_ONLINE_WORKSHOPS, PAST_ONLINE_WORKSHOPS } from '@/data/workshops';
 
-interface CurrentWorkshop {
-  badge: string;
-  title: string;
-  subtitle?: string;
-  description: string;
-  image?: string;
-  imageAlt?: string;
-  details: { label: string; value: string }[];
-  topicsLabel: string;
-  topics: string[];
-  includes?: string[];
-  formUrl: string;
-}
-
-const CURRENT_WORKSHOPS: CurrentWorkshop[] = [
-  {
-    badge: 'Online Workshop',
-    title: 'Women in Islam',
-    description:
-      'Join us for a beneficial morning exploring the role, value and identity of Muslim women through faith, family, spirituality and everyday life.',
-    image: '/assets/photo-women-in-islam.webp',
-    imageAlt: 'Women in an Islamic study circle',
-    details: [
-      { label: 'Format', value: 'Via Zoom' },
-      { label: 'Date', value: '29 August 2026' },
-      { label: 'Time', value: '09:00 – 11:30' },
-      { label: 'Investment', value: 'R100 per person' },
-    ],
-    topicsLabel: 'Topics Covered',
-    topics: [
-      'The spiritual role of women',
-      'Marriage & Motherhood',
-      'Modesty & Character',
-      'Rights of women in Islam',
-      'Balancing Dunya & Deen',
-      'Building a peaceful home',
-      'Self-worth & Identity',
-      'Women in Islamic history',
-    ],
-    formUrl: 'https://forms.gle/GX8ZQRMdNRKJq7T89',
-  },
-  {
-    badge: '4-Week Online Course · Women Only',
-    title: 'The Nikah Series',
-    subtitle: 'What Every Muslim Woman Should Know About Marriage',
-    description:
-      'From preparing for marriage to navigating married life — learn the Islamic guidance every Muslim woman should know.',
-    image: '/assets/photo-nikah-series.webp',
-    imageAlt: 'Newlywed couple\'s hands, wearing wedding rings, resting on a bouquet of white roses',
-    details: [
-      { label: 'Format', value: 'Microsoft Teams (Online)' },
-      { label: 'Dates', value: '4, 11, 18 & 25 October 2026' },
-      { label: 'Time', value: 'Sundays, 10:00 – 11:00' },
-      { label: 'Investment', value: 'R150 for the full series' },
-    ],
-    topicsLabel: 'Topics Include',
-    topics: [
-      'Before the Nikah',
-      'Choosing a Spouse',
-      'The Nikah & Mahr',
-      'Rights & Responsibilities',
-      'Married Life',
-      'Intimacy',
-      'In-Laws',
-      'and more',
-    ],
-    includes: ['4 live sessions', 'Digital course notes', 'Anonymous Q&A', 'Access to recordings'],
-    // Public fill-out link — the shared URL was the form owner's /edit link, not for respondents.
-    formUrl: 'https://docs.google.com/forms/d/1wpWHAWtaP3Y5p4O7tQQpg8tbf1e3GdiXrflgj2iE0DA/viewform',
-  },
-];
-
-const PAST_WORKSHOPS = [
-  {
-    title: 'Ramadan Preparation',
-    type: 'Online',
-    description:
-      'How to enter Ramadan spiritually and practically prepared: fasting rules, Taraweeh, Laylatul Qadr, Zakat, and more.',
-    image: '/assets/photo-ramadan-preparation.webp',
-    imageAlt: 'A bowl of dates beside an open Qur’an, prepared for Ramadan',
-  },
-];
+// Workshops are authored as files under content/workshops/ (directly, or via
+// the CMS at /admin) — see src/data/workshops.ts. PastWorkshopsGrid wants a
+// simpler shape than the "available now" cards below, so map it here.
+const PAST_WORKSHOPS = PAST_ONLINE_WORKSHOPS.map((w) => ({
+  title: w.title,
+  type: w.typeLabel ?? 'Workshop',
+  description: w.description,
+  image: w.image,
+  imageAlt: w.imageAlt,
+}));
 
 export default function Workshops() {
   return (
@@ -135,7 +64,7 @@ export default function Workshops() {
           </div>
 
           <div className="space-y-8">
-            {CURRENT_WORKSHOPS.map((workshop) => (
+            {CURRENT_ONLINE_WORKSHOPS.map((workshop) => (
               <div key={workshop.title} className="bg-primary rounded-2xl overflow-hidden shadow-xl">
                 {workshop.image ? (
                   /* Hero image — spans the full width of the card */
@@ -172,7 +101,7 @@ export default function Workshops() {
                   </div>
 
                   <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-                    {workshop.details.map(({ label, value }) => (
+                    {(workshop.details ?? []).map(({ label, value }) => (
                       <div key={label} className="bg-white/10 rounded-xl p-4">
                         <p className="font-utility text-xs uppercase tracking-widest mb-1 text-accent">{label}</p>
                         <p className="font-display text-white text-lg">{value}</p>
@@ -181,9 +110,9 @@ export default function Workshops() {
                   </div>
 
                   <div className="mb-8">
-                    <p className="font-utility text-xs uppercase tracking-widest mb-3 text-accent">{workshop.topicsLabel}</p>
+                    <p className="font-utility text-xs uppercase tracking-widest mb-3 text-accent">{workshop.topicsLabel ?? 'Topics Covered'}</p>
                     <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-2">
-                      {workshop.topics.map((topic) => (
+                      {(workshop.topics ?? []).map((topic) => (
                         <li key={topic} className="font-body text-sm leading-relaxed flex items-start gap-2 text-bmc-cream">
                           <img src="/assets/bullet.webp" alt="" width={16} height={16} loading="lazy" decoding="async" className="flex-shrink-0 mt-1" />
                           {topic}
@@ -206,14 +135,16 @@ export default function Workshops() {
                     </div>
                   )}
 
-                  <a
-                    href={workshop.formUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-2 bg-accent hover:bg-accent/90 text-primary font-utility font-bold px-8 py-4 rounded-full transition-all hover:-translate-y-1 hover:shadow-lg"
-                  >
-                    Register Now &rarr;
-                  </a>
+                  {workshop.registrationUrl && (
+                    <a
+                      href={workshop.registrationUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-2 bg-accent hover:bg-accent/90 text-primary font-utility font-bold px-8 py-4 rounded-full transition-all hover:-translate-y-1 hover:shadow-lg"
+                    >
+                      Register Now &rarr;
+                    </a>
+                  )}
                 </div>
               </div>
             ))}

@@ -1,0 +1,29 @@
+{
+  "title": "Women in Islam",
+  "page": "online",
+  "status": "available",
+  "order": 1,
+  "badge": "Online Workshop",
+  "description": "Join us for a beneficial morning exploring the role, value and identity of Muslim women through faith, family, spirituality and everyday life.",
+  "image": "/assets/photo-women-in-islam.webp",
+  "imageAlt": "Women in an Islamic study circle",
+  "typeLabel": "Online",
+  "details": [
+    { "label": "Format", "value": "Via Zoom" },
+    { "label": "Date", "value": "29 August 2026" },
+    { "label": "Time", "value": "09:00 – 11:30" },
+    { "label": "Investment", "value": "R100 per person" }
+  ],
+  "topicsLabel": "Topics Covered",
+  "topics": [
+    "The spiritual role of women",
+    "Marriage & Motherhood",
+    "Modesty & Character",
+    "Rights of women in Islam",
+    "Balancing Dunya & Deen",
+    "Building a peaceful home",
+    "Self-worth & Identity",
+    "Women in Islamic history"
+  ],
+  "registrationUrl": "https://forms.gle/GX8ZQRMdNRKJq7T89"
+}
