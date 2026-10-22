@@ -2,6 +2,8 @@ import { ClassPageLayout } from '@/components/class-page-layout';
 import { IncludedList, DetailsGrid } from '@/components/class-page-blocks';
 import { motion } from 'framer-motion';
 import { Seo } from '@/components/seo';
+import { programmeJsonLd } from '@/lib/structured-data';
+
 
 const INCLUDED = [
   'The Arabic alphabet: every letter, sound, and form',
@@ -16,9 +18,10 @@ export default function QuranClasses() {
   return (
     <>
       <Seo
-        title="Get Into Quran: In Person"
+        title="Beginner Quran Class, Mitchell's Plain"
         description="A beginner Quran reading programme in Mitchell's Plain, Cape Town — every Saturday morning, from the Arabic alphabet to confidently reciting the Mushaf."
         path="/programmes/quran-classes"
+        jsonLd={programmeJsonLd('/programmes/quran-classes')}
       />
       <ClassPageLayout
       title="Get Into Quran: In Person"

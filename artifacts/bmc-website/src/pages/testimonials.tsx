@@ -3,6 +3,8 @@ import { motion } from 'framer-motion';
 import { Quote } from 'lucide-react';
 import { Link } from 'wouter';
 import { Seo } from '@/components/seo';
+import { simplePageJsonLd } from '@/lib/structured-data';
+
 
 interface Testimonial {
   quote: string;
@@ -112,6 +114,7 @@ export default function Testimonials() {
         title="Student Testimonials"
         description="Real stories from women who found their footing through Beginners Madrasah Classes — reverts, beginners and mothers sharing their own journeys."
         path="/testimonials"
+        jsonLd={simplePageJsonLd('Testimonials', '/testimonials')}
       />
       <div className="min-h-screen bg-background pt-32 pb-24 relative overflow-hidden">
 

@@ -49,7 +49,7 @@ const modules = import.meta.glob<Workshop>('/content/workshops/*.json', {
   import: 'default',
 });
 
-const ALL_WORKSHOPS: Workshop[] = Object.values(modules);
+export const ALL_WORKSHOPS: Workshop[] = Object.values(modules);
 
 /** The date a workshop is "done" — its last session, or its only session. */
 function effectiveEnd(w: Workshop): string | undefined {
@@ -71,8 +71,8 @@ function hasPassed(w: Workshop, now: Date = new Date()): boolean {
 }
 
 /** Effective status, combining the manual flag with automatic date expiry. */
-function isPast(w: Workshop): boolean {
-  return w.status === 'past' || hasPassed(w);
+export function isPast(w: Workshop, now: Date = new Date()): boolean {
+  return w.status === 'past' || hasPassed(w, now);
 }
 
 /** Soonest upcoming first; undated workshops last; `order` then title break ties. */
@@ -91,12 +91,11 @@ function byMostRecent(a: Workshop, b: Workshop): number {
   return db - da || (a.order ?? 0) - (b.order ?? 0) || a.title.localeCompare(b.title);
 }
 
-export const CURRENT_ONLINE_WORKSHOPS = ALL_WORKSHOPS.filter(
-  (w) => w.page === 'online' && !isPast(w),
-).sort(byUpcoming);
-export const PAST_ONLINE_WORKSHOPS = ALL_WORKSHOPS.filter(
-  (w) => w.page === 'online' && isPast(w),
-).sort(byMostRecent);
-export const PAST_IN_PERSON_WORKSHOPS = ALL_WORKSHOPS.filter(
-  (w) => w.page === 'in-person' && isPast(w),
-).sort(byMostRecent);
+// Lists take `now` so the prerendered HTML (built with the build date) and the browser's
+// first render agree; pages pass useNow(), which switches to the real date after load.
+export const currentOnlineWorkshops = (now: Date) =>
+  ALL_WORKSHOPS.filter((w) => w.page === 'online' && !isPast(w, now)).sort(byUpcoming);
+export const pastOnlineWorkshops = (now: Date) =>
+  ALL_WORKSHOPS.filter((w) => w.page === 'online' && isPast(w, now)).sort(byMostRecent);
+export const pastInPersonWorkshops = (now: Date) =>
+  ALL_WORKSHOPS.filter((w) => w.page === 'in-person' && isPast(w, now)).sort(byMostRecent);

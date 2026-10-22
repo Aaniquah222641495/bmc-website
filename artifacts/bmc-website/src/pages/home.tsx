@@ -3,6 +3,8 @@ import { motion } from 'framer-motion';
 import { Wifi, ShieldCheck, BadgeDollarSign, BookOpen } from 'lucide-react';
 import { PROGRAMMES as ALL_PROGRAMMES } from '@/data/programmes';
 import { Seo } from '@/components/seo';
+import { homeJsonLd } from '@/lib/structured-data';
+
 
 const TESTIMONIALS_PREVIEW = [
   {
@@ -46,9 +48,10 @@ export default function Home() {
   return (
     <>
       <Seo
-        title="Beginners Madrasah Classes | Islamic Learning"
+        title="Beginners Madrasah Classes | Islamic Classes, Cape Town"
         description="A warm, safe, beginner-friendly Islamic learning space for women and children, online and in-person. Six programmes from R150/month, est. 2024."
         path="/"
+        jsonLd={homeJsonLd()}
       />
       <div className="flex flex-col min-h-screen">
 

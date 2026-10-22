@@ -29,6 +29,8 @@ if (!basePath) {
 
 export default defineConfig({
   base: basePath,
+  // One timestamp for the client and prerender builds, so workshop lists match on hydration.
+  define: { __BUILD_TIME__: JSON.stringify(process.env.BUILD_TIME ?? new Date().toISOString()) },
   plugins: [
     react(),
     tailwindcss(),

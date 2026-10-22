@@ -4,7 +4,10 @@ import { IncludedList, DetailsGrid, PastWorkshopsGrid } from '@/components/class
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Seo } from '@/components/seo';
-import { PAST_IN_PERSON_WORKSHOPS } from '@/data/workshops';
+import { programmeJsonLd } from '@/lib/structured-data';
+
+import { pastInPersonWorkshops, type Workshop } from '@/data/workshops';
+import { useNow } from '@/hooks/use-now';
 
 const INCLUDED = [
   'Interactive, face-to-face learning with real discussion',
@@ -23,13 +26,13 @@ const GALLERY_IMAGES = [
 
 // Past in-person workshops are authored as files under content/workshops/
 // (directly, or via the CMS at /admin) — see src/data/workshops.ts.
-const PAST_WORKSHOPS = PAST_IN_PERSON_WORKSHOPS.map((w) => ({
+const toPastCard = (w: Workshop) => ({
   title: w.title,
   type: w.typeLabel ?? 'In-Person',
   description: w.description,
   image: w.image,
   imageAlt: w.imageAlt,
-}));
+});
 
 function WorkshopGallery() {
   const [index, setIndex] = useState(0);
@@ -104,12 +107,14 @@ function WorkshopGallery() {
 }
 
 export default function InPersonWorkshops() {
+  const PAST_WORKSHOPS = pastInPersonWorkshops(useNow()).map(toPastCard);
   return (
     <>
       <Seo
-        title="In-Person Workshops"
+        title="In-Person Islamic Workshops, Cape Town"
         description="Interactive face-to-face Islamic workshops with open discussion and practical learning — topics include Wudhu, Ghusl, Salaah and more, from R100."
         path="/programmes/in-person-workshops"
+        jsonLd={programmeJsonLd('/programmes/in-person-workshops')}
       />
       <ClassPageLayout
       title="In-Person Workshops"

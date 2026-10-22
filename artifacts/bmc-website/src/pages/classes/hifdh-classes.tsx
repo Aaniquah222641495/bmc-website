@@ -2,6 +2,8 @@ import { ClassPageLayout } from '@/components/class-page-layout';
 import { IncludedList, DetailsGrid } from '@/components/class-page-blocks';
 import { motion } from 'framer-motion';
 import { Seo } from '@/components/seo';
+import { programmeJsonLd } from '@/lib/structured-data';
+
 
 const INCLUDED = [
   'A structured, personalised memorisation plan',
@@ -19,6 +21,7 @@ export default function HifdhClasses() {
         title="Women's Hifdh Programme"
         description="Structured online Quran memorisation for women, with live guidance three times a week via Microsoft Teams — memorisation, revision and recitation."
         path="/programmes/hifdh-classes"
+        jsonLd={programmeJsonLd('/programmes/hifdh-classes')}
       />
       <ClassPageLayout
       title="Women's Hifdh Programme"

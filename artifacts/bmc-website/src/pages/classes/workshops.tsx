@@ -2,18 +2,20 @@ import { Link } from 'wouter';
 import { motion } from 'framer-motion';
 import { PastWorkshopsGrid } from '@/components/class-page-blocks';
 import { Seo } from '@/components/seo';
-import { CURRENT_ONLINE_WORKSHOPS, PAST_ONLINE_WORKSHOPS, type Workshop } from '@/data/workshops';
+import { currentOnlineWorkshops, pastOnlineWorkshops, type Workshop } from '@/data/workshops';
+import { useNow } from '@/hooks/use-now';
+import { graph, programmeJsonLd, eventsJsonLd } from '@/lib/structured-data';
 
 // Workshops are authored as files under content/workshops/ (directly, or via
 // the CMS at /admin) — see src/data/workshops.ts. PastWorkshopsGrid wants a
 // simpler shape than the "available now" cards below, so map it here.
-const PAST_WORKSHOPS = PAST_ONLINE_WORKSHOPS.map((w) => ({
+const toPastCard = (w: Workshop) => ({
   title: w.title,
   type: w.typeLabel ?? 'Workshop',
   description: w.description,
   image: w.image,
   imageAlt: w.imageAlt,
-}));
+});
 
 // One "Available Now" card. Extracted so the section can lay the cards out
 // either stacked (a lone workshop) or two-up in a grid.
@@ -107,6 +109,10 @@ function CurrentWorkshopCard({ workshop }: { workshop: Workshop }) {
 }
 
 export default function Workshops() {
+  const now = useNow();
+  const CURRENT_ONLINE_WORKSHOPS = currentOnlineWorkshops(now);
+  const PAST_WORKSHOPS = pastOnlineWorkshops(now).map(toPastCard);
+  const events = eventsJsonLd(CURRENT_ONLINE_WORKSHOPS, '/programmes/workshops');
   const multiple = CURRENT_ONLINE_WORKSHOPS.length > 1;
 
   return (
@@ -115,6 +121,7 @@ export default function Workshops() {
         title="Online Workshops & Short Courses"
         description="Online workshops and short courses on Islamic topics — Women in Islam, the Nikah Series, Wudhu, Ghusl and Ramadan preparation — accessible, from R100."
         path="/programmes/workshops"
+        jsonLd={[programmeJsonLd('/programmes/workshops'), ...(events.length ? [graph(...events)] : [])]}
       />
       <div className="min-h-screen bg-background pt-32 pb-24">
       <div className="container mx-auto px-4">

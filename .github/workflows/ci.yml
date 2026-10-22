@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - name: Install pnpm (the lockfile needs pnpm 10)
+        run: npm install -g pnpm@10.34.7 && pnpm -v
+      # Same flags as Netlify (netlify.toml): the lockfile is out of sync with the overrides
+      # in pnpm-workspace.yaml. Regenerating it is a separate, reviewed change.
+      - run: pnpm install --no-frozen-lockfile --config.strictDepBuilds=false
+      - name: Typecheck
+        run: pnpm run typecheck
+      - name: Build and prerender the site
+        working-directory: artifacts/bmc-website
+        run: node scripts/build.mjs
+        env:
+          NODE_ENV: production
+          PORT: "5000"
+          BASE_PATH: /
+      - name: Audit dependencies (high and critical)
+        run: pnpm audit --audit-level high
+        continue-on-error: true
