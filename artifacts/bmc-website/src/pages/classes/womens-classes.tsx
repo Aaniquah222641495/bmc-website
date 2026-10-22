@@ -2,6 +2,8 @@ import { ClassPageLayout } from '@/components/class-page-layout';
 import { IncludedList, DetailsGrid } from '@/components/class-page-blocks';
 import { motion } from 'framer-motion';
 import { Seo } from '@/components/seo';
+import { programmeJsonLd } from '@/lib/structured-data';
+
 
 const INCLUDED = [
   'Aqaaid (Islamic Belief): understand the foundations of faith',
@@ -20,6 +22,7 @@ export default function WomensClasses() {
         title="Women's Online Madrasah"
         description="Beginner-friendly, self-paced Islamic studies for women 18+ via Google Classroom — Aqaaid, Fiqh, Tajweed, Seerah, Akhlaaq, Hadith and more, R150/month."
         path="/programmes/womens-classes"
+        jsonLd={programmeJsonLd('/programmes/womens-classes')}
       />
       <ClassPageLayout
       title="Women's Online Madrasah"

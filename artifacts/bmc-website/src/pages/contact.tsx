@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion';
 import { Seo } from '@/components/seo';
+import { contactJsonLd } from '@/lib/structured-data';
+
 
 const CONTACTS = [
   {
@@ -59,9 +61,10 @@ export default function Contact() {
   return (
     <>
       <Seo
-        title="Get In Touch"
+        title="Contact & Enrolment Enquiries"
         description="Contact Beginners Madrasah Classes via WhatsApp, Instagram or TikTok — we're here to help you find the right programme and answer your questions."
         path="/contact"
+        jsonLd={contactJsonLd()}
       />
       <div className="min-h-screen bg-background pt-32 pb-24 relative overflow-hidden">
       {/* Existing deco-window accent */}

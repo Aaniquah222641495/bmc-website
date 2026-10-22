@@ -2,6 +2,8 @@ import { ClassPageLayout } from '@/components/class-page-layout';
 import { IncludedList, DetailsGrid } from '@/components/class-page-blocks';
 import { motion } from 'framer-motion';
 import { Seo } from '@/components/seo';
+import { programmeJsonLd } from '@/lib/structured-data';
+
 
 const INCLUDED = [
   'Quran recitation: building a strong foundation in reading',
@@ -21,6 +23,7 @@ export default function ChildrensClasses() {
         title="Children's Online Madrasah"
         description="Live Islamic classes for children aged 6-13, three times a week via Microsoft Teams — Quran, Aqaaid, Fiqh, Akhlaaq and Islamic History, R150/month."
         path="/programmes/childrens-classes"
+        jsonLd={programmeJsonLd('/programmes/childrens-classes')}
       />
       <ClassPageLayout
       title="Children's Online Madrasah"

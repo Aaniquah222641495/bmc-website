@@ -1,5 +1,7 @@
-const SITE_URL = 'https://beginnersmadrasah.co.za';
-const SITE_NAME = 'Beginners Madrasah Classes';
+import { SITE_URL, SITE_NAME } from '@/lib/structured-data';
+
+/** Short brand suffix keeps full titles under ~60 characters. */
+const TITLE_SUFFIX = ' | Beginners Madrasah';
 const DEFAULT_IMAGE = `${SITE_URL}/og-image.jpg`;
 
 interface SeoProps {
@@ -8,14 +10,17 @@ interface SeoProps {
   path: string;
   image?: string;
   noIndex?: boolean;
+  /** JSON-LD objects for this page (see lib/structured-data.ts). */
+  jsonLd?: object | object[];
 }
 
 /**
  * Per-page metadata. React 19 hoists title/meta/link tags rendered anywhere
  * in the tree into <head>, so this can just be dropped into each page.
  */
-export function Seo({ title, description, path, image, noIndex }: SeoProps) {
-  const fullTitle = path === '/' ? title : `${title} | ${SITE_NAME}`;
+export function Seo({ title, description, path, image, noIndex, jsonLd }: SeoProps) {
+  const fullTitle = path === '/' ? title : `${title}${TITLE_SUFFIX}`;
+  const blocks = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
   const url = `${SITE_URL}${path}`;
   const ogImage = image ? `${SITE_URL}${image}` : DEFAULT_IMAGE;
 
@@ -23,8 +28,8 @@ export function Seo({ title, description, path, image, noIndex }: SeoProps) {
     <>
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
-      <link rel="canonical" href={url} />
-      {noIndex && <meta name="robots" content="noindex, follow" />}
+      {!noIndex && <link rel="canonical" href={url} />}
+      <meta name="robots" content={noIndex ? 'noindex, follow' : 'index, follow, max-image-preview:large'} />
 
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={description} />
@@ -38,6 +43,14 @@ export function Seo({ title, description, path, image, noIndex }: SeoProps) {
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={ogImage} />
+      {blocks.map((b, i) => (
+        <script
+          key={i}
+          type="application/ld+json"
+          // JSON-LD is data, not code. Escape "<" so content can't close the tag.
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(b).replace(/</g, '\\u003c') }}
+        />
+      ))}
     </>
   );
 }

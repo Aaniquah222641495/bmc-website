@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'wouter';
 import { Seo } from '@/components/seo';
+import { aboutJsonLd } from '@/lib/structured-data';
+
 
 const GALLERY_IMAGES = [
   '/assets/photo-founder-teaching.webp',
@@ -70,9 +72,10 @@ export default function About() {
   return (
     <>
       <Seo
-        title="Our Story"
+        title="About Mualimah Rukeya & Our Story"
         description="Meet Mualimah Rukeya, founder of Beginners Madrasah Classes since 2024 — making Islamic education accessible, flexible and welcoming for all."
         path="/about"
+        jsonLd={aboutJsonLd()}
       />
       <div className="min-h-screen bg-background pt-32 pb-20">
       <div className="container mx-auto px-4 max-w-4xl">

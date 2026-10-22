@@ -1,4 +1,22 @@
+# Beginners Madrasah Classes: search engines and AI assistants are welcome,
+# so people can find the classes in Google, Bing, ChatGPT, Claude, Perplexity and Gemini.
+
 User-agent: *
 Allow: /
+Disallow: /admin
+
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: GPTBot
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+User-agent: ClaudeBot
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: Bingbot
+Allow: /
+Disallow: /admin
 
 Sitemap: https://beginnersmadrasah.co.za/sitemap.xml
