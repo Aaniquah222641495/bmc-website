@@ -65,6 +65,13 @@ export function Footer() {
             <span className="text-accent text-xs">★</span>
             <span>☽</span>
           </div>
+          {/* Studio credit, added with the client's permission (2026-10-24) */}
+          <p>
+            Website by{' '}
+            <a href="https://digitalpantry.co.za" target="_blank" rel="noopener" className="underline decoration-primary-foreground/30 underline-offset-4 hover:text-accent transition-colors">
+              Digital Pantry
+            </a>
+          </p>
         </div>
       </div>
     </footer>
