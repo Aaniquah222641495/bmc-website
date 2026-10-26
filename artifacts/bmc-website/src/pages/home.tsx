@@ -87,8 +87,8 @@ export default function Home() {
           aria-hidden="true"
           loading="lazy"
           decoding="async"
-          className="absolute top-20 right-1 sm:right-8 lg:right-auto lg:left-1/2 pointer-events-none select-none lg:-translate-x-1/2"
-          style={{ width: 'clamp(56px, 16vw, 240px)', opacity: 0.65 }}
+          className="absolute top-20 right-1 sm:right-8 lg:right-auto lg:left-[46.5%] pointer-events-none select-none"
+          style={{ width: 'clamp(56px, 11vw, 150px)', opacity: 0.65 }}
         />
         <div className="relative container mx-auto px-5 md:px-10 grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-10 lg:gap-16 items-center">
           <div>
@@ -125,18 +125,26 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Mascot sits freely in the hero, with a gentle float (stopped under reduced motion) */}
+          {/* Mascot in an arch window, the brand's own shape (founder kept this, 2026-10-26) */}
           <div className="flex justify-center">
-            <img
-              src="/assets/mascot-2.webp"
-              alt="Illustration of Mualimah and two students reading the Qur'an, with the Beginners Madrasah Classes banner"
-              width={800}
-              height={640}
-              fetchPriority="high"
-              decoding="async"
-              draggable={false}
-              className="bmc-float w-full max-w-[17rem] sm:max-w-sm lg:max-w-[30rem] h-auto"
-            />
+            <div className="relative w-full max-w-[19rem] sm:max-w-sm lg:max-w-[28rem]">
+              <div
+                className="absolute inset-0 translate-x-3 translate-y-3 rounded-t-[999px] rounded-b-[2rem] border border-accent/60"
+                aria-hidden="true"
+              />
+              <div className="relative rounded-t-[999px] rounded-b-[2rem] bg-bmc-paper px-6 pt-14 pb-8 sm:px-10 sm:pt-20 shadow-[0_30px_60px_-30px_hsl(155_42%_18%/0.35)]">
+                <img
+                  src="/assets/mascot-2.webp"
+                  alt="Illustration of Mualimah and two students reading the Qur'an, with the Beginners Madrasah Classes banner"
+                  width={800}
+                  height={640}
+                  fetchPriority="high"
+                  decoding="async"
+                  draggable={false}
+                  className="w-full h-auto"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>
