@@ -44,6 +44,8 @@ const STEPS = [
     desc: 'Pick the class that suits you: for women, for children, Qur\'an, Hifdh or workshops, online or in person.',
     cta: 'View programmes',
     href: '/programmes',
+    img: '/assets/stock/step-choose-laptop.webp',
+    alt: 'A woman in a mustard hijab typing on a laptop at a white table',
   },
   {
     title: 'Register',
@@ -51,10 +53,14 @@ const STEPS = [
     cta: 'Register on WhatsApp',
     href: WHATSAPP,
     external: true,
+    img: '/assets/stock/step-register-mushaf.webp',
+    alt: 'A closed pink Mushaf resting on a white cloth with pink prayer beads and flowers',
   },
   {
     title: 'Join your first class',
     desc: 'Begin in a warm, nurturing space where every question is welcome.',
+    img: '/assets/stock/step-first-class-lanterns.webp',
+    alt: 'A table with lit candles, two gold lanterns, a small framed print and a cup of coffee',
   },
 ];
 
@@ -248,6 +254,15 @@ export default function Home() {
           <ol className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8">
             {STEPS.map((step, i) => (
               <li key={step.title} className="bmc-reveal relative flex flex-col">
+                <img
+                  src={step.img}
+                  alt={step.alt}
+                  width={800}
+                  height={600}
+                  loading="lazy"
+                  decoding="async"
+                  className="mb-6 aspect-[16/10] md:aspect-[4/3] w-full rounded-xl object-cover shadow-[0_24px_48px_-32px_hsl(155_42%_18%/0.4)]"
+                />
                 <span className="font-display italic text-bmc-gold-ink leading-none mb-4" style={{ fontSize: '3.5rem' }} aria-hidden="true">
                   {i + 1}
                 </span>
