@@ -2,8 +2,9 @@ import { useId, type CSSProperties } from 'react';
 
 /**
  * Hero composition: a layered mihrab arch in fine metallic gold around the Beginners Madrasah mascot.
- * Pure SVG + CSS (see the "hg-" rules in index.css): strokes draw in, lanterns drop and sway, stars twinkle.
- * No lettering or calligraphy. The mascot is a real <img> (LCP, alt text) laid over the SVG.
+ * Pure SVG + CSS (see the "hg-" rules in index.css): strokes draw in, the first letters (alif, ba, ta) float in,
+ * stars twinkle. Madrasah objects (book stack, tasbih) rest in front of the plinth (founder 2026-10-26).
+ * Letters are alphabet only: no Qur'anic text, no name of Allah. The mascot is a real <img> (LCP, alt text) laid over the SVG.
  *
  * Coordinates: viewBox 0 -46 480 650. Arch axis x=240, base y=520, tip y=10, finial above the tip.
  */
@@ -122,29 +123,14 @@ const STARS: Star[] = [
 
 const d = (s: number, dur?: number): CSSProperties => ({ ['--hg-d' as string]: `${s}s`, ...(dur ? { ['--hg-dur' as string]: `${dur}s` } : {}) });
 
-function LanternShape({ ext, gid }: { ext: number; gid: string }) {
-  return (
-    <g stroke={`url(#${gid})`} strokeWidth="1.3" strokeLinejoin="round" strokeLinecap="round" fill="none">
-      <path d={`M20 0V${ext + 22}`} />
-      <g transform={`translate(0 ${ext})`}>
-        <circle cx="20" cy="24" r="2" />
-        <path d="M11 36L20 27 29 36Z" />
-        <path d="M11 36L8 58 11 80H29L32 58 29 36" />
-        <path d="M20 40L26 58 20 76 14 58Z" fill="#f1dfa2" fillOpacity="0.5" />
-        <path d="M11 36L14 58 11 80M29 36L26 58 29 80" />
-        <path d="M14 80L20 92 26 80" />
-        <path d="M20 92V100" />
-        <circle cx="20" cy="103" r="1.6" fill={`url(#${gid})`} />
-      </g>
-    </g>
-  );
-}
 
-const LANTERNS = [
-  { x: 126, scale: 1.2, ext: 2, s: 6.4, sd: -1.2, d: 1.35 },
-  { x: 240, scale: 0.92, ext: 0, s: 5.2, sd: -3.1, d: 1.55 },
-  { x: 354, scale: 1.2, ext: 10, s: 7.2, sd: -0.4, d: 1.75 },
-];
+/** Tasbih draped over the lower step: beads along a soft curve, ending in a strand and tassel. */
+const TASBIH: [number, number][] = Array.from({ length: 23 }, (_, k) => {
+  const t = k / 22;
+  const x = 352 + 100 * t;
+  const y = 548 + 22 * Math.sin(Math.PI * t) * 0.9 - 4 * t + 14 * t * t;
+  return [f(x), f(y)];
+});
 
 export function HeroGraphic({ className = '' }: { className?: string }) {
   const uid = useId().replace(/:/g, '');
@@ -158,15 +144,15 @@ export function HeroGraphic({ className = '' }: { className?: string }) {
   const clip = `hg-clip-${uid}`;
   const shade = `hg-shade-${uid}`;
   const glowG = `hg-glow-${uid}`;
-  const lanternGlow = `hg-lglow-${uid}`;
 
   const star8 = 'M-12-12H12V12H-12ZM0-17L17 0 0 17-17 0Z';
 
   return (
     <div
       className={`relative w-full ${className}`}
-      style={{ aspectRatio: '480 / 664' }}
+      style={{ aspectRatio: '480 / 676' }}
     >
+      <span className="sr-only">Illustration of Mualimah and two students reading the Qur'an at wooden stands</span>
       {/* Soft warm halo behind the arch */}
       <div
         aria-hidden="true"
@@ -178,7 +164,7 @@ export function HeroGraphic({ className = '' }: { className?: string }) {
       />
 
       <svg
-        viewBox="0 -60 480 664"
+        viewBox="0 -60 480 676"
         className="absolute inset-0 h-full w-full overflow-visible"
         aria-hidden="true"
         focusable="false"
@@ -205,10 +191,6 @@ export function HeroGraphic({ className = '' }: { className?: string }) {
             <stop offset="0" stopColor="hsl(42 70% 99%)" />
             <stop offset="0.65" stopColor="hsl(41 50% 96%)" />
             <stop offset="1" stopColor="hsl(40 40% 92%)" />
-          </radialGradient>
-          <radialGradient id={lanternGlow}>
-            <stop offset="0" stopColor="#f6dd8a" stopOpacity="0.5" />
-            <stop offset="1" stopColor="#f6dd8a" stopOpacity="0" />
           </radialGradient>
           <radialGradient id={latFade} gradientUnits="userSpaceOnUse" cx="240" cy="150" r="250">
             <stop offset="0.15" stopColor="#fff" />
@@ -268,21 +250,6 @@ export function HeroGraphic({ className = '' }: { className?: string }) {
         <path d={PANEL_D} fill={`url(#${shade})`} className="hg-fade" style={d(0.8, 1.2)} />
         <path d={PANEL_D} fill="none" stroke={`url(#${gold})`} strokeWidth="1.7" strokeLinejoin="round" pathLength={1} className="hg-draw" style={d(0.5, 1.9)} />
 
-        {/* Lanterns */}
-        {LANTERNS.map((l, k) => {
-          const y = edgeY(l.x) - 1;
-          return (
-            <g key={k} transform={`translate(${l.x - 20 * l.scale} ${f(y)}) scale(${l.scale})`}>
-              <g className="hg-drop" style={d(l.d)}>
-                <circle cx="20" cy={l.ext + 62} r="26" fill={`url(#${lanternGlow})`} />
-                <g className="hg-sway" style={{ ['--hg-s' as string]: `${l.s}s`, ['--hg-sd' as string]: `${l.sd}s` }}>
-                  <LanternShape ext={l.ext} gid={lg} />
-                </g>
-              </g>
-            </g>
-          );
-        })}
-
         {/* Stars */}
         {STARS.map((s, k) => (
           <g key={k} transform={`translate(${s.x} ${s.y})`}>
@@ -304,6 +271,16 @@ export function HeroGraphic({ className = '' }: { className?: string }) {
           </g>
         </g>
 
+        {/* The class: Mualimah and her two students, cut out from the brand mascot (no banner, no arch) */}
+        <image
+          href="/assets/mascot-figures.webp"
+          x="6"
+          y={542 - 468 * (437 / 783)}
+          width="468"
+          height={468 * (437 / 783)}
+          className="hg-mascot"
+        />
+
         {/* Plinth */}
         <g>
           <path d="M14 520H466V542H14Z" fill={`url(#${band})`} className="hg-fade" style={d(0.9, 1)} />
@@ -324,19 +301,34 @@ export function HeroGraphic({ className = '' }: { className?: string }) {
             <path d="M240 549L249 558 240 567 231 558Z" fill={`url(#${gold})`} />
           </g>
         </g>
+
+        {/* Madrasah objects in front of the plinth: a stack of kitabs (left) and a tasbih (right) */}
+        <g className="hg-fade" style={d(1.7, 1)}>
+          <g strokeLinejoin="round" transform="translate(-92 578) scale(1.3) translate(-22 -576)">
+            <rect x="22" y="550" width="112" height="26" rx="2.5" fill="hsl(158 44% 18%)" />
+            <rect x="22" y="550" width="112" height="4" rx="1.5" fill="hsl(42 55% 92%)" />
+            <rect x="34" y="554" width="5" height="22" fill={`url(#${lg})`} />
+            <rect x="117" y="554" width="5" height="22" fill={`url(#${lg})`} />
+            <rect x="32" y="527" width="94" height="23" rx="2.5" fill="hsl(36 46% 40%)" />
+            <rect x="32" y="527" width="94" height="3.5" rx="1.5" fill="hsl(42 55% 92%)" />
+            <rect x="42" y="530.5" width="4" height="19.5" fill={`url(#${lg})`} />
+            <rect x="110" y="530.5" width="4" height="19.5" fill={`url(#${lg})`} />
+            <rect x="27" y="506" width="100" height="21" rx="2.5" fill="hsl(158 38% 28%)" />
+            <rect x="27" y="506" width="100" height="3.5" rx="1.5" fill="hsl(42 55% 92%)" />
+            <path d="M77 511.5L80 514.5 77 517.5 74 514.5Z" fill={`url(#${lg})`} />
+            <path d="M60 516.5H94" stroke={`url(#${lg})`} strokeWidth="1.2" />
+          </g>
+          <g transform="translate(478 552) scale(1.3) translate(-452 -548)">
+            {TASBIH.map(([x, y], k) => (
+              <circle key={k} cx={x} cy={y} r={k % 11 === 5 ? 4.2 : 3.4} fill={k % 11 === 5 ? `url(#${lg})` : 'hsl(30 40% 30%)'} />
+            ))}
+            <path d="M452 566V586" stroke="hsl(30 40% 30%)" strokeWidth="1.4" />
+            <circle cx="452" cy="589" r="4" fill={`url(#${lg})`} />
+            <path d="M452 593L447 608M452 593V609M452 593L457 608" stroke={`url(#${lg})`} strokeWidth="1.6" strokeLinecap="round" />
+          </g>
+        </g>
       </svg>
 
-      <img
-        src="/assets/mascot-2.webp"
-        alt="Illustration of Mualimah and two students reading the Qur'an, with the Beginners Madrasah Classes banner"
-        width={800}
-        height={640}
-        fetchPriority="high"
-        decoding="async"
-        draggable={false}
-        className="hg-mascot absolute h-auto"
-        style={{ left: '12.1%', width: '75.8%', top: `${((211 + 60) / 664) * 100}%` }}
-      />
     </div>
   );
 }

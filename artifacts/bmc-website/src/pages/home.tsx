@@ -1,9 +1,10 @@
 import { Link } from 'wouter';
-import { ArrowRight, BookOpen, MessageCircle, ShieldCheck, Wallet, Wifi } from 'lucide-react';
+import { ArrowRight, MessageCircle } from 'lucide-react';
 import { PROGRAMMES as ALL_PROGRAMMES, programmeTags } from '@/data/programmes';
 import { Seo } from '@/components/seo';
 import { homeJsonLd } from '@/lib/structured-data';
-import { GirihPattern, HeroGraphic, OrnamentDivider, Rosette } from '@/components/ornaments';
+import { GirihPattern, HeroGraphic, Rosette } from '@/components/ornaments';
+import { BookStackIcon, HeroLetters, MasjidIcon, MasjidSkyline, RehalIcon, SectionMark, SlateIcon } from '@/components/ornaments/madrasah';
 
 // Real student words, supplied by the client. Use verbatim; do not edit or add.
 const TESTIMONIALS_PREVIEW = [
@@ -110,10 +111,10 @@ const MOMENTS = [
 ];
 
 const PILLARS = [
-  { Icon: BookOpen, title: 'Beginner Friendly', desc: 'No prior knowledge needed. We start from absolute zero.' },
-  { Icon: ShieldCheck, title: 'Safe Environment', desc: 'A warm, nurturing space where every question is welcome.' },
-  { Icon: Wifi, title: 'Learn from Anywhere', desc: 'Online classes accessible from home, anywhere in the world.' },
-  { Icon: Wallet, title: 'Affordable Learning', desc: 'Quality Islamic education from just R150 per month.' },
+  { Icon: SlateIcon, title: 'Beginner Friendly', desc: 'No prior knowledge needed. We start from absolute zero.' },
+  { Icon: MasjidIcon, title: 'Safe Environment', desc: 'A warm, nurturing space where every question is welcome.' },
+  { Icon: RehalIcon, title: 'Learn from Anywhere', desc: 'Online classes accessible from home, anywhere in the world.' },
+  { Icon: BookStackIcon, title: 'Affordable Learning', desc: 'Quality Islamic education from just R150 per month.' },
 ];
 
 // Shared type sizes for the calmer, lighter display scale.
@@ -145,9 +146,17 @@ export default function Home() {
         />
         <Rosette className="absolute left-0 bottom-0 h-[34rem] w-[48rem]" origin="0% 100%" opacity={0.2} />
         <Rosette className="absolute right-0 top-0 hidden h-[30rem] w-[44rem] sm:block" origin="100% 0%" opacity={0.14} />
+        {/* Masjid skyline along the foot of the hero: a community learning space, at a glance */}
+        <MasjidSkyline
+          className="hg-fade absolute inset-x-0 bottom-0 mx-auto h-24 w-full max-w-[90rem] sm:h-32 lg:h-40 pointer-events-none"
+          color="hsl(40 34% 87%)"
+          crescent="hsl(40 58% 62%)"
+        />
 
-        <div className="relative container mx-auto px-5 md:px-10 grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-12 lg:gap-20 items-center">
-          <div>
+        <HeroLetters />
+
+        <div className="pointer-events-none relative container mx-auto px-5 md:px-10 grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-12 lg:gap-20 items-center">
+          <div className="pointer-events-auto">
             <p className="bmc-rise bmc-eyebrow mb-7 leading-[1.9]">
               Est. 2024 &middot; Six programmes &middot; Online and in Cape Town
             </p>
@@ -174,7 +183,7 @@ export default function Home() {
           </div>
 
           {/* Mascot inside a code-drawn mihrab arch (HeroGraphic). Mascot-2 is the brand's mascot (founder, 2026-10-26). */}
-          <div className="flex justify-center lg:justify-end">
+          <div className="pointer-events-auto flex justify-center lg:justify-end">
             <HeroGraphic className="max-w-[19.5rem] sm:max-w-[22rem] lg:max-w-[27rem]" />
           </div>
         </div>
@@ -187,8 +196,8 @@ export default function Home() {
           <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-14 lg:gap-y-0">
             {PILLARS.map(({ Icon, title, desc }) => (
               <li key={title} className="bmc-reveal flex flex-col items-center text-center lg:px-6">
-                <div className="bmc-gold-frame relative w-14 h-14 rounded-full flex items-center justify-center mb-6 text-bmc-gold-light" aria-hidden="true">
-                  <Icon size={22} strokeWidth={1.3} />
+                <div className="bmc-gold-frame relative w-16 h-16 rounded-full flex items-center justify-center mb-6 text-bmc-gold-light" aria-hidden="true">
+                  <Icon size={40} strokeWidth={1.25} />
                 </div>
                 <h2 className="text-[1.4rem] leading-snug text-primary-foreground mb-3">{title}</h2>
                 <p className="text-primary-foreground/80 leading-[1.7] text-[0.95rem] max-w-[17rem]">{desc}</p>
@@ -202,6 +211,7 @@ export default function Home() {
       <section className={`${SECTION} bg-bmc-paper`}>
         <div className="container mx-auto px-5 md:px-10">
           <div className="max-w-2xl mb-16 md:mb-24">
+            <SectionMark className="mb-5" />
             <h2 className={`${H2} mb-6`} style={H2_STYLE}>
               How to start
             </h2>
@@ -269,6 +279,7 @@ export default function Home() {
           </figure>
 
           <div className="bmc-reveal">
+            <SectionMark className="mb-5" />
             <h2 className={`${H2} mb-9`} style={H2_STYLE}>
               Born from a passion for teaching
             </h2>
@@ -292,9 +303,12 @@ export default function Home() {
       <section className={`${SECTION} bg-bmc-paper`}>
         <div className="container mx-auto px-5 md:px-10">
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-14 md:mb-20">
-            <h2 className={H2} style={H2_STYLE}>
-              Our programmes
-            </h2>
+            <div>
+              <SectionMark className="mb-5" />
+              <h2 className={H2} style={H2_STYLE}>
+                Our programmes
+              </h2>
+            </div>
             <Link href="/programmes" className="bmc-link">
               See all programmes <ArrowRight size={16} aria-hidden="true" />
             </Link>
@@ -374,6 +388,7 @@ export default function Home() {
       {/* Moments */}
       <section className={`${SECTION} bg-background`}>
         <div className="container mx-auto px-5 md:px-10">
+          <SectionMark className="mb-5" />
           <h2 className={`${H2} mb-12 md:mb-16`} style={H2_STYLE}>
             Moments from our classes
           </h2>
@@ -405,7 +420,7 @@ export default function Home() {
       {/* Testimonials */}
       <section className={`relative overflow-hidden ${SECTION}`} style={{ backgroundColor: 'hsl(40 26% 91%)' }}>
         <div className="container mx-auto px-5 md:px-10">
-          <OrnamentDivider className="mb-10" />
+          <div className="mb-8 flex justify-center"><SectionMark /></div>
           <h2 className={`text-center ${H2}`} style={H2_STYLE}>
             What Our Students Say
           </h2>
@@ -444,27 +459,50 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Closing invitation */}
+      {/* Closing invitation: her women's class illustration, and the masjid skyline leading into the footer */}
       <section className="relative overflow-hidden bg-primary text-primary-foreground">
         <GirihPattern />
-        <div className="bmc-reveal relative px-6 py-24 md:py-36 text-center">
-          <OrnamentDivider tone="dark" className="mb-10" />
-          <h2 className="text-primary-foreground leading-[1.08] tracking-[-0.018em] mb-6 max-w-2xl mx-auto" style={{ fontSize: 'clamp(2.25rem, 4.8vw, 3.8rem)' }}>
-            A Safe Space for Growth
-          </h2>
-          <p className="text-[1.15rem] text-primary-foreground/85 max-w-xl mx-auto mb-12 leading-[1.7]">
-            Whether you are taking your very first steps or returning to your roots, there is a place for you here.
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-4">
-            <Link href="/programmes" className="bmc-btn bmc-btn-light">
-              Start Your Journey
-            </Link>
-            <a href={WHATSAPP} target="_blank" rel="noreferrer" className="bmc-btn bmc-btn-outline">
-              <MessageCircle size={18} aria-hidden="true" />
-              Chat on WhatsApp
-            </a>
+        <div className="relative container mx-auto px-5 md:px-10 pt-24 pb-40 md:pt-32 md:pb-52 grid grid-cols-1 lg:grid-cols-[0.8fr_1.2fr] gap-14 lg:gap-20 items-center">
+          <div className="bmc-reveal relative mx-auto w-full max-w-[17rem] sm:max-w-[20rem] lg:max-w-[23rem]">
+            <div
+              aria-hidden="true"
+              className="absolute -inset-[12%] rounded-full"
+              style={{ background: 'radial-gradient(closest-side, hsl(var(--bmc-gold-light) / 0.28), transparent 72%)' }}
+            />
+            <img
+              src="/assets/womens-classes-illustration.webp"
+              alt="Illustration of a teacher reading with a circle of women students, each with a book, inside an arch"
+              width={1587}
+              height={2245}
+              loading="lazy"
+              decoding="async"
+              className="relative w-full h-auto drop-shadow-[0_30px_40px_hsl(158_50%_5%/0.45)]"
+            />
+          </div>
+          <div className="bmc-reveal text-center lg:text-left">
+            <div className="mb-8 flex justify-center lg:justify-start"><SectionMark light /></div>
+            <h2 className="text-primary-foreground leading-[1.08] tracking-[-0.018em] mb-6 max-w-2xl mx-auto lg:mx-0" style={{ fontSize: 'clamp(2.25rem, 4.8vw, 3.8rem)' }}>
+              A Safe Space for Growth
+            </h2>
+            <p className="text-[1.15rem] text-primary-foreground/85 max-w-xl mx-auto lg:mx-0 mb-12 leading-[1.7]">
+              Whether you are taking your very first steps or returning to your roots, there is a place for you here.
+            </p>
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4">
+              <Link href="/programmes" className="bmc-btn bmc-btn-light">
+                Start Your Journey
+              </Link>
+              <a href={WHATSAPP} target="_blank" rel="noreferrer" className="bmc-btn bmc-btn-outline">
+                <MessageCircle size={18} aria-hidden="true" />
+                Chat on WhatsApp
+              </a>
+            </div>
           </div>
         </div>
+        <MasjidSkyline
+          className="absolute inset-x-0 bottom-0 mx-auto h-28 w-full max-w-[90rem] sm:h-36 lg:h-44 pointer-events-none"
+          color="hsl(158 46% 10.5%)"
+          crescent="hsl(40 58% 62%)"
+        />
       </section>
     </>
   );
