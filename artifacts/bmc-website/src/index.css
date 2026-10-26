@@ -131,13 +131,13 @@
   --input: var(--bmc-cream-dark);
   --ring: var(--bmc-gold);
 
-  --app-font-sans: 'DM Sans', system-ui, sans-serif;
-  --app-font-serif: 'Fraunces', Georgia, serif;
+  --app-font-sans: 'Nunito Sans', system-ui, sans-serif;
+  --app-font-serif: 'Lora', Georgia, serif;
   --app-font-mono: Menlo, monospace;
   
-  --font-display: 'Fraunces', Georgia, serif;
-  --font-body: 'DM Sans', system-ui, sans-serif;
-  --font-utility: 'DM Sans', system-ui, sans-serif;
+  --font-display: 'Lora', Georgia, serif;
+  --font-body: 'Nunito Sans', system-ui, sans-serif;
+  --font-utility: 'Nunito Sans', system-ui, sans-serif;
 
   --radius: 0.5rem;
 }
