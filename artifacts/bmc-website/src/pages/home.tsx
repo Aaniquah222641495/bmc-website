@@ -67,12 +67,12 @@ const STEPS = [
 // Real photos for the Moments gallery. No event names or dates are claimed.
 const MOMENTS = [
   {
-    src: '/assets/photo-workshop-stage.webp',
-    alt: 'A teacher standing on a stage in a hall, with a laptop on a desk in the foreground',
-    width: 800,
-    height: 1067,
+    src: '/assets/photo-workshop-awards.webp',
+    alt: 'A teacher speaking at a workshop, with framed certificates on a table beside her',
+    width: 750,
+    height: 1000,
     cls: 'md:col-start-1 md:row-span-2',
-    pos: 'center 30%',
+    pos: 'center 72%',
   },
   {
     src: '/assets/photo-ramadan-preparation.webp',

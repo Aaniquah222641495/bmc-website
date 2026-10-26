@@ -42,8 +42,8 @@
       "tag": "Online · Workshops",
       "price": "From R100",
       "type": "online",
-      "image": "/assets/photo-workshop-stage.webp",
-      "imagePosition": "center 28%",
+      "image": "/assets/photo-workshop-audience.webp",
+      "imagePosition": "center 70%",
       "gradient": "from-[#1B4332] to-[#0d2419]"
     },
     {
