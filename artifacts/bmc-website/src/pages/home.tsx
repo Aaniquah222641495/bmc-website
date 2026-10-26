@@ -1,6 +1,6 @@
 import { Link } from 'wouter';
-import { ArrowRight, BookOpen, ShieldCheck, Wallet, Wifi } from 'lucide-react';
-import { PROGRAMMES as ALL_PROGRAMMES } from '@/data/programmes';
+import { ArrowRight, BookOpen, MessageCircle, ShieldCheck, Wallet, Wifi } from 'lucide-react';
+import { PROGRAMMES as ALL_PROGRAMMES, programmeTags } from '@/data/programmes';
 import { Seo } from '@/components/seo';
 import { homeJsonLd } from '@/lib/structured-data';
 
@@ -33,6 +33,102 @@ const FEATURED_PATHS = [
   '/workshops',
 ];
 const PROGRAMMES = FEATURED_PATHS.map((path) => ALL_PROGRAMMES.find((p) => p.path === path)!);
+// The first programme is shown large; the rest are compact. Women's Online Madrasah is first in the list.
+const [FEATURED, ...REST] = PROGRAMMES;
+
+const WHATSAPP = 'https://wa.me/27686498593';
+
+// Real photos from the client's workshops and classes. Alt text describes what is visible only.
+const HERO_PHOTOS = [
+  {
+    src: '/assets/photo-quran-completion.webp',
+    alt: 'Two women smiling together, one holding a book',
+    width: 800,
+    height: 1067,
+    cls: 'lg:left-[-4.75rem] lg:bottom-[-1.5rem] w-24 sm:w-28 lg:w-32 aspect-[4/5] -rotate-3',
+    pos: 'center 30%',
+  },
+  {
+    src: '/assets/photo-workshop-audience.webp',
+    alt: 'A teacher speaking to a room of seated women at a workshop',
+    width: 750,
+    height: 1282,
+    cls: 'lg:left-[-2.5rem] lg:top-[34%] w-24 sm:w-28 lg:w-24 aspect-[4/5] rotate-2',
+    pos: 'center 55%',
+  },
+  {
+    src: '/assets/photo-workshop-awards.webp',
+    alt: 'A teacher speaking at a workshop, with framed certificates on a table behind her',
+    width: 750,
+    height: 1000,
+    cls: 'lg:right-[0.5rem] lg:bottom-[-4.75rem] w-24 sm:w-28 lg:w-24 aspect-[4/5] -rotate-2',
+    pos: 'center 40%',
+  },
+];
+
+const STEPS = [
+  {
+    title: 'Choose a programme',
+    desc: 'Pick the class that suits you: for women, for children, Qur\'an, Hifdh or workshops, online or in person.',
+    cta: 'View programmes',
+    href: '/programmes',
+  },
+  {
+    title: 'Register',
+    desc: 'Send us a message on WhatsApp and we will help you register.',
+    cta: 'Register on WhatsApp',
+    href: WHATSAPP,
+    external: true,
+  },
+  {
+    title: 'Join your first class',
+    desc: 'Begin in a warm, nurturing space where every question is welcome.',
+  },
+];
+
+// Real photos for the Moments gallery. No event names or dates are claimed.
+const MOMENTS = [
+  {
+    src: '/assets/photo-workshop-stage.webp',
+    alt: 'A teacher standing on a stage in a hall, with a laptop on a desk in the foreground',
+    width: 800,
+    height: 1067,
+    cls: 'md:col-start-1 md:row-span-2',
+    pos: 'center 30%',
+  },
+  {
+    src: '/assets/photo-ramadan-preparation.webp',
+    alt: 'A bowl of dates beside an ornate decorative box and an open Qur\'an',
+    width: 924,
+    height: 614,
+    cls: 'md:col-span-2',
+    pos: 'center',
+  },
+  {
+    src: '/assets/photo-quran-lesson.webp',
+    alt: 'Two women sitting outdoors reading together from a book on a small table',
+    width: 800,
+    height: 1067,
+    cls: 'md:col-start-4 md:row-start-1 md:row-span-2',
+    pos: 'center 40%',
+  },
+  {
+    src: '/assets/photo-achievement.webp',
+    alt: 'Two women standing together, one holding a framed certificate, in a workshop hall',
+    width: 750,
+    height: 1000,
+    cls: '',
+    pos: 'center 55%',
+  },
+  {
+    src: '/assets/photo-wudhu-workshop-1.webp',
+    alt: 'A presenter standing in front of a slide titled Wudhu, Ghusl and Salaah Workshop',
+    width: 800,
+    height: 1067,
+    cls: '',
+    pos: 'center 45%',
+  },
+];
 
 const PILLARS = [
   { Icon: BookOpen, title: 'Beginner Friendly', desc: 'No prior knowledge needed. We start from absolute zero.' },
@@ -125,8 +221,8 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Mascot in an arch window, the brand's own shape (founder kept this, 2026-10-26) */}
-          <div className="flex justify-center">
+          {/* Mascot in an arch window, the brand's own shape (founder kept this, 2026-10-26), with a small photo collage */}
+          <div className="flex justify-center lg:mb-16">
             <div className="relative w-full max-w-[19rem] sm:max-w-sm lg:max-w-[28rem]">
               <div
                 className="absolute inset-0 translate-x-3 translate-y-3 rounded-t-[999px] rounded-b-[2rem] border border-accent/60"
@@ -144,6 +240,23 @@ export default function Home() {
                   className="w-full h-auto"
                 />
               </div>
+              {/* Photos: a simple row under the window on small screens, offset and overlapping from lg up */}
+              <ul className="relative mt-8 flex justify-center gap-3 sm:gap-4 lg:mt-0 lg:block">
+                {HERO_PHOTOS.map((ph) => (
+                  <li key={ph.src} className={`lg:absolute shrink-0 rounded-xl bg-white p-1 shadow-[0_14px_28px_-14px_hsl(155_42%_18%/0.5)] ring-1 ring-accent/70 ${ph.cls}`}>
+                    <img
+                      src={ph.src}
+                      alt={ph.alt}
+                      width={ph.width}
+                      height={ph.height}
+                      loading="lazy"
+                      decoding="async"
+                      style={{ objectPosition: ph.pos }}
+                      className="h-full w-full rounded-lg object-cover"
+                    />
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </div>
@@ -166,10 +279,58 @@ export default function Home() {
         </div>
       </section>
 
+      {/* How to start */}
+      <section className="py-20 md:py-28 bg-bmc-paper border-y border-border">
+        <div className="container mx-auto px-5 md:px-10">
+          <div className="max-w-2xl mb-12 md:mb-16">
+            <h2 className="text-primary leading-tight tracking-[-0.01em] mb-4" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)' }}>
+              How to start
+            </h2>
+            <p className="text-foreground/80 leading-relaxed text-[1.05rem]">
+              No prior knowledge needed. We start from absolute zero.
+            </p>
+          </div>
+          <ol className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8">
+            {STEPS.map((step, i) => (
+              <li key={step.title} className="bmc-reveal relative flex flex-col">
+                <span className="font-display italic text-bmc-gold-ink leading-none mb-4" style={{ fontSize: '3.5rem' }} aria-hidden="true">
+                  {i + 1}
+                </span>
+                <div className="border-t-2 border-accent pt-5 flex-1 flex flex-col">
+                  <h3 className="text-xl text-primary mb-2">
+                    <span className="sr-only">Step {i + 1}: </span>
+                    {step.title}
+                  </h3>
+                  <p className="text-foreground/80 leading-relaxed text-[0.98rem] mb-4">{step.desc}</p>
+                  {step.href &&
+                    (step.external ? (
+                      <a
+                        href={step.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="mt-auto inline-flex min-h-11 items-center gap-2 self-start font-utility font-semibold text-primary underline decoration-accent decoration-2 underline-offset-[6px] hover:text-secondary transition-colors"
+                      >
+                        {step.cta} <ArrowRight size={16} aria-hidden="true" />
+                      </a>
+                    ) : (
+                      <Link
+                        href={step.href}
+                        className="mt-auto inline-flex min-h-11 items-center gap-2 self-start font-utility font-semibold text-primary underline decoration-accent decoration-2 underline-offset-[6px] hover:text-secondary transition-colors"
+                      >
+                        {step.cta} <ArrowRight size={16} aria-hidden="true" />
+                      </Link>
+                    ))}
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
       {/* Story and founder */}
       <section className="py-20 md:py-28 bg-background">
         <div className="container mx-auto px-5 md:px-10 grid grid-cols-1 lg:grid-cols-[0.8fr_1.2fr] gap-12 lg:gap-20 items-center">
-          <figure className="bmc-reveal max-w-sm mx-auto lg:mx-0 w-full">
+          <figure className="bmc-reveal relative max-w-sm mx-auto lg:mx-0 w-full">
             <div className="aspect-[4/5] overflow-hidden rounded-2xl bg-muted shadow-[0_30px_60px_-34px_hsl(155_42%_18%/0.4)]">
               <img
                 src="/assets/photo-founder-teaching.webp"
@@ -181,6 +342,15 @@ export default function Home() {
                 className="w-full h-full object-cover"
               />
             </div>
+            <img
+              src="/assets/bmc-logo-final.webp"
+              alt="Beginners Madrasah Classes emblem: a teacher and two students reading, with the words Est 2024"
+              width={260}
+              height={291}
+              loading="lazy"
+              decoding="async"
+              className="absolute -right-5 top-[58%] w-24 sm:w-28 h-auto drop-shadow-[0_10px_16px_hsl(155_42%_18%/0.3)]"
+            />
             <figcaption className="mt-4 text-center lg:text-left">
               <span className="block font-display text-lg text-primary">Mualimah Rukeya</span>
               <span className="block font-utility text-sm text-foreground/70">Founder &amp; Teacher</span>
@@ -210,7 +380,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Programmes */}
+      {/* Programmes: one featured, the rest compact */}
       <section className="py-20 md:py-28 bg-bmc-paper border-y border-border">
         <div className="container mx-auto px-5 md:px-10">
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-12 md:mb-16">
@@ -219,39 +389,108 @@ export default function Home() {
             </h2>
             <Link
               href="/programmes"
-              className="inline-flex items-center gap-2 font-utility font-semibold text-primary underline decoration-accent decoration-2 underline-offset-[6px] hover:text-secondary transition-colors"
+              className="inline-flex min-h-11 items-center gap-2 font-utility font-semibold text-primary underline decoration-accent decoration-2 underline-offset-[6px] hover:text-secondary transition-colors"
             >
               See all programmes <ArrowRight size={16} aria-hidden="true" />
             </Link>
           </div>
 
-          <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-14">
-            {PROGRAMMES.map(({ title, path, descShort, price, tag, image, imagePosition, gradient }) => (
-              <li key={path} className="bmc-reveal">
-                <Link href={`/programmes${path}`} className="group flex flex-col h-full rounded-2xl">
-                  <div className={`relative aspect-[4/3] overflow-hidden rounded-xl bg-gradient-to-br ${gradient}`}>
-                    {image && (
-                      <img
-                        src={image}
-                        alt=""
-                        loading="lazy"
-                        decoding="async"
-                        style={{ objectPosition: imagePosition ?? 'top' }}
-                        className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04] motion-reduce:transition-none"
-                      />
-                    )}
-                  </div>
-                  <p className="mt-5 font-utility text-sm font-medium text-bmc-gold-ink">{tag}</p>
-                  <h3 className="mt-1 text-xl text-primary leading-snug">{title}</h3>
-                  <p className="mt-3 text-foreground/75 leading-relaxed text-[0.95rem] flex-1">{descShort}</p>
-                  <div className="mt-5 flex items-center justify-between border-t border-border pt-4">
-                    <span className="font-utility font-semibold text-primary">{price}</span>
-                    <span className="inline-flex items-center gap-1.5 font-utility text-sm font-semibold text-primary group-hover:text-secondary">
-                      Learn more
-                      <ArrowRight size={15} className="transition-transform group-hover:translate-x-1 motion-reduce:transition-none" aria-hidden="true" />
-                    </span>
-                  </div>
-                </Link>
+          <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] gap-8 lg:gap-10">
+            <Link
+              href={`/programmes${FEATURED.path}`}
+              className="bmc-reveal group flex flex-col rounded-2xl bg-card p-3 sm:p-4 shadow-[0_24px_48px_-30px_hsl(155_42%_18%/0.4)] ring-1 ring-border"
+            >
+              <div className={`relative aspect-[4/3] overflow-hidden rounded-xl bg-gradient-to-br ${FEATURED.gradient}`}>
+                {FEATURED.image && (
+                  <img
+                    src={FEATURED.image}
+                    alt=""
+                    width={1500}
+                    height={1449}
+                    loading="lazy"
+                    decoding="async"
+                    style={{ objectPosition: FEATURED.imagePosition ?? 'top' }}
+                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03] motion-reduce:transition-none"
+                  />
+                )}
+              </div>
+              <div className="px-2 sm:px-3 pt-6 pb-3 flex flex-col flex-1">
+                <p className="font-utility text-sm font-medium text-bmc-gold-ink">{FEATURED.tag}</p>
+                <h3 className="mt-1 text-primary leading-tight" style={{ fontSize: 'clamp(1.6rem, 2.6vw, 2.2rem)' }}>
+                  {FEATURED.title}
+                </h3>
+                <TagList tags={programmeTags(FEATURED)} className="mt-4" />
+                <p className="mt-4 text-foreground/80 leading-relaxed text-[1.02rem] flex-1">{FEATURED.descShort}</p>
+                <div className="mt-6 flex items-center justify-between border-t border-border pt-4">
+                  <span className="font-utility text-lg font-semibold text-primary">{FEATURED.price}</span>
+                  <span className="inline-flex items-center gap-1.5 font-utility text-sm font-semibold text-primary group-hover:text-secondary">
+                    Learn more
+                    <ArrowRight size={15} className="transition-transform group-hover:translate-x-1 motion-reduce:transition-none" aria-hidden="true" />
+                  </span>
+                </div>
+              </div>
+            </Link>
+
+            <ul className="flex flex-col gap-4">
+              {REST.map((p) => (
+                <li key={p.path} className="bmc-reveal flex-1">
+                  <Link
+                    href={`/programmes${p.path}`}
+                    className="group flex h-full items-center gap-4 rounded-2xl bg-card p-3 ring-1 ring-border transition-shadow hover:shadow-[0_16px_32px_-22px_hsl(155_42%_18%/0.5)]"
+                  >
+                    <div className={`relative h-20 w-20 sm:h-24 sm:w-24 shrink-0 overflow-hidden rounded-xl bg-gradient-to-br ${p.gradient}`}>
+                      {p.image && (
+                        <img
+                          src={p.image}
+                          alt=""
+                          width={96}
+                          height={96}
+                          loading="lazy"
+                          decoding="async"
+                          style={{ objectPosition: p.imagePosition ?? 'top' }}
+                          className="w-full h-full object-cover"
+                        />
+                      )}
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <h3 className="text-[1.05rem] leading-snug text-primary">{p.title}</h3>
+                      <TagList tags={programmeTags(p)} className="mt-2" />
+                      <p className="mt-2 font-utility text-sm font-semibold text-primary">{p.price}</p>
+                    </div>
+                    <ArrowRight size={18} className="shrink-0 text-primary transition-transform group-hover:translate-x-1 motion-reduce:transition-none" aria-hidden="true" />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* Moments */}
+      <section className="py-20 md:py-28 bg-background">
+        <div className="container mx-auto px-5 md:px-10">
+          <h2 className="text-primary leading-tight tracking-[-0.01em] mb-10 md:mb-14" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)' }}>
+            Moments from our classes
+          </h2>
+          <ul
+            className="-mx-5 px-5 md:mx-0 md:px-0 flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 md:pb-0 md:overflow-visible md:grid md:grid-cols-4 md:auto-rows-[15rem] lg:auto-rows-[17rem] md:gap-5"
+            aria-label="Photos from our classes and workshops"
+          >
+            {MOMENTS.map((m) => (
+              <li
+                key={m.src}
+                className={`bmc-reveal snap-center shrink-0 basis-[72%] sm:basis-[46%] md:basis-auto overflow-hidden rounded-2xl bg-muted shadow-[0_20px_40px_-28px_hsl(155_42%_18%/0.5)] aspect-[4/5] md:aspect-auto ${m.cls}`}
+              >
+                <img
+                  src={m.src}
+                  alt={m.alt}
+                  width={m.width}
+                  height={m.height}
+                  loading="lazy"
+                  decoding="async"
+                  style={{ objectPosition: m.pos }}
+                  className="h-full w-full object-cover"
+                />
               </li>
             ))}
           </ul>
@@ -259,37 +498,45 @@ export default function Home() {
       </section>
 
       {/* Testimonials */}
-      <section className="py-20 md:py-28 bg-background">
+      <section className="relative overflow-hidden py-20 md:py-28" style={{ backgroundColor: 'hsl(150 20% 89%)' }}>
         <div className="container mx-auto px-5 md:px-10">
-          <h2 className="text-primary leading-tight tracking-[-0.01em] mb-12 md:mb-16" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)' }}>
+          <h2 className="text-center text-primary leading-tight tracking-[-0.01em]" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)' }}>
             What Our Students Say
           </h2>
 
-          <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] gap-12 lg:gap-20">
-            <figure className="bmc-reveal">
-              <blockquote
-                className="font-display italic font-normal text-primary leading-[1.25] tracking-[-0.01em]"
-                style={{ fontSize: 'clamp(1.6rem, 3.2vw, 2.4rem)' }}
-              >
-                &ldquo;{lead.quote}&rdquo;
-              </blockquote>
-              <figcaption className="mt-6 font-utility font-semibold text-foreground/80">{lead.name}</figcaption>
-            </figure>
+          <figure className="bmc-reveal mx-auto mt-6 max-w-4xl text-center">
+            <span
+              className="block font-display text-bmc-gold-ink leading-none select-none"
+              style={{ fontSize: 'clamp(6rem, 12vw, 9rem)', height: 'clamp(4rem, 8vw, 6rem)' }}
+              aria-hidden="true"
+            >
+              &ldquo;
+            </span>
+            <blockquote
+              className="font-display italic font-normal text-primary leading-[1.25] tracking-[-0.01em]"
+              style={{ fontSize: 'clamp(1.6rem, 3.6vw, 2.8rem)' }}
+            >
+              {lead.quote}
+            </blockquote>
+            <figcaption className="mt-7 font-utility font-semibold text-foreground/85">{lead.name}</figcaption>
+          </figure>
 
-            <div className="flex flex-col gap-10 lg:border-l lg:border-border lg:pl-14">
-              {others.map((t) => (
-                <figure key={t.name} className="bmc-reveal">
-                  <blockquote className="text-foreground/85 leading-relaxed text-[1.02rem]">&ldquo;{t.quote}&rdquo;</blockquote>
-                  <figcaption className="mt-3 font-utility text-sm font-semibold text-foreground/80">{t.name}</figcaption>
-                </figure>
-              ))}
-              <Link
-                href="/testimonials"
-                className="inline-flex items-center gap-2 font-utility font-semibold text-primary underline decoration-accent decoration-2 underline-offset-[6px] hover:text-secondary transition-colors self-start"
-              >
-                Read All Stories <ArrowRight size={16} aria-hidden="true" />
-              </Link>
-            </div>
+          <div className="mt-14 md:mt-16 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-5xl mx-auto">
+            {others.map((t) => (
+              <figure key={t.name} className="bmc-reveal rounded-2xl bg-bmc-paper p-7 md:p-9 border-t-4 border-accent shadow-[0_20px_40px_-30px_hsl(155_42%_18%/0.45)]">
+                <blockquote className="text-foreground/90 leading-relaxed text-[1.05rem]">&ldquo;{t.quote}&rdquo;</blockquote>
+                <figcaption className="mt-4 font-utility text-sm font-semibold text-foreground/85">{t.name}</figcaption>
+              </figure>
+            ))}
+          </div>
+
+          <div className="mt-10 text-center">
+            <Link
+              href="/testimonials"
+              className="inline-flex min-h-11 items-center gap-2 font-utility font-semibold text-primary underline decoration-accent decoration-2 underline-offset-[6px] hover:text-secondary transition-colors"
+            >
+              Read All Stories <ArrowRight size={16} aria-hidden="true" />
+            </Link>
           </div>
         </div>
       </section>
@@ -305,15 +552,39 @@ export default function Home() {
             <p className="text-lg text-primary-foreground/90 max-w-xl mx-auto mb-9 leading-relaxed">
               Whether you are taking your very first steps or returning to your roots, there is a place for you here.
             </p>
-            <Link
-              href="/programmes"
-              className="inline-flex items-center rounded-full bg-bmc-paper text-primary font-utility font-semibold px-8 py-3.5 transition-all hover:bg-accent active:translate-y-px"
-            >
-              Start Your Journey
-            </Link>
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              <Link
+                href="/programmes"
+                className="inline-flex min-h-11 items-center rounded-full bg-bmc-paper text-primary font-utility font-semibold px-8 py-3.5 transition-all hover:bg-accent active:translate-y-px focus-visible:outline-bmc-gold-light"
+              >
+                Start Your Journey
+              </Link>
+              <a
+                href={WHATSAPP}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex min-h-11 items-center gap-2 rounded-full border-2 border-bmc-gold-light text-primary-foreground font-utility font-semibold px-7 py-3 transition-colors hover:bg-bmc-gold-light hover:text-primary active:translate-y-px focus-visible:outline-bmc-gold-light"
+              >
+                <MessageCircle size={18} aria-hidden="true" />
+                Chat on WhatsApp
+              </a>
+            </div>
           </div>
         </div>
       </section>
     </>
+  );
+}
+
+function TagList({ tags, className = '' }: { tags: string[]; className?: string }) {
+  if (tags.length === 0) return null;
+  return (
+    <ul className={`flex flex-wrap gap-1.5 ${className}`} aria-label="Programme tags">
+      {tags.map((t) => (
+        <li key={t} className="rounded-full border border-accent/70 bg-bmc-paper px-2.5 py-0.5 font-utility text-xs font-medium text-bmc-gold-ink">
+          {t}
+        </li>
+      ))}
+    </ul>
   );
 }
