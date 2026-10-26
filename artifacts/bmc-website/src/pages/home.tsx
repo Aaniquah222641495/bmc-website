@@ -523,7 +523,7 @@ export default function Home() {
 
           <div className="mt-14 md:mt-16 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-5xl mx-auto">
             {others.map((t) => (
-              <figure key={t.name} className="bmc-reveal rounded-2xl bg-bmc-paper p-7 md:p-9 border-t-4 border-accent shadow-[0_20px_40px_-30px_hsl(155_42%_18%/0.45)]">
+              <figure key={t.name} className="bmc-reveal rounded-2xl bg-bmc-paper p-7 md:p-9 border border-accent/50 shadow-[0_20px_40px_-30px_hsl(155_42%_18%/0.45)]">
                 <blockquote className="text-foreground/90 leading-relaxed text-[1.05rem]">&ldquo;{t.quote}&rdquo;</blockquote>
                 <figcaption className="mt-4 font-utility text-sm font-semibold text-foreground/85">{t.name}</figcaption>
               </figure>
