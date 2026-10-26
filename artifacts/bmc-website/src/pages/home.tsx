@@ -1,21 +1,20 @@
 import { Link } from 'wouter';
-import { motion } from 'framer-motion';
-import { Wifi, ShieldCheck, BadgeDollarSign, BookOpen } from 'lucide-react';
+import { ArrowRight, BookOpen, ShieldCheck, Wallet, Wifi } from 'lucide-react';
 import { PROGRAMMES as ALL_PROGRAMMES } from '@/data/programmes';
 import { Seo } from '@/components/seo';
 import { homeJsonLd } from '@/lib/structured-data';
 
-
+// Real student words, supplied by the client. Use verbatim; do not edit or add.
 const TESTIMONIALS_PREVIEW = [
-  {
-    name: 'Naadhirah Gilbert',
-    quote:
-      "Mualimah takes her time with each topic and always makes sure that everyone is on the same page. The class is perfect for beginners, reverts or even just a refresher course.",
-  },
   {
     name: 'Aaliyah Arendse',
     quote:
       "Even though I'm a very shy and nervous person, she makes you feel comfortable in every class. Best decision I've made.",
+  },
+  {
+    name: 'Naadhirah Gilbert',
+    quote:
+      'Mualimah takes her time with each topic and always makes sure that everyone is on the same page. The class is perfect for beginners, reverts or even just a refresher course.',
   },
   {
     name: 'Yasmeen Zingitwa',
@@ -24,7 +23,7 @@ const TESTIMONIALS_PREVIEW = [
   },
 ];
 
-// Curated order for the homepage teaser (alternates online/in-person for variety).
+// Curated order for the homepage (alternates online and in-person). Content comes from content/settings/programmes.json.
 const FEATURED_PATHS = [
   '/womens-classes',
   '/in-person-workshops',
@@ -33,18 +32,17 @@ const FEATURED_PATHS = [
   '/childrens-classes',
   '/workshops',
 ];
-const PROGRAMMES = FEATURED_PATHS.map(
-  (path) => ALL_PROGRAMMES.find((p) => p.path === path)!,
-);
+const PROGRAMMES = FEATURED_PATHS.map((path) => ALL_PROGRAMMES.find((p) => p.path === path)!);
 
 const PILLARS = [
-  { Icon: Wifi,            title: 'Learn from Anywhere',  desc: 'Online classes accessible from home, anywhere in the world.' },
-  { Icon: BookOpen,        title: 'Beginner Friendly',     desc: 'No prior knowledge needed. We start from absolute zero.' },
-  { Icon: ShieldCheck,     title: 'Safe Environment',      desc: 'A warm, nurturing space where every question is welcome.' },
-  { Icon: BadgeDollarSign, title: 'Affordable Learning',   desc: 'Quality Islamic education from just R150 per month.' },
+  { Icon: BookOpen, title: 'Beginner Friendly', desc: 'No prior knowledge needed. We start from absolute zero.' },
+  { Icon: ShieldCheck, title: 'Safe Environment', desc: 'A warm, nurturing space where every question is welcome.' },
+  { Icon: Wifi, title: 'Learn from Anywhere', desc: 'Online classes accessible from home, anywhere in the world.' },
+  { Icon: Wallet, title: 'Affordable Learning', desc: 'Quality Islamic education from just R150 per month.' },
 ];
 
 export default function Home() {
+  const [lead, ...others] = TESTIMONIALS_PREVIEW;
   return (
     <>
       <Seo
@@ -53,393 +51,231 @@ export default function Home() {
         path="/"
         jsonLd={homeJsonLd()}
       />
-      <div className="flex flex-col min-h-screen">
 
-      {/* ── Hero Section ─────────────────────────────────────── */}
-      <section className="relative min-h-[calc(100vh-80px)] flex items-center bg-background pt-20 overflow-hidden">
-
-        {/* Faint tiling gold star texture */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          aria-hidden="true"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 8 L43.5 22 L57 18 L48 29 L62 33 L48 37 L57 48 L43.5 44 L40 58 L36.5 44 L23 48 L32 37 L18 33 L32 29 L23 18 L36.5 22 Z' fill='none' stroke='%23C9A84C' stroke-width='0.6'/%3E%3C/svg%3E")`,
-            opacity: 0.05,
-          }}
-        />
-
-        {/* Corner lace arch — top-left (hidden on mobile/tablet, where it crowds the heading) */}
-        <img
-          src="/assets/deco-corner.webp"
-          alt=""
-          aria-hidden="true"
-          loading="lazy"
-          decoding="async"
-          className="absolute top-0 left-0 pointer-events-none select-none hidden lg:block"
-          style={{ width: 'clamp(160px, 18vw, 280px)', opacity: 0.55 }}
-        />
-        {/* Corner lace arch — bottom-right (rotated 180°, hidden on mobile/tablet) */}
-        <img
-          src="/assets/deco-corner.webp"
-          alt=""
-          aria-hidden="true"
-          loading="lazy"
-          decoding="async"
-          className="absolute bottom-0 right-0 pointer-events-none select-none hidden lg:block"
-          style={{ width: 'clamp(160px, 18vw, 280px)', opacity: 0.55, transform: 'rotate(180deg)' }}
-        />
-        {/* Hanging lanterns — top-centre (hidden on mobile/tablet, where there isn't room above the heading) */}
-        <img
-          src="/assets/deco-lanterns.webp"
-          alt=""
-          aria-hidden="true"
-          loading="lazy"
-          decoding="async"
-          className="absolute top-0 left-1/2 pointer-events-none select-none hidden lg:block"
-          style={{ width: 'clamp(140px, 16vw, 240px)', opacity: 0.6, transform: 'translateX(-50%)' }}
-        />
-
-        <div className="container mx-auto px-4 md:px-16 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-
-          {/* ── Left: Text ─────────────────────────────────────── */}
-          <motion.div
-            className="flex flex-col items-start"
-            initial={{ opacity: 0, x: -32 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <div className="relative w-full">
-              {/* Small illustration, top-right of the heading — mobile/tablet only; lg+ uses the full-size illustration column */}
-              <img
-                src="/assets/mascot-2.webp"
-                alt="Beginners Madrasah Classes illustrated mascot"
-                className="absolute top-1/2 -translate-y-1/2 right-0 w-24 sm:w-28 lg:hidden"
-                fetchPriority="high"
-                decoding="async"
-                draggable={false}
-              />
-              <h1 className="font-display text-primary leading-[1.1] mb-3 pr-28 sm:pr-32 lg:pr-0" style={{ fontSize: 'clamp(2.4rem, 4.5vw, 4rem)' }}>
-                Beginners<br />
-                Madrasah<br />
-                <span className="text-accent italic">Classes</span>
-              </h1>
-            </div>
-
-            {/* EST badge — sits directly under the title */}
-            <div className="flex items-center gap-2 mb-5">
-              <div className="w-5 h-px bg-accent" />
-              <span className="font-utility uppercase tracking-[0.2em] text-accent/70" style={{ fontSize: '0.62rem' }}>
-                Est 2024 · Foundations of Islamic Knowledge
-              </span>
-            </div>
-
-            {/* Gold diamond rule — anchored left */}
-            <div className="flex items-center gap-3 mb-6 w-48">
-              <div className="h-px flex-1 bg-gradient-to-r from-accent to-transparent" />
-              <div className="w-2 h-2 rotate-45 shrink-0 bg-accent" />
-              <div className="h-px flex-1 bg-gradient-to-l from-accent to-transparent" />
-            </div>
-
-            <p className="font-body text-foreground/65 leading-relaxed mb-10" style={{ fontSize: 'clamp(1rem, 1.4vw, 1.1rem)', maxWidth: '38ch' }}>
+      {/* Hero */}
+      <section className="relative overflow-hidden bg-background pt-28 pb-16 md:pt-36 md:pb-24">
+        <div className="container mx-auto px-5 md:px-10 grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-10 lg:gap-16 items-center">
+          <div>
+            <h1
+              className="bmc-rise text-primary leading-[1.04] tracking-[-0.02em] mb-6"
+              style={{ fontSize: 'clamp(2.5rem, 6.2vw, 4.6rem)' }}
+            >
+              Beginners Madrasah <span className="italic font-medium text-bmc-gold-ink">Classes</span>
+            </h1>
+            <p
+              className="bmc-rise bmc-rise-2 text-foreground/80 leading-relaxed mb-9"
+              style={{ fontSize: 'clamp(1.05rem, 1.5vw, 1.2rem)', maxWidth: '36ch' }}
+            >
               A warm, safe, beginner-friendly Islamic learning space for women and children, online and in-person.
             </p>
-
-            <div className="flex flex-wrap gap-4 items-center">
+            <div className="bmc-rise bmc-rise-3 flex flex-wrap gap-3 items-center">
+              <a
+                href="https://wa.me/27686498593"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center rounded-full bg-primary text-primary-foreground font-utility font-semibold px-7 py-3.5 text-[0.95rem] shadow-[0_8px_20px_-8px_hsl(155_42%_18%/0.55)] transition-all hover:bg-secondary active:translate-y-px"
+              >
+                Register Now
+              </a>
               <Link
                 href="/programmes"
-                className="rounded-full border-2 border-primary text-primary font-utility font-bold px-8 py-3 hover:bg-primary hover:text-white transition-all"
-                style={{ fontSize: '0.88rem', letterSpacing: '0.06em' }}
+                className="inline-flex items-center gap-2 rounded-full px-5 py-3.5 font-utility font-semibold text-[0.95rem] text-primary underline decoration-accent decoration-2 underline-offset-[6px] hover:text-secondary transition-colors"
               >
-                View Programmes
-              </Link>
-              <a href="https://wa.me/27686498593" target="_blank" rel="noreferrer">
-                <button
-                  className="rounded-full bg-accent text-primary font-utility font-bold px-8 py-3 hover:bg-accent/90 transition-all"
-                  style={{ fontSize: '0.88rem', letterSpacing: '0.06em', boxShadow: '0 6px 24px rgba(201,168,76,0.38)' }}
-                >
-                  Register Now
-                </button>
-              </a>
-            </div>
-
-            {/* Stats strip */}
-            <div className="flex items-center gap-8 mt-12 pt-8 border-t border-border">
-              {[
-                { num: '200+', label: 'Students enrolled' },
-                { num: '6',   label: 'Programmes' },
-                { num: '2+',  label: 'Years teaching' },
-              ].map(({ num, label }) => (
-                <div key={label}>
-                  <p className="font-display text-primary text-2xl font-bold leading-none mb-1">{num}</p>
-                  <p className="font-utility text-foreground/50 text-xs tracking-wide">{label}</p>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* ── Right: Illustration (lg+ only — mobile/tablet use the small version beside the heading) ── */}
-          <motion.div
-            className="relative hidden lg:flex justify-center items-center"
-            initial={{ opacity: 0, x: 32 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <motion.img
-              src="/assets/mascot-2.webp"
-              alt="Beginners Madrasah Classes illustrated mascot"
-              className="w-full max-w-[260px] sm:max-w-sm lg:max-w-md xl:max-w-lg mx-auto"
-              fetchPriority="high"
-              decoding="async"
-              draggable={false}
-              animate={{ y: [0, -14, 0] }}
-              transition={{ repeat: Infinity, duration: 4.5, ease: "easeInOut" }}
-            />
-          </motion.div>
-
-        </div>
-      </section>
-
-      {/* ── Why Choose BMC ───────────────────────────────────── */}
-      <section className="islamic-pattern py-20 relative text-white">
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
-            {PILLARS.map(({ Icon, title, desc }, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="text-center flex flex-col items-center group"
-              >
-                <div className="w-16 h-16 rounded-full border border-accent flex items-center justify-center mb-4 group-hover:bg-accent group-hover:text-primary transition-colors text-accent">
-                  <Icon size={26} strokeWidth={1.5} />
-                </div>
-                <h3 className="font-display text-xl mb-2">{title}</h3>
-                <p className="font-body text-sm text-white/70 leading-relaxed">{desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Our Story Teaser ─────────────────────────────────── */}
-      <section className="py-20 bg-background">
-        <div className="container mx-auto px-4 max-w-5xl">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="flex flex-col md:flex-row items-center gap-10 bg-card border border-border rounded-2xl overflow-hidden shadow-lg"
-          >
-            {/* Accent bar — top on mobile, left on desktop */}
-            <div className="md:hidden h-1.5 w-full bg-accent shrink-0" />
-            <div className="hidden md:block w-1.5 self-stretch bg-accent shrink-0" />
-
-            <div className="flex-1 py-10 px-8 md:pl-0 md:pr-12">
-              <p className="font-utility text-xs text-accent uppercase tracking-widest mb-3">Our Story</p>
-              <h2 className="font-display text-3xl md:text-4xl text-primary mb-5 leading-snug">
-                Born from a passion<br className="hidden md:block" /> for teaching
-              </h2>
-              <p className="font-body text-foreground/70 leading-relaxed mb-6" style={{ maxWidth: '52ch' }}>
-                Alhamdulillah, what started as a small class has grown into a thriving learning community, offering six programmes to hundreds of students across South Africa and beyond.
-              </p>
-              <Link href="/about">
-                <span className="inline-flex items-center gap-2 text-accent font-utility font-bold text-sm hover:gap-3 transition-all cursor-pointer uppercase tracking-widest">
-                  Read Our Story &rarr;
-                </span>
+                View Programmes <ArrowRight size={16} aria-hidden="true" />
               </Link>
             </div>
-
-            {/* Stats */}
-            <div className="grid grid-cols-2 gap-px bg-border w-full md:w-72 shrink-0 md:self-stretch">
-              {[
-                { num: '300+', label: 'Students' },
-                { num: '6',    label: 'Programmes' },
-                { num: '2024', label: 'Established' },
-                { num: '2+',   label: 'Years teaching' },
-              ].map(({ num, label }) => (
-                <div key={label} className="bg-muted flex flex-col items-center justify-center p-6">
-                  <p className="font-display text-2xl text-accent font-bold">{num}</p>
-                  <p className="font-utility text-xs text-foreground/50 uppercase tracking-wide mt-1">{label}</p>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ── Featured Programmes ──────────────────────────────── */}
-      <section className="py-24 bg-background">
-        <div className="container mx-auto px-4 max-w-6xl">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-display text-primary mb-4">Featured Programmes</h2>
-            <div className="w-24 h-1 bg-accent mx-auto" />
+            <p className="bmc-rise bmc-rise-3 mt-10 font-utility text-sm text-foreground/70">
+              Est. 2024 &middot; Six programmes &middot; Online and in Cape Town
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {PROGRAMMES.map(({ title, path, descShort: desc, price, tag, image, imagePosition, gradient }, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08 }}
-                className="h-full"
-              >
-                <Link href={`/programmes${path}`}>
-                  <div className="bg-card rounded-2xl border border-border hover:border-accent hover:shadow-xl transition-all cursor-pointer h-full flex flex-col group overflow-hidden">
-
-                    {/* Image block */}
-                    <div className={`relative w-full h-48 overflow-hidden bg-gradient-to-br ${gradient} shrink-0`}>
-                      {image ? (
-                        <img
-                          src={image}
-                          alt={title}
-                          loading="lazy"
-                          style={{ objectPosition: imagePosition ?? 'top' }}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        />
-                      ) : (
-                        /* Placeholder: Islamic pattern overlay on gradient */
-                        <div className="absolute inset-0 flex items-center justify-center opacity-20"
-                          style={{
-                            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 6 L32.5 16 L42 13 L36 21 L46 25 L36 29 L42 37 L32.5 34 L30 44 L27.5 34 L18 37 L24 29 L14 25 L24 21 L18 13 L27.5 16 Z' fill='none' stroke='%23C9A84C' stroke-width='0.8'/%3E%3C/svg%3E")`,
-                          }}
-                        />
-                      )}
-                      {/* Tag pill */}
-                      <span className="absolute top-3 left-3 bg-black/40 backdrop-blur-sm text-white font-utility text-[0.65rem] uppercase tracking-widest px-2.5 py-1 rounded-full">
-                        {tag}
-                      </span>
-                    </div>
-
-                    {/* Content */}
-                    <div className="p-6 flex flex-col flex-1">
-                      <h3 className="text-lg font-display text-primary mb-2 leading-snug">{title}</h3>
-                      <p className="text-foreground/65 font-body text-sm leading-relaxed flex-1">{desc}</p>
-                      <div className="flex items-center justify-between mt-5 pt-4 border-t border-border">
-                        <span className="font-utility text-xs font-bold text-accent bg-accent/10 px-3 py-1 rounded-full">{price}</span>
-                        <span className="text-primary font-utility font-bold group-hover:text-accent transition-colors flex items-center gap-1 text-sm">
-                          Learn More <span className="group-hover:translate-x-1 transition-transform inline-block">&rarr;</span>
-                        </span>
-                      </div>
-                    </div>
-
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── About Strip ──────────────────────────────────────── */}
-      <section className="py-24 bg-muted border-y border-border relative overflow-hidden">
-        <div className="container mx-auto px-4 max-w-6xl">
-          <div className="flex flex-col lg:flex-row gap-12 items-center">
-            <div className="w-full lg:w-1/2">
-              <div className="aspect-[4/5] rounded-[2rem] border-2 border-accent/30 relative overflow-hidden shadow-xl">
+          {/* Mascot in an arch window, the brand's own shape */}
+          <div className="flex justify-center">
+            <div className="relative w-full max-w-[19rem] sm:max-w-sm lg:max-w-[28rem]">
+              <div
+                className="absolute inset-0 translate-x-3 translate-y-3 rounded-t-[999px] rounded-b-[2rem] border border-accent/60"
+                aria-hidden="true"
+              />
+              <div className="relative rounded-t-[999px] rounded-b-[2rem] bg-bmc-paper px-6 pt-14 pb-8 sm:px-10 sm:pt-20 shadow-[0_30px_60px_-30px_hsl(155_42%_18%/0.35)]">
                 <img
-                  src="/assets/photo-founder-teaching.webp"
-                  alt="Mualimah Rukeya teaching a workshop"
-                  loading="lazy"
-                  className="absolute inset-0 w-full h-full object-cover"
+                  src="/assets/mascot-2.webp"
+                  alt="Illustration of Mualimah and two students reading the Qur'an, with the Beginners Madrasah Classes banner"
+                  width={800}
+                  height={640}
+                  fetchPriority="high"
+                  decoding="async"
+                  draggable={false}
+                  className="w-full h-auto"
                 />
-                <div className="absolute bottom-0 left-0 right-0 bg-primary/80 backdrop-blur-sm px-6 py-4">
-                  <h3 className="font-display text-lg text-white">Mualimah Rukeya</h3>
-                  <p className="font-utility text-xs text-accent uppercase tracking-widest">Founder & Teacher</p>
-                </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
 
-            <div className="w-full lg:w-1/2">
-              <h2 className="text-4xl font-display text-primary mb-6">About Our Founder</h2>
-              <p className="text-lg font-body text-foreground/80 leading-relaxed mb-6">
-                Mualimah Rukeya has been teaching Islamic sciences since 2024, guiding women and children toward a deeper connection with their faith in a safe, nurturing environment.
-              </p>
-              <p className="text-lg font-body text-foreground/80 leading-relaxed mb-8">
-                She founded Beginners Madrasah Classes to make authentic Islamic education accessible to all, wherever you are.
-              </p>
-              <Link href="/about" className="border-b-2 border-accent text-primary font-utility font-bold pb-1 hover:text-accent transition-colors inline-block">
-                Read More
+      {/* What you can expect */}
+      <section className="bg-bmc-paper border-y border-border">
+        <div className="container mx-auto px-5 md:px-10 py-14 md:py-20">
+          <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-10 gap-y-10">
+            {PILLARS.map(({ Icon, title, desc }) => (
+              <li key={title} className="bmc-reveal">
+                <Icon size={22} strokeWidth={1.6} className="text-secondary mb-4" aria-hidden="true" />
+                <h2 className="text-xl text-primary mb-2">{title}</h2>
+                <p className="text-foreground/75 leading-relaxed text-[0.95rem]">{desc}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* Story and founder */}
+      <section className="py-20 md:py-28 bg-background">
+        <div className="container mx-auto px-5 md:px-10 grid grid-cols-1 lg:grid-cols-[0.8fr_1.2fr] gap-12 lg:gap-20 items-center">
+          <figure className="bmc-reveal max-w-sm mx-auto lg:mx-0 w-full">
+            <div className="aspect-[4/5] overflow-hidden rounded-t-[999px] rounded-b-2xl bg-muted shadow-[0_30px_60px_-34px_hsl(155_42%_18%/0.4)]">
+              <img
+                src="/assets/photo-founder-teaching.webp"
+                alt="Mualimah Rukeya teaching a workshop"
+                width={1000}
+                height={1333}
+                loading="lazy"
+                decoding="async"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <figcaption className="mt-4 text-center lg:text-left">
+              <span className="block font-display text-lg text-primary">Mualimah Rukeya</span>
+              <span className="block font-utility text-sm text-foreground/70">Founder &amp; Teacher</span>
+            </figcaption>
+          </figure>
+
+          <div className="bmc-reveal">
+            <h2 className="text-primary leading-tight tracking-[-0.01em] mb-6" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)' }}>
+              Born from a passion for teaching
+            </h2>
+            <p className="text-foreground/80 leading-relaxed mb-5 text-[1.05rem]" style={{ maxWidth: '58ch' }}>
+              Alhamdulillah, what started as a small class has grown into a thriving learning community, offering six programmes to hundreds of students across South Africa and beyond.
+            </p>
+            <p className="text-foreground/80 leading-relaxed mb-5 text-[1.05rem]" style={{ maxWidth: '58ch' }}>
+              Mualimah Rukeya has been teaching Islamic sciences since 2024, guiding women and children toward a deeper connection with their faith in a safe, nurturing environment.
+            </p>
+            <p className="text-foreground/80 leading-relaxed mb-8 text-[1.05rem]" style={{ maxWidth: '58ch' }}>
+              She founded Beginners Madrasah Classes to make authentic Islamic education accessible to all, wherever you are.
+            </p>
+            <Link
+              href="/about"
+              className="inline-flex items-center gap-2 font-utility font-semibold text-primary underline decoration-accent decoration-2 underline-offset-[6px] hover:text-secondary transition-colors"
+            >
+              Read Our Story <ArrowRight size={16} aria-hidden="true" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Programmes */}
+      <section className="py-20 md:py-28 bg-bmc-paper border-y border-border">
+        <div className="container mx-auto px-5 md:px-10">
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-12 md:mb-16">
+            <h2 className="text-primary leading-tight tracking-[-0.01em]" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)' }}>
+              Our programmes
+            </h2>
+            <Link
+              href="/programmes"
+              className="inline-flex items-center gap-2 font-utility font-semibold text-primary underline decoration-accent decoration-2 underline-offset-[6px] hover:text-secondary transition-colors"
+            >
+              See all programmes <ArrowRight size={16} aria-hidden="true" />
+            </Link>
+          </div>
+
+          <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-14">
+            {PROGRAMMES.map(({ title, path, descShort, price, tag, image, imagePosition, gradient }) => (
+              <li key={path} className="bmc-reveal">
+                <Link href={`/programmes${path}`} className="group flex flex-col h-full rounded-2xl">
+                  <div className={`relative aspect-[4/3] overflow-hidden rounded-t-[999px] rounded-b-xl bg-gradient-to-br ${gradient}`}>
+                    {image && (
+                      <img
+                        src={image}
+                        alt=""
+                        loading="lazy"
+                        decoding="async"
+                        style={{ objectPosition: imagePosition ?? 'top' }}
+                        className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04] motion-reduce:transition-none"
+                      />
+                    )}
+                  </div>
+                  <p className="mt-5 font-utility text-sm font-medium text-bmc-gold-ink">{tag}</p>
+                  <h3 className="mt-1 text-xl text-primary leading-snug">{title}</h3>
+                  <p className="mt-3 text-foreground/75 leading-relaxed text-[0.95rem] flex-1">{descShort}</p>
+                  <div className="mt-5 flex items-center justify-between border-t border-border pt-4">
+                    <span className="font-utility font-semibold text-primary">{price}</span>
+                    <span className="inline-flex items-center gap-1.5 font-utility text-sm font-semibold text-primary group-hover:text-secondary">
+                      Learn more
+                      <ArrowRight size={15} className="transition-transform group-hover:translate-x-1 motion-reduce:transition-none" aria-hidden="true" />
+                    </span>
+                  </div>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="py-20 md:py-28 bg-background">
+        <div className="container mx-auto px-5 md:px-10">
+          <h2 className="text-primary leading-tight tracking-[-0.01em] mb-12 md:mb-16" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)' }}>
+            What Our Students Say
+          </h2>
+
+          <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] gap-12 lg:gap-20">
+            <figure className="bmc-reveal">
+              <blockquote
+                className="font-display italic font-normal text-primary leading-[1.25] tracking-[-0.01em]"
+                style={{ fontSize: 'clamp(1.6rem, 3.2vw, 2.4rem)' }}
+              >
+                &ldquo;{lead.quote}&rdquo;
+              </blockquote>
+              <figcaption className="mt-6 font-utility font-semibold text-foreground/80">{lead.name}</figcaption>
+            </figure>
+
+            <div className="flex flex-col gap-10 lg:border-l lg:border-border lg:pl-14">
+              {others.map((t) => (
+                <figure key={t.name} className="bmc-reveal">
+                  <blockquote className="text-foreground/85 leading-relaxed text-[1.02rem]">&ldquo;{t.quote}&rdquo;</blockquote>
+                  <figcaption className="mt-3 font-utility text-sm font-semibold text-foreground/80">{t.name}</figcaption>
+                </figure>
+              ))}
+              <Link
+                href="/testimonials"
+                className="inline-flex items-center gap-2 font-utility font-semibold text-primary underline decoration-accent decoration-2 underline-offset-[6px] hover:text-secondary transition-colors self-start"
+              >
+                Read All Stories <ArrowRight size={16} aria-hidden="true" />
               </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── Testimonials Preview ─────────────────────────────── */}
-      <section className="py-24 bg-background">
-        <div className="container mx-auto px-4 max-w-6xl">
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16 max-w-xl mx-auto"
-          >
-            <p className="font-utility text-xs text-accent uppercase tracking-widest mb-3">In their own words</p>
-            <h2 className="text-4xl font-display text-primary mb-4">What Our Students Say</h2>
-            <div className="w-24 h-1 bg-accent mx-auto" />
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-            {TESTIMONIALS_PREVIEW.map((t, i) => (
-              <motion.div
-                key={t.name}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                whileHover={{ y: -6 }}
-                className="relative overflow-hidden bg-card border border-border rounded-2xl shadow-sm hover:shadow-xl hover:border-accent/40 transition-shadow duration-300 p-7 flex flex-col"
-              >
-                <span className="absolute -top-2 right-4 font-display text-7xl leading-none text-accent/10 select-none pointer-events-none" aria-hidden="true">
-                  &rdquo;
-                </span>
-                <p className="font-body text-foreground/80 leading-relaxed flex-1 mb-6 relative">"{t.quote}"</p>
-                <div className="flex items-center gap-3 pt-4 border-t border-border/60 relative">
-                  <div className="w-9 h-9 rounded-full bg-accent/15 text-accent font-display font-bold flex items-center justify-center flex-shrink-0">
-                    {t.name.charAt(0)}
-                  </div>
-                  <span className="font-utility text-sm text-primary font-medium">{t.name}</span>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-center"
-          >
-            <Link href="/testimonials">
-              <span className="inline-flex items-center gap-2 text-accent font-utility font-bold text-sm hover:gap-3 transition-all cursor-pointer uppercase tracking-widest">
-                Read All Stories &rarr;
-              </span>
+      {/* Closing invitation */}
+      <section className="px-4 md:px-8 pb-16 md:pb-24 bg-background">
+        <div className="bmc-reveal islamic-pattern relative overflow-hidden rounded-[2rem] mx-auto max-w-6xl px-6 py-16 md:py-24 text-center text-primary-foreground">
+          <div className="absolute inset-0 bg-primary/55" aria-hidden="true" />
+          <div className="relative">
+            <h2 className="text-primary-foreground leading-tight tracking-[-0.01em] mb-5 max-w-2xl mx-auto" style={{ fontSize: 'clamp(2rem, 4.4vw, 3.2rem)' }}>
+              A Safe Space for Growth
+            </h2>
+            <p className="text-lg text-primary-foreground/90 max-w-xl mx-auto mb-9 leading-relaxed">
+              Whether you are taking your very first steps or returning to your roots, there is a place for you here.
+            </p>
+            <Link
+              href="/programmes"
+              className="inline-flex items-center rounded-full bg-bmc-paper text-primary font-utility font-semibold px-8 py-3.5 transition-all hover:bg-accent active:translate-y-px"
+            >
+              Start Your Journey
             </Link>
-          </motion.div>
+          </div>
         </div>
       </section>
-
-      {/* ── Closing CTA ──────────────────────────────────────── */}
-      <section className="islamic-pattern py-24 text-center text-white relative">
-        <div className="absolute inset-0 bg-primary/40 mix-blend-multiply" />
-        <div className="container mx-auto px-4 relative z-10">
-          <h2 className="text-4xl md:text-5xl font-display mb-6 max-w-2xl mx-auto leading-tight">
-            A Safe Space for Growth
-          </h2>
-          <p className="text-xl font-body text-white/90 max-w-xl mx-auto mb-10">
-            Whether you are taking your very first steps or returning to your roots, there is a place for you here.
-          </p>
-          <Link href="/programmes" className="bg-white text-primary font-utility font-bold px-10 py-4 rounded-full hover:bg-accent hover:text-white transition-all shadow-xl inline-block">
-            Start Your Journey
-          </Link>
-        </div>
-      </section>
-
-      </div>
     </>
   );
 }

@@ -73,6 +73,8 @@
   --color-bmc-charcoal: hsl(0 0% 17%);
   --color-bmc-white: hsl(0 0% 100%);
   --color-bmc-cream-dark: hsl(42 28% 89%);
+  --color-bmc-gold-ink: hsl(40 66% 26%);
+  --color-bmc-paper: hsl(40 38% 96.5%);
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -90,6 +92,8 @@
   --bmc-charcoal: 0 0% 17%; /* #2C2C2C */
   --bmc-white: 0 0% 100%; /* #FFFFFF */
   --bmc-cream-dark: 42 28% 89%; /* #EDE8DC */
+  --bmc-gold-ink: 40 66% 26%; /* gold dark enough for text on cream */
+  --bmc-paper: 40 38% 96.5%; /* lighter cream for raised surfaces */
 
   --background: var(--bmc-cream);
   --foreground: var(--bmc-charcoal);
@@ -113,7 +117,7 @@
   --secondary-border: var(--bmc-forest-green);
 
   --muted: var(--bmc-cream-dark);
-  --muted-foreground: var(--bmc-charcoal);
+  --muted-foreground: 0 0% 32%;
   --muted-border: 42 20% 80%;
 
   --accent: var(--bmc-gold);
@@ -127,13 +131,13 @@
   --input: var(--bmc-cream-dark);
   --ring: var(--bmc-gold);
 
-  --app-font-sans: 'DM Sans', sans-serif;
-  --app-font-serif: 'Lora', serif;
+  --app-font-sans: 'DM Sans', system-ui, sans-serif;
+  --app-font-serif: 'Fraunces', Georgia, serif;
   --app-font-mono: Menlo, monospace;
   
-  --font-display: 'Playfair Display', serif;
-  --font-body: 'Lora', serif;
-  --font-utility: 'DM Sans', sans-serif;
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --font-utility: 'DM Sans', system-ui, sans-serif;
 
   --radius: 0.5rem;
 }
@@ -183,7 +187,32 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-display font-bold;
+    @apply font-display font-semibold;
+    text-wrap: balance;
+  }
+  p, li { text-wrap: pretty; }
+
+  ::selection { background: hsl(var(--bmc-gold-light) / 0.55); color: hsl(var(--bmc-forest-green)); }
+  :focus-visible { outline: 2px solid hsl(var(--bmc-forest-green)); outline-offset: 3px; border-radius: 4px; }
+}
+
+/* Calm entrance for the first screen: a short rise, no fade, so the headline is always visible (LCP-safe). */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes bmc-rise { from { transform: translateY(14px); } to { transform: none; } }
+  .bmc-rise { animation: bmc-rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
+  .bmc-rise-2 { animation-delay: 0.12s; }
+  .bmc-rise-3 { animation-delay: 0.24s; }
+}
+
+/* Scroll reveal: progressive enhancement, no JS. Browsers without scroll-driven animations just show the content. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    @keyframes bmc-reveal { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+    .bmc-reveal {
+      animation: bmc-reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 5% entry 45%;
+    }
   }
 }
 
