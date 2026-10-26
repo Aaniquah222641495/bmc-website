@@ -245,7 +245,7 @@ export default function Workshops() {
               href="https://instagram.com/beginners_classes"
               target="_blank"
               rel="noreferrer"
-              className="font-utility font-bold text-primary hover:text-accent transition-colors underline"
+              className="bmc-link-inline font-utility"
             >
               @beginners_classes
             </a>
@@ -253,7 +253,7 @@ export default function Workshops() {
               href="https://tiktok.com/@rukeyabaradien_"
               target="_blank"
               rel="noreferrer"
-              className="font-utility font-bold text-primary hover:text-accent transition-colors underline"
+              className="bmc-link-inline font-utility"
             >
               @rukeyabaradien_
             </a>
@@ -264,7 +264,7 @@ export default function Workshops() {
               href="https://wa.me/27686498593?text=Slm%2C%20please%20let%20me%20know%20about%20upcoming%20workshops"
               target="_blank"
               rel="noreferrer"
-              className="text-primary underline hover:text-accent transition-colors"
+              className="bmc-link-inline"
             >
               WhatsApp message
             </a>

@@ -95,7 +95,7 @@ export function ClassPageLayout({ title, description, children, heroImage, formU
                           <button
                             type="button"
                             onClick={() => setFormOpen(false)}
-                            className="font-utility text-sm text-primary/70 hover:text-primary underline whitespace-nowrap"
+                            className="bmc-link-inline font-utility text-sm whitespace-nowrap"
                           >
                             Hide form
                           </button>
@@ -123,7 +123,7 @@ export function ClassPageLayout({ title, description, children, heroImage, formU
                     href={`https://wa.me/27686498593?text=Slm%2C%20I%27d%20like%20to%20register%20for%20${encodeURIComponent(title)}`}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-primary underline hover:text-accent transition-colors"
+                    className="bmc-link-inline"
                   >
                     WhatsApp
                   </a>

@@ -65,35 +65,39 @@
   --font-body: var(--font-body);
   --font-utility: var(--font-utility);
 
-  --color-bmc-cream: hsl(39 30% 93%);
-  --color-bmc-forest-green: hsl(155 42% 18%);
-  --color-bmc-sage-green: hsl(153 40% 30%);
+  --color-bmc-cream: hsl(40 32% 95%);
+  --color-bmc-forest-green: hsl(158 44% 14%);
+  --color-bmc-sage-green: hsl(155 36% 25%);
   --color-bmc-gold: hsl(44 53% 54%);
   --color-bmc-gold-light: hsl(43 80% 72%);
   --color-bmc-charcoal: hsl(0 0% 17%);
   --color-bmc-white: hsl(0 0% 100%);
-  --color-bmc-cream-dark: hsl(42 28% 89%);
-  --color-bmc-gold-ink: hsl(40 66% 26%);
-  --color-bmc-paper: hsl(40 38% 96.5%);
+  --color-bmc-cream-dark: hsl(40 24% 88%);
+  --color-bmc-gold-ink: hsl(40 64% 27%);
+  --color-bmc-paper: hsl(40 42% 98%);
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
+  /* Soft, deep shadows (two layers: contact + ambient). */
+  --shadow-soft: 0 1px 2px hsl(158 44% 8% / 0.05), 0 28px 56px -32px hsl(158 44% 8% / 0.32);
+  --shadow-lift: 0 1px 2px hsl(158 44% 8% / 0.06), 0 36px 64px -30px hsl(158 44% 8% / 0.4);
 }
 
 :root {
   /* BMC Colors */
-  --bmc-cream: 39 30% 93%; /* #F5F0E8 */
-  --bmc-forest-green: 155 42% 18%; /* #1B4332 */
-  --bmc-sage-green: 153 40% 30%; /* #2D6A4F */
+  --bmc-cream: 40 32% 95%; /* warm ivory */
+  --bmc-forest-green: 158 44% 14%; /* deep forest */
+  --bmc-sage-green: 155 36% 25%;
   --bmc-gold: 44 53% 54%; /* #C9A84C */
   --bmc-gold-light: 43 80% 72%; /* #F0D080 */
   --bmc-charcoal: 0 0% 17%; /* #2C2C2C */
   --bmc-white: 0 0% 100%; /* #FFFFFF */
-  --bmc-cream-dark: 42 28% 89%; /* #EDE8DC */
-  --bmc-gold-ink: 40 66% 26%; /* gold dark enough for text on cream */
-  --bmc-paper: 40 38% 96.5%; /* lighter cream for raised surfaces */
+  --bmc-cream-dark: 40 24% 88%;
+  --bmc-gold-ink: 40 64% 27%; /* gold dark enough for text on ivory (about 7:1) */
+  --bmc-paper: 40 42% 98%; /* lighter ivory for raised surfaces */
 
   --background: var(--bmc-cream);
   --foreground: var(--bmc-charcoal);
@@ -117,7 +121,7 @@
   --secondary-border: var(--bmc-forest-green);
 
   --muted: var(--bmc-cream-dark);
-  --muted-foreground: 0 0% 32%;
+  --muted-foreground: 0 0% 30%;
   --muted-border: 42 20% 80%;
 
   --accent: var(--bmc-gold);
@@ -140,6 +144,7 @@
   --font-utility: 'Nunito Sans', system-ui, sans-serif;
 
   --radius: 0.5rem;
+  --bmc-gold-metal: linear-gradient(135deg, hsl(41 52% 40%) 0%, hsl(45 68% 64%) 38%, hsl(44 78% 80%) 52%, hsl(42 55% 48%) 100%);
 }
 
 .dark {
@@ -187,13 +192,16 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-display font-semibold;
+    @apply font-display font-medium;
+    letter-spacing: -0.012em;
     text-wrap: balance;
   }
   p, li { text-wrap: pretty; }
 
   ::selection { background: hsl(var(--bmc-gold-light) / 0.55); color: hsl(var(--bmc-forest-green)); }
-  :focus-visible { outline: 2px solid hsl(var(--bmc-forest-green)); outline-offset: 3px; border-radius: 4px; }
+  :focus-visible { outline: 2px solid hsl(var(--bmc-forest-green)); outline-offset: 3px; border-radius: 6px; }
+  a { text-decoration: none; }
+  .bmc-band-rules :focus-visible, .islamic-pattern :focus-visible, footer :focus-visible { outline-color: hsl(var(--bmc-gold-light)); }
 }
 
 /* Calm entrance for the first screen: a short rise, no fade, so the headline is always visible (LCP-safe). */
@@ -216,23 +224,140 @@
   }
 }
 
-/* Islamic Geometric Pattern */
+/* ───────── Refined system: patterns, buttons, links, eyebrows, frames ───────── */
+
+/* Tone-on-tone 8-point star lattice for dark green bands (very low contrast). Same geometry as <GirihPattern />. */
 .islamic-pattern {
   background-color: hsl(var(--bmc-forest-green));
-  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%232D6A4F' fill-opacity='0.2'%3E%3Cpath d='M30 0l30 30-30 30L0 30zM15 15l15 15-15 15L0 30zM45 15l15 15-15 15L30 30zM30 15l15 15-15 15L15 30z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-}
-
-/* Mughal arch container */
-.mughal-arch-wrap {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background-image: url("data:image/svg+xml,%3Csvg width='48' height='48' viewBox='-24 -24 48 48' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Cdefs%3E%3Cpath id='s' d='M-12-12H12V12H-12ZM0-17L17 0 0 17-17 0Z'/%3E%3C/defs%3E%3Cg fill='none' stroke='%23E8D9A8' stroke-opacity='0.085' stroke-width='0.7'%3E%3Cuse xlink:href='%23s'/%3E%3Cuse xlink:href='%23s' x='24' y='24'/%3E%3Cuse xlink:href='%23s' x='-24' y='24'/%3E%3Cuse xlink:href='%23s' x='24' y='-24'/%3E%3Cuse xlink:href='%23s' x='-24' y='-24'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 48px 48px;
+  background-position: center;
 }
 
 .gold-divider {
   height: 1px;
-  background: linear-gradient(90deg, transparent, hsl(var(--bmc-gold)), transparent);
+  background: linear-gradient(90deg, transparent, hsl(var(--bmc-gold) / 0.7), transparent);
   width: 100%;
   margin: 2rem 0;
+}
+
+/* Hairline gold rules for the top and bottom of dark bands. */
+.bmc-band-rules::before,
+.bmc-band-rules::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, hsl(43 70% 70% / 0.7) 20%, hsl(44 78% 82% / 0.9) 50%, hsl(43 70% 70% / 0.7) 80%, transparent);
+}
+.bmc-band-rules::before { top: 0; }
+.bmc-band-rules::after { bottom: 0; }
+
+/* Decorative glyph gold (solid, never body text). */
+.bmc-gold-text { color: hsl(40 52% 44%); }
+
+/* 1px metallic gold border that follows border-radius (used on the hero arch). */
+.bmc-gold-frame::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: var(--bmc-gold-metal);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  pointer-events: none;
+}
+
+/* Eyebrow: small letter-spaced caps in readable gold-ink (about 7:1 on ivory). */
+.bmc-eyebrow {
+  font-family: var(--font-utility);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: hsl(var(--bmc-gold-ink));
+}
+.on-dark .bmc-eyebrow, .bmc-eyebrow.on-dark { color: hsl(var(--bmc-gold-light)); }
+
+/* Photo frame: ivory mat, hairline gold ring, deep soft shadow. */
+.bmc-photo {
+  padding: 6px;
+  border-radius: 16px;
+  background: hsl(var(--bmc-paper));
+  box-shadow: 0 0 0 1px hsl(var(--bmc-gold) / 0.38), var(--shadow-soft);
+}
+.bmc-photo > img, .bmc-photo > picture > img { border-radius: 11px; display: block; }
+
+@layer components {
+  /* Buttons: pill, no chunky shadows. */
+  .bmc-btn {
+    display: inline-flex;
+    min-height: 2.9rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 9999px;
+    padding: 0.75rem 1.9rem;
+    font-family: var(--font-utility);
+    font-size: 0.92rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.15s ease;
+  }
+  .bmc-btn:active { transform: translateY(1px); }
+  .bmc-btn-primary {
+    background: linear-gradient(180deg, hsl(158 40% 19%), hsl(158 44% 14%));
+    color: hsl(var(--bmc-paper));
+    box-shadow: inset 0 0 0 1px hsl(var(--bmc-gold) / 0.55), inset 0 1px 0 hsl(0 0% 100% / 0.1), 0 14px 24px -16px hsl(158 44% 8% / 0.55);
+  }
+  .bmc-btn-primary:hover {
+    background: linear-gradient(180deg, hsl(158 38% 24%), hsl(158 42% 17%));
+    box-shadow: inset 0 0 0 1px hsl(var(--bmc-gold-light) / 0.8), inset 0 1px 0 hsl(0 0% 100% / 0.12), 0 18px 28px -16px hsl(158 44% 8% / 0.55);
+  }
+  .bmc-btn-light {
+    background: hsl(var(--bmc-paper));
+    color: hsl(var(--bmc-forest-green));
+    box-shadow: inset 0 0 0 1px hsl(var(--bmc-gold) / 0.6);
+  }
+  .bmc-btn-light:hover { background: hsl(var(--bmc-gold-light)); }
+  .bmc-btn-outline {
+    color: hsl(var(--bmc-paper));
+    box-shadow: inset 0 0 0 1px hsl(var(--bmc-gold-light) / 0.65);
+  }
+  .bmc-btn-outline:hover { background: hsl(0 0% 100% / 0.08); box-shadow: inset 0 0 0 1px hsl(var(--bmc-gold-light)); }
+  .bmc-btn-light:focus-visible, .bmc-btn-outline:focus-visible { outline-color: hsl(var(--bmc-gold-light)); }
+
+  /* Text link without underline: colour, weight and a moving arrow mark it as a link. */
+  .bmc-link {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-utility);
+    font-size: 0.92rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: hsl(var(--bmc-forest-green));
+    transition: color 0.25s ease;
+  }
+  .bmc-link svg { transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+  .bmc-link:hover { color: hsl(var(--bmc-gold-ink)); }
+  .bmc-link:hover svg { transform: translateX(4px); }
+
+  /* Inline link inside a sentence: heavier weight and deep colour, no underline. */
+  .bmc-link-inline {
+    font-weight: 700;
+    color: hsl(var(--bmc-forest-green));
+    transition: color 0.25s ease;
+  }
+  .bmc-link-inline:hover { color: hsl(var(--bmc-gold-ink)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bmc-link svg, .bmc-btn { transition: none; }
+  .bmc-link:hover svg { transform: none; }
 }

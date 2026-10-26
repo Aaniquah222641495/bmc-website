@@ -117,7 +117,7 @@ export default function Contact() {
         >
           <p className="font-utility text-sm text-primary">
             <span className="text-accent font-bold">Note:</span> For class registrations, please use the{' '}
-            <a href="/programmes" className="underline hover:text-accent transition-colors">Register</a> button on the relevant class page.
+            <a href="/programmes" className="bmc-link-inline">Register</a> button on the relevant class page.
           </p>
         </motion.div>
 
@@ -159,7 +159,7 @@ export default function Contact() {
               <div>
                 <p className="font-utility text-xs text-foreground/50 uppercase tracking-widest mb-1">{contact.label}</p>
                 <p className="font-display text-lg text-primary mb-2">{contact.value}</p>
-                <span className="font-utility text-sm text-accent group-hover:underline inline-flex items-center gap-1">
+                <span className="font-utility text-sm text-bmc-gold-ink font-semibold inline-flex items-center gap-1">
                   {contact.cta} <span className="group-hover:translate-x-1 transition-transform">&rarr;</span>
                 </span>
               </div>

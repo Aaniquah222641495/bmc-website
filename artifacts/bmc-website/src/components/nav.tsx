@@ -2,6 +2,7 @@ import { Link, useLocation } from 'wouter';
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { GirihPattern } from '@/components/ornaments';
 
 const NAV_LINKS = [
   { label: 'Home', href: '/' },
@@ -43,22 +44,22 @@ export function Nav() {
     <>
       <header
         className={cn(
-          'fixed top-0 inset-x-0 z-50 bg-background transition-[border-color,box-shadow] duration-300 border-b',
-          isScrolled ? 'border-border shadow-[0_8px_24px_-18px_hsl(155_42%_18%/0.4)]' : 'border-transparent',
+          'fixed top-0 inset-x-0 z-50 bg-background/95 backdrop-blur-md transition-[border-color,box-shadow] duration-300 border-b',
+          isScrolled ? 'border-[hsl(var(--bmc-gold)/0.3)] shadow-[0_18px_32px_-26px_hsl(158_44%_8%/0.45)]' : 'border-transparent',
         )}
       >
         <nav aria-label="Main" className="container mx-auto px-5 md:px-10 h-[4.5rem] flex items-center justify-between">
           <Link href="/" aria-label="Beginners Madrasah Classes, home" className="rounded-md">
             <span className="flex items-center gap-2.5">
               <img src="/assets/bmc-logo-final.webp" alt="" width={260} height={291} className="h-11 w-auto object-contain" />
-              <span className="font-display font-semibold text-primary leading-[1.05] text-[1.05rem]">
+              <span className="font-display font-medium text-primary leading-[1.05] text-[1.05rem] tracking-[-0.005em]">
                 Beginners Madrasah<span className="block text-[0.8rem] font-medium italic text-bmc-gold-ink">Classes</span>
               </span>
             </span>
           </Link>
 
           <div className="hidden md:flex items-center gap-9">
-            <ul className="flex gap-7">
+            <ul className="flex gap-6 lg:gap-8">
               {NAV_LINKS.map((link) => {
                 const active = location === link.href;
                 return (
@@ -67,12 +68,17 @@ export function Nav() {
                       href={link.href}
                       aria-current={active ? 'page' : undefined}
                       className={cn(
-                        'font-utility text-[0.95rem] font-medium py-1 border-b-2 transition-colors',
-                        active
-                          ? 'text-primary border-accent'
-                          : 'text-foreground/80 border-transparent hover:text-primary hover:border-accent/60',
+                        'group relative inline-flex min-h-11 items-center px-0.5 font-utility text-[0.9rem] font-semibold tracking-[0.03em] transition-colors',
+                        active ? 'text-primary' : 'text-foreground/75 hover:text-primary',
                       )}
                     >
+                      <span
+                        aria-hidden="true"
+                        className={cn(
+                          'absolute left-1/2 bottom-1 size-[5px] -translate-x-1/2 rotate-45 bg-[image:var(--bmc-gold-metal)] transition-[opacity,transform] duration-300 motion-reduce:transition-none',
+                          active ? 'opacity-100 scale-100' : 'opacity-0 scale-50 group-hover:opacity-60 group-hover:scale-100',
+                        )}
+                      />
                       {link.label}
                     </Link>
                   </li>
@@ -81,7 +87,7 @@ export function Nav() {
             </ul>
             <Link
               href="/programmes"
-              className="rounded-full bg-primary text-primary-foreground font-utility font-semibold text-[0.95rem] px-6 py-2.5 transition-colors hover:bg-secondary active:translate-y-px"
+              className="bmc-btn bmc-btn-primary !min-h-11 !px-6 !py-2 !text-[0.88rem]"
             >
               Start Learning
             </Link>
@@ -101,8 +107,9 @@ export function Nav() {
       </header>
 
       {open && (
-        <div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Menu" className="fixed inset-0 z-[60] bg-primary text-primary-foreground flex flex-col">
-          <div className="flex items-center justify-between px-5 h-[4.5rem]">
+        <div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Menu" className="fixed inset-0 z-[60] bg-primary text-primary-foreground flex flex-col overflow-hidden">
+          <GirihPattern />
+          <div className="relative flex items-center justify-between px-5 h-[4.5rem]">
             <span className="font-display text-lg">Beginners Madrasah</span>
             <button
               type="button"
@@ -114,14 +121,14 @@ export function Nav() {
               <X className="w-7 h-7" />
             </button>
           </div>
-          <ul className="flex-1 flex flex-col justify-center gap-1 px-8 pb-16">
+          <ul className="relative flex-1 flex flex-col justify-center gap-1 px-8 pb-16">
             {NAV_LINKS.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
                   aria-current={location === link.href ? 'page' : undefined}
                   className={cn(
-                    'block py-3 font-display text-3xl',
+                    'block py-3 font-display font-normal text-3xl tracking-tight',
                     location === link.href ? 'text-bmc-gold-light' : 'text-primary-foreground hover:text-bmc-gold-light',
                   )}
                 >
@@ -130,7 +137,7 @@ export function Nav() {
               </li>
             ))}
             <li className="pt-6">
-              <Link href="/programmes" className="inline-block rounded-full bg-bmc-paper text-primary font-utility font-semibold px-8 py-3.5">
+              <Link href="/programmes" className="bmc-btn bmc-btn-light">
                 Start Learning
               </Link>
             </li>
