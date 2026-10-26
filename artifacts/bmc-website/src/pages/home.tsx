@@ -38,34 +38,6 @@ const [FEATURED, ...REST] = PROGRAMMES;
 
 const WHATSAPP = 'https://wa.me/27686498593';
 
-// Real photos from the client's workshops and classes. Alt text describes what is visible only.
-const HERO_PHOTOS = [
-  {
-    src: '/assets/photo-quran-completion.webp',
-    alt: 'Two women smiling together, one holding a book',
-    width: 800,
-    height: 1067,
-    cls: 'lg:left-[-4.75rem] lg:bottom-[-1.5rem] w-24 sm:w-28 lg:w-32 aspect-[4/5] -rotate-3',
-    pos: 'center 30%',
-  },
-  {
-    src: '/assets/photo-workshop-audience.webp',
-    alt: 'A teacher speaking to a room of seated women at a workshop',
-    width: 750,
-    height: 1282,
-    cls: 'lg:left-[-2.5rem] lg:top-[34%] w-24 sm:w-28 lg:w-24 aspect-[4/5] rotate-2',
-    pos: 'center 55%',
-  },
-  {
-    src: '/assets/photo-workshop-awards.webp',
-    alt: 'A teacher speaking at a workshop, with framed certificates on a table behind her',
-    width: 750,
-    height: 1000,
-    cls: 'lg:right-[0.5rem] lg:bottom-[-4.75rem] w-24 sm:w-28 lg:w-24 aspect-[4/5] -rotate-2',
-    pos: 'center 40%',
-  },
-];
-
 const STEPS = [
   {
     title: 'Choose a programme',
@@ -221,8 +193,8 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Mascot in an arch window, the brand's own shape (founder kept this, 2026-10-26), with a small photo collage */}
-          <div className="flex justify-center lg:mb-16">
+          {/* Mascot in an arch window, the brand's own shape (founder kept this, 2026-10-26) */}
+          <div className="flex justify-center">
             <div className="relative w-full max-w-[19rem] sm:max-w-sm lg:max-w-[28rem]">
               <div
                 className="absolute inset-0 translate-x-3 translate-y-3 rounded-t-[999px] rounded-b-[2rem] border border-accent/60"
@@ -240,23 +212,6 @@ export default function Home() {
                   className="w-full h-auto"
                 />
               </div>
-              {/* Photos: a simple row under the window on small screens, offset and overlapping from lg up */}
-              <ul className="relative mt-8 flex justify-center gap-3 sm:gap-4 lg:mt-0 lg:block">
-                {HERO_PHOTOS.map((ph) => (
-                  <li key={ph.src} className={`lg:absolute shrink-0 rounded-xl bg-white p-1 shadow-[0_14px_28px_-14px_hsl(155_42%_18%/0.5)] ring-1 ring-accent/70 ${ph.cls}`}>
-                    <img
-                      src={ph.src}
-                      alt={ph.alt}
-                      width={ph.width}
-                      height={ph.height}
-                      loading="lazy"
-                      decoding="async"
-                      style={{ objectPosition: ph.pos }}
-                      className="h-full w-full rounded-lg object-cover"
-                    />
-                  </li>
-                ))}
-              </ul>
             </div>
           </div>
         </div>
@@ -342,15 +297,6 @@ export default function Home() {
                 className="w-full h-full object-cover"
               />
             </div>
-            <img
-              src="/assets/bmc-logo-final.webp"
-              alt="Beginners Madrasah Classes emblem: a teacher and two students reading, with the words Est 2024"
-              width={260}
-              height={291}
-              loading="lazy"
-              decoding="async"
-              className="absolute -right-5 top-[58%] w-24 sm:w-28 h-auto drop-shadow-[0_10px_16px_hsl(155_42%_18%/0.3)]"
-            />
             <figcaption className="mt-4 text-center lg:text-left">
               <span className="block font-display text-lg text-primary">Mualimah Rukeya</span>
               <span className="block font-utility text-sm text-foreground/70">Founder &amp; Teacher</span>
