@@ -14,7 +14,7 @@ const linkClass = 'hover:text-bmc-gold-light underline-offset-4 hover:underline 
 
 export function Footer() {
   return (
-    <footer className="bg-primary text-primary-foreground pt-16 pb-8">
+    <footer className="bg-primary text-primary-foreground pt-16 pb-8 border-t-[4px] border-accent">
       <div className="container mx-auto px-5 md:px-10">
         <div className="grid grid-cols-1 md:grid-cols-[1.3fr_1fr_1fr] gap-12 mb-14">
           <div className="flex flex-col items-start gap-4">
@@ -63,6 +63,11 @@ export function Footer() {
 
         <div className="border-t border-primary-foreground/15 pt-6 flex flex-col md:flex-row justify-between gap-3 text-sm font-utility text-primary-foreground/75">
           <p>&copy; {new Date().getFullYear()} Beginners Madrasah Classes. All rights reserved.</p>
+          <div className="flex gap-2 items-center" aria-hidden="true">
+            <span>☽</span>
+            <span className="text-accent text-xs">★</span>
+            <span>☽</span>
+          </div>
           {/* Studio credit, added with the client's permission (2026-10-24) */}
           <p>
             Website by{' '}

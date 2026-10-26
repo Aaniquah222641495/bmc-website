@@ -54,7 +54,43 @@ export default function Home() {
 
       {/* Hero */}
       <section className="relative overflow-hidden bg-background pt-28 pb-16 md:pt-36 md:pb-24">
-        <div className="container mx-auto px-5 md:px-10 grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-10 lg:gap-16 items-center">
+        {/* Decorative ornaments from the original design: star texture, lace corners, hanging lanterns. All aria-hidden, no pointer events. */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          aria-hidden="true"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 8 L43.5 22 L57 18 L48 29 L62 33 L48 37 L57 48 L43.5 44 L40 58 L36.5 44 L23 48 L32 37 L18 33 L32 29 L23 18 L36.5 22 Z' fill='none' stroke='%23C9A84C' stroke-width='0.6'/%3E%3C/svg%3E")`,
+            opacity: 0.06,
+          }}
+        />
+        <img
+          src="/assets/deco-corner.webp"
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          decoding="async"
+          className="absolute top-20 left-0 pointer-events-none select-none"
+          style={{ width: 'clamp(90px, 18vw, 280px)', opacity: 0.5 }}
+        />
+        <img
+          src="/assets/deco-corner.webp"
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          decoding="async"
+          className="absolute bottom-0 right-0 pointer-events-none select-none"
+          style={{ width: 'clamp(90px, 18vw, 280px)', opacity: 0.5, transform: 'rotate(180deg)' }}
+        />
+        <img
+          src="/assets/deco-lanterns.webp"
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          decoding="async"
+          className="absolute top-20 right-1 sm:right-8 lg:right-auto lg:left-1/2 pointer-events-none select-none lg:-translate-x-1/2"
+          style={{ width: 'clamp(56px, 16vw, 240px)', opacity: 0.65 }}
+        />
+        <div className="relative container mx-auto px-5 md:px-10 grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-10 lg:gap-16 items-center">
           <div>
             <h1
               className="bmc-rise text-primary leading-[1.04] tracking-[-0.02em] mb-6"
@@ -89,39 +125,33 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Mascot in an arch window, the brand's own shape */}
+          {/* Mascot sits freely in the hero, with a gentle float (stopped under reduced motion) */}
           <div className="flex justify-center">
-            <div className="relative w-full max-w-[19rem] sm:max-w-sm lg:max-w-[28rem]">
-              <div
-                className="absolute inset-0 translate-x-3 translate-y-3 rounded-t-[999px] rounded-b-[2rem] border border-accent/60"
-                aria-hidden="true"
-              />
-              <div className="relative rounded-t-[999px] rounded-b-[2rem] bg-bmc-paper px-6 pt-14 pb-8 sm:px-10 sm:pt-20 shadow-[0_30px_60px_-30px_hsl(155_42%_18%/0.35)]">
-                <img
-                  src="/assets/mascot-2.webp"
-                  alt="Illustration of Mualimah and two students reading the Qur'an, with the Beginners Madrasah Classes banner"
-                  width={800}
-                  height={640}
-                  fetchPriority="high"
-                  decoding="async"
-                  draggable={false}
-                  className="w-full h-auto"
-                />
-              </div>
-            </div>
+            <img
+              src="/assets/mascot-2.webp"
+              alt="Illustration of Mualimah and two students reading the Qur'an, with the Beginners Madrasah Classes banner"
+              width={800}
+              height={640}
+              fetchPriority="high"
+              decoding="async"
+              draggable={false}
+              className="bmc-float w-full max-w-[17rem] sm:max-w-sm lg:max-w-[30rem] h-auto"
+            />
           </div>
         </div>
       </section>
 
       {/* What you can expect */}
-      <section className="bg-bmc-paper border-y border-border">
+      <section className="islamic-pattern relative text-primary-foreground">
         <div className="container mx-auto px-5 md:px-10 py-14 md:py-20">
           <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-10 gap-y-10">
             {PILLARS.map(({ Icon, title, desc }) => (
-              <li key={title} className="bmc-reveal">
-                <Icon size={22} strokeWidth={1.6} className="text-secondary mb-4" aria-hidden="true" />
-                <h2 className="text-xl text-primary mb-2">{title}</h2>
-                <p className="text-foreground/75 leading-relaxed text-[0.95rem]">{desc}</p>
+              <li key={title} className="bmc-reveal flex flex-col items-center text-center">
+                <div className="w-16 h-16 rounded-full border border-accent flex items-center justify-center mb-4 text-bmc-gold-light" aria-hidden="true">
+                  <Icon size={24} strokeWidth={1.6} />
+                </div>
+                <h2 className="text-xl text-primary-foreground mb-2">{title}</h2>
+                <p className="text-primary-foreground/85 leading-relaxed text-[0.95rem]">{desc}</p>
               </li>
             ))}
           </ul>
@@ -132,7 +162,7 @@ export default function Home() {
       <section className="py-20 md:py-28 bg-background">
         <div className="container mx-auto px-5 md:px-10 grid grid-cols-1 lg:grid-cols-[0.8fr_1.2fr] gap-12 lg:gap-20 items-center">
           <figure className="bmc-reveal max-w-sm mx-auto lg:mx-0 w-full">
-            <div className="aspect-[4/5] overflow-hidden rounded-t-[999px] rounded-b-2xl bg-muted shadow-[0_30px_60px_-34px_hsl(155_42%_18%/0.4)]">
+            <div className="aspect-[4/5] overflow-hidden rounded-2xl bg-muted shadow-[0_30px_60px_-34px_hsl(155_42%_18%/0.4)]">
               <img
                 src="/assets/photo-founder-teaching.webp"
                 alt="Mualimah Rukeya teaching a workshop"
@@ -191,7 +221,7 @@ export default function Home() {
             {PROGRAMMES.map(({ title, path, descShort, price, tag, image, imagePosition, gradient }) => (
               <li key={path} className="bmc-reveal">
                 <Link href={`/programmes${path}`} className="group flex flex-col h-full rounded-2xl">
-                  <div className={`relative aspect-[4/3] overflow-hidden rounded-t-[999px] rounded-b-xl bg-gradient-to-br ${gradient}`}>
+                  <div className={`relative aspect-[4/3] overflow-hidden rounded-xl bg-gradient-to-br ${gradient}`}>
                     {image && (
                       <img
                         src={image}
@@ -257,8 +287,8 @@ export default function Home() {
       </section>
 
       {/* Closing invitation */}
-      <section className="px-4 md:px-8 pb-16 md:pb-24 bg-background">
-        <div className="bmc-reveal islamic-pattern relative overflow-hidden rounded-[2rem] mx-auto max-w-6xl px-6 py-16 md:py-24 text-center text-primary-foreground">
+      <section className="bg-background">
+        <div className="bmc-reveal islamic-pattern relative overflow-hidden px-6 py-16 md:py-24 text-center text-primary-foreground">
           <div className="absolute inset-0 bg-primary/55" aria-hidden="true" />
           <div className="relative">
             <h2 className="text-primary-foreground leading-tight tracking-[-0.01em] mb-5 max-w-2xl mx-auto" style={{ fontSize: 'clamp(2rem, 4.4vw, 3.2rem)' }}>
