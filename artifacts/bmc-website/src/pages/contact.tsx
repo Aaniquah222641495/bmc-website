@@ -98,10 +98,9 @@ export default function Contact() {
             animate={{ opacity: 1, y: 0 }}
             className="text-center md:text-left"
           >
-            <h1 className="text-4xl md:text-5xl font-display text-primary mb-4">
+            <h1 className="text-4xl md:text-5xl font-display text-primary mb-6">
               Get In Touch
             </h1>
-            <div className="w-24 h-1 bg-accent mb-6 mx-auto md:mx-0" />
             <p className="font-body text-foreground/70 text-lg max-w-xl">
               We'd love to hear from you. Reach out on any of the platforms below and we'll get back to you as soon as possible, InshaAllah.
             </p>

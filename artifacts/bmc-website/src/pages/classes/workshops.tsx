@@ -142,8 +142,7 @@ export default function Workshops() {
           className="mb-16 max-w-5xl mx-auto bg-card rounded-2xl overflow-hidden border border-border shadow-xl"
         >
           <div className="islamic-pattern py-12 px-8 md:px-12">
-            <h1 className="text-4xl md:text-5xl font-display text-white mb-4">Online Workshops & Short Courses</h1>
-            <div className="w-20 h-1 bg-accent mb-6" />
+            <h1 className="text-4xl md:text-5xl font-display text-white mb-6">Online Workshops & Short Courses</h1>
             <p className="font-body text-lg leading-relaxed max-w-2xl text-bmc-cream">
               Focused online sessions and short courses on essential Islamic topics: practical, accessible, and designed to leave you with knowledge you can use straight away.
             </p>
@@ -157,10 +156,8 @@ export default function Workshops() {
           transition={{ delay: 0.15 }}
           className={`mb-16 mx-auto ${multiple ? 'max-w-6xl' : 'max-w-5xl'}`}
         >
-          <div className="flex items-center gap-3 mb-6">
-            <div className="h-px bg-accent flex-1" />
+          <div className="flex items-center justify-center gap-3 mb-6">
             <span className="font-utility text-sm text-accent uppercase tracking-widest font-bold whitespace-nowrap">Available Now</span>
-            <div className="h-px bg-accent flex-1" />
           </div>
 
           {CURRENT_ONLINE_WORKSHOPS.length === 0 ? (
@@ -184,10 +181,8 @@ export default function Workshops() {
           transition={{ delay: 0.25 }}
           className="mb-16 max-w-5xl mx-auto"
         >
-          <div className="flex items-center gap-3 mb-6">
-            <div className="h-px bg-border flex-1" />
+          <div className="flex items-center justify-center gap-3 mb-6">
             <span className="font-utility text-sm text-foreground/50 uppercase tracking-widest whitespace-nowrap">Previous Workshops</span>
-            <div className="h-px bg-border flex-1" />
           </div>
 
           <p className="font-body text-foreground/60 text-center mb-8">
@@ -204,10 +199,8 @@ export default function Workshops() {
           transition={{ delay: 0.35 }}
           className="mb-16 max-w-5xl mx-auto"
         >
-          <div className="flex items-center gap-3 mb-6">
-            <div className="h-px bg-accent flex-1" />
+          <div className="flex items-center justify-center gap-3 mb-6">
             <span className="font-utility text-sm text-accent uppercase tracking-widest font-bold whitespace-nowrap">Also Available</span>
-            <div className="h-px bg-accent flex-1" />
           </div>
 
           <div className="bg-card border border-border rounded-2xl p-8 flex flex-col md:flex-row items-start md:items-center gap-6">

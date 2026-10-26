@@ -151,10 +151,8 @@ export default function InPersonWorkshops() {
 
         {/* Past Workshops */}
         <div>
-          <div className="flex items-center gap-3 mb-6">
-            <div className="h-px bg-border flex-1" />
+          <div className="flex items-center justify-center gap-3 mb-6">
             <span className="font-utility text-sm text-foreground/50 uppercase tracking-widest whitespace-nowrap">Previous Workshops</span>
-            <div className="h-px bg-border flex-1" />
           </div>
 
           <PastWorkshopsGrid workshops={PAST_WORKSHOPS} delayBase={0.45} />

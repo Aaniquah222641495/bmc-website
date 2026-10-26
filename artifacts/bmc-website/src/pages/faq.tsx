@@ -11,7 +11,7 @@ function FaqItem({ q, a }: { q: string; a: string }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="border-b border-border/60 last:border-b-0">
+    <div className="rounded-xl transition-colors hover:bg-bmc-paper -mx-3 px-3">
       <button
         onClick={() => setOpen(!open)}
         className="w-full flex items-center justify-between gap-4 py-5 text-left group"
@@ -75,10 +75,9 @@ export default function Faq() {
             animate={{ opacity: 1, y: 0 }}
           >
             <p className="font-utility text-xs text-accent uppercase tracking-widest mb-3">Need help?</p>
-            <h1 className="text-4xl md:text-5xl font-display text-primary mb-4">
+            <h1 className="text-4xl md:text-5xl font-display text-primary mb-6">
               Frequently Asked Questions
             </h1>
-            <div className="w-24 h-1 bg-accent mx-auto mb-6" />
             <p className="font-body text-foreground/70 text-lg">
               Can't find your answer here? We're always happy to help.
             </p>

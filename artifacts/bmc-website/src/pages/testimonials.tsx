@@ -138,8 +138,7 @@ export default function Testimonials() {
           className="text-center mb-16 max-w-2xl mx-auto relative"
         >
           <p className="font-utility text-xs text-accent uppercase tracking-widest mb-3">In their own words</p>
-          <h1 className="text-4xl md:text-5xl font-display text-primary mb-4">Student Testimonials</h1>
-          <div className="w-24 h-1 bg-accent mx-auto mb-6" />
+          <h1 className="text-4xl md:text-5xl font-display text-primary mb-6">Student Testimonials</h1>
           <p className="font-body text-foreground/70 text-lg">
             Real stories from the women who've joined our classes — reverts finding their footing, beginners building confidence, and mothers passing it on to their children.
           </p>
@@ -185,7 +184,7 @@ export default function Testimonials() {
                   &rdquo;
                 </span>
                 <p className="font-body text-foreground/80 leading-relaxed flex-1 mb-6 relative">"{t.quote}"</p>
-                <div className="flex items-center gap-3 pt-4 border-t border-border/60 relative">
+                <div className="flex items-center gap-3 pt-2 relative">
                   <div className="w-9 h-9 rounded-full bg-accent/15 text-accent font-display font-bold flex items-center justify-center flex-shrink-0">
                     {t.name.charAt(0)}
                   </div>
@@ -244,7 +243,7 @@ export default function Testimonials() {
                 viewport={{ once: true }}
                 transition={{ delay: gi * 0.08, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                 whileHover={{ y: -4 }}
-                className="bg-card border border-border border-l-4 border-l-accent/50 rounded-2xl shadow-sm hover:shadow-lg hover:border-l-accent transition-shadow duration-300 p-7"
+                className="bg-card border border-border rounded-2xl shadow-sm hover:shadow-lg transition-shadow duration-300 p-7"
               >
                 <div className="flex items-center gap-3 mb-5">
                   <img src="/assets/bullet.webp" alt="" width={14} height={14} loading="lazy" decoding="async" />
@@ -252,7 +251,7 @@ export default function Testimonials() {
                 </div>
                 <div className="space-y-5">
                   {group.items.map((quote, i) => (
-                    <div key={i} className={i > 0 ? 'pt-5 border-t border-border/60' : ''}>
+                    <div key={i} className={i > 0 ? 'pt-5' : ''}>
                       <p className="font-body text-foreground/75 leading-relaxed text-sm mb-2">"{quote}"</p>
                       <span className="font-utility text-[0.7rem] text-foreground/40 uppercase tracking-widest">Student, 2025</span>
                     </div>

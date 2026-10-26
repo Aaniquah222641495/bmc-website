@@ -44,17 +44,14 @@ export function Nav() {
     <>
       <header
         className={cn(
-          'fixed top-0 inset-x-0 z-50 bg-background/95 backdrop-blur-md transition-[border-color,box-shadow] duration-300 border-b',
-          isScrolled ? 'border-[hsl(var(--bmc-gold)/0.3)] shadow-[0_18px_32px_-26px_hsl(158_44%_8%/0.45)]' : 'border-transparent',
+          'fixed top-0 inset-x-0 z-50 bg-background/95 backdrop-blur-md transition-shadow duration-300',
+          isScrolled ? 'shadow-[0_18px_32px_-22px_hsl(158_44%_8%/0.4)]' : 'shadow-none',
         )}
       >
         <nav aria-label="Main" className="container mx-auto px-5 md:px-10 h-[4.5rem] flex items-center justify-between">
-          <Link href="/" aria-label="Beginners Madrasah Classes, home" className="rounded-md">
-            <span className="flex items-center gap-2.5">
-              <img src="/assets/bmc-logo-final.webp" alt="" width={260} height={291} className="h-11 w-auto object-contain" />
-              <span className="font-display font-medium text-primary leading-[1.05] text-[1.05rem] tracking-[-0.005em]">
-                Beginners Madrasah<span className="block text-[0.8rem] font-medium italic text-bmc-gold-ink">Classes</span>
-              </span>
+          <Link href="/" aria-label="Beginners Madrasah Classes, home" className="rounded-md inline-flex min-h-11 items-center">
+            <span className="font-display text-primary leading-none text-[1.2rem] sm:text-[1.4rem] font-medium tracking-[-0.012em] whitespace-nowrap">
+              Beginners Madrasah <span className="italic font-normal text-bmc-gold-ink">Classes</span>
             </span>
           </Link>
 

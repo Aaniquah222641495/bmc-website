@@ -3,7 +3,7 @@ import { ArrowRight, BookOpen, MessageCircle, ShieldCheck, Wallet, Wifi } from '
 import { PROGRAMMES as ALL_PROGRAMMES, programmeTags } from '@/data/programmes';
 import { Seo } from '@/components/seo';
 import { homeJsonLd } from '@/lib/structured-data';
-import { GirihPattern, Lantern, OrnamentDivider } from '@/components/ornaments';
+import { GirihPattern, HeroGraphic, OrnamentDivider, Rosette } from '@/components/ornaments';
 
 // Real student words, supplied by the client. Use verbatim; do not edit or add.
 const TESTIMONIALS_PREVIEW = [
@@ -134,19 +134,19 @@ export default function Home() {
 
       {/* Hero */}
       <section className="relative overflow-hidden bg-background pt-36 pb-24 md:pt-44 md:pb-36">
-        {/* Soft ivory glow behind the arch window. */}
+        {/* Quiet warmth and a large faint khatam rosette: decoration only, behind everything, never under text. */}
         <div
           className="absolute inset-0 pointer-events-none"
           aria-hidden="true"
-          style={{ background: 'radial-gradient(55% 60% at 76% 48%, hsl(var(--bmc-paper)) 0%, transparent 72%)' }}
+          style={{
+            background:
+              'radial-gradient(60% 70% at 74% 46%, hsl(var(--bmc-paper)) 0%, transparent 70%), radial-gradient(42% 52% at 0% 100%, hsl(var(--bmc-gold-light) / 0.22) 0%, transparent 70%)',
+          }}
         />
-        {/* Two fine-line lanterns, hung from the top edge. Decorative, never over text. */}
-        <div className="absolute top-16 right-5 sm:right-12 lg:right-auto lg:left-[53%] flex items-start gap-6 pointer-events-none" aria-hidden="true">
-          <Lantern width={28} className="opacity-90" />
-          <Lantern width={40} className="mt-6 hidden sm:block opacity-90" />
-        </div>
+        <Rosette className="absolute left-0 bottom-0 h-[34rem] w-[48rem]" origin="0% 100%" opacity={0.2} />
+        <Rosette className="absolute right-0 top-0 hidden h-[30rem] w-[44rem] sm:block" origin="100% 0%" opacity={0.14} />
 
-        <div className="relative container mx-auto px-5 md:px-10 grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-16 lg:gap-20 items-center">
+        <div className="relative container mx-auto px-5 md:px-10 grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-12 lg:gap-20 items-center">
           <div>
             <p className="bmc-rise bmc-eyebrow mb-7 leading-[1.9]">
               Est. 2024 &middot; Six programmes &middot; Online and in Cape Town
@@ -173,32 +173,18 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Mascot in an arch window, the brand's own shape (founder kept this, 2026-10-26) */}
-          <div className="flex justify-center">
-            <div className="relative w-full max-w-[19rem] sm:max-w-sm lg:max-w-[28rem]">
-              <div className="bmc-gold-frame absolute -inset-3 rounded-t-[999px] rounded-b-[2.75rem]" aria-hidden="true" />
-              <div className="relative rounded-t-[999px] rounded-b-[2rem] bg-bmc-paper px-6 pt-14 pb-8 sm:px-10 sm:pt-20 shadow-lift">
-                <img
-                  src="/assets/mascot-2.webp"
-                  alt="Illustration of Mualimah and two students reading the Qur'an, with the Beginners Madrasah Classes banner"
-                  width={800}
-                  height={640}
-                  fetchPriority="high"
-                  decoding="async"
-                  draggable={false}
-                  className="w-full h-auto"
-                />
-              </div>
-            </div>
+          {/* Mascot inside a code-drawn mihrab arch (HeroGraphic). Mascot-2 is the brand's mascot (founder, 2026-10-26). */}
+          <div className="flex justify-center lg:justify-end">
+            <HeroGraphic className="max-w-[19.5rem] sm:max-w-[22rem] lg:max-w-[27rem]" />
           </div>
         </div>
       </section>
 
       {/* What you can expect */}
-      <section className="bmc-band-rules relative overflow-hidden bg-primary text-primary-foreground">
+      <section className="relative overflow-hidden bg-primary text-primary-foreground">
         <GirihPattern />
         <div className="relative container mx-auto px-5 md:px-10 py-20 md:py-28">
-          <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-14 lg:gap-y-0 lg:divide-x divide-[hsl(43_70%_72%/0.2)]">
+          <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-14 lg:gap-y-0">
             {PILLARS.map(({ Icon, title, desc }) => (
               <li key={title} className="bmc-reveal flex flex-col items-center text-center lg:px-6">
                 <div className="bmc-gold-frame relative w-14 h-14 rounded-full flex items-center justify-center mb-6 text-bmc-gold-light" aria-hidden="true">
@@ -237,9 +223,8 @@ export default function Home() {
                     className="aspect-[4/3] w-full object-cover"
                   />
                 </div>
-                <p className="flex items-center gap-4 mb-4" aria-hidden="true">
+                <p className="mb-4" aria-hidden="true">
                   <span className="font-display italic text-bmc-gold-ink text-[1.5rem] leading-none">0{i + 1}</span>
-                  <span className="h-px flex-1 bg-gradient-to-r from-[hsl(var(--bmc-gold)/0.7)] to-transparent" />
                 </p>
                 <h3 className="text-[1.65rem] leading-tight text-primary mb-3">
                   <span className="sr-only">Step {i + 1}: </span>
@@ -304,7 +289,7 @@ export default function Home() {
       </section>
 
       {/* Programmes: one featured, the rest in a single quiet list */}
-      <section className={`${SECTION} bg-bmc-paper border-y border-[hsl(var(--bmc-gold)/0.25)]`}>
+      <section className={`${SECTION} bg-bmc-paper`}>
         <div className="container mx-auto px-5 md:px-10">
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-14 md:mb-20">
             <h2 className={H2} style={H2_STYLE}>
@@ -318,7 +303,7 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] gap-8 lg:gap-12">
             <Link
               href={`/programmes${FEATURED.path}`}
-              className="bmc-reveal group flex flex-col rounded-[1.25rem] bg-card p-3 sm:p-4 shadow-soft ring-1 ring-[hsl(var(--bmc-gold)/0.3)] transition-shadow duration-500 hover:shadow-lift"
+              className="bmc-reveal group flex flex-col rounded-[1.25rem] bg-card p-3 sm:p-4 shadow-soft ring-1 ring-[hsl(var(--bmc-gold)/0.3)] bmc-lift transition-shadow duration-500 hover:shadow-lift"
             >
               <div className={`relative aspect-[4/3] overflow-hidden rounded-[0.9rem] bg-gradient-to-br ${FEATURED.gradient}`}>
                 {FEATURED.image && (
@@ -341,7 +326,7 @@ export default function Home() {
                 </h3>
                 <TagList tags={programmeTags(FEATURED)} className="mt-5" />
                 <p className="mt-5 text-foreground/80 leading-[1.7] text-[1.02rem] flex-1">{FEATURED.descShort}</p>
-                <div className="mt-8 flex items-center justify-between border-t border-border pt-5">
+                <div className="mt-8 flex items-center justify-between pt-2">
                   <span className="font-display text-xl font-medium text-primary">{FEATURED.price}</span>
                   <span className="bmc-link !min-h-0 group-hover:text-bmc-gold-ink">
                     Learn more
@@ -351,12 +336,12 @@ export default function Home() {
               </div>
             </Link>
 
-            <ul className="bmc-reveal flex flex-col overflow-hidden rounded-[1.25rem] bg-card shadow-soft ring-1 ring-[hsl(var(--bmc-gold)/0.3)] divide-y divide-border">
+            <ul className="bmc-reveal flex flex-col overflow-hidden rounded-[1.25rem] bg-card shadow-soft ring-1 ring-[hsl(var(--bmc-gold)/0.3)] gap-1.5 p-2">
               {REST.map((p) => (
                 <li key={p.path} className="flex-1">
                   <Link
                     href={`/programmes${p.path}`}
-                    className="group flex h-full items-center gap-4 p-4 transition-colors duration-300 hover:bg-bmc-paper"
+                    className="group flex h-full items-center gap-4 rounded-[0.9rem] p-3 sm:p-4 transition-colors duration-300 hover:bg-bmc-paper"
                   >
                     <div className={`relative h-[4.5rem] w-[4.5rem] sm:h-20 sm:w-20 shrink-0 overflow-hidden rounded-[0.7rem] bg-gradient-to-br ${p.gradient}`}>
                       {p.image && (
@@ -460,7 +445,7 @@ export default function Home() {
       </section>
 
       {/* Closing invitation */}
-      <section className="bmc-band-rules relative overflow-hidden bg-primary text-primary-foreground">
+      <section className="relative overflow-hidden bg-primary text-primary-foreground">
         <GirihPattern />
         <div className="bmc-reveal relative px-6 py-24 md:py-36 text-center">
           <OrnamentDivider tone="dark" className="mb-10" />

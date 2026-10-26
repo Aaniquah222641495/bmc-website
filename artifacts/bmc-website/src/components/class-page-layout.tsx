@@ -61,9 +61,7 @@ export function ClassPageLayout({ title, description, children, heroImage, formU
             {showRegistration && (
               <div className="mt-16">
                 <div className="flex items-center justify-center gap-4 mb-10">
-                  <div className="h-px bg-accent flex-1 max-w-[100px]" />
                   <span className="font-display text-primary text-xl tracking-widest uppercase">Register Below</span>
-                  <div className="h-px bg-accent flex-1 max-w-[100px]" />
                 </div>
 
                 {!formOpen && (
@@ -88,7 +86,7 @@ export function ClassPageLayout({ title, description, children, heroImage, formU
                       className="overflow-hidden"
                     >
                       <div className="rounded-2xl overflow-hidden border-2 border-accent/30 shadow-lg">
-                        <div className="bg-primary/5 py-4 px-6 border-b border-accent/20 flex items-center justify-between gap-4">
+                        <div className="bg-primary/5 py-4 px-6 flex items-center justify-between gap-4">
                           <p className="font-utility text-sm text-primary/70 tracking-wide">
                             Complete the form below to register for <strong className="text-primary">{title}</strong>
                           </p>

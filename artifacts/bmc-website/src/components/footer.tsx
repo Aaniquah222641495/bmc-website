@@ -15,12 +15,22 @@ const linkClass = 'inline-flex min-h-11 items-center text-primary-foreground/85 
 
 export function Footer() {
   return (
-    <footer className="bmc-band-rules relative overflow-hidden bg-[hsl(158_46%_10.5%)] text-primary-foreground pt-20 pb-8">
+    <footer className="relative overflow-hidden bg-[hsl(158_46%_10.5%)] text-primary-foreground pt-20 pb-8">
       <GirihPattern />
       <div className="relative container mx-auto px-5 md:px-10">
         <div className="grid grid-cols-1 md:grid-cols-[1.3fr_1fr_1fr] gap-14 mb-16">
           <div className="flex flex-col items-start gap-4">
-            <img src="/assets/bmc-logo-final.webp" alt="Beginners Madrasah Classes" loading="lazy" width={96} height={96} className="h-24 w-auto object-contain" />
+            <div className="w-full max-w-[15rem] rounded-t-[999px] rounded-b-2xl bg-bmc-paper px-5 pt-12 pb-5 shadow-lift">
+              <img
+                src="/assets/mascot-2.webp"
+                alt="Illustration of Mualimah and two students reading the Qur'an, with the Beginners Madrasah Classes banner"
+                loading="lazy"
+                decoding="async"
+                width={800}
+                height={640}
+                className="w-full h-auto"
+              />
+            </div>
             <p className="text-primary-foreground/85 max-w-sm leading-relaxed">
               Foundations of Islamic Knowledge. A warm, safe, beginner-friendly Islamic learning space for women and children.
             </p>
@@ -63,7 +73,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-[hsl(43_70%_72%/0.22)] pt-7 flex flex-col md:flex-row md:items-center justify-between gap-4 text-sm font-utility text-primary-foreground/75">
+        <div className="pt-4 flex flex-col md:flex-row md:items-center justify-between gap-4 text-sm font-utility text-primary-foreground/75">
           <p>&copy; {new Date().getFullYear()} Beginners Madrasah Classes. All rights reserved.</p>
           <Khatam size={22} className="hidden md:block" />
           {/* Studio credit, added with the client's permission (2026-10-24) */}

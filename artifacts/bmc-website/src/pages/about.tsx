@@ -94,8 +94,7 @@ export default function About() {
             className="mx-auto mb-4 pointer-events-none select-none"
             style={{ width: 'clamp(140px, 18vw, 220px)', opacity: 0.9 }}
           />
-          <h1 className="text-4xl md:text-5xl font-display text-primary mb-4">Our Story</h1>
-          <div className="w-24 h-1 bg-accent mx-auto mb-6" />
+          <h1 className="text-4xl md:text-5xl font-display text-primary mb-6">Our Story</h1>
           <p className="font-body text-foreground/60 text-lg max-w-xl mx-auto">
             How a passion for teaching grew into a thriving Islamic learning community.
           </p>

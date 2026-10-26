@@ -34,8 +34,7 @@ export default function Programmes() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-12 max-w-3xl mx-auto"
         >
-          <h1 className="text-4xl md:text-5xl font-display text-primary mb-4">Our Programmes</h1>
-          <div className="w-24 h-1 bg-accent mx-auto mb-6" />
+          <h1 className="text-4xl md:text-5xl font-display text-primary mb-6">Our Programmes</h1>
           <p className="font-body text-lg text-foreground/70 leading-relaxed">
             Designed to meet you wherever you are on your journey, whether you're taking your very first steps or looking to deepen your knowledge. <span className="text-accent">☽</span>
           </p>
@@ -94,7 +93,7 @@ export default function Programmes() {
                 className="h-full"
               >
                 <Link href={`/programmes${path}`}>
-                  <div className="bg-card rounded-2xl border border-border hover:border-accent hover:shadow-xl transition-all cursor-pointer h-full flex flex-col group overflow-hidden">
+                  <div className="bg-card rounded-2xl border border-border hover:border-accent hover:shadow-xl hover:-translate-y-1 motion-reduce:hover:translate-y-0 transition-all duration-300 cursor-pointer h-full flex flex-col group overflow-hidden">
 
                     {/* Image block */}
                     <div className={`relative w-full h-52 overflow-hidden bg-gradient-to-br ${gradient} shrink-0`}>
@@ -125,7 +124,7 @@ export default function Programmes() {
                         {title}
                       </h3>
                       <p className="text-foreground/65 font-body text-sm leading-relaxed flex-1">{desc}</p>
-                      <div className="flex items-center justify-between mt-5 pt-4 border-t border-border">
+                      <div className="flex items-center justify-between mt-5 pt-2">
                         <span className="font-utility text-xs font-bold text-accent bg-accent/10 px-3 py-1 rounded-full">{price}</span>
                         <span className="text-primary font-utility font-bold group-hover:text-accent transition-colors flex items-center gap-1 text-sm">
                           View Details <span className="group-hover:translate-x-1 transition-transform inline-block">&rarr;</span>

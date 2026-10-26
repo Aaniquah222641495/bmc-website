@@ -26,8 +26,7 @@ interface IncludedListProps {
 export function IncludedList({ items, heading = "What's Included" }: IncludedListProps) {
   return (
     <div>
-      <div className="flex items-center gap-4 mb-6">
-        <div className="h-px bg-accent w-8" />
+      <div className="mb-6">
         <h2 className="font-display text-2xl text-primary whitespace-nowrap">{heading}</h2>
       </div>
       <ul className="space-y-3">

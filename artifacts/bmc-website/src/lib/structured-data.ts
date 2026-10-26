@@ -31,7 +31,7 @@ export const organization = {
   name: SITE_NAME,
   alternateName: 'BMC',
   url: `${SITE_URL}/`,
-  logo: `${SITE_URL}/assets/bmc-logo-final.webp`,
+  logo: `${SITE_URL}/assets/mascot-2.webp`,
   image: `${SITE_URL}/og-image.jpg`,
   description:
     'A beginner-friendly Islamic learning space for women and children in Cape Town, with online and in-person programmes.',
