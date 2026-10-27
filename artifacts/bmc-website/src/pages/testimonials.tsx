@@ -109,13 +109,19 @@ export default function Testimonials() {
         art={<FeaturedQuote />}
       />
 
-      {/* Named testimonials */}
+      {/* Named testimonials: heading holds on the left while the cards scroll */}
       <section className={`${SECTION_Y} bg-background`}>
-        <div className={CONTAINER}>
-          <SectionHead title="From Our Students" center className="mb-14 md:mb-20" />
-          <ul className="mx-auto max-w-6xl gap-6 md:columns-2 lg:columns-3 lg:gap-8">
+        <div className={`${CONTAINER} mx-auto grid max-w-6xl grid-cols-1 gap-10 lg:grid-cols-[0.75fr_2fr] lg:gap-14`}>
+          <div className="lg:sticky lg:top-32 lg:self-start">
+            <p className="bmc-eyebrow mb-4">In their own names</p>
+            <h2 className={H2} style={{ fontSize: 'clamp(2rem, 3.6vw, 2.9rem)' }}>From Our Students</h2>
+            <p className="mt-5 max-w-sm text-[1.05rem] leading-[1.7] text-foreground/75">
+              Six students who were happy to put their names to their words.
+            </p>
+          </div>
+          <ul className="gap-6 md:columns-2 lg:gap-7">
             {NAMED_TESTIMONIALS.map((t) => (
-              <li key={t.name} className="mb-6 break-inside-avoid lg:mb-8">
+              <li key={t.name} className="mb-6 break-inside-avoid lg:mb-7">
                 <figure className={`bmc-reveal ${CARD} relative overflow-hidden p-8 md:p-9`}>
                   <blockquote className="relative leading-[1.75] text-foreground/90">"{t.quote}"</blockquote>
                   <figcaption className="relative mt-7 flex items-center gap-3">
@@ -131,24 +137,24 @@ export default function Testimonials() {
         </div>
       </section>
 
-      {/* Real class photo */}
+      {/* The class behind the words: wide photo with a caption card resting on it */}
       <section className={`${SECTION_Y} bg-bmc-paper`}>
-        <div className={`${CONTAINER} mx-auto grid max-w-5xl grid-cols-1 items-center gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20`}>
-          <div className="bmc-photo bmc-reveal">
-            <img
-              src="/assets/photo-womens-madrasah.webp"
-              alt="The Women's Online Madrasah, gathered together on a live class call"
-              loading="lazy"
-              decoding="async"
-              className="aspect-[4/3] w-full object-cover object-top"
-            />
-          </div>
-          <div className="bmc-reveal">
-            <p className="bmc-eyebrow mb-4">Behind the Scenes</p>
-            <h2 className={H2} style={{ fontSize: 'clamp(1.8rem, 3.2vw, 2.5rem)' }}>The Women's Online Madrasah</h2>
-            <p className="mt-5 text-[1.08rem] leading-[1.7] text-foreground/80">
-              Live, every week — a familiar circle of faces behind these words. Real classes, real questions, real friendships.
-            </p>
+        <div className={`${CONTAINER} mx-auto max-w-6xl`}>
+          <div className="bmc-reveal relative">
+            <div className="bmc-photo">
+              <img
+                src="/assets/photo-womens-madrasah.webp"
+                alt="The Women's Online Madrasah, gathered together on a class call"
+                loading="lazy"
+                decoding="async"
+                className="aspect-[4/3] w-full object-cover object-[center_25%] sm:aspect-[16/8]"
+              />
+            </div>
+            <div className={`${CARD} relative -mt-16 mx-4 p-7 sm:absolute sm:bottom-8 sm:left-8 sm:m-0 sm:max-w-md md:p-9`}>
+              <p className="bmc-eyebrow mb-3">Behind the scenes</p>
+              <h2 className="text-primary leading-[1.12]" style={{ fontSize: 'clamp(1.6rem, 2.6vw, 2.1rem)' }}>The Women's Online Madrasah</h2>
+              <p className="mt-4 leading-[1.7] text-foreground/80">A familiar circle of faces behind these words. Real classes, real questions, real friendships.</p>
+            </div>
           </div>
         </div>
       </section>
