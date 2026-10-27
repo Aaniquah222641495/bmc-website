@@ -4,7 +4,9 @@ import { PROGRAMMES as ALL_PROGRAMMES, programmeTags } from '@/data/programmes';
 import { Seo } from '@/components/seo';
 import { homeJsonLd } from '@/lib/structured-data';
 import { GirihPattern, HeroGraphic, Rosette } from '@/components/ornaments';
-import { BookStackIcon, HeroLetters, MasjidIcon, MasjidSkyline, RehalIcon, SectionMark, SlateIcon } from '@/components/ornaments/madrasah';
+import { TagList } from '@/components/page-shell';
+import { BookStackIcon, HeroLetters, MasjidIcon, MasjidSkyline, SlateIcon } from '@/components/ornaments/madrasah';
+import { ChooseArt, FirstClassArt, LaptopBookIcon, RegisterArt } from '@/components/ornaments/steps-art';
 
 // Real student words, supplied by the client. Use verbatim; do not edit or add.
 const TESTIMONIALS_PREVIEW = [
@@ -46,8 +48,7 @@ const STEPS = [
     desc: 'Pick the class that suits you: for women, for children, Qur\'an, Hifdh or workshops, online or in person.',
     cta: 'View programmes',
     href: '/programmes',
-    img: '/assets/stock/step-choose-laptop.webp',
-    alt: 'A woman in a mustard hijab typing on a laptop at a white table',
+    Art: ChooseArt,
   },
   {
     title: 'Register',
@@ -55,14 +56,12 @@ const STEPS = [
     cta: 'Register on WhatsApp',
     href: WHATSAPP,
     external: true,
-    img: '/assets/stock/step-register-mushaf.webp',
-    alt: 'A closed pink Mushaf resting on a white cloth with pink prayer beads and flowers',
+    Art: RegisterArt,
   },
   {
     title: 'Join your first class',
     desc: 'Begin in a warm, nurturing space where every question is welcome.',
-    img: '/assets/stock/step-first-class-lanterns.webp',
-    alt: 'A table with lit candles, two gold lanterns, a small framed print and a cup of coffee',
+    Art: FirstClassArt,
   },
 ];
 
@@ -113,7 +112,7 @@ const MOMENTS = [
 const PILLARS = [
   { Icon: SlateIcon, title: 'Beginner Friendly', desc: 'No prior knowledge needed. We start from absolute zero.' },
   { Icon: MasjidIcon, title: 'Safe Environment', desc: 'A warm, nurturing space where every question is welcome.' },
-  { Icon: RehalIcon, title: 'Learn from Anywhere', desc: 'Online classes accessible from home, anywhere in the world.' },
+  { Icon: LaptopBookIcon, title: 'Learn from Anywhere', desc: 'Online classes accessible from home, anywhere in the world.' },
   { Icon: BookStackIcon, title: 'Affordable Learning', desc: 'Quality Islamic education from just R150 per month.' },
 ];
 
@@ -211,7 +210,6 @@ export default function Home() {
       <section className={`${SECTION} bg-bmc-paper`}>
         <div className="container mx-auto px-5 md:px-10">
           <div className="max-w-2xl mb-16 md:mb-24">
-            <SectionMark className="mb-5" />
             <h2 className={`${H2} mb-6`} style={H2_STYLE}>
               How to start
             </h2>
@@ -222,16 +220,11 @@ export default function Home() {
           <ol className="grid grid-cols-1 md:grid-cols-3 gap-14 md:gap-10 lg:gap-14">
             {STEPS.map((step, i) => (
               <li key={step.title} className="bmc-reveal relative flex flex-col">
-                <div className="bmc-photo mb-9">
-                  <img
-                    src={step.img}
-                    alt={step.alt}
-                    width={800}
-                    height={600}
-                    loading="lazy"
-                    decoding="async"
-                    className="aspect-[4/3] w-full object-cover"
-                  />
+                <div
+                  className="mb-9 flex aspect-[4/3] items-center justify-center rounded-2xl shadow-lift transition-transform duration-500 hover:-translate-y-1"
+                  style={{ background: 'radial-gradient(70% 70% at 50% 45%, hsl(42 70% 97%), hsl(40 36% 90%))' }}
+                >
+                  <step.Art className="w-[82%] h-auto" />
                 </div>
                 <p className="mb-4" aria-hidden="true">
                   <span className="font-display italic text-bmc-gold-ink text-[1.5rem] leading-none">0{i + 1}</span>
@@ -279,7 +272,6 @@ export default function Home() {
           </figure>
 
           <div className="bmc-reveal">
-            <SectionMark className="mb-5" />
             <h2 className={`${H2} mb-9`} style={H2_STYLE}>
               Born from a passion for teaching
             </h2>
@@ -304,7 +296,6 @@ export default function Home() {
         <div className="container mx-auto px-5 md:px-10">
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-14 md:mb-20">
             <div>
-              <SectionMark className="mb-5" />
               <h2 className={H2} style={H2_STYLE}>
                 Our programmes
               </h2>
@@ -388,7 +379,6 @@ export default function Home() {
       {/* Moments */}
       <section className={`${SECTION} bg-background`}>
         <div className="container mx-auto px-5 md:px-10">
-          <SectionMark className="mb-5" />
           <h2 className={`${H2} mb-12 md:mb-16`} style={H2_STYLE}>
             Moments from our classes
           </h2>
@@ -420,7 +410,6 @@ export default function Home() {
       {/* Testimonials */}
       <section className={`relative overflow-hidden ${SECTION}`} style={{ backgroundColor: 'hsl(40 26% 91%)' }}>
         <div className="container mx-auto px-5 md:px-10">
-          <div className="mb-8 flex justify-center"><SectionMark /></div>
           <h2 className={`text-center ${H2}`} style={H2_STYLE}>
             What Our Students Say
           </h2>
@@ -480,7 +469,6 @@ export default function Home() {
             />
           </div>
           <div className="bmc-reveal text-center lg:text-left">
-            <div className="mb-8 flex justify-center lg:justify-start"><SectionMark light /></div>
             <h2 className="text-primary-foreground leading-[1.08] tracking-[-0.018em] mb-6 max-w-2xl mx-auto lg:mx-0" style={{ fontSize: 'clamp(2.25rem, 4.8vw, 3.8rem)' }}>
               A Safe Space for Growth
             </h2>
@@ -505,18 +493,5 @@ export default function Home() {
         />
       </section>
     </>
-  );
-}
-
-function TagList({ tags, className = '' }: { tags: string[]; className?: string }) {
-  if (tags.length === 0) return null;
-  return (
-    <ul className={`flex flex-wrap gap-1.5 ${className}`} aria-label="Programme tags">
-      {tags.map((t) => (
-        <li key={t} className="rounded-full border border-[hsl(var(--bmc-gold)/0.6)] px-2.5 py-0.5 font-utility text-[0.7rem] font-semibold tracking-[0.05em] text-bmc-gold-ink">
-          {t}
-        </li>
-      ))}
-    </ul>
   );
 }

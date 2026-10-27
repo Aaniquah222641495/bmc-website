@@ -225,13 +225,10 @@ export function MasjidSkyline({ className = '', style, color = 'currentColor', c
   );
 }
 
-/** Small section marker: a rehal in gold-ink, used above section headings. */
-export function SectionMark({ className = '', light = false }: { className?: string; light?: boolean }) {
-  return (
-    <span className={`inline-flex items-center ${light ? 'text-bmc-gold-light' : 'text-bmc-gold-ink'} ${className}`} aria-hidden="true">
-      <RehalIcon size={48} strokeWidth={1.2} />
-    </span>
-  );
+/** Section marker: intentionally renders nothing (founder 2026-10-27: no icons that do not add meaning;
+ *  first the rehal, then a khatam star above every heading were both rejected). Kept as a no-op so existing imports compile. */
+export function SectionMark(_props: { className?: string; light?: boolean }) {
+  return null;
 }
 
 /* ------------------------------------------------------------------------- */
@@ -255,10 +252,22 @@ const SCATTER: Scatter[] = [
   { name: 'ta', left: '93%', top: '86%', size: 3, rot: -8, f: 7, fd: -5.5 },
 ];
 
-export function HeroLetters() {
+/** Quieter scatter for inner-page headers: letters stay out toward the edges so they never sit behind the heading. */
+export const HEADER_SCATTER: Scatter[] = [
+  { name: 'alif', left: '7%', top: '30%', size: 3, rot: -8, f: 7, fd: -1, hideSm: true },
+  { name: 'ba', left: '14%', top: '62%', size: 3.3, rot: 6, f: 8, fd: -3, hideSm: true },
+  { name: 'ta', left: '4%', top: '78%', size: 2.6, rot: -5, f: 7.5, fd: -5, hideSm: true },
+  { name: 'tha', left: '92%', top: '28%', size: 3, rot: 8, f: 6.6, fd: -2, hideSm: true },
+  { name: 'jim', left: '85%', top: '60%', size: 3.4, rot: -6, f: 8.2, fd: -4, hideSm: true },
+  { name: 'dal', left: '96%', top: '76%', size: 2.6, rot: 6, f: 7.8, fd: -3.5, hideSm: true },
+  { name: 'ra', left: '9%', top: '20%', size: 2.2, rot: -6, f: 7.4, fd: -2.5 },
+  { name: 'alif', left: '92%', top: '22%', size: 2.4, rot: 10, f: 8, fd: -0.5 },
+];
+
+export function HeroLetters({ items = SCATTER }: { items?: Scatter[] } = {}) {
   return (
     <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-      {SCATTER.map((l, k) => (
+      {items.map((l, k) => (
         <span
           key={k}
           className={`hl-letter pointer-events-auto absolute ${l.hideSm ? 'hidden sm:block' : ''}`}

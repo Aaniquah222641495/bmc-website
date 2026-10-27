@@ -1,6 +1,6 @@
 import { Link } from 'wouter';
 import { SiWhatsapp, SiInstagram, SiTiktok } from 'react-icons/si';
-import { GirihPattern, Khatam } from '@/components/ornaments';
+import { GirihPattern } from '@/components/ornaments';
 
 const LINKS = [
   { label: 'Home', href: '/' },
@@ -76,7 +76,6 @@ export function Footer() {
 
         <div className="pt-4 flex flex-col md:flex-row md:items-center justify-between gap-4 text-sm font-utility text-primary-foreground/75">
           <p>&copy; {new Date().getFullYear()} Beginners Madrasah Classes. All rights reserved.</p>
-          <Khatam size={22} className="hidden md:block" />
           {/* Studio credit, added with the client's permission (2026-10-24) */}
           <p>
             Website by{' '}
