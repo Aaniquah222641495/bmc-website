@@ -104,7 +104,7 @@ export function PageHeader({
 }) {
   const split = Boolean(image || art);
   return (
-    <header className="relative overflow-hidden bg-background pt-32 pb-28 md:pt-40 md:pb-40">
+    <header className="relative overflow-hidden bg-background pt-32 pb-20 md:pt-40 md:pb-28">
       <div
         className="pointer-events-none absolute inset-0"
         aria-hidden="true"
@@ -114,11 +114,6 @@ export function PageHeader({
         }}
       />
       <Rosette className="absolute right-0 top-0 hidden h-[24rem] w-[36rem] sm:block" origin="100% 0%" opacity={0.12} />
-      <MasjidSkyline
-        className="hg-fade pointer-events-none absolute inset-x-0 bottom-0 mx-auto h-20 w-full max-w-[90rem] sm:h-28 lg:h-36"
-        color="hsl(40 34% 87%)"
-        crescent="hsl(40 58% 62%)"
-      />
       {!split && <HeroLetters items={HEADER_SCATTER} />}
 
       <div className={`relative ${CONTAINER}`}>
