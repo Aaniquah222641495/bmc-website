@@ -49,9 +49,9 @@ const STEPS = [
     Art: ChooseArt,
   },
   {
-    title: 'Register',
-    desc: 'Send us a message on WhatsApp and we will help you register.',
-    cta: 'Register on WhatsApp',
+    title: 'Fill in the form',
+    desc: 'Each class page has a short registration form. We will be in touch once it comes through.',
+    cta: 'Questions first? Ask on WhatsApp',
     href: WHATSAPP,
     external: true,
     Art: RegisterArt,
@@ -172,13 +172,13 @@ export default function Home() {
               Patient, beginner-friendly Islamic classes for women and children. No prior knowledge needed. From R150 a month.
             </p>
             <div className="bmc-rise bmc-rise-3 flex flex-wrap gap-x-8 gap-y-3 items-center">
-              <a href={WHATSAPP} target="_blank" rel="noreferrer" className="bmc-btn bmc-btn-primary">
-                <SiWhatsapp className="size-[1.1rem]" aria-hidden="true" />
-                Register on WhatsApp
-              </a>
-              <Link href="/programmes" className="bmc-link">
+              <Link href="/programmes" className="bmc-btn bmc-btn-primary">
                 Find your class <ArrowRight size={16} aria-hidden="true" />
               </Link>
+              <a href={WHATSAPP} target="_blank" rel="noreferrer" className="bmc-link">
+                <SiWhatsapp className="size-[1rem]" aria-hidden="true" />
+                Questions? Ask on WhatsApp
+              </a>
             </div>
 
             <figure className="bmc-rise bmc-rise-3 mt-12 flex max-w-[30rem] items-start gap-4">
@@ -322,7 +322,7 @@ export default function Home() {
             <h2 className={`${H2} mb-5`} style={H2_STYLE}>
               How to start
             </h2>
-            <p className="text-foreground/80 leading-[1.7] text-[1.1rem]">Registering takes one WhatsApp message.</p>
+            <p className="text-foreground/80 leading-[1.7] text-[1.1rem]">Registering takes a few minutes, with a short form on each class page.</p>
           </div>
           <ol className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-10 lg:gap-14">
             {STEPS.map((step, i) => (
@@ -508,16 +508,16 @@ export default function Home() {
               There is a place for you here
             </h2>
             <p className="text-[1.15rem] text-primary-foreground/85 max-w-xl mx-auto lg:mx-0 mb-11 leading-[1.7]">
-              Whether you are taking your very first steps or returning to your roots, send us a message and we will help you register.
+              Whether you are taking your very first steps or returning to your roots, choose your class and register in a few minutes.
             </p>
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4">
-              <a href={WHATSAPP} target="_blank" rel="noreferrer" className="bmc-btn bmc-btn-light">
-                <SiWhatsapp className="size-[1.1rem]" aria-hidden="true" />
-                Register on WhatsApp
-              </a>
-              <Link href="/programmes" className="bmc-btn bmc-btn-outline">
+              <Link href="/programmes" className="bmc-btn bmc-btn-light">
                 Find your class
               </Link>
+              <a href={WHATSAPP} target="_blank" rel="noreferrer" className="bmc-btn bmc-btn-outline">
+                <SiWhatsapp className="size-[1.1rem]" aria-hidden="true" />
+                Ask on WhatsApp
+              </a>
             </div>
           </div>
         </div>
