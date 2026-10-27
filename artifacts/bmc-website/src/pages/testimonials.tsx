@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import { Link } from 'wouter';
+import { GirihPattern } from '@/components/ornaments';
 import { Seo } from '@/components/seo';
 import { simplePageJsonLd } from '@/lib/structured-data';
 import { CARD, ClosingBand, CONTAINER, H2, PageHeader, SECTION_Y, SectionHead } from '@/components/page-shell';
@@ -104,29 +106,8 @@ export default function Testimonials() {
         eyebrow="In their own words"
         title="Student Testimonials"
         intro="Real stories from the women who've joined our classes — reverts finding their footing, beginners building confidence, and mothers passing it on to their children."
+        art={<FeaturedQuote />}
       />
-
-      {/* Featured quote */}
-      <section className={`${SECTION_Y} bg-bmc-paper !pt-16 md:!pt-24`}>
-        <div className={CONTAINER}>
-          <figure className="bmc-reveal mx-auto max-w-4xl text-center">
-            <span
-              className="bmc-gold-text block select-none font-display leading-none"
-              style={{ fontSize: 'clamp(5rem, 10vw, 7.5rem)', height: 'clamp(3.5rem, 7vw, 5rem)' }}
-              aria-hidden="true"
-            >
-              &ldquo;
-            </span>
-            <blockquote
-              className="font-display font-normal italic leading-[1.4] tracking-[-0.01em] text-primary"
-              style={{ fontSize: 'clamp(1.35rem, 2.6vw, 2rem)' }}
-            >
-              {FEATURED.quote}
-            </blockquote>
-            <figcaption className="bmc-eyebrow mt-9">{FEATURED.tag}</figcaption>
-          </figure>
-        </div>
-      </section>
 
       {/* Named testimonials */}
       <section className={`${SECTION_Y} bg-background`}>
@@ -136,15 +117,12 @@ export default function Testimonials() {
             {NAMED_TESTIMONIALS.map((t) => (
               <li key={t.name} className="mb-6 break-inside-avoid lg:mb-8">
                 <figure className={`bmc-reveal ${CARD} relative overflow-hidden p-8 md:p-9`}>
-                  <span className="bmc-gold-text pointer-events-none absolute right-6 top-2 select-none font-display text-7xl leading-none opacity-30" aria-hidden="true">
-                    &rdquo;
-                  </span>
                   <blockquote className="relative leading-[1.75] text-foreground/90">"{t.quote}"</blockquote>
                   <figcaption className="relative mt-7 flex items-center gap-3">
-                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-bmc-gold-light/40 font-display font-semibold text-bmc-gold-ink" aria-hidden="true">
+                    <span className="inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-primary font-display text-lg text-bmc-gold-light" aria-hidden="true">
                       {t.name.charAt(0)}
                     </span>
-                    <span className="bmc-eyebrow !text-[0.68rem]">{t.name}</span>
+                    <span className="font-display text-[1.08rem] text-primary">{t.name}</span>
                   </figcaption>
                 </figure>
               </li>
@@ -175,31 +153,8 @@ export default function Testimonials() {
         </div>
       </section>
 
-      {/* More stories, grouped */}
-      <section className={`${SECTION_Y} bg-background`}>
-        <div className={CONTAINER}>
-          <SectionHead title="More Stories" intro="Shared with love, by students who asked to stay anonymous." center className="mb-14 md:mb-20" />
-          <ul className="mx-auto grid max-w-6xl grid-cols-1 gap-6 md:grid-cols-2 lg:gap-8">
-            {MORE_STORIES.map((group) => {
-              return (
-                <li key={group.label} className="flex">
-                  <div className={`bmc-reveal bmc-lift ${CARD} w-full p-8 md:p-10`}>
-                    <h3 className="bmc-eyebrow mb-7 !text-[0.78rem]">{group.label}</h3>
-                    <div className="space-y-7">
-                      {group.items.map((quote) => (
-                        <figure key={quote}>
-                          <blockquote className="mb-3 leading-[1.75] text-foreground/85">"{quote}"</blockquote>
-                          <figcaption className="font-utility text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-foreground/70">Student, 2025</figcaption>
-                        </figure>
-                      ))}
-                    </div>
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      </section>
+      {/* More stories: one card per story, filter by theme */}
+      <MoreStories />
 
       <ClosingBand
         title="Ready to start your own journey?"
@@ -212,5 +167,69 @@ export default function Testimonials() {
         Join the women who found their footing here. Every class starts with someone who felt exactly where you are now.
       </ClosingBand>
     </>
+  );
+}
+
+function FeaturedQuote() {
+  return (
+    <figure className="relative overflow-hidden rounded-[1.75rem] bg-primary p-8 text-primary-foreground shadow-lift md:p-11">
+      <GirihPattern />
+      <div className="relative">
+        <span
+          className="block select-none font-display leading-none text-bmc-gold-light"
+          style={{ fontSize: 'clamp(4.5rem, 8vw, 6.5rem)', height: 'clamp(3rem, 5.2vw, 4.2rem)' }}
+          aria-hidden="true"
+        >
+          &ldquo;
+        </span>
+        <blockquote className="mt-2 font-display text-[1.18rem] font-normal italic leading-[1.5] md:text-[1.3rem]">{FEATURED.quote}</blockquote>
+        <figcaption className="mt-7 font-utility text-[0.75rem] font-bold uppercase tracking-[0.16em] text-bmc-gold-light">{FEATURED.tag}</figcaption>
+      </div>
+    </figure>
+  );
+}
+
+function MoreStories() {
+  const [theme, setTheme] = useState<string>('All');
+  const stories = MORE_STORIES.flatMap((g) => g.items.map((quote) => ({ quote, label: g.label })));
+  const visible = theme === 'All' ? stories : stories.filter((s) => s.label === theme);
+  const themes = ['All', ...MORE_STORIES.map((g) => g.label)];
+  return (
+    <section className={`${SECTION_Y} bg-background`}>
+      <div className={CONTAINER}>
+        <SectionHead title="More Stories" intro="Shared with love, by students who asked to stay anonymous." center className="mb-10 md:mb-12" />
+        <div role="group" aria-label="Filter stories by theme" className="mx-auto mb-12 flex max-w-4xl flex-wrap justify-center gap-2.5 md:mb-16">
+          {themes.map((t) => {
+            const on = theme === t;
+            return (
+              <button
+                key={t}
+                type="button"
+                aria-pressed={on}
+                onClick={() => setTheme(t)}
+                className={`min-h-11 rounded-full px-5 font-utility text-[0.9rem] font-semibold transition-colors duration-300 motion-reduce:transition-none ${
+                  on ? 'bg-primary text-primary-foreground shadow-soft' : 'bg-card text-foreground/80 shadow-soft hover:text-primary'
+                }`}
+              >
+                {t}
+              </button>
+            );
+          })}
+        </div>
+        <ul className="mx-auto max-w-6xl gap-6 md:columns-2 lg:columns-3 lg:gap-8" aria-live="polite">
+          {visible.map(({ quote, label }) => (
+            <li key={quote} className="mb-6 break-inside-avoid lg:mb-8">
+              <figure className={`${CARD} p-8`}>
+                <span className="inline-flex rounded-full bg-bmc-gold-light/35 px-3 py-1 font-utility text-[0.7rem] font-bold uppercase tracking-[0.12em] text-bmc-gold-ink">
+                  {label}
+                </span>
+                <blockquote className="mt-5 leading-[1.75] text-foreground/85">"{quote}"</blockquote>
+                <figcaption className="mt-5 font-utility text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-foreground/65">Student, 2025</figcaption>
+              </figure>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
   );
 }
