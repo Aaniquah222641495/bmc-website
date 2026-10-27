@@ -33,7 +33,10 @@ export function Footer() {
                 height={437}
                 className="h-16 w-auto"
               />
-              <span className="font-display font-semibold text-primary text-[1.7rem] leading-none tracking-[0.06em]">BMC</span>
+              <span className="flex flex-col font-display text-primary leading-[1.02]">
+                <span className="font-semibold text-[1.3rem]">Beginners Madrasah</span>
+                <span className="italic font-normal text-bmc-gold-ink text-[1.18rem]">Classes</span>
+              </span>
             </div>
             <p className="text-primary-foreground/85 max-w-sm leading-relaxed">
               Foundations of Islamic Knowledge. A warm, safe, beginner-friendly Islamic learning space for women and children.

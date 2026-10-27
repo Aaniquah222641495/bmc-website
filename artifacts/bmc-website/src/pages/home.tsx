@@ -157,7 +157,7 @@ export default function Home() {
         <div className="pointer-events-none relative container mx-auto px-5 md:px-10 grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-12 lg:gap-20 items-center">
           <div className="pointer-events-auto">
             <p className="bmc-rise bmc-eyebrow mb-6 leading-[1.9]">
-              Beginners Madrasah Classes &middot; Online and in Cape Town
+              Islamic classes &middot; Online and in Cape Town
             </p>
             <h1
               className="bmc-rise text-primary leading-[1.02] tracking-[-0.025em] mb-7"

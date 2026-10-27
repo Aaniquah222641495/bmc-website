@@ -51,7 +51,10 @@ export function Nav() {
         <nav aria-label="Main" className="container mx-auto px-5 md:px-10 h-[4.5rem] flex items-center justify-between">
           <Link href="/" aria-label="Beginners Madrasah Classes, home" className="rounded-md inline-flex min-h-11 items-center gap-2.5">
             <img src="/assets/mascot-figures-sm.webp" alt="" width={231} height={128} className="h-11 sm:h-14 w-auto shrink-0" />
-            <span className="font-display font-semibold text-primary text-[1.35rem] sm:text-[1.6rem] leading-none tracking-[0.06em]">BMC</span>
+            <span className="flex flex-col font-display text-primary leading-[1.02]">
+              <span className="font-semibold text-[1.05rem] sm:text-[1.3rem] tracking-[0.005em]">Beginners Madrasah</span>
+              <span className="italic font-normal text-bmc-gold-ink text-[0.98rem] sm:text-[1.18rem]">Classes</span>
+            </span>
           </Link>
 
           <div className="hidden lg:flex items-center gap-9">
