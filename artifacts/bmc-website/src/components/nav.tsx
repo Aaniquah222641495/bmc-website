@@ -49,8 +49,9 @@ export function Nav() {
         )}
       >
         <nav aria-label="Main" className="container mx-auto px-5 md:px-10 h-[4.5rem] flex items-center justify-between">
-          <Link href="/" aria-label="Beginners Madrasah Classes, home" className="rounded-md inline-flex min-h-11 items-center">
+          <Link href="/" aria-label="Beginners Madrasah Classes, home" className="rounded-md inline-flex min-h-11 items-center gap-2.5">
             <img src="/assets/mascot-figures-sm.webp" alt="" width={229} height={128} className="h-11 sm:h-14 w-auto shrink-0" />
+            <span className="font-display font-semibold text-primary text-[1.35rem] sm:text-[1.6rem] leading-none tracking-[0.06em]">BMC</span>
           </Link>
 
           <div className="hidden md:flex items-center gap-9">
