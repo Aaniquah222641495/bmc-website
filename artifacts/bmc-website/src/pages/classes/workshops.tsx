@@ -2,10 +2,11 @@ import { Link } from 'wouter';
 import { ArrowRight } from 'lucide-react';
 import { PastWorkshopsGrid } from '@/components/class-page-blocks';
 import { GirihPattern } from '@/components/ornaments';
-import { OpenBookIcon } from '@/components/ornaments/madrasah';
-import { CARD, CONTAINER, PageHeader, SECTION_Y, SectionHead, StarBullet, TagList } from '@/components/page-shell';
+import { InPersonArt } from '@/components/ornaments/programmes-art';
+import { ProgrammeHero } from '@/components/programme-hero';
+import { SiInstagram, SiTiktok, SiWhatsapp } from 'react-icons/si';
+import { CONTAINER, SECTION_Y, SectionHead, StarBullet } from '@/components/page-shell';
 import { Seo } from '@/components/seo';
-import { PROGRAMMES } from '@/data/programmes';
 import { currentOnlineWorkshops, pastOnlineWorkshops, type Workshop } from '@/data/workshops';
 import { useNow } from '@/hooks/use-now';
 import { graph, programmeJsonLd, eventsJsonLd } from '@/lib/structured-data';
@@ -13,6 +14,8 @@ import { graph, programmeJsonLd, eventsJsonLd } from '@/lib/structured-data';
 // Workshops are authored as files under content/workshops/ (directly, or via
 // the CMS at /admin) — see src/data/workshops.ts. PastWorkshopsGrid wants a
 // simpler shape than the "available now" cards below, so map it here.
+const NOTIFY = 'https://wa.me/27686498593?text=Slm%2C%20please%20let%20me%20know%20about%20upcoming%20workshops';
+
 const toPastCard = (w: Workshop) => ({
   title: w.title,
   type: w.typeLabel ?? 'Workshop',
@@ -109,12 +112,16 @@ export default function Workshops() {
         path="/programmes/workshops"
         jsonLd={[programmeJsonLd('/programmes/workshops'), ...(events.length ? [graph(...events)] : [])]}
       />
-      <PageHeader
-        back={{ href: '/programmes', label: 'Back to Programmes' }}
-        eyebrow={PROGRAMMES.find((p) => p.path === '/workshops')?.tag}
+      <ProgrammeHero
+        path="/workshops"
         title="Online Workshops & Short Courses"
         intro="Focused online sessions and short courses on essential Islamic topics: practical, accessible, and designed to leave you with knowledge you can use straight away."
-        mark={<span className="inline-flex text-bmc-gold-ink" aria-hidden="true"><OpenBookIcon size={52} strokeWidth={1.2} /></span>}
+        actions={
+          <a href={NOTIFY} target="_blank" rel="noreferrer" className="bmc-btn bmc-btn-light">
+            <SiWhatsapp className="size-[1.1rem]" aria-hidden="true" />
+            Ask about the next one
+          </a>
+        }
       />
 
       {/* Currently Available */}
@@ -122,10 +129,25 @@ export default function Workshops() {
         <div className={CONTAINER}>
           <SectionHead title="Available Now" center className="mb-12 md:mb-16" />
           {CURRENT_ONLINE_WORKSHOPS.length === 0 ? (
-            <p className="mx-auto max-w-xl text-center leading-[1.75] text-foreground/80">
-              No workshops are open for registration right now. Have a look at the previous
-              workshops below, or follow us to hear when new dates are announced.
-            </p>
+            <div className="bmc-reveal mx-auto flex max-w-3xl flex-col items-center gap-6 rounded-[1.75rem] bg-bmc-gold-light/45 p-8 text-center sm:flex-row sm:p-10 sm:text-left">
+              <span className="inline-flex size-16 shrink-0 items-center justify-center rounded-2xl bg-card text-primary shadow-soft" aria-hidden="true">
+                <svg width="34" height="34" viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="8" y="11" width="32" height="29" rx="4" />
+                  <path d="M8 19H40M16 7V14M32 7V14" />
+                  <path d="M24 24V32M20 28H28" />
+                </svg>
+              </span>
+              <div className="flex-1">
+                <p className="font-display text-[1.35rem] leading-snug text-primary">New dates are on the way</p>
+                <p className="mt-1.5 leading-[1.7] text-foreground/80">
+                  No workshops are open for registration right now. Have a look at the previous
+                  workshops below, or follow us to hear when new dates are announced.
+                </p>
+              </div>
+              <a href={NOTIFY} target="_blank" rel="noreferrer" className="bmc-btn bmc-btn-primary whitespace-nowrap">
+                <SiWhatsapp className="size-[1.05rem]" aria-hidden="true" /> Notify me
+              </a>
+            </div>
           ) : (
             <div className={`mx-auto ${multiple ? 'grid max-w-6xl items-stretch gap-8 md:grid-cols-2' : 'max-w-5xl space-y-8'}`}>
               {CURRENT_ONLINE_WORKSHOPS.map((workshop) => (
@@ -150,52 +172,49 @@ export default function Workshops() {
       </section>
       )}
 
-      {/* In-Person Workshops */}
+      {/* Also available + stay updated */}
       <section className={`${SECTION_Y} bg-bmc-paper`}>
-        <div className={`${CONTAINER} mx-auto max-w-5xl`}>
-          <SectionHead title="Also Available" className="mb-12" />
-          <div className={`bmc-reveal ${CARD} flex flex-col items-start gap-8 p-8 md:flex-row md:items-center md:p-12`}>
-            <div className="flex-1">
-              <h3 className="mb-3 text-[1.6rem] text-primary">In-Person Workshops</h3>
-              <p className="mb-5 leading-[1.7] text-foreground/80">
+        <div className={`${CONTAINER} mx-auto grid max-w-6xl grid-cols-1 gap-6 lg:grid-cols-[1.2fr_1fr] lg:gap-8`}>
+          <Link
+            href="/programmes/in-person-workshops"
+            className="bmc-reveal group relative flex flex-col overflow-hidden rounded-[1.75rem] bg-primary p-8 text-primary-foreground shadow-lift sm:flex-row sm:items-center sm:gap-8 md:p-10"
+          >
+            <GirihPattern />
+            <span className="relative mb-6 block w-40 shrink-0 rounded-2xl bg-bmc-paper p-2 sm:mb-0 sm:w-44">
+              <InPersonArt className="block h-auto w-full" />
+            </span>
+            <span className="relative block">
+              <span className="block font-utility text-[0.72rem] font-bold uppercase tracking-[0.16em] text-bmc-gold-light">Also available</span>
+              <span className="mt-2 block font-display text-[1.7rem] leading-tight">In-Person Workshops</span>
+              <span className="mt-3 block leading-[1.7] text-primary-foreground/85">
                 Interactive face-to-face workshops covering important Islamic topics, with opportunities for discussion, questions and practical learning.
-              </p>
-              <TagList tags={['In-Person', 'From R100']} />
-            </div>
-            <Link href="/programmes/in-person-workshops" className="bmc-btn bmc-btn-primary whitespace-nowrap">
-              View In-Person <ArrowRight size={16} aria-hidden="true" />
-            </Link>
-          </div>
-        </div>
-      </section>
+              </span>
+              <span className="mt-5 inline-flex items-center gap-2 font-utility font-semibold text-bmc-gold-light">
+                View In-Person <ArrowRight size={16} className="transition-transform group-hover:translate-x-1 motion-reduce:transition-none" aria-hidden="true" />
+              </span>
+            </span>
+          </Link>
 
-      {/* Stay Updated */}
-      <section className={`${SECTION_Y} bg-background`}>
-        <div className={`${CONTAINER} bmc-reveal mx-auto max-w-3xl text-center`}>
-          <SectionHead title="Stay Updated" center className="mb-6" />
-          <p className="mx-auto mb-8 max-w-md leading-[1.7] text-foreground/80">
-            New workshop dates are announced on Instagram and TikTok. Follow along so you don't miss the next one.
-          </p>
-          <div className="mb-8 flex flex-wrap justify-center gap-x-8 gap-y-1">
-            <a href="https://instagram.com/beginners_classes" target="_blank" rel="noreferrer" className="bmc-link-inline inline-flex min-h-11 items-center font-utility">
-              @beginners_classes
-            </a>
-            <a href="https://tiktok.com/@rukeyabaradien_" target="_blank" rel="noreferrer" className="bmc-link-inline inline-flex min-h-11 items-center font-utility">
-              @rukeyabaradien_
-            </a>
+          <div className="bmc-reveal flex flex-col rounded-[1.75rem] bg-card p-8 shadow-soft md:p-10">
+            <p className="bmc-eyebrow mb-3">Stay updated</p>
+            <h2 className="text-primary leading-[1.12]" style={{ fontSize: 'clamp(1.6rem, 2.6vw, 2rem)' }}>Hear about the next one first</h2>
+            <p className="mt-3 leading-[1.7] text-foreground/80">
+              New workshop dates are announced on Instagram and TikTok. Follow along so you don't miss the next one.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <a href="https://instagram.com/beginners_classes" target="_blank" rel="noreferrer" className="inline-flex min-h-11 items-center gap-2 rounded-full bg-bmc-paper px-4 font-utility text-[0.9rem] font-semibold text-primary hover:shadow-soft">
+                <SiInstagram className="size-4 text-bmc-gold-ink" aria-hidden="true" /> @beginners_classes
+              </a>
+              <a href="https://tiktok.com/@rukeyabaradien_" target="_blank" rel="noreferrer" className="inline-flex min-h-11 items-center gap-2 rounded-full bg-bmc-paper px-4 font-utility text-[0.9rem] font-semibold text-primary hover:shadow-soft">
+                <SiTiktok className="size-4 text-bmc-gold-ink" aria-hidden="true" /> @rukeyabaradien_
+              </a>
+            </div>
+            <p className="mt-6 text-sm leading-[1.7] text-foreground/75">
+              Or send us a{' '}
+              <a href={NOTIFY} target="_blank" rel="noreferrer" className="bmc-link-inline">WhatsApp message</a>
+              {' '}to be added to the notification list.
+            </p>
           </div>
-          <p className="text-sm leading-[1.7] text-foreground/75">
-            Or send us a{' '}
-            <a
-              href="https://wa.me/27686498593?text=Slm%2C%20please%20let%20me%20know%20about%20upcoming%20workshops"
-              target="_blank"
-              rel="noreferrer"
-              className="bmc-link-inline"
-            >
-              WhatsApp message
-            </a>
-            {' '}to be added to the notification list.
-          </p>
         </div>
       </section>
     </>

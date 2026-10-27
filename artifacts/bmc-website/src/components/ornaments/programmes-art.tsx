@@ -4,15 +4,15 @@
  * Same palette and line language as the How to start illustrations. Decorative: aria-hidden.
  */
 
-const INK = 'hsl(var(--bmc-gold-ink))';
-const FOREST = 'hsl(158 44% 18%)';
-const FOREST_2 = 'hsl(158 34% 30%)';
-const TAN = 'hsl(36 46% 42%)';
-const PAGE = 'hsl(42 60% 96%)';
-const GOLD = 'hsl(42 62% 58%)';
-const SKIN = ['hsl(28 45% 62%)', 'hsl(24 38% 44%)', 'hsl(30 50% 72%)'];
+export const INK = 'hsl(var(--bmc-gold-ink))';
+export const FOREST = 'hsl(158 44% 18%)';
+export const FOREST_2 = 'hsl(158 34% 30%)';
+export const TAN = 'hsl(36 46% 42%)';
+export const PAGE = 'hsl(42 60% 96%)';
+export const GOLD = 'hsl(42 62% 58%)';
+export const SKIN = ['hsl(28 45% 62%)', 'hsl(24 38% 44%)', 'hsl(30 50% 72%)'];
 
-function Person({ x, y, s = 1, scarf, skin }: { x: number; y: number; s?: number; scarf: string; skin: string }) {
+export function Person({ x, y, s = 1, scarf, skin }: { x: number; y: number; s?: number; scarf: string; skin: string }) {
   // Faceless, modest figure: head with hijab and shoulders, as in a video-call tile
   return (
     <g transform={`translate(${x} ${y}) scale(${s})`}>

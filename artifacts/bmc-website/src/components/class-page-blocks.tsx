@@ -1,4 +1,4 @@
-import { CARD, StarBullet } from '@/components/page-shell';
+import { CARD } from '@/components/page-shell';
 
 /**
  * Shared building blocks for the individual class/programme pages
@@ -32,14 +32,16 @@ function splitLead(item: string): [string | null, string] {
 
 export function IncludedList({ items, heading = "What's Included" }: IncludedListProps) {
   return (
-    <div className={`${CARD} p-7 md:p-10`}>
+    <div>
       <h2 className="mb-7 text-[1.6rem] leading-tight text-primary md:text-[1.9rem]">{heading}</h2>
-      <ul className="space-y-5">
+      <ul className="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
         {items.map((item) => {
           const [lead, rest] = splitLead(item);
           return (
-            <li key={item} className="flex items-start gap-4 leading-[1.7] text-foreground/85">
-              <StarBullet className="mt-[0.55rem]" />
+            <li key={item} className="flex items-start gap-3.5 rounded-2xl bg-card p-5 leading-[1.6] text-foreground/85 shadow-soft">
+              <span className="mt-0.5 inline-flex size-7 shrink-0 items-center justify-center rounded-full bg-bmc-gold-light text-primary" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12.5L10 17.5 19 7" /></svg>
+              </span>
               <span>
                 {lead ? (
                   <>

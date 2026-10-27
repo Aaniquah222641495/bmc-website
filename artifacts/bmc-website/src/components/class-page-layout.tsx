@@ -1,9 +1,10 @@
 import { type ReactNode, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
-import { PROGRAMMES } from '@/data/programmes';
 import { DetailsGrid, IncludedList, type DetailItem } from '@/components/class-page-blocks';
-import { CARD, CONTAINER, PageHeader, PROGRAMME_ICONS, SECTION_Y } from '@/components/page-shell';
+import { CARD, CONTAINER, SECTION_Y } from '@/components/page-shell';
+import { ProgrammeHero } from '@/components/programme-hero';
+import { RegisterArt } from '@/components/ornaments/steps-art';
 
 export interface ClassPageLayoutProps {
   title: string;
@@ -20,6 +21,7 @@ export interface ClassPageLayoutProps {
   children?: ReactNode;
   /** Full-width sections after the main block (e.g. previous workshops). */
   after?: ReactNode;
+  /** @deprecated The hero now uses the programme's drawn scene; kept so existing pages still compile. */
   heroImage?: string;
   heroImageAlt?: string;
   formUrl?: string; // per-class registration form URL
@@ -38,15 +40,11 @@ export function ClassPageLayout({
   details,
   children,
   after,
-  heroImage,
-  heroImageAlt,
   formUrl,
   showRegistration = true,
 }: ClassPageLayoutProps) {
   const FORM_URL = formUrl ?? DEFAULT_FORM_URL;
   const [formOpen, setFormOpen] = useState(false);
-  const programme = PROGRAMMES.find((p) => p.path === path);
-  const Icon = PROGRAMME_ICONS[path];
 
   const openForm = () => {
     setFormOpen(true);
@@ -56,14 +54,17 @@ export function ClassPageLayout({
 
   return (
     <>
-      <PageHeader
-        back={{ href: '/programmes', label: 'Back to Programmes' }}
-        eyebrow={programme?.tag}
+      <ProgrammeHero
+        path={path}
         title={title}
         intro={description}
-        image={heroImage}
-        imageAlt={heroImageAlt}
-        mark={Icon ? <span className="inline-flex text-bmc-gold-ink" aria-hidden="true"><Icon size={52} strokeWidth={1.2} /></span> : undefined}
+        actions={
+          showRegistration ? (
+            <button type="button" onClick={openForm} className="bmc-btn bmc-btn-light">
+              Register Now <ArrowRight size={16} aria-hidden="true" />
+            </button>
+          ) : undefined
+        }
       />
 
       <section className={`${SECTION_Y} bg-bmc-paper !pt-16 md:!pt-24`}>
@@ -74,7 +75,7 @@ export function ClassPageLayout({
             {children}
           </div>
 
-          <aside className={`${CARD} p-7 md:p-9 lg:sticky lg:top-28`} aria-label="Programme details">
+          <aside className="rounded-[1.5rem] bg-bmc-gold-light/45 p-7 shadow-soft ring-1 ring-[hsl(var(--bmc-gold)/0.35)] md:p-9 lg:sticky lg:top-28" aria-label="Programme details">
             <DetailsGrid items={details} />
             {showRegistration && (
               <button type="button" onClick={openForm} className="bmc-btn bmc-btn-primary mt-9 w-full">
@@ -88,9 +89,11 @@ export function ClassPageLayout({
       {after}
 
       {showRegistration && (
-        <section id="register" className={`${SECTION_Y} scroll-mt-20 bg-background`}>
+        <section id="register" className={`${SECTION_Y} scroll-mt-20 bg-[hsl(var(--bmc-gold-light)/0.35)]`}>
           <div className={`${CONTAINER} mx-auto max-w-4xl text-center`}>
-            <h2 className="mb-10 text-primary leading-[1.1]" style={{ fontSize: 'clamp(1.9rem, 3.4vw, 2.6rem)' }}>Register Below</h2>
+            <RegisterArt className="mx-auto mb-4 block h-auto w-48 md:w-56" />
+            <h2 className="mb-3 text-primary leading-[1.1]" style={{ fontSize: 'clamp(1.9rem, 3.4vw, 2.6rem)' }}>Register Below</h2>
+            <p className="mx-auto mb-9 max-w-md leading-[1.7] text-foreground/80">It takes a few minutes. We'll be in touch once your form comes through.</p>
 
             {!formOpen && (
               <button type="button" onClick={() => setFormOpen(true)} className="bmc-btn bmc-btn-primary">
