@@ -3,7 +3,7 @@ import { Link } from 'wouter';
 import { GirihPattern } from '@/components/ornaments';
 import { Seo } from '@/components/seo';
 import { simplePageJsonLd } from '@/lib/structured-data';
-import { CARD, ClosingBand, CONTAINER, H2, PageHeader, SECTION_Y, SectionHead } from '@/components/page-shell';
+import { CARD, ClosingBand, CONTAINER, H2, H2_STYLE, PageHeader, SECTION_Y, SectionHead } from '@/components/page-shell';
 
 
 interface Testimonial {
@@ -114,7 +114,7 @@ export default function Testimonials() {
         <div className={`${CONTAINER} mx-auto grid max-w-6xl grid-cols-1 gap-10 lg:grid-cols-[0.75fr_2fr] lg:gap-14`}>
           <div className="lg:sticky lg:top-32 lg:self-start">
             <p className="bmc-eyebrow mb-4">In their own names</p>
-            <h2 className={H2} style={{ fontSize: 'clamp(2rem, 3.6vw, 2.9rem)' }}>From Our Students</h2>
+            <h2 className={H2} style={H2_STYLE}>From Our Students</h2>
             <p className="mt-5 max-w-sm text-[1.05rem] leading-[1.7] text-foreground/75">
               Six students who were happy to put their names to their words.
             </p>
@@ -197,8 +197,11 @@ function FeaturedQuote() {
 
 function MoreStories() {
   const [theme, setTheme] = useState<string>('All');
+  const [showAll, setShowAll] = useState(false);
   const stories = MORE_STORIES.flatMap((g) => g.items.map((quote) => ({ quote, label: g.label })));
-  const visible = theme === 'All' ? stories : stories.filter((s) => s.label === theme);
+  const filtered = theme === 'All' ? stories : stories.filter((s) => s.label === theme);
+  const LIMIT = 6;
+  const visible = showAll ? filtered : filtered.slice(0, LIMIT);
   const themes = ['All', ...MORE_STORIES.map((g) => g.label)];
   return (
     <section className={`${SECTION_Y} bg-background`}>
@@ -235,6 +238,13 @@ function MoreStories() {
             </li>
           ))}
         </ul>
+        {!showAll && filtered.length > LIMIT && (
+          <div className="mt-4 text-center">
+            <button type="button" onClick={() => setShowAll(true)} className="bmc-btn bmc-btn-soft">
+              Show all {filtered.length} stories
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );

@@ -23,12 +23,12 @@ export default function QuranClasses() {
       />
       <ClassPageLayout
         path="/quran-classes"
-        title="Get Into Quran: In Person"
-        description="A Quran programme for complete beginners or those wanting to start again, held every Saturday morning in Mitchell's Plain, Cape Town."
+        title="Get Into Qur'an: In Person"
+        description="A Qur'an programme for complete beginners or those wanting to start again, held every Saturday morning in Mitchell's Plain, Cape Town."
         intro={
           <>
             <p>
-              This in-person Quran programme is designed for complete beginners, or for those who once learned but want to start again from the foundations. You will be guided step by step through Quran reading, with the goal of progressing to confidently reciting directly from the Mushaf.
+              This in-person Qur'an programme is designed for complete beginners, or for those who once learned but want to start again from the foundations. You will be guided step by step through Qur'an reading, with the goal of progressing to confidently reciting directly from the Mushaf.
             </p>
             <p>
               Classes are held every Saturday morning in Mitchell's Plain, Cape Town, giving you the added blessing of learning in community with other students on the same journey.

@@ -9,7 +9,6 @@ import { StoryPath } from '@/components/ornaments/story-path';
 
 
 const GALLERY_IMAGES = [
-  '/assets/photo-founder-teaching.webp',
   '/assets/photo-wudhu-workshop-1.webp',
   '/assets/photo-wudhu-workshop-2.webp',
   '/assets/photo-workshop-audience.webp',
@@ -146,12 +145,18 @@ export default function About() {
       <section className={`${SECTION_Y} bg-background`}>
         <div className={`${CONTAINER} grid gap-8 md:grid-cols-2 lg:gap-12`}>
           {[
-            { title: 'Our Mission', start: 0, text: 'To make authentic Islamic education accessible to every woman and child, wherever they are on their journey: affordable, flexible, and always welcoming.' },
-            { title: 'Our Vision', start: 5, text: 'A world where no Muslim woman or child feels too late, too lost, or too busy to begin learning their deen.' },
-          ].map(({ title, start, text }) => (
-            <div key={title} className={`bmc-reveal ${CARD} flex flex-col p-6 sm:p-8 md:p-10`}>
-              <h2 className="mb-4 text-[1.9rem] leading-tight text-primary">{title}</h2>
-              <p className="mb-9 leading-[1.75] text-foreground/85">{text}</p>
+            { title: 'Our Mission', start: 0, tone: 'green', text: 'To make authentic Islamic education accessible to every woman and child, wherever they are on their journey: affordable, flexible, and always welcoming.' },
+            { title: 'Our Vision', start: 4, tone: 'gold', text: 'A world where no Muslim woman or child feels too late, too lost, or too busy to begin learning their deen.' },
+          ].map(({ title, start, tone, text }) => (
+            <div
+              key={title}
+              className={`bmc-reveal relative flex flex-col overflow-hidden rounded-[1.75rem] p-6 shadow-lift sm:p-8 md:p-10 ${
+                tone === 'green' ? 'bg-primary text-primary-foreground' : 'bg-bmc-gold-light/50 text-foreground'
+              }`}
+            >
+              {tone === 'green' && <GirihPattern />}
+              <h2 className={`relative mb-4 text-[1.9rem] leading-tight ${tone === 'green' ? 'text-primary-foreground' : 'text-primary'}`}>{title}</h2>
+              <p className={`relative mb-9 font-display text-[1.25rem] italic leading-[1.5] ${tone === 'green' ? 'text-primary-foreground/90' : 'text-primary'}`}>{text}</p>
               <AutoSlideshow images={GALLERY_IMAGES} startIndex={start} />
             </div>
           ))}

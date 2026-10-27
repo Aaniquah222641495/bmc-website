@@ -1,3 +1,4 @@
+import { SiWhatsapp } from 'react-icons/si';
 import { useState, useEffect } from 'react';
 import { ClassPageLayout } from '@/components/class-page-layout';
 import { PastWorkshopsGrid } from '@/components/class-page-blocks';
@@ -145,37 +146,38 @@ export default function InPersonWorkshops() {
         ]}
         after={
           <>
-            {/* Past Workshops */}
-            {PAST_WORKSHOPS.length > 0 && (
-              <section className={`${SECTION_Y} bg-background`}>
-                <div className={CONTAINER}>
-                  <SectionHead title="Previous Workshops" className="mb-14 md:mb-16" />
-                  <PastWorkshopsGrid workshops={PAST_WORKSHOPS} />
-                </div>
-              </section>
-            )}
-
-            {/* Gallery and CTA */}
-            <section className={`${SECTION_Y} bg-bmc-paper`}>
-              <div className={`${CONTAINER} grid grid-cols-1 items-center gap-14 lg:grid-cols-[1.1fr_0.9fr] lg:gap-24`}>
+            {/* Previous workshops beside the photo gallery */}
+            <section className={`${SECTION_Y} bg-background`}>
+              <div className={`${CONTAINER} grid grid-cols-1 items-start gap-12 lg:grid-cols-2 lg:gap-16`}>
+                {PAST_WORKSHOPS.length > 0 && (
+                  <div>
+                    <SectionHead title="Previous Workshops" className="mb-10" />
+                    <PastWorkshopsGrid workshops={PAST_WORKSHOPS} gridClassName="" />
+                  </div>
+                )}
                 <div className="bmc-reveal">
                   <SectionHead title="From Our Workshops" className="mb-10" />
                   <WorkshopGallery />
                 </div>
-                <div className="bmc-reveal">
-                  <div className={`${CARD} p-8 text-center md:p-12`}>
-                    <p className="mx-auto mb-8 max-w-lg leading-[1.75] text-foreground/85">
-                      Workshop dates and locations are announced on Instagram and TikTok. Send us a WhatsApp message to be added to the notification list.
-                    </p>
-                    <a
-                      href="https://wa.me/27686498593?text=Slm%2C%20I%27d%20like%20to%20find%20out%20about%20upcoming%20in-person%20workshops"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="bmc-btn bmc-btn-primary"
-                    >
-                      Enquire via WhatsApp <ArrowRight size={16} aria-hidden="true" />
-                    </a>
-                  </div>
+              </div>
+            </section>
+
+            {/* Enquiry */}
+            <section className="bg-bmc-paper pb-24 md:pb-32">
+              <div className={`${CONTAINER} mx-auto max-w-4xl`}>
+                <div className="bmc-reveal flex flex-col items-center gap-6 rounded-[1.75rem] bg-bmc-gold-light/45 p-8 text-center sm:flex-row sm:p-10 sm:text-left">
+                  <SiWhatsapp className="size-12 shrink-0 text-[#25D366]" aria-hidden="true" />
+                  <p className="flex-1 leading-[1.75] text-foreground/85">
+                    Workshop dates and locations are announced on Instagram and TikTok. Send us a WhatsApp message to be added to the notification list.
+                  </p>
+                  <a
+                    href="https://wa.me/27686498593?text=Slm%2C%20I%27d%20like%20to%20find%20out%20about%20upcoming%20in-person%20workshops"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="bmc-btn bmc-btn-primary whitespace-nowrap"
+                  >
+                    Enquire via WhatsApp <ArrowRight size={16} aria-hidden="true" />
+                  </a>
                 </div>
               </div>
             </section>

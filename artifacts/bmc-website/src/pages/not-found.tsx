@@ -14,10 +14,16 @@ export default function NotFound() {
       <PageHeader
         title="404"
         intro="The page you are looking for has been moved or no longer exists."
+        mark={<img src="/assets/mascot-figures.webp" alt="" width={789} height={437} className="mx-auto h-auto w-56 sm:w-72" />}
       >
-        <Link href="/" className="bmc-btn bmc-btn-primary">
-          Return Home
-        </Link>
+        <div className="flex flex-wrap items-center justify-center gap-4">
+          <Link href="/" className="bmc-btn bmc-btn-primary">
+            Return Home
+          </Link>
+          <Link href="/programmes" className="bmc-btn bmc-btn-soft">
+            See the programmes
+          </Link>
+        </div>
       </PageHeader>
     </>
   );

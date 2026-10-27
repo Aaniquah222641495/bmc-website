@@ -5,7 +5,7 @@ export const CATEGORIES = [
     items: [
       {
         q: 'Are classes suitable for complete beginners?',
-        a: 'Absolutely. That is exactly what we are here for. Our programmes are designed from the ground up for beginners. No prior knowledge of Arabic, Quran, or Islamic studies is required. You are welcome exactly as you are.',
+        a: 'Absolutely. That is exactly what we are here for. Our programmes are designed from the ground up for beginners. No prior knowledge of Arabic, Qur\'an, or Islamic studies is required. You are welcome exactly as you are.',
       },
       {
         q: 'I am a revert. Where do I start?',
@@ -13,7 +13,7 @@ export const CATEGORIES = [
       },
       {
         q: 'What do I need to get started?',
-        a: "Just a stable internet connection, a device to join class on, and an open heart. We provide all learning materials. For the in-person Quran programme, you will need to be able to travel to Mitchell's Plain, Cape Town on Saturday mornings.",
+        a: "Just a stable internet connection, a device to join class on, and an open heart. We provide all learning materials. For the in-person Qur'an programme, you will need to be able to travel to Mitchell's Plain, Cape Town on Saturday mornings.",
       },
     ],
   },
@@ -26,7 +26,7 @@ export const CATEGORIES = [
       },
       {
         q: 'What platform are classes held on?',
-        a: "Children's Online Madrasah and the Women's Hifdh Programme are held live via Microsoft Teams. The Women's Online Madrasah uses Google Classroom with pre-recorded lessons. The in-person Quran programme takes place every Saturday morning in Mitchell's Plain, Cape Town.",
+        a: "Children's Online Madrasah and the Women's Hifdh Programme are held live via Microsoft Teams. The Women's Online Madrasah uses Google Classroom with pre-recorded lessons. The in-person Qur'an programme takes place every Saturday morning in Mitchell's Plain, Cape Town.",
       },
       {
         q: 'What if I miss a session?',

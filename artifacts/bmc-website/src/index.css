@@ -344,6 +344,13 @@
     color: hsl(var(--bmc-paper));
     box-shadow: inset 0 0 0 1px hsl(var(--bmc-gold-light) / 0.65);
   }
+  /* Secondary button on light backgrounds */
+  .bmc-btn-soft {
+    color: hsl(var(--primary));
+    background: hsl(var(--card));
+    box-shadow: 0 1px 2px hsl(158 40% 12% / 0.08), inset 0 0 0 1px hsl(var(--bmc-gold) / 0.45);
+  }
+  .bmc-btn-soft:hover { background: hsl(var(--bmc-gold-light) / 0.45); }
   .bmc-btn-outline:hover { background: hsl(0 0% 100% / 0.08); box-shadow: inset 0 0 0 1px hsl(var(--bmc-gold-light)); }
   .bmc-btn-light:focus-visible, .bmc-btn-outline:focus-visible { outline-color: hsl(var(--bmc-gold-light)); }
 

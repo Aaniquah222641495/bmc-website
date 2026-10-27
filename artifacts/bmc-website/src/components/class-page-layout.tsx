@@ -2,7 +2,7 @@ import { type ReactNode, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { DetailsGrid, IncludedList, type DetailItem } from '@/components/class-page-blocks';
-import { CARD, CONTAINER, SECTION_Y } from '@/components/page-shell';
+import { CARD, CONTAINER, H2, H2_STYLE, SECTION_Y } from '@/components/page-shell';
 import { ProgrammeHero } from '@/components/programme-hero';
 import { RegisterArt } from '@/components/ornaments/steps-art';
 
@@ -92,7 +92,7 @@ export function ClassPageLayout({
         <section id="register" className={`${SECTION_Y} scroll-mt-20 bg-[hsl(var(--bmc-gold-light)/0.35)]`}>
           <div className={`${CONTAINER} mx-auto max-w-4xl text-center`}>
             <RegisterArt className="mx-auto mb-4 block h-auto w-48 md:w-56" />
-            <h2 className="mb-3 text-primary leading-[1.1]" style={{ fontSize: 'clamp(1.9rem, 3.4vw, 2.6rem)' }}>Register Below</h2>
+            <h2 className={`mb-3 ${H2}`} style={H2_STYLE}>Register Below</h2>
             <p className="mx-auto mb-9 max-w-md leading-[1.7] text-foreground/80">It takes a few minutes. We'll be in touch once your form comes through.</p>
 
             {!formOpen && (

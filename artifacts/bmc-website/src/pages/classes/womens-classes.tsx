@@ -6,7 +6,7 @@ import { programmeJsonLd } from '@/lib/structured-data';
 const INCLUDED = [
   'Aqaaid (Islamic Belief): understand the foundations of faith',
   'Fiqh (Islamic Jurisprudence): how to practice Islam correctly',
-  'Tajweed: Quran recitation with proper pronunciation',
+  'Tajweed: Qur\'an recitation with proper pronunciation',
   'Seerah: the life and character of the Prophet (SAW)',
   'Akhlaaq: Islamic character and moral conduct',
   'Hadith: sayings and teachings of the Prophet (SAW)',

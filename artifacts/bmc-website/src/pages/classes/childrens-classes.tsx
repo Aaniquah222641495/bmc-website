@@ -5,8 +5,8 @@ import { CARD } from '@/components/page-shell';
 
 
 const INCLUDED = [
-  'Quran recitation: building a strong foundation in reading',
-  'Surahs: memorising short chapters of the Quran',
+  'Qur\'an recitation: building a strong foundation in reading',
+  'Surahs: memorising short chapters of the Qur\'an',
   'Aqaaid: understanding the pillars of Islamic belief',
   'Fiqh: how to perform wudhu, salah, and daily acts of worship',
   'Akhlaaq: Islamic character, kindness, and good manners',

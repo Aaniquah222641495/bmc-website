@@ -25,11 +25,11 @@ export default function HifdhClasses() {
       <ClassPageLayout
         path="/hifdh-classes"
         title="Women's Hifdh Programme"
-        description="A structured online Quran memorisation programme for women, with live guidance three times a week."
+        description="A structured online Qur'an memorisation programme for women, with live guidance three times a week."
         intro={
           <>
             <p>
-              Hifdh, the memorisation of the Holy Quran, is one of the most beloved acts in Islam. Our Women's Hifdh Programme provides a structured, supportive online environment for women who have taken this beautiful step.
+              Hifdh, the memorisation of the Holy Qur'an, is one of the most beloved acts in Islam. Our Women's Hifdh Programme provides a structured, supportive online environment for women who have taken this beautiful step.
             </p>
             <p>
               Live classes are held three times a week via Microsoft Teams. Students receive consistent guidance with their memorisation, revision, and recitation to help them progress steadily and confidently in their Hifdh journey.
@@ -49,7 +49,7 @@ export default function HifdhClasses() {
           <GirihPattern />
           <div className="relative">
             <blockquote className="mx-auto max-w-lg font-display text-[1.35rem] italic leading-[1.5]">
-              "The best among you are those who learn the Quran and teach it."
+              "The best among you are those who learn the Qur'an and teach it."
             </blockquote>
             <figcaption className="bmc-eyebrow on-dark mt-5">Prophet Muhammad (SAW)</figcaption>
           </div>
