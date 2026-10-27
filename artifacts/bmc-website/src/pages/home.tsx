@@ -407,43 +407,56 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Testimonials */}
+      {/* Testimonials: one featured voice on deep green, two more beside it. Quotes verbatim. */}
       <section className={`relative overflow-hidden ${SECTION}`} style={{ backgroundColor: 'hsl(40 26% 91%)' }}>
         <div className="container mx-auto px-5 md:px-10">
-          <h2 className={`text-center ${H2}`} style={H2_STYLE}>
-            What Our Students Say
-          </h2>
-
-          <figure className="bmc-reveal mx-auto mt-10 max-w-4xl text-center">
-            <span
-              className="bmc-gold-text block font-display leading-none select-none"
-              style={{ fontSize: 'clamp(5rem, 10vw, 7.5rem)', height: 'clamp(3.5rem, 7vw, 5rem)' }}
-              aria-hidden="true"
-            >
-              &ldquo;
-            </span>
-            <blockquote
-              className="font-display italic font-normal text-primary leading-[1.3] tracking-[-0.012em]"
-              style={{ fontSize: 'clamp(1.55rem, 3.3vw, 2.5rem)' }}
-            >
-              {lead.quote}
-            </blockquote>
-            <figcaption className="bmc-eyebrow mt-9">{lead.name}</figcaption>
-          </figure>
-
-          <div className="mt-20 md:mt-24 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-5xl mx-auto">
-            {others.map((t) => (
-              <figure key={t.name} className="bmc-reveal rounded-[1.25rem] bg-bmc-paper p-8 md:p-11 ring-1 ring-[hsl(var(--bmc-gold)/0.35)] shadow-soft">
-                <blockquote className="text-foreground/90 leading-[1.75] text-[1.05rem]">&ldquo;{t.quote}&rdquo;</blockquote>
-                <figcaption className="bmc-eyebrow mt-6 !text-[0.68rem]">{t.name}</figcaption>
-              </figure>
-            ))}
-          </div>
-
-          <div className="mt-12 text-center">
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-12 md:mb-16">
+            <h2 className={H2} style={H2_STYLE}>
+              What Our Students Say
+            </h2>
             <Link href="/testimonials" className="bmc-link">
               Read All Stories <ArrowRight size={16} aria-hidden="true" />
             </Link>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] gap-6 md:gap-8 items-stretch">
+            <figure className="bmc-reveal relative overflow-hidden rounded-[1.75rem] bg-primary text-primary-foreground p-9 md:p-14 shadow-lift flex flex-col justify-between min-h-[22rem]">
+              <GirihPattern />
+              <div className="relative">
+                <span
+                  className="block font-display leading-none select-none text-bmc-gold-light"
+                  style={{ fontSize: 'clamp(5.5rem, 10vw, 8rem)', height: 'clamp(3.6rem, 6.5vw, 5rem)' }}
+                  aria-hidden="true"
+                >
+                  &ldquo;
+                </span>
+                <blockquote
+                  className="mt-4 font-display italic font-normal leading-[1.28] tracking-[-0.01em]"
+                  style={{ fontSize: 'clamp(1.6rem, 3vw, 2.35rem)' }}
+                >
+                  {lead.quote}
+                </blockquote>
+              </div>
+              <figcaption className="relative mt-10 flex items-center gap-4">
+                <Initial name={lead.name} dark />
+                <span className="font-utility font-semibold tracking-[0.04em] text-primary-foreground/90">{lead.name}</span>
+              </figcaption>
+            </figure>
+
+            <div className="grid grid-cols-1 gap-6 md:gap-8">
+              {others.map((t) => (
+                <figure
+                  key={t.name}
+                  className="bmc-reveal flex flex-col justify-between rounded-[1.5rem] bg-bmc-paper p-8 md:p-10 shadow-soft transition-transform duration-500 hover:-translate-y-1"
+                >
+                  <blockquote className="text-foreground/90 leading-[1.75] text-[1.06rem]">&ldquo;{t.quote}&rdquo;</blockquote>
+                  <figcaption className="mt-7 flex items-center gap-3.5">
+                    <Initial name={t.name} />
+                    <span className="font-utility font-semibold tracking-[0.03em] text-primary">{t.name}</span>
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -493,5 +506,19 @@ export default function Home() {
         />
       </section>
     </>
+  );
+}
+
+/** Initial of a student's first name in a small round badge (decorative; the name is shown beside it). */
+function Initial({ name, dark = false }: { name: string; dark?: boolean }) {
+  return (
+    <span
+      aria-hidden="true"
+      className={`inline-flex size-11 shrink-0 items-center justify-center rounded-full font-display text-lg ${
+        dark ? 'bg-bmc-gold-light text-primary' : 'bg-primary text-bmc-gold-light'
+      }`}
+    >
+      {name.trim().charAt(0)}
+    </span>
   );
 }
