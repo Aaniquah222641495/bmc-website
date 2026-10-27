@@ -1,137 +1,155 @@
 import { type ReactNode, useState } from 'react';
-import { Link } from 'wouter';
 import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowRight } from 'lucide-react';
+import { PROGRAMMES } from '@/data/programmes';
+import { DetailsGrid, IncludedList, type DetailItem } from '@/components/class-page-blocks';
+import { CARD, CONTAINER, PageHeader, PROGRAMME_ICONS, SECTION_Y } from '@/components/page-shell';
 
 export interface ClassPageLayoutProps {
   title: string;
   description: string;
-  children: ReactNode;
+  /** Programme path as in content/settings/programmes.json (e.g. "/womens-classes"). Gives the header its tag. */
+  path: string;
+  /** The introductory paragraphs. */
+  intro: ReactNode;
+  included: string[];
+  includedHeading?: string;
+  /** Who it's for, when, where and how much. */
+  details: DetailItem[];
+  /** Extra blocks in the main column (e.g. a note for parents). */
+  children?: ReactNode;
+  /** Full-width sections after the main block (e.g. previous workshops). */
+  after?: ReactNode;
   heroImage?: string;
+  heroImageAlt?: string;
   formUrl?: string; // per-class registration form URL
   showRegistration?: boolean;
 }
 
 const DEFAULT_FORM_URL = 'https://forms.gle/7tFCxqL8Ypgv9Jps5';
 
-export function ClassPageLayout({ title, description, children, heroImage, formUrl, showRegistration = true }: ClassPageLayoutProps) {
+export function ClassPageLayout({
+  title,
+  description,
+  path,
+  intro,
+  included,
+  includedHeading,
+  details,
+  children,
+  after,
+  heroImage,
+  heroImageAlt,
+  formUrl,
+  showRegistration = true,
+}: ClassPageLayoutProps) {
   const FORM_URL = formUrl ?? DEFAULT_FORM_URL;
   const [formOpen, setFormOpen] = useState(false);
+  const programme = PROGRAMMES.find((p) => p.path === path);
+  const Icon = PROGRAMME_ICONS[path];
+
+  const openForm = () => {
+    setFormOpen(true);
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.getElementById('register')?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+  };
+
   return (
-    <div className="min-h-screen bg-background pt-32 pb-20">
-      <div className="container mx-auto px-4 max-w-5xl">
-        <div className="mb-8">
-          <Link href="/programmes">
-            <span className="text-primary hover:text-accent font-utility text-sm inline-flex items-center gap-2 cursor-pointer transition-colors">
-              &larr; Back to Programmes
-            </span>
-          </Link>
-        </div>
+    <>
+      <PageHeader
+        back={{ href: '/programmes', label: 'Back to Programmes' }}
+        eyebrow={programme?.tag}
+        title={title}
+        intro={description}
+        image={heroImage}
+        imageAlt={heroImageAlt}
+        mark={Icon ? <span className="inline-flex text-bmc-gold-ink" aria-hidden="true"><Icon size={52} strokeWidth={1.2} /></span> : undefined}
+      />
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="bg-card rounded-2xl shadow-xl overflow-hidden border border-border"
-        >
-          {/* Header — marble arch pattern for standard pages, full-bleed photo when heroImage is provided */}
-          <div className="islamic-pattern relative overflow-hidden">
-            {heroImage && (
-              <>
-                <img
-                  src={heroImage}
-                  alt=""
-                  aria-hidden="true"
-                  className="absolute inset-0 w-full h-full object-cover"
-                  draggable={false}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/80 to-primary/50" />
-              </>
-            )}
-            <div className={`text-center relative z-10 px-8 ${heroImage ? 'py-16' : 'py-12'}`}>
-              <h1 className="text-4xl md:text-5xl font-display mb-4 text-white">{title}</h1>
-              <p className="text-lg md:text-xl font-body max-w-2xl mx-auto text-bmc-cream">{description}</p>
-            </div>
-          </div>
-
-          {/* Content */}
-          <div className="p-8 md:p-12">
+      <section className={`${SECTION_Y} bg-bmc-paper !pt-16 md:!pt-24`}>
+        <div className={`${CONTAINER} grid grid-cols-1 items-start gap-12 lg:grid-cols-[1fr_21rem] lg:gap-16 xl:grid-cols-[1fr_23rem]`}>
+          <div className="space-y-10 md:space-y-12">
+            <div className="max-w-[60ch] space-y-5 text-[1.1rem] leading-[1.75] text-foreground/85">{intro}</div>
+            <IncludedList items={included} heading={includedHeading} />
             {children}
-
-            {/* Registration Section */}
-            {showRegistration && (
-              <div className="mt-16">
-                <div className="flex items-center justify-center gap-4 mb-10">
-                  <span className="font-display text-primary text-xl tracking-widest uppercase">Register Below</span>
-                </div>
-
-                {!formOpen && (
-                  <div className="text-center">
-                    <button
-                      type="button"
-                      onClick={() => setFormOpen(true)}
-                      className="inline-flex items-center gap-2 bg-accent hover:bg-accent/90 text-primary font-utility font-bold px-8 py-4 rounded-full transition-all hover:-translate-y-1 hover:shadow-lg"
-                    >
-                      Register Now &rarr;
-                    </button>
-                  </div>
-                )}
-
-                <AnimatePresence initial={false}>
-                  {formOpen && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.35, ease: 'easeInOut' }}
-                      className="overflow-hidden"
-                    >
-                      <div className="rounded-2xl overflow-hidden border-2 border-accent/30 shadow-lg">
-                        <div className="bg-primary/5 py-4 px-6 flex items-center justify-between gap-4">
-                          <p className="font-utility text-sm text-primary/70 tracking-wide">
-                            Complete the form below to register for <strong className="text-primary">{title}</strong>
-                          </p>
-                          <button
-                            type="button"
-                            onClick={() => setFormOpen(false)}
-                            className="bmc-link-inline font-utility text-sm whitespace-nowrap"
-                          >
-                            Hide form
-                          </button>
-                        </div>
-                        <iframe
-                          src={`${FORM_URL}?embedded=true`}
-                          width="100%"
-                          height="800"
-                          frameBorder="0"
-                          marginHeight={0}
-                          marginWidth={0}
-                          title={`Registration form for ${title}`}
-                          className="block w-full bg-white"
-                        >
-                          Loading registration form…
-                        </iframe>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-
-                <p className="text-center text-sm font-utility text-foreground/50 mt-4">
-                  Having trouble? Contact us on{' '}
-                  <a
-                    href={`https://wa.me/27686498593?text=Slm%2C%20I%27d%20like%20to%20register%20for%20${encodeURIComponent(title)}`}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="bmc-link-inline"
-                  >
-                    WhatsApp
-                  </a>
-                  {' '}and we will assist you.
-                </p>
-              </div>
-            )}
           </div>
-        </motion.div>
-      </div>
-    </div>
+
+          <aside className={`${CARD} p-7 md:p-9 lg:sticky lg:top-28`} aria-label="Programme details">
+            <DetailsGrid items={details} />
+            {showRegistration && (
+              <button type="button" onClick={openForm} className="bmc-btn bmc-btn-primary mt-9 w-full">
+                Register Now <ArrowRight size={16} aria-hidden="true" />
+              </button>
+            )}
+          </aside>
+        </div>
+      </section>
+
+      {after}
+
+      {showRegistration && (
+        <section id="register" className={`${SECTION_Y} scroll-mt-20 bg-background`}>
+          <div className={`${CONTAINER} mx-auto max-w-4xl text-center`}>
+            <h2 className="mb-10 text-primary leading-[1.1]" style={{ fontSize: 'clamp(1.9rem, 3.4vw, 2.6rem)' }}>Register Below</h2>
+
+            {!formOpen && (
+              <button type="button" onClick={() => setFormOpen(true)} className="bmc-btn bmc-btn-primary">
+                Register Now <ArrowRight size={16} aria-hidden="true" />
+              </button>
+            )}
+
+            <AnimatePresence initial={false}>
+              {formOpen && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: 'auto', opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.35, ease: 'easeInOut' }}
+                  className="overflow-hidden text-left"
+                >
+                  <div className="p-1">
+                    <div className={`${CARD} overflow-hidden`}>
+                      <div className="flex items-center justify-between gap-4 bg-bmc-paper px-6 py-3">
+                        <p className="font-utility text-sm tracking-wide text-foreground/80">
+                          Complete the form below to register for <strong className="text-primary">{title}</strong>
+                        </p>
+                        <button type="button" onClick={() => setFormOpen(false)} className="bmc-link-inline inline-flex min-h-11 items-center whitespace-nowrap font-utility text-sm">
+                          Hide form
+                        </button>
+                      </div>
+                      <iframe
+                        src={`${FORM_URL}?embedded=true`}
+                        width="100%"
+                        height="800"
+                        frameBorder="0"
+                        marginHeight={0}
+                        marginWidth={0}
+                        title={`Registration form for ${title}`}
+                        className="block w-full bg-white"
+                      >
+                        Loading registration form…
+                      </iframe>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            <p className="mt-8 font-utility text-sm text-foreground/75">
+              Having trouble? Contact us on{' '}
+              <a
+                href={`https://wa.me/27686498593?text=Slm%2C%20I%27d%20like%20to%20register%20for%20${encodeURIComponent(title)}`}
+                target="_blank"
+                rel="noreferrer"
+                className="bmc-link-inline"
+              >
+                WhatsApp
+              </a>
+              {' '}and we will assist you.
+            </p>
+          </div>
+        </section>
+      )}
+    </>
   );
 }

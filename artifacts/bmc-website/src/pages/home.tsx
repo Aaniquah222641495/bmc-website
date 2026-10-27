@@ -1,5 +1,6 @@
 import { Link } from 'wouter';
-import { ArrowRight, MessageCircle } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
+import { SiWhatsapp } from 'react-icons/si';
 import { PROGRAMMES as ALL_PROGRAMMES, programmeTags } from '@/data/programmes';
 import { Seo } from '@/components/seo';
 import { homeJsonLd } from '@/lib/structured-data';
@@ -173,6 +174,7 @@ export default function Home() {
             </p>
             <div className="bmc-rise bmc-rise-3 flex flex-wrap gap-x-8 gap-y-2 items-center">
               <a href={WHATSAPP} target="_blank" rel="noreferrer" className="bmc-btn bmc-btn-primary">
+                <SiWhatsapp className="size-[1.1rem]" aria-hidden="true" />
                 Register Now
               </a>
               <Link href="/programmes" className="bmc-link">
@@ -493,7 +495,7 @@ export default function Home() {
                 Start Your Journey
               </Link>
               <a href={WHATSAPP} target="_blank" rel="noreferrer" className="bmc-btn bmc-btn-outline">
-                <MessageCircle size={18} aria-hidden="true" />
+                <SiWhatsapp className="size-[1.1rem]" aria-hidden="true" />
                 Chat on WhatsApp
               </a>
             </div>

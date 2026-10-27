@@ -1,7 +1,11 @@
 import { Link } from 'wouter';
-import { motion } from 'framer-motion';
+import { ArrowRight } from 'lucide-react';
 import { PastWorkshopsGrid } from '@/components/class-page-blocks';
+import { GirihPattern } from '@/components/ornaments';
+import { OpenBookIcon } from '@/components/ornaments/madrasah';
+import { CARD, CONTAINER, PageHeader, SECTION_Y, SectionHead, StarBullet, TagList } from '@/components/page-shell';
 import { Seo } from '@/components/seo';
+import { PROGRAMMES } from '@/data/programmes';
 import { currentOnlineWorkshops, pastOnlineWorkshops, type Workshop } from '@/data/workshops';
 import { useNow } from '@/hooks/use-now';
 import { graph, programmeJsonLd, eventsJsonLd } from '@/lib/structured-data';
@@ -21,56 +25,43 @@ const toPastCard = (w: Workshop) => ({
 // either stacked (a lone workshop) or two-up in a grid.
 function CurrentWorkshopCard({ workshop }: { workshop: Workshop }) {
   return (
-    <div className="bg-primary rounded-2xl overflow-hidden shadow-xl h-full flex flex-col">
+    <article className="bmc-reveal relative flex h-full flex-col overflow-hidden rounded-[1.25rem] bg-primary text-primary-foreground shadow-lift">
       {workshop.image ? (
-        /* Hero image — spans the full width of the card */
-        <div className="relative w-full h-64 md:h-72 overflow-hidden">
-          <img
-            src={workshop.image}
-            alt={workshop.imageAlt ?? workshop.title}
-            loading="lazy"
-            className="w-full h-full object-cover object-center"
-          />
-          <span className="absolute top-3 left-3 bg-black/40 backdrop-blur-sm text-white font-utility text-[0.65rem] uppercase tracking-widest px-2.5 py-1 rounded-full">
+        <div className="relative h-64 w-full overflow-hidden md:h-72">
+          <img src={workshop.image} alt={workshop.imageAlt ?? workshop.title} loading="lazy" decoding="async" className="h-full w-full object-cover object-center" />
+          <span className="absolute left-4 top-4 rounded-full bg-primary/80 px-3 py-1 font-utility text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-primary-foreground backdrop-blur-sm">
             {workshop.badge}
           </span>
         </div>
       ) : (
-        <div className="islamic-pattern px-8 md:px-12 py-8">
-          <span className="inline-block bg-accent/90 text-primary font-utility text-[0.65rem] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full">
+        <div className="relative px-8 pb-2 pt-8 md:px-12">
+          <GirihPattern />
+          <span className="relative inline-block rounded-full bg-bmc-gold-light px-3 py-1 font-utility text-[0.68rem] font-bold uppercase tracking-[0.14em] text-primary">
             {workshop.badge}
           </span>
         </div>
       )}
 
-      <div className="p-8 md:p-12 text-white flex flex-col flex-1">
-        <div className="flex items-start justify-between gap-4 flex-wrap mb-6">
-          <div>
-            <h2 className="font-display text-3xl md:text-4xl text-white mb-1">{workshop.title}</h2>
-            {workshop.subtitle && (
-              <p className="font-body italic text-accent/90 mb-3">{workshop.subtitle}</p>
-            )}
-            <p className="font-body text-lg leading-relaxed text-bmc-cream">
-              {workshop.description}
-            </p>
-          </div>
-        </div>
+      <div className="relative flex flex-1 flex-col p-8 md:p-12">
+        <h2 className="mb-2 text-[1.9rem] leading-tight text-primary-foreground md:text-[2.3rem]">{workshop.title}</h2>
+        {workshop.subtitle && <p className="mb-4 italic text-bmc-gold-light">{workshop.subtitle}</p>}
+        <p className="mb-9 text-[1.05rem] leading-[1.7] text-primary-foreground/90">{workshop.description}</p>
 
-        <div className="grid sm:grid-cols-2 gap-4 mb-8">
+        <dl className="mb-10 grid gap-4 sm:grid-cols-2">
           {(workshop.details ?? []).map(({ label, value }) => (
-            <div key={label} className="bg-white/10 rounded-xl p-4">
-              <p className="font-utility text-xs uppercase tracking-widest mb-1 text-accent">{label}</p>
-              <p className="font-display text-white text-lg">{value}</p>
+            <div key={label} className="rounded-xl bg-white/10 p-4">
+              <dt className="bmc-eyebrow on-dark !text-[0.66rem]">{label}</dt>
+              <dd className="mt-1 font-display text-[1.1rem] text-primary-foreground">{value}</dd>
             </div>
           ))}
-        </div>
+        </dl>
 
-        <div className="mb-8">
-          <p className="font-utility text-xs uppercase tracking-widest mb-3 text-accent">{workshop.topicsLabel ?? 'Topics Covered'}</p>
-          <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-2">
+        <div className="mb-9">
+          <p className="bmc-eyebrow on-dark mb-4">{workshop.topicsLabel ?? 'Topics Covered'}</p>
+          <ul className="grid gap-x-6 gap-y-3 sm:grid-cols-2">
             {(workshop.topics ?? []).map((topic) => (
-              <li key={topic} className="font-body text-sm leading-relaxed flex items-start gap-2 text-bmc-cream">
-                <img src="/assets/bullet.webp" alt="" width={16} height={16} loading="lazy" decoding="async" className="flex-shrink-0 mt-1" />
+              <li key={topic} className="flex items-start gap-3 text-[0.95rem] leading-[1.6] text-primary-foreground/90">
+                <StarBullet className="mt-[0.35rem] !h-3.5 !w-3.5 !text-bmc-gold-light" />
                 {topic}
               </li>
             ))}
@@ -78,12 +69,12 @@ function CurrentWorkshopCard({ workshop }: { workshop: Workshop }) {
         </div>
 
         {workshop.includes && (
-          <div className="mb-8">
-            <p className="font-utility text-xs uppercase tracking-widest mb-3 text-accent">What You'll Receive</p>
-            <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-2">
+          <div className="mb-9">
+            <p className="bmc-eyebrow on-dark mb-4">What You'll Receive</p>
+            <ul className="grid gap-x-6 gap-y-3 sm:grid-cols-2">
               {workshop.includes.map((item) => (
-                <li key={item} className="font-body text-sm leading-relaxed flex items-start gap-2 text-bmc-cream">
-                  <img src="/assets/bullet.webp" alt="" width={16} height={16} loading="lazy" decoding="async" className="flex-shrink-0 mt-1" />
+                <li key={item} className="flex items-start gap-3 text-[0.95rem] leading-[1.6] text-primary-foreground/90">
+                  <StarBullet className="mt-[0.35rem] !h-3.5 !w-3.5 !text-bmc-gold-light" />
                   {item}
                 </li>
               ))}
@@ -93,18 +84,13 @@ function CurrentWorkshopCard({ workshop }: { workshop: Workshop }) {
 
         {workshop.registrationUrl && (
           <div className="mt-auto pt-4">
-            <a
-              href={workshop.registrationUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 bg-accent hover:bg-accent/90 text-primary font-utility font-bold px-8 py-4 rounded-full transition-all hover:-translate-y-1 hover:shadow-lg"
-            >
-              Register Now &rarr;
+            <a href={workshop.registrationUrl} target="_blank" rel="noreferrer" className="bmc-btn bmc-btn-light">
+              Register Now <ArrowRight size={16} aria-hidden="true" />
             </a>
           </div>
         )}
       </div>
-    </div>
+    </article>
   );
 }
 
@@ -123,135 +109,82 @@ export default function Workshops() {
         path="/programmes/workshops"
         jsonLd={[programmeJsonLd('/programmes/workshops'), ...(events.length ? [graph(...events)] : [])]}
       />
-      <div className="min-h-screen bg-background pt-32 pb-24">
-      <div className="container mx-auto px-4">
+      <PageHeader
+        back={{ href: '/programmes', label: 'Back to Programmes' }}
+        eyebrow={PROGRAMMES.find((p) => p.path === '/workshops')?.tag}
+        title="Online Workshops & Short Courses"
+        intro="Focused online sessions and short courses on essential Islamic topics: practical, accessible, and designed to leave you with knowledge you can use straight away."
+        mark={<span className="inline-flex text-bmc-gold-ink" aria-hidden="true"><OpenBookIcon size={52} strokeWidth={1.2} /></span>}
+      />
 
-        {/* Back link */}
-        <div className="mb-8 max-w-5xl mx-auto">
-          <Link href="/programmes">
-            <span className="text-primary hover:text-accent font-utility text-sm inline-flex items-center gap-2 cursor-pointer transition-colors">
-              &larr; Back to Programmes
-            </span>
-          </Link>
-        </div>
-
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-16 max-w-5xl mx-auto bg-card rounded-2xl overflow-hidden border border-border shadow-xl"
-        >
-          <div className="islamic-pattern py-12 px-8 md:px-12">
-            <h1 className="text-4xl md:text-5xl font-display text-white mb-6">Online Workshops & Short Courses</h1>
-            <p className="font-body text-lg leading-relaxed max-w-2xl text-bmc-cream">
-              Focused online sessions and short courses on essential Islamic topics: practical, accessible, and designed to leave you with knowledge you can use straight away.
-            </p>
-          </div>
-        </motion.div>
-
-        {/* Currently Available */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.15 }}
-          className={`mb-16 mx-auto ${multiple ? 'max-w-6xl' : 'max-w-5xl'}`}
-        >
-          <div className="flex items-center justify-center gap-3 mb-6">
-            <span className="font-utility text-sm text-accent uppercase tracking-widest font-bold whitespace-nowrap">Available Now</span>
-          </div>
-
+      {/* Currently Available */}
+      <section className={`${SECTION_Y} bg-bmc-paper !pt-16 md:!pt-24`}>
+        <div className={CONTAINER}>
+          <SectionHead title="Available Now" center className="mb-12 md:mb-16" />
           {CURRENT_ONLINE_WORKSHOPS.length === 0 ? (
-            <p className="font-body text-foreground/60 text-center py-8">
+            <p className="mx-auto max-w-xl text-center leading-[1.75] text-foreground/80">
               No workshops are open for registration right now. Have a look at the previous
               workshops below, or follow us to hear when new dates are announced.
             </p>
           ) : (
-            <div className={multiple ? 'grid md:grid-cols-2 gap-8 items-stretch' : 'space-y-8'}>
+            <div className={`mx-auto ${multiple ? 'grid max-w-6xl items-stretch gap-8 md:grid-cols-2' : 'max-w-5xl space-y-8'}`}>
               {CURRENT_ONLINE_WORKSHOPS.map((workshop) => (
                 <CurrentWorkshopCard key={workshop.title} workshop={workshop} />
               ))}
             </div>
           )}
-        </motion.div>
+        </div>
+      </section>
 
-        {/* Past Workshops */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.25 }}
-          className="mb-16 max-w-5xl mx-auto"
-        >
-          <div className="flex items-center justify-center gap-3 mb-6">
-            <span className="font-utility text-sm text-foreground/50 uppercase tracking-widest whitespace-nowrap">Previous Workshops</span>
-          </div>
+      {/* Past Workshops */}
+      {PAST_WORKSHOPS.length > 0 && (
+      <section className={`${SECTION_Y} bg-background`}>
+        <div className={CONTAINER}>
+          <SectionHead
+            title="Previous Workshops"
+            intro="These workshops have been run before and may return in future. Follow us to be notified when they open again."
+            className="mb-14 md:mb-16"
+          />
+          <PastWorkshopsGrid workshops={PAST_WORKSHOPS} gridClassName="md:grid-cols-2" />
+        </div>
+      </section>
+      )}
 
-          <p className="font-body text-foreground/60 text-center mb-8">
-            These workshops have been run before and may return in future. Follow us to be notified when they open again.
-          </p>
-
-          <PastWorkshopsGrid workshops={PAST_WORKSHOPS} delayBase={0.3} gridClassName="md:grid-cols-2" />
-        </motion.div>
-
-        {/* In-Person Workshops */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.35 }}
-          className="mb-16 max-w-5xl mx-auto"
-        >
-          <div className="flex items-center justify-center gap-3 mb-6">
-            <span className="font-utility text-sm text-accent uppercase tracking-widest font-bold whitespace-nowrap">Also Available</span>
-          </div>
-
-          <div className="bg-card border border-border rounded-2xl p-8 flex flex-col md:flex-row items-start md:items-center gap-6">
+      {/* In-Person Workshops */}
+      <section className={`${SECTION_Y} bg-bmc-paper`}>
+        <div className={`${CONTAINER} mx-auto max-w-5xl`}>
+          <SectionHead title="Also Available" className="mb-12" />
+          <div className={`bmc-reveal ${CARD} flex flex-col items-start gap-8 p-8 md:flex-row md:items-center md:p-12`}>
             <div className="flex-1">
-              <h2 className="font-display text-2xl text-primary mb-2">In-Person Workshops</h2>
-              <p className="font-body text-foreground/70 leading-relaxed mb-3">
+              <h3 className="mb-3 text-[1.6rem] text-primary">In-Person Workshops</h3>
+              <p className="mb-5 leading-[1.7] text-foreground/80">
                 Interactive face-to-face workshops covering important Islamic topics, with opportunities for discussion, questions and practical learning.
               </p>
-              <div className="flex flex-wrap gap-4 text-sm font-utility">
-                <span className="bg-muted rounded-full px-4 py-1 text-primary border border-border">In-Person</span>
-                <span className="bg-muted rounded-full px-4 py-1 text-primary border border-border">From R100</span>
-              </div>
+              <TagList tags={['In-Person', 'From R100']} />
             </div>
-            <Link href="/programmes/in-person-workshops">
-              <span className="inline-flex items-center gap-2 border border-primary text-primary hover:bg-primary hover:text-white font-utility font-bold px-6 py-3 rounded-full transition-all cursor-pointer whitespace-nowrap">
-                View In-Person &rarr;
-              </span>
+            <Link href="/programmes/in-person-workshops" className="bmc-btn bmc-btn-primary whitespace-nowrap">
+              View In-Person <ArrowRight size={16} aria-hidden="true" />
             </Link>
           </div>
-        </motion.div>
+        </div>
+      </section>
 
-        {/* Stay Updated */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center max-w-5xl mx-auto bg-muted rounded-2xl p-10 border border-border"
-        >
-          <h2 className="font-display text-2xl text-primary mb-3">Stay Updated</h2>
-          <p className="font-body text-foreground/70 mb-6 max-w-md mx-auto">
+      {/* Stay Updated */}
+      <section className={`${SECTION_Y} bg-background`}>
+        <div className={`${CONTAINER} bmc-reveal mx-auto max-w-3xl text-center`}>
+          <SectionHead title="Stay Updated" center className="mb-6" />
+          <p className="mx-auto mb-8 max-w-md leading-[1.7] text-foreground/80">
             New workshop dates are announced on Instagram and TikTok. Follow along so you don't miss the next one.
           </p>
-          <div className="flex justify-center gap-6 flex-wrap mb-6">
-            <a
-              href="https://instagram.com/beginners_classes"
-              target="_blank"
-              rel="noreferrer"
-              className="bmc-link-inline font-utility"
-            >
+          <div className="mb-8 flex flex-wrap justify-center gap-x-8 gap-y-1">
+            <a href="https://instagram.com/beginners_classes" target="_blank" rel="noreferrer" className="bmc-link-inline inline-flex min-h-11 items-center font-utility">
               @beginners_classes
             </a>
-            <a
-              href="https://tiktok.com/@rukeyabaradien_"
-              target="_blank"
-              rel="noreferrer"
-              className="bmc-link-inline font-utility"
-            >
+            <a href="https://tiktok.com/@rukeyabaradien_" target="_blank" rel="noreferrer" className="bmc-link-inline inline-flex min-h-11 items-center font-utility">
               @rukeyabaradien_
             </a>
           </div>
-          <p className="font-body text-sm text-foreground/50">
+          <p className="text-sm leading-[1.7] text-foreground/75">
             Or send us a{' '}
             <a
               href="https://wa.me/27686498593?text=Slm%2C%20please%20let%20me%20know%20about%20upcoming%20workshops"
@@ -263,10 +196,8 @@ export default function Workshops() {
             </a>
             {' '}to be added to the notification list.
           </p>
-        </motion.div>
-
-      </div>
-      </div>
+        </div>
+      </section>
     </>
   );
 }

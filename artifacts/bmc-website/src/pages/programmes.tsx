@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { Link } from 'wouter';
 import { motion, AnimatePresence } from 'framer-motion';
-import { PROGRAMMES, type ProgrammeType } from '@/data/programmes';
+import { ArrowRight } from 'lucide-react';
+import { PROGRAMMES, programmeTags, type ProgrammeType } from '@/data/programmes';
 import { Seo } from '@/components/seo';
 import { programmesJsonLd } from '@/lib/structured-data';
-
+import { CARD, CONTAINER, IconChip, PageHeader, PROGRAMME_ICONS, TagList } from '@/components/page-shell';
+import { OpenBookIcon } from '@/components/ornaments/madrasah';
 
 type Tab = ProgrammeType;
 
@@ -25,122 +27,91 @@ export default function Programmes() {
         path="/programmes"
         jsonLd={programmesJsonLd()}
       />
-      <div className="min-h-screen bg-background pt-32 pb-20">
-      <div className="container mx-auto px-4 max-w-6xl">
+      <PageHeader
+        title="Our Programmes"
+        intro="Designed to meet you wherever you are on your journey, whether you're taking your very first steps or looking to deepen your knowledge."
+      />
 
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-12 max-w-3xl mx-auto"
-        >
-          <h1 className="text-4xl md:text-5xl font-display text-primary mb-6">Our Programmes</h1>
-          <p className="font-body text-lg text-foreground/70 leading-relaxed">
-            Designed to meet you wherever you are on your journey, whether you're taking your very first steps or looking to deepen your knowledge. <span className="text-accent">☽</span>
-          </p>
-        </motion.div>
-
-        {/* Tabs */}
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="flex justify-center mb-12"
-        >
-          <div className="inline-flex bg-card border border-border rounded-2xl p-1.5 gap-1">
-            {TABS.map(({ id, label, sub }) => (
-              <button
-                key={id}
-                onClick={() => setActive(id)}
-                className={`relative px-8 py-3 rounded-xl font-utility text-sm font-bold transition-all duration-200 flex flex-col items-center gap-0.5 ${
-                  active === id
-                    ? 'bg-primary text-white shadow-md'
-                    : 'text-foreground/60 hover:text-primary'
-                }`}
-              >
-                {active === id && (
-                  <motion.div
-                    layoutId="tab-bg"
-                    className="absolute inset-0 bg-primary rounded-xl"
-                    style={{ zIndex: 0 }}
-                  />
-                )}
-                <span className="relative z-10 tracking-wide">{label}</span>
-                <span className={`relative z-10 text-[0.65rem] font-normal tracking-widest uppercase ${active === id ? 'text-accent' : 'text-foreground/40'}`}>
-                  {sub}
-                </span>
-              </button>
-            ))}
+      <section className="bg-bmc-paper pb-24 pt-14 md:pb-36 md:pt-20">
+        <div className={CONTAINER}>
+          {/* Tabs: a soft pill group, no outlines */}
+          <div className="mb-14 flex justify-center md:mb-20">
+            <div role="group" aria-label="Choose how you would like to learn" className="inline-flex gap-1.5 rounded-full bg-card p-1.5 shadow-soft">
+              {TABS.map(({ id, label, sub }) => {
+                const on = active === id;
+                return (
+                  <button
+                    key={id}
+                    type="button"
+                    aria-pressed={on}
+                    onClick={() => setActive(id)}
+                    className={`flex min-h-12 flex-col items-center justify-center gap-0.5 rounded-full px-5 py-2.5 font-utility transition-colors duration-300 motion-reduce:transition-none sm:px-9 ${
+                      on ? 'bg-primary text-primary-foreground shadow-[inset_0_0_0_1px_hsl(var(--bmc-gold)/0.55)]' : 'text-foreground/75 hover:text-primary'
+                    }`}
+                  >
+                    <span className="text-sm font-bold tracking-wide">{label}</span>
+                    <span className={`text-[0.65rem] font-semibold uppercase tracking-[0.14em] ${on ? 'text-bmc-gold-light' : 'text-bmc-gold-ink'}`}>{sub}</span>
+                  </button>
+                );
+              })}
+            </div>
           </div>
-        </motion.div>
 
-        {/* Cards grid */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={active}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.25 }}
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
-          >
-            {visible.map(({ title, path, descLong: desc, tag, price, image, imagePosition, gradient }, i) => (
-              <motion.div
-                key={path}
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.07 }}
-                className="h-full"
-              >
-                <Link href={`/programmes${path}`}>
-                  <div className="bg-card rounded-2xl border border-border hover:border-accent hover:shadow-xl hover:-translate-y-1 motion-reduce:hover:translate-y-0 transition-all duration-300 cursor-pointer h-full flex flex-col group overflow-hidden">
-
-                    {/* Image block */}
-                    <div className={`relative w-full h-52 overflow-hidden bg-gradient-to-br ${gradient} shrink-0`}>
-                      {image ? (
-                        <img
-                          src={image}
-                          alt={title}
-                          loading="lazy"
-                          style={{ objectPosition: imagePosition ?? 'top' }}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        />
-                      ) : (
-                        <div
-                          className="absolute inset-0 opacity-15"
-                          style={{
-                            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 6 L32.5 16 L42 13 L36 21 L46 25 L36 29 L42 37 L32.5 34 L30 44 L27.5 34 L18 37 L24 29 L14 25 L24 21 L18 13 L27.5 16 Z' fill='none' stroke='%23C9A84C' stroke-width='0.8'/%3E%3C/svg%3E")`,
-                          }}
-                        />
-                      )}
-                      <span className="absolute top-3 left-3 bg-black/40 backdrop-blur-sm text-white font-utility text-[0.65rem] uppercase tracking-widest px-2.5 py-1 rounded-full">
-                        {tag}
-                      </span>
-                    </div>
-
-                    {/* Content */}
-                    <div className="p-6 flex flex-col flex-1">
-                      <h3 className="text-xl font-display text-primary mb-2 leading-snug group-hover:text-accent transition-colors">
-                        {title}
-                      </h3>
-                      <p className="text-foreground/65 font-body text-sm leading-relaxed flex-1">{desc}</p>
-                      <div className="flex items-center justify-between mt-5 pt-2">
-                        <span className="font-utility text-xs font-bold text-accent bg-accent/10 px-3 py-1 rounded-full">{price}</span>
-                        <span className="text-primary font-utility font-bold group-hover:text-accent transition-colors flex items-center gap-1 text-sm">
-                          View Details <span className="group-hover:translate-x-1 transition-transform inline-block">&rarr;</span>
-                        </span>
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.ul
+              key={active}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -6 }}
+              transition={{ duration: 0.25 }}
+              className="mx-auto grid max-w-6xl grid-cols-1 gap-8 md:grid-cols-2 lg:gap-10"
+            >
+              {visible.map((p) => {
+                const Icon = PROGRAMME_ICONS[p.path] ?? OpenBookIcon;
+                return (
+                  <li key={p.path} className="flex">
+                    <Link
+                      href={`/programmes${p.path}`}
+                      className={`group flex w-full flex-col p-3 transition-shadow duration-500 hover:shadow-lift sm:p-4 ${CARD} bmc-lift`}
+                    >
+                      <div className={`relative aspect-[16/10] overflow-hidden rounded-[0.9rem] bg-gradient-to-br ${p.gradient}`}>
+                        {p.image && (
+                          <img
+                            src={p.image}
+                            alt=""
+                            width={1200}
+                            height={750}
+                            loading="lazy"
+                            decoding="async"
+                            style={{ objectPosition: p.imagePosition ?? 'top' }}
+                            className="h-full w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.02] motion-reduce:transition-none"
+                          />
+                        )}
                       </div>
-                    </div>
-
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
-          </motion.div>
-        </AnimatePresence>
-
-      </div>
-      </div>
+                      <div className="flex flex-1 flex-col px-2 pb-4 pt-7 sm:px-4">
+                        <div className="flex items-center gap-4">
+                          <IconChip Icon={Icon} size={30} />
+                          <p className="bmc-eyebrow">{p.tag}</p>
+                        </div>
+                        <h2 className="mt-5 text-[1.65rem] leading-[1.15] text-primary">{p.title}</h2>
+                        <TagList tags={programmeTags(p)} className="mt-4" />
+                        <p className="mt-4 flex-1 text-[1rem] leading-[1.7] text-foreground/80">{p.descLong}</p>
+                        <div className="mt-7 flex items-center justify-between">
+                          <span className="font-display text-xl font-medium text-primary">{p.price}</span>
+                          <span className="bmc-link !min-h-0 group-hover:text-bmc-gold-ink">
+                            View Details
+                            <ArrowRight size={15} className="transition-transform group-hover:translate-x-1 motion-reduce:transition-none" aria-hidden="true" />
+                          </span>
+                        </div>
+                      </div>
+                    </Link>
+                  </li>
+                );
+              })}
+            </motion.ul>
+          </AnimatePresence>
+        </div>
+      </section>
     </>
   );
 }

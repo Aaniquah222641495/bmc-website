@@ -1,6 +1,7 @@
 import { Link } from 'wouter';
 import { SiWhatsapp, SiInstagram, SiTiktok } from 'react-icons/si';
 import { GirihPattern } from '@/components/ornaments';
+import { WhatsAppFloat } from '@/components/whatsapp-float';
 
 const LINKS = [
   { label: 'Home', href: '/' },
@@ -15,6 +16,8 @@ const linkClass = 'inline-flex min-h-11 items-center text-primary-foreground/85 
 
 export function Footer() {
   return (
+    <>
+      <WhatsAppFloat />
     <footer className="relative overflow-hidden bg-[hsl(158_46%_10.5%)] text-primary-foreground pt-20 pb-8">
       <GirihPattern />
       <div className="relative container mx-auto px-5 md:px-10">
@@ -86,5 +89,6 @@ export function Footer() {
         </div>
       </div>
     </footer>
+    </>
   );
 }
