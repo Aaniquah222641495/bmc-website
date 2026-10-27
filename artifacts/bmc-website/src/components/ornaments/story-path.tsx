@@ -6,7 +6,7 @@ import { LaptopBookIcon } from './steps-art';
  * Each icon matches its words. Labels are real text (readable, translatable); the path is decorative.
  */
 
-function SeedlingIcon({ size = 26 }: { size?: number }) {
+export function SeedlingIcon({ size = 26 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d="M24 40V22" />
