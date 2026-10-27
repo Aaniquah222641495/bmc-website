@@ -1,6 +1,6 @@
 import { type ReactNode, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Clock, ClipboardList, MessageCircleHeart } from 'lucide-react';
 import { DetailsGrid, IncludedList, type DetailItem } from '@/components/class-page-blocks';
 import { CARD, CONTAINER, H2, H2_STYLE, SECTION_Y } from '@/components/page-shell';
 import { ProgrammeHero } from '@/components/programme-hero';
@@ -25,6 +25,8 @@ export interface ClassPageLayoutProps {
   heroImage?: string;
   heroImageAlt?: string;
   formUrl?: string; // per-class registration form URL
+  /** What the visitor should have ready, matching the questions in this class's Google Form. Keep in step with the form. */
+  formNeeds?: string;
   showRegistration?: boolean;
 }
 
@@ -41,6 +43,7 @@ export function ClassPageLayout({
   children,
   after,
   formUrl,
+  formNeeds = 'Your name and contact details.',
   showRegistration = true,
 }: ClassPageLayoutProps) {
   const FORM_URL = formUrl ?? DEFAULT_FORM_URL;
@@ -93,7 +96,26 @@ export function ClassPageLayout({
           <div className={`${CONTAINER} mx-auto max-w-4xl text-center`}>
             <RegisterArt className="mx-auto mb-4 block h-auto w-48 md:w-56" />
             <h2 className={`mb-3 ${H2}`} style={H2_STYLE}>Register below</h2>
-            <p className="mx-auto mb-9 max-w-md leading-[1.7] text-foreground/80">It takes a few minutes. We'll be in touch once your form comes through.</p>
+            <p className="mx-auto mb-10 max-w-md leading-[1.7] text-foreground/80">Before you start, here is what to expect.</p>
+
+            {/* Before you start: tell a nervous beginner how long it takes, what to have ready and what happens next. */}
+            <ul className="mx-auto mb-10 grid max-w-3xl grid-cols-1 gap-4 text-left sm:grid-cols-3">
+              {[
+                { Icon: Clock, title: 'Takes a few minutes', text: 'One short form, on this page.' },
+                { Icon: ClipboardList, title: 'Have ready', text: formNeeds },
+                { Icon: MessageCircleHeart, title: 'What happens next', text: "We'll be in touch once your form comes through. Fees and how to pay are explained in the form." },
+              ].map(({ Icon, title: t, text }) => (
+                <li key={t} className="flex gap-3.5 rounded-[1.1rem] bg-bmc-paper p-5 shadow-soft">
+                  <span className="mt-0.5 inline-flex size-10 shrink-0 items-center justify-center rounded-full bg-primary text-bmc-gold-light" aria-hidden="true">
+                    <Icon size={19} strokeWidth={1.6} />
+                  </span>
+                  <span>
+                    <span className="block font-display text-[1.08rem] leading-snug text-primary">{t}</span>
+                    <span className="mt-1 block text-[0.92rem] leading-[1.6] text-foreground/80">{text}</span>
+                  </span>
+                </li>
+              ))}
+            </ul>
 
             {!formOpen && (
               <button type="button" onClick={() => setFormOpen(true)} className="bmc-btn bmc-btn-primary">

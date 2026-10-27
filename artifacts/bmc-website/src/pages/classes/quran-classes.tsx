@@ -23,6 +23,8 @@ export default function QuranClasses() {
       />
       <ClassPageLayout
         path="/quran-classes"
+        // Matches the questions in the shared registration form (forms.gle/7tFCxqL8Ypgv9Jps5), read 2026-10-27.
+        formNeeds="Your full name, email, date of birth, WhatsApp number, and city and country."
         title="Get Into Qur'an: In Person"
         description="A Qur'an programme for complete beginners or those wanting to start again, held every Saturday morning in Mitchell's Plain, Cape Town."
         intro={

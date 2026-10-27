@@ -24,6 +24,8 @@ export default function HifdhClasses() {
       />
       <ClassPageLayout
         path="/hifdh-classes"
+        // Matches the questions in the shared registration form (forms.gle/7tFCxqL8Ypgv9Jps5), read 2026-10-27.
+        formNeeds="Your full name, email, date of birth, WhatsApp number, and city and country."
         title="Women's Hifdh Programme"
         description="A structured online Qur'an memorisation programme for women, with live guidance three times a week."
         intro={
