@@ -60,7 +60,7 @@ export default function Contact() {
       />
       <PageHeader
         eyebrow="WhatsApp is quickest"
-        title="Get In Touch"
+        title="Get in touch"
         intro="We'd love to hear from you. Reach out on any of the platforms below and we'll get back to you as soon as possible, InshaAllah."
         art={<ChatCard />}
       />

@@ -85,7 +85,7 @@ export function Nav() {
               href="/programmes"
               className="bmc-btn bmc-btn-primary !min-h-11 !px-6 !py-2 !text-[0.88rem]"
             >
-              Start Learning
+              Find your class
             </Link>
           </div>
 
@@ -134,7 +134,7 @@ export function Nav() {
             ))}
             <li className="pt-6">
               <Link href="/programmes" className="bmc-btn bmc-btn-light">
-                Start Learning
+                Find your class
               </Link>
             </li>
           </ul>

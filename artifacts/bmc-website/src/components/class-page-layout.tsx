@@ -61,7 +61,7 @@ export function ClassPageLayout({
         actions={
           showRegistration ? (
             <button type="button" onClick={openForm} className="bmc-btn bmc-btn-light">
-              Register Now <ArrowRight size={16} aria-hidden="true" />
+              Register now <ArrowRight size={16} aria-hidden="true" />
             </button>
           ) : undefined
         }
@@ -79,7 +79,7 @@ export function ClassPageLayout({
             <DetailsGrid items={details} />
             {showRegistration && (
               <button type="button" onClick={openForm} className="bmc-btn bmc-btn-primary mt-9 w-full">
-                Register Now <ArrowRight size={16} aria-hidden="true" />
+                Register now <ArrowRight size={16} aria-hidden="true" />
               </button>
             )}
           </aside>
@@ -92,12 +92,12 @@ export function ClassPageLayout({
         <section id="register" className={`${SECTION_Y} scroll-mt-20 bg-[hsl(var(--bmc-gold-light)/0.35)]`}>
           <div className={`${CONTAINER} mx-auto max-w-4xl text-center`}>
             <RegisterArt className="mx-auto mb-4 block h-auto w-48 md:w-56" />
-            <h2 className={`mb-3 ${H2}`} style={H2_STYLE}>Register Below</h2>
+            <h2 className={`mb-3 ${H2}`} style={H2_STYLE}>Register below</h2>
             <p className="mx-auto mb-9 max-w-md leading-[1.7] text-foreground/80">It takes a few minutes. We'll be in touch once your form comes through.</p>
 
             {!formOpen && (
               <button type="button" onClick={() => setFormOpen(true)} className="bmc-btn bmc-btn-primary">
-                Register Now <ArrowRight size={16} aria-hidden="true" />
+                Register now <ArrowRight size={16} aria-hidden="true" />
               </button>
             )}
 

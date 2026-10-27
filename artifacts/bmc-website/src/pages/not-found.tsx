@@ -18,7 +18,7 @@ export default function NotFound() {
       >
         <div className="flex flex-wrap items-center justify-center gap-4">
           <Link href="/" className="bmc-btn bmc-btn-primary">
-            Return Home
+            Back to home
           </Link>
           <Link href="/programmes" className="bmc-btn bmc-btn-soft">
             See the programmes

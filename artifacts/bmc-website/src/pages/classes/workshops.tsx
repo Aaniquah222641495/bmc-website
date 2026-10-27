@@ -88,7 +88,7 @@ function CurrentWorkshopCard({ workshop }: { workshop: Workshop }) {
         {workshop.registrationUrl && (
           <div className="mt-auto pt-4">
             <a href={workshop.registrationUrl} target="_blank" rel="noreferrer" className="bmc-btn bmc-btn-light">
-              Register Now <ArrowRight size={16} aria-hidden="true" />
+              Register now <ArrowRight size={16} aria-hidden="true" />
             </a>
           </div>
         )}
@@ -127,7 +127,7 @@ export default function Workshops() {
       {/* Currently Available */}
       <section className={`${SECTION_Y} bg-bmc-paper !pt-16 md:!pt-24`}>
         <div className={CONTAINER}>
-          <SectionHead title="Available Now" center className="mb-12 md:mb-16" />
+          <SectionHead title="Available now" center className="mb-12 md:mb-16" />
           {CURRENT_ONLINE_WORKSHOPS.length === 0 ? (
             <div className="bmc-reveal mx-auto flex max-w-3xl flex-col items-center gap-6 rounded-[1.75rem] bg-bmc-gold-light/45 p-8 text-center sm:flex-row sm:p-10 sm:text-left">
               <span className="inline-flex size-16 shrink-0 items-center justify-center rounded-2xl bg-card text-primary shadow-soft" aria-hidden="true">
@@ -163,7 +163,7 @@ export default function Workshops() {
       <section className={`${SECTION_Y} bg-background`}>
         <div className={CONTAINER}>
           <SectionHead
-            title="Previous Workshops"
+            title="Previous workshops"
             intro="These workshops have been run before and may return in future. Follow us to be notified when they open again."
             className="mb-14 md:mb-16"
           />

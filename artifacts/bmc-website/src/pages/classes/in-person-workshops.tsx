@@ -151,12 +151,12 @@ export default function InPersonWorkshops() {
               <div className={`${CONTAINER} grid grid-cols-1 items-start gap-12 lg:grid-cols-2 lg:gap-16`}>
                 {PAST_WORKSHOPS.length > 0 && (
                   <div>
-                    <SectionHead title="Previous Workshops" className="mb-10" />
+                    <SectionHead title="Previous workshops" className="mb-10" />
                     <PastWorkshopsGrid workshops={PAST_WORKSHOPS} gridClassName="" />
                   </div>
                 )}
                 <div className="bmc-reveal">
-                  <SectionHead title="From Our Workshops" className="mb-10" />
+                  <SectionHead title="From our workshops" className="mb-10" />
                   <WorkshopGallery />
                 </div>
               </div>

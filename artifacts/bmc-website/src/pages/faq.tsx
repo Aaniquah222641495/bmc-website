@@ -80,7 +80,7 @@ export default function Faq() {
       />
       <PageHeader
         eyebrow="Need help?"
-        title="Frequently Asked Questions"
+        title="Frequently asked questions"
         intro="Can't find your answer here? We're always happy to help."
         art={<TopicCards />}
       >

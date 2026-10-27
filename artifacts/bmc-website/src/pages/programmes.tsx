@@ -33,7 +33,7 @@ export default function Programmes() {
         jsonLd={programmesJsonLd()}
       />
       <PageHeader
-        title="Our Programmes"
+        title="Our programmes"
         intro="Designed to meet you wherever you are on your journey, whether you're taking your very first steps or looking to deepen your knowledge."
       >
           {/* The choice is the hero: two drawn scenes that switch the list below */}
@@ -110,7 +110,7 @@ export default function Programmes() {
                         <div className="mt-5 flex items-center justify-between">
                           <span className="font-display text-xl font-medium text-primary">{p.price}</span>
                           <span className="bmc-link !min-h-0 group-hover:text-bmc-gold-ink">
-                            View Details
+                            View details
                             <ArrowRight size={15} className="transition-transform group-hover:translate-x-1 motion-reduce:transition-none" aria-hidden="true" />
                           </span>
                         </div>

@@ -104,7 +104,7 @@ export default function Testimonials() {
       />
       <PageHeader
         eyebrow="In their own words"
-        title="Student Testimonials"
+        title="Student stories"
         intro="Real stories from the women who've joined our classes — reverts finding their footing, beginners building confidence, and mothers passing it on to their children."
         art={<FeaturedQuote />}
       />
@@ -114,7 +114,7 @@ export default function Testimonials() {
         <div className={`${CONTAINER} mx-auto grid max-w-6xl grid-cols-1 gap-10 lg:grid-cols-[0.75fr_2fr] lg:gap-14`}>
           <div className="lg:sticky lg:top-32 lg:self-start">
             <p className="bmc-eyebrow mb-4">In their own names</p>
-            <h2 className={H2} style={H2_STYLE}>From Our Students</h2>
+            <h2 className={H2} style={H2_STYLE}>From our students</h2>
             <p className="mt-5 max-w-sm text-[1.05rem] leading-[1.7] text-foreground/75">
               Six students who were happy to put their names to their words.
             </p>
@@ -206,7 +206,7 @@ function MoreStories() {
   return (
     <section className={`${SECTION_Y} bg-background`}>
       <div className={CONTAINER}>
-        <SectionHead title="More Stories" intro="Shared with love, by students who asked to stay anonymous." center className="mb-10 md:mb-12" />
+        <SectionHead title="More stories" intro="Shared with love, by students who asked to stay anonymous." center className="mb-10 md:mb-12" />
         <div role="group" aria-label="Filter stories by theme" className="mx-auto mb-12 flex max-w-4xl flex-wrap justify-center gap-2.5 md:mb-16">
           {themes.map((t) => {
             const on = theme === t;

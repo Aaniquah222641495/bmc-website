@@ -9,7 +9,7 @@ const LINKS = [
   { label: 'Programmes', href: '/programmes' },
   { label: 'Testimonials', href: '/testimonials' },
   { label: 'FAQ', href: '/faq' },
-  { label: 'Contact Us', href: '/contact' },
+  { label: 'Contact us', href: '/contact' },
 ];
 
 const linkClass = 'inline-flex min-h-11 items-center text-primary-foreground/85 hover:text-bmc-gold-light transition-colors';
