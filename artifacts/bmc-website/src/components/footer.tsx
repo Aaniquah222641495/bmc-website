@@ -20,16 +20,17 @@ export function Footer() {
       <div className="relative container mx-auto px-5 md:px-10">
         <div className="grid grid-cols-1 md:grid-cols-[1.3fr_1fr_1fr] gap-14 mb-16">
           <div className="flex flex-col items-start gap-4">
-            <div className="w-full max-w-[15rem] rounded-t-[999px] rounded-b-2xl bg-bmc-paper px-5 pt-12 pb-5 shadow-lift">
+            <div className="flex items-center gap-4 rounded-2xl bg-bmc-paper px-5 py-4 shadow-lift">
               <img
-                src="/assets/mascot-2.webp"
-                alt="Illustration of Mualimah and two students reading the Qur'an, with the Beginners Madrasah Classes banner"
+                src="/assets/mascot-figures.webp"
+                alt="Illustration of Mualimah and two students reading the Qur'an at wooden stands"
                 loading="lazy"
                 decoding="async"
-                width={800}
-                height={640}
-                className="w-full h-auto"
+                width={789}
+                height={437}
+                className="h-16 w-auto"
               />
+              <span className="font-display font-semibold text-primary text-[1.7rem] leading-none tracking-[0.06em]">BMC</span>
             </div>
             <p className="text-primary-foreground/85 max-w-sm leading-relaxed">
               Foundations of Islamic Knowledge. A warm, safe, beginner-friendly Islamic learning space for women and children.

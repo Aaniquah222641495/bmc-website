@@ -275,9 +275,9 @@ export function HeroGraphic({ className = '' }: { className?: string }) {
         <image
           href="/assets/mascot-figures.webp"
           x="6"
-          y={542 - 468 * (437 / 783)}
+          y={542 - 468 * (437 / 789)}
           width="468"
-          height={468 * (437 / 783)}
+          height={468 * (437 / 789)}
           className="hg-mascot"
         />
 

@@ -462,18 +462,18 @@ export default function Home() {
       {/* Closing invitation: her women's class illustration, and the masjid skyline leading into the footer */}
       <section className="relative overflow-hidden bg-primary text-primary-foreground">
         <GirihPattern />
-        <div className="relative container mx-auto px-5 md:px-10 pt-24 pb-40 md:pt-32 md:pb-52 grid grid-cols-1 lg:grid-cols-[0.8fr_1.2fr] gap-14 lg:gap-20 items-center">
-          <div className="bmc-reveal relative mx-auto w-full max-w-[17rem] sm:max-w-[20rem] lg:max-w-[23rem]">
+        <div className="relative container mx-auto px-5 md:px-10 pt-24 pb-40 md:pt-32 md:pb-52 grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-14 lg:gap-16 items-center">
+          <div className="bmc-reveal relative mx-auto w-full max-w-[22rem] sm:max-w-[28rem] lg:max-w-[34rem]">
             <div
               aria-hidden="true"
               className="absolute -inset-[12%] rounded-full"
               style={{ background: 'radial-gradient(closest-side, hsl(var(--bmc-gold-light) / 0.28), transparent 72%)' }}
             />
             <img
-              src="/assets/womens-classes-illustration.webp"
-              alt="Illustration of a teacher reading with a circle of women students, each with a book, inside an arch"
-              width={1587}
-              height={2245}
+              src="/assets/womens-circle.webp"
+              alt="Illustration of a teacher reading with a circle of women students on a green mat, with books and a laptop"
+              width={1100}
+              height={796}
               loading="lazy"
               decoding="async"
               className="relative w-full h-auto drop-shadow-[0_30px_40px_hsl(158_50%_5%/0.45)]"
