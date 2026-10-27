@@ -54,7 +54,7 @@ export function Nav() {
             <span className="font-display font-semibold text-primary text-[1.35rem] sm:text-[1.6rem] leading-none tracking-[0.06em]">BMC</span>
           </Link>
 
-          <div className="hidden md:flex items-center gap-9">
+          <div className="hidden lg:flex items-center gap-9">
             <ul className="flex gap-6 lg:gap-8">
               {NAV_LINKS.map((link) => {
                 const active = location === link.href;
@@ -91,7 +91,7 @@ export function Nav() {
 
           <button
             type="button"
-            className="md:hidden p-2 -mr-2 text-primary rounded-md"
+            className="lg:hidden p-2 -mr-2 text-primary rounded-md"
             onClick={() => setOpen(true)}
             aria-label="Open menu"
             aria-expanded={open}

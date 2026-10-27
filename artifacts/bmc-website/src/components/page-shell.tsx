@@ -85,6 +85,7 @@ export function PageHeader({
   mark,
   image,
   imageAlt = '',
+  art,
   children,
 }: {
   eyebrow?: string;
@@ -97,9 +98,11 @@ export function PageHeader({
   /** When set, the header becomes two columns: text left, framed photo right. */
   image?: string;
   imageAlt?: string;
+  /** Custom art for the right column (split layout), e.g. the About story path. */
+  art?: ReactNode;
   children?: ReactNode;
 }) {
-  const split = Boolean(image);
+  const split = Boolean(image || art);
   return (
     <header className="relative overflow-hidden bg-background pt-32 pb-28 md:pt-40 md:pb-40">
       <div
@@ -146,6 +149,7 @@ export function PageHeader({
             )}
             {children && <div className="bmc-rise bmc-rise-3 mt-9">{children}</div>}
           </div>
+          {split && art && <div className="mx-auto w-full max-w-xl lg:max-w-none">{art}</div>}
           {split && image && (
             <div className="bmc-photo mx-auto w-full max-w-xl lg:max-w-none">
               <img src={image} alt={imageAlt} width={1200} height={900} decoding="async" fetchPriority="high" className="aspect-[4/3] w-full object-cover" />

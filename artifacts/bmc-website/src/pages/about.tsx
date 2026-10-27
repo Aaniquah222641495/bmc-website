@@ -5,6 +5,7 @@ import { Seo } from '@/components/seo';
 import { aboutJsonLd } from '@/lib/structured-data';
 import { CARD, ClosingBand, CONTAINER, PageHeader, SECTION_Y } from '@/components/page-shell';
 import { GirihPattern } from '@/components/ornaments';
+import { StoryPath } from '@/components/ornaments/story-path';
 
 
 const GALLERY_IMAGES = [
@@ -91,17 +92,7 @@ export default function About() {
       <PageHeader
         title="Our Story"
         intro="How a passion for teaching grew into a thriving Islamic learning community."
-        mark={
-          // Kept as supplied. Sits alone at the top of the header: no letters, skyline or hover effects over it.
-          <img
-            src="/assets/deco-bismillah.webp"
-            alt="Bismillah"
-            fetchPriority="high"
-            decoding="async"
-            className="pointer-events-none mx-auto select-none"
-            style={{ width: 'clamp(140px, 18vw, 220px)', opacity: 0.9 }}
-          />
-        }
+        art={<StoryPath />}
       />
 
       {/* Founder and story */}
