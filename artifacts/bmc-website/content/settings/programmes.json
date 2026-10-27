@@ -9,7 +9,10 @@
       "price": "R150/month",
       "type": "online",
       "image": "/assets/photo-womens-madrasah.webp",
-      "gradient": "from-emerald-800 to-emerald-950"
+      "gradient": "from-emerald-800 to-emerald-950",
+      "when": "Your own pace",
+      "where": "Google Classroom",
+      "who": "Women 18+"
     },
     {
       "title": "Women's Hifdh Programme",
@@ -21,7 +24,10 @@
       "type": "online",
       "image": "/assets/photo-quran-lesson.webp",
       "imagePosition": "center 40%",
-      "gradient": "from-violet-800 to-violet-950"
+      "gradient": "from-violet-800 to-violet-950",
+      "when": "Mon, Wed & Fri",
+      "where": "Microsoft Teams",
+      "who": "Women"
     },
     {
       "title": "Children's Online Madrasah",
@@ -32,7 +38,10 @@
       "price": "R150/month",
       "type": "online",
       "image": "/assets/photo-childrens-class.webp",
-      "gradient": "from-sky-800 to-sky-950"
+      "gradient": "from-sky-800 to-sky-950",
+      "when": "3 times a week",
+      "where": "Microsoft Teams",
+      "who": "Ages 6–13"
     },
     {
       "title": "Online Workshops & Short Courses",
@@ -44,7 +53,8 @@
       "type": "online",
       "image": "/assets/photo-workshop-audience.webp",
       "imagePosition": "center 70%",
-      "gradient": "from-[#1B4332] to-[#0d2419]"
+      "gradient": "from-[#1B4332] to-[#0d2419]",
+      "where": "Online"
     },
     {
       "title": "Get Into Qur'an: In Person",
@@ -56,7 +66,10 @@
       "type": "inperson",
       "image": "/assets/photo-quran-completion.webp",
       "imagePosition": "center 36%",
-      "gradient": "from-amber-800 to-amber-950"
+      "gradient": "from-amber-800 to-amber-950",
+      "when": "Saturday mornings",
+      "where": "Mitchell's Plain",
+      "who": "Complete beginners"
     },
     {
       "title": "In-Person Workshops",
@@ -68,7 +81,8 @@
       "type": "inperson",
       "image": "/assets/photo-wudhu-workshop-2.webp",
       "imagePosition": "center 60%",
-      "gradient": "from-rose-800 to-rose-950"
+      "gradient": "from-rose-800 to-rose-950",
+      "where": "Face to face"
     }
   ]
 }

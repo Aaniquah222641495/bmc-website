@@ -10,6 +10,10 @@ export interface Programme {
   /** Fuller copy, used on the Programmes page. */
   descLong: string;
   tag: string;
+  /** Optional short facts for the Programmes card (CMS). */
+  when?: string;
+  where?: string;
+  who?: string;
   price: string;
   type: ProgrammeType;
   image?: string;

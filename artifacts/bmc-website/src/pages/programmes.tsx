@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'wouter';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, CalendarDays, Laptop, MapPin, UserRound } from 'lucide-react';
 import { SiWhatsapp } from 'react-icons/si';
 import { PROGRAMMES, type ProgrammeType } from '@/data/programmes';
 import { Seo } from '@/components/seo';
@@ -12,14 +12,6 @@ import { InPersonArt, OnlineArt } from '@/components/ornaments/programmes-art';
 type Tab = ProgrammeType;
 
 const WHATSAPP = 'https://wa.me/27686498593';
-
-/** Who it is for, then how it runs, in one line: "Women · Online · Self-paced". No duplicate tag pills. */
-function eyebrow(p: { title: string; tag: string }): string {
-  const who = /children/i.test(p.title) ? 'Children' : /women/i.test(p.title) ? 'Women' : '';
-  // The Online / In person pill on the photo already says the format, so drop it here.
-  const rest = p.tag.split('·').map((t) => t.trim()).filter((t) => t && !/^(online|in-person)$/i.test(t));
-  return [who, ...rest].filter(Boolean).join(' · ');
-}
 
 const FORMAT_LABEL: Record<Tab, string> = { online: 'Online', inperson: 'In person' };
 
@@ -93,7 +85,7 @@ export default function Programmes() {
                       href={`/programmes${p.path}`}
                       className={`group flex w-full flex-col p-3 transition-shadow duration-500 hover:shadow-lift sm:p-4 ${CARD} bmc-lift`}
                     >
-                      <div className={`relative aspect-[16/10] overflow-hidden rounded-[0.9rem] bg-gradient-to-br ${p.gradient}`}>
+                      <div className={`relative aspect-[2/1] overflow-hidden rounded-[0.9rem] bg-gradient-to-br ${p.gradient}`}>
                         {p.image && (
                           <img
                             src={p.image}
@@ -111,11 +103,11 @@ export default function Programmes() {
                           {FORMAT_LABEL[p.type]}
                         </span>
                       </div>
-                      <div className="flex flex-1 flex-col px-2 pb-4 pt-7 sm:px-4">
-                        <p className="bmc-eyebrow">{eyebrow(p)}</p>
-                        <h2 className="mt-4 text-[1.65rem] leading-[1.15] text-primary">{p.title}</h2>
-                        <p className="mt-4 flex-1 text-[1rem] leading-[1.7] text-foreground/80">{p.descLong}</p>
-                        <div className="mt-7 flex items-center justify-between">
+                      <div className="flex flex-1 flex-col px-2 pb-3 pt-5 sm:px-3">
+                        <h2 className="text-[1.5rem] leading-[1.15] text-primary">{p.title}</h2>
+                        <Facts p={p} />
+                        <p className="mt-3 flex-1 text-[0.98rem] leading-[1.65] text-foreground/80">{p.descLong}</p>
+                        <div className="mt-5 flex items-center justify-between">
                           <span className="font-display text-xl font-medium text-primary">{p.price}</span>
                           <span className="bmc-link !min-h-0 group-hover:text-bmc-gold-ink">
                             View Details
@@ -152,5 +144,26 @@ function OnlineOrInPerson({ Art, on }: { Art: typeof OnlineArt; on: boolean }) {
     <span className={`block w-28 shrink-0 overflow-hidden rounded-2xl bg-bmc-paper p-1.5 transition-transform sm:w-32 duration-500 motion-reduce:transition-none ${on ? '' : 'group-hover:-translate-y-0.5'}`}>
       <Art className={`block h-auto w-full transition-opacity duration-300 ${on ? 'opacity-100' : 'opacity-75'}`} />
     </span>
+  );
+}
+
+/** Quick facts: each icon names the fact beside it (when / where / who). Empty facts are hidden. */
+function Facts({ p }: { p: (typeof PROGRAMMES)[number] }) {
+  const facts = [
+    { Icon: CalendarDays, label: 'When', value: p.when },
+    { Icon: p.type === 'online' ? Laptop : MapPin, label: 'Where', value: p.where },
+    { Icon: UserRound, label: 'For', value: p.who },
+  ].filter((f) => f.value);
+  if (!facts.length) return null;
+  return (
+    <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 font-utility text-[0.88rem] text-foreground/80">
+      {facts.map(({ Icon, label, value }) => (
+        <li key={label} className="inline-flex items-center gap-1.5">
+          <Icon size={16} className="shrink-0 text-bmc-gold-ink" aria-hidden="true" />
+          <span className="sr-only">{label}: </span>
+          {value}
+        </li>
+      ))}
+    </ul>
   );
 }

@@ -89,6 +89,24 @@ export default defineConfig({
               },
               {
                 type: 'string',
+                name: 'when',
+                label: 'Fact: when',
+                description: 'Short, shown with a calendar icon on the Programmes card, e.g. "Mon, Wed & Fri". Leave empty to hide.',
+              },
+              {
+                type: 'string',
+                name: 'where',
+                label: 'Fact: where',
+                description: 'Short, shown with a laptop (online) or pin (in person) icon, e.g. "Microsoft Teams". Leave empty to hide.',
+              },
+              {
+                type: 'string',
+                name: 'who',
+                label: 'Fact: who it is for',
+                description: 'Short, shown with a person icon, e.g. "Women 18+". Leave empty to hide.',
+              },
+              {
+                type: 'string',
                 name: 'price',
                 label: 'Price label',
                 required: true,
