@@ -2,7 +2,7 @@ import { useId, useRef, useState, type FormEvent } from 'react';
 import { ArrowRight, Loader2 } from 'lucide-react';
 import { SiWhatsapp } from 'react-icons/si';
 import { Link } from 'wouter';
-import { REG_FIELDS, submitRegistration, submitWaitlist, TERMS_FIELD, validate, waitlistFields, type ClassKey, type RegField } from '@/data/registration';
+import { REG_FIELDS, submitRegistration, submitWaitlist, TERMS_FIELD, validate, waitlistFields, type ClassKey, type RegField, type WorkshopListKey } from '@/data/registration';
 import { PAYMENT_DETAILS, programmeByPath } from '@/data/programmes';
 
 const WHATSAPP_NUMBER = '27686498593';
@@ -16,11 +16,13 @@ type Phase = { name: 'form' } | { name: 'sending' } | { name: 'sent'; first: str
  * Our own registration form (ADR-0031). Answers go into the class's Google Form through the client's Apps Script.
  * mode="waitlist" is the "Tell me when it opens" form: the script emails everyone on it once the Google Form opens.
  */
-export function RegistrationForm({ classKey, title, source, mode = 'register' }: { classKey: ClassKey; title: string; source: string; mode?: 'register' | 'waitlist' }) {
+export function RegistrationForm({ classKey, title, source, mode = 'register' }: { classKey: ClassKey | WorkshopListKey; title: string; source: string; mode?: 'register' | 'waitlist' }) {
   const waitlist = mode === 'waitlist';
+  const workshopList = classKey === 'workshops' || classKey === 'in-person-workshops';
   const programme = programmeByPath(`/${source}`);
   const terms = waitlist ? '' : (programme?.terms ?? '').trim();
-  const fields = waitlist ? waitlistFields(title) : terms ? [...REG_FIELDS[classKey], TERMS_FIELD] : REG_FIELDS[classKey];
+  const regKey = classKey as ClassKey;
+  const fields = waitlist ? waitlistFields(title, workshopList) : terms ? [...REG_FIELDS[regKey], TERMS_FIELD] : REG_FIELDS[regKey];
   const uid = useId();
   const [values, setValues] = useState<Record<string, string>>({});
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -43,7 +45,7 @@ export function RegistrationForm({ classKey, title, source, mode = 'register' }:
       return;
     }
     setPhase({ name: 'sending' });
-    const res = waitlist ? await submitWaitlist(classKey, values, source) : await submitRegistration(classKey, values, source, fields);
+    const res = waitlist ? await submitWaitlist(classKey, values, source) : await submitRegistration(regKey, values, source, fields);
     const nameField = !waitlist && classKey === 'children' ? 'parentName' : 'name';
     const full = (values[nameField] ?? '').trim();
     setPhase(res.status === 'sent' ? { name: 'sent', first: full.split(/\s+/)[0], full } : { name: 'failed', reason: res.reason });
@@ -57,7 +59,11 @@ export function RegistrationForm({ classKey, title, source, mode = 'register' }:
         <h3 className="font-display text-[1.8rem] leading-tight text-primary">Shukran{phase.first ? `, ${phase.first}` : ''}</h3>
         {waitlist ? (
           <p className="mx-auto mt-4 max-w-md leading-[1.7] text-foreground/85">
-            We'll email you as soon as registration for <strong className="text-primary">{title}</strong> opens, InshaAllah.
+            {workshopList ? (
+              <>We'll email you when a new <strong className="text-primary">{title.toLowerCase()}</strong> date is announced, InshaAllah.</>
+            ) : (
+              <>We'll email you as soon as registration for <strong className="text-primary">{title}</strong> opens, InshaAllah.</>
+            )}
           </p>
         ) : (
           <>
@@ -128,7 +134,7 @@ export function RegistrationForm({ classKey, title, source, mode = 'register' }:
       </div>
 
       <p className="mt-8 text-[0.85rem] leading-[1.6] text-foreground/70">
-        {waitlist ? 'We email you once, when it opens. Nothing else.' : 'Your details go only to Mualimah Rukeya, to arrange your class.'} Questions?{' '}
+        {waitlist ? (workshopList ? 'We only email you about new workshop dates.' : 'We email you once, when it opens. Nothing else.') : 'Your details go only to Mualimah Rukeya, to arrange your class.'} Questions?{' '}
         <Link href="/faq" className="bmc-link-inline">See the FAQ</Link>.
       </p>
 
@@ -147,28 +153,44 @@ export function RegistrationForm({ classKey, title, source, mode = 'register' }:
   );
 }
 
-/** The class's terms, in her words: lines ending in ":" are headings. Scrolls if long. */
+/** The class's terms, in her words (lines ending in ":" are headings), behind a small link that opens them in a dialog. */
 function FieldWithTerms({ terms, children }: { terms: string; children: React.ReactNode }) {
+  const ref = useRef<HTMLDialogElement>(null);
   if (!terms) return <>{children}</>;
   const blocks = terms.split(/\n\s*\n/);
   return (
-    <>
-      <section aria-label="Terms and conditions" tabIndex={0} className="max-h-80 overflow-y-auto rounded-xl bg-bmc-paper p-5 text-[0.92rem] leading-[1.6] text-foreground/85 outline-none focus-visible:ring-2 focus-visible:ring-primary sm:col-span-2">
-        <h3 className="mb-3 font-display text-[1.15rem] text-primary">Terms and conditions</h3>
-        {blocks.map((b, i) => (
-          <div key={i} className="mb-3 last:mb-0">
-            {b.split('\n').map((line, j) =>
-              /:\s*$/.test(line) ? (
-                <p key={j} className="mt-1 font-utility font-bold text-primary">{line.replace(/:\s*$/, '')}</p>
-              ) : (
-                <p key={j}>{line}</p>
-              ),
-            )}
-          </div>
-        ))}
-      </section>
+    <div className="sm:col-span-2">
       {children}
-    </>
+      <button type="button" onClick={() => ref.current?.showModal()} className="bmc-link-inline mt-2 inline-flex min-h-11 items-center font-utility text-[0.92rem]">
+        Read the full terms and conditions
+      </button>
+      <dialog
+        ref={ref}
+        aria-labelledby="terms-title"
+        onClick={(e) => e.target === ref.current && ref.current?.close()}
+        className="m-auto w-[min(40rem,calc(100vw-2rem))] max-h-[85vh] rounded-[1.25rem] bg-card p-0 text-foreground shadow-lift backdrop:bg-[hsl(158_44%_8%/0.55)]"
+      >
+        <div className="sticky top-0 flex items-center justify-between gap-4 bg-card px-6 pb-3 pt-6 md:px-8">
+          <h3 id="terms-title" className="font-display text-[1.4rem] text-primary">Terms and conditions</h3>
+          <button type="button" onClick={() => ref.current?.close()} className="bmc-btn bmc-btn-soft !min-h-11 !px-4" aria-label="Close terms and conditions">
+            Close
+          </button>
+        </div>
+        <div className="px-6 pb-8 text-[0.95rem] leading-[1.65] text-foreground/85 md:px-8">
+          {blocks.map((b, i) => (
+            <div key={i} className="mb-4 last:mb-0">
+              {b.split('\n').map((line, j) =>
+                /:\s*$/.test(line) ? (
+                  <p key={j} className="mt-1 font-utility font-bold text-primary">{line.replace(/:\s*$/, '')}</p>
+                ) : (
+                  <p key={j}>{line}</p>
+                ),
+              )}
+            </div>
+          ))}
+        </div>
+      </dialog>
+    </div>
   );
 }
 

@@ -23,6 +23,8 @@ export interface RegField {
 }
 
 export type ClassKey = 'womens' | 'hifdh' | 'quran' | 'children';
+/** Waitlist-only lists: no registration form, people are emailed when a new workshop is published. */
+export type WorkshopListKey = 'workshops' | 'in-person-workshops';
 
 /** Programme path (content/settings/programmes.json) to registration form. */
 export const CLASS_BY_PATH: Record<string, ClassKey> = {
@@ -66,7 +68,7 @@ const CHILD_FIELDS: RegField[] = [
 
 /** Added to a class's form only when its CMS terms are filled in. The Google Form question title is TERMS_QUESTION. */
 export const TERMS_QUESTION = 'I agree to the terms and conditions';
-export const TERMS_FIELD: RegField = { id: 'terms', question: TERMS_QUESTION, label: 'I have read and agree to the terms and conditions above.', kind: 'consent', required: true };
+export const TERMS_FIELD: RegField = { id: 'terms', question: TERMS_QUESTION, label: 'I have read and agree to the terms and conditions.', kind: 'consent', required: true };
 
 export const REG_FIELDS: Record<ClassKey, RegField[]> = {
   womens: ADULT_FIELDS,
@@ -124,7 +126,7 @@ export function validate(fields: RegField[], values: Record<string, string>): Re
 }
 
 /** "Tell me when it opens": the minimum to send one email (and, if given, one WhatsApp) when registration opens. */
-export function waitlistFields(classTitle: string): RegField[] {
+export function waitlistFields(classTitle: string, workshop = false): RegField[] {
   return [
     { id: 'name', question: 'Name', label: 'Your name', kind: 'text', required: true, autoComplete: 'name', max: 100 },
     { id: 'email', question: 'Email', kind: 'email', required: true, autoComplete: 'email', max: 254 },
@@ -132,14 +134,16 @@ export function waitlistFields(classTitle: string): RegField[] {
     {
       id: 'consent',
       question: 'Consent',
-      label: `Let me know once when registration for ${classTitle} opens. My details are only used for that, and I can ask to be removed at any time.`,
+      label: workshop
+        ? `Email me when a new ${classTitle.toLowerCase()} date is announced. My details are only used for that, and I can ask to be removed at any time.`
+        : `Let me know once when registration for ${classTitle} opens. My details are only used for that, and I can ask to be removed at any time.`,
       kind: 'consent',
       required: true,
     },
   ];
 }
 
-export async function submitWaitlist(classKey: ClassKey, values: Record<string, string>, source: string): Promise<SubmitResult> {
+export async function submitWaitlist(classKey: ClassKey | WorkshopListKey, values: Record<string, string>, source: string): Promise<SubmitResult> {
   if (!REGISTER_ENDPOINT) return { status: 'failed', reason: 'network' };
   const wa = (values.whatsapp ?? '').trim();
   return post({

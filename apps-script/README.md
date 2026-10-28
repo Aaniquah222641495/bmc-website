@@ -8,6 +8,8 @@ The class pages on the website have their own registration form. This small Goog
 3. keeps anything it cannot put into the form in a **backup sheet** and emails an alert (nothing is lost),
 4. runs the **"Tell me when it opens"** waitlist: when a Google Form is reopened, everyone waiting gets one email within the hour, and she gets the list with a one-tap WhatsApp link for each person who left a number.
 
+5. runs the **workshop lists**: on the Online and In-Person Workshops pages people leave their email; when she publishes a new workshop in the site editor, everyone on that list gets an email within the hour (the script reads `beginnersmadrasah.co.za/workshops.json`, written by every site build). These people stay on the list until they ask to be removed (delete their row in the Waitlist tab).
+
 Opening and closing a class is done the usual way: in the Google Form, **Responses > Accepting responses** on or off. The website follows it within a few minutes.
 
 ## Part 1: Paste the script

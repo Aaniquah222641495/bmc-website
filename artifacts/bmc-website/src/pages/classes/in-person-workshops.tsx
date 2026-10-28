@@ -10,6 +10,8 @@ import { programmeJsonLd } from '@/lib/structured-data';
 
 import { pastInPersonWorkshops, type Workshop } from '@/data/workshops';
 import { useNow } from '@/hooks/use-now';
+import { NotifyButton, NotifySection } from '@/components/workshop-notify';
+import { REGISTER_ENDPOINT } from '@/data/registration';
 
 const INCLUDED = [
   'Interactive, face-to-face learning with real discussion',
@@ -127,9 +129,7 @@ export default function InPersonWorkshops() {
         heroImageAlt="Mualimah Rukeya teaching at an in-person workshop"
         showRegistration={false}
         heroAction={
-          <a href="https://wa.me/27686498593?text=Slm%2C%20I%27d%20like%20to%20find%20out%20about%20upcoming%20in-person%20workshops" target="_blank" rel="noreferrer" className="bmc-btn bmc-btn-light">
-            <SiWhatsapp className="size-[1.1rem]" aria-hidden="true" /> Ask about the next one
-          </a>
+          <NotifyButton whatsapp="https://wa.me/27686498593?text=Slm%2C%20I%27d%20like%20to%20find%20out%20about%20upcoming%20in-person%20workshops" className="bmc-btn bmc-btn-light" />
         }
         intro={
           <>
@@ -167,7 +167,9 @@ export default function InPersonWorkshops() {
               </div>
             </section>
 
-            {/* Enquiry */}
+            {/* Enquiry: the notify form when the client's script is live, otherwise WhatsApp */}
+            <NotifySection listKey="in-person-workshops" title="In-person workshop" source="in-person-workshops" />
+            {!REGISTER_ENDPOINT && (
             <section className="bg-bmc-paper pb-24 md:pb-32">
               <div className={`${CONTAINER} mx-auto max-w-4xl`}>
                 <div className="bmc-reveal flex flex-col items-center gap-6 rounded-[1.75rem] bg-bmc-gold-light/45 p-8 text-center sm:flex-row sm:p-10 sm:text-left">
@@ -186,6 +188,7 @@ export default function InPersonWorkshops() {
                 </div>
               </div>
             </section>
+            )}
           </>
         }
       />

@@ -4,11 +4,13 @@ import { PastWorkshopsGrid } from '@/components/class-page-blocks';
 import { GirihPattern } from '@/components/ornaments';
 import { InPersonArt } from '@/components/ornaments/programmes-art';
 import { ProgrammeHero } from '@/components/programme-hero';
-import { SiInstagram, SiTiktok, SiWhatsapp } from 'react-icons/si';
+import { SiInstagram, SiTiktok } from 'react-icons/si';
 import { CONTAINER, SECTION_Y, SectionHead, StarBullet } from '@/components/page-shell';
 import { Seo } from '@/components/seo';
 import { currentOnlineWorkshops, pastOnlineWorkshops, type Workshop } from '@/data/workshops';
 import { useNow } from '@/hooks/use-now';
+import { NotifyButton, NotifySection } from '@/components/workshop-notify';
+import { REGISTER_ENDPOINT } from '@/data/registration';
 import { graph, programmeJsonLd, eventsJsonLd } from '@/lib/structured-data';
 
 // Workshops are authored as files under content/workshops/ (directly, or via
@@ -117,10 +119,7 @@ export default function Workshops() {
         title="Online Workshops & Short Courses"
         intro="Focused online sessions and short courses on essential Islamic topics: practical, accessible, and designed to leave you with knowledge you can use straight away."
         actions={
-          <a href={NOTIFY} target="_blank" rel="noreferrer" className="bmc-btn bmc-btn-light">
-            <SiWhatsapp className="size-[1.1rem]" aria-hidden="true" />
-            Ask about the next one
-          </a>
+          <NotifyButton whatsapp={NOTIFY} className="bmc-btn bmc-btn-light" />
         }
       />
 
@@ -144,9 +143,7 @@ export default function Workshops() {
                   workshops below, or follow us to hear when new dates are announced.
                 </p>
               </div>
-              <a href={NOTIFY} target="_blank" rel="noreferrer" className="bmc-btn bmc-btn-primary whitespace-nowrap">
-                <SiWhatsapp className="size-[1.05rem]" aria-hidden="true" /> Notify me
-              </a>
+              <NotifyButton whatsapp={NOTIFY} className="bmc-btn bmc-btn-primary whitespace-nowrap" label="Notify me" />
             </div>
           ) : (
             <div className={`mx-auto ${multiple ? 'grid max-w-6xl items-stretch gap-8 md:grid-cols-2' : 'max-w-5xl space-y-8'}`}>
@@ -209,14 +206,17 @@ export default function Workshops() {
                 <SiTiktok className="size-4 text-bmc-gold-ink" aria-hidden="true" /> @rukeyabaradien_
               </a>
             </div>
-            <p className="mt-6 text-sm leading-[1.7] text-foreground/75">
-              Or send us a{' '}
-              <a href={NOTIFY} target="_blank" rel="noreferrer" className="bmc-link-inline">WhatsApp message</a>
-              {' '}to be added to the notification list.
-            </p>
+            {!REGISTER_ENDPOINT && (
+              <p className="mt-6 text-sm leading-[1.7] text-foreground/75">
+                Or send us a{' '}
+                <a href={NOTIFY} target="_blank" rel="noreferrer" className="bmc-link-inline">WhatsApp message</a>
+                {' '}to be added to the notification list.
+              </p>
+            )}
           </div>
         </div>
       </section>
+      <NotifySection listKey="workshops" title="Online workshop" source="workshops" />
     </>
   );
 }

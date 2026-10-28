@@ -49,6 +49,14 @@ const CLASS_TITLES = {
   children: "Children's Online Madrasah"
 };
 
+// Workshop lists: no registration here (workshops have their own links); people are emailed
+// every time a new workshop is published on the site (checkWorkshops_, hourly).
+const WORKSHOP_LISTS = {
+  workshops: 'Online workshops',
+  'in-person-workshops': 'In-person workshops'
+};
+function listTitle_(key) { return CLASS_TITLES[key] || WORKSHOP_LISTS[key]; }
+
 const ADULT_CONSENT = 'I agree that Beginners Madrasah Classes may keep these details, including my answer about my faith, to arrange my classes and contact me about them.';
 const CHILD_CONSENT = "I am this child's parent or guardian, and I agree that Beginners Madrasah Classes may keep these details to arrange my child's classes and contact me about them.";
 
@@ -135,8 +143,8 @@ function processRegistration_(data) {
   if (clean_(data.website, 200) !== '') return { ok: true };
 
   const key = String(data.classKey || '');
+  if (data.type === 'waitlist' && (FIELDS[key] || WORKSHOP_LISTS[key])) return processWaitlist_(key, data.answers || {});
   if (!FIELDS[key]) return { ok: false, error: 'invalid' };
-  if (data.type === 'waitlist') return processWaitlist_(key, data.answers || {});
   const v = validate_(key, data.answers || {});
   if (!v.ok) return { ok: false, error: 'invalid' };
   const a = v.answers;
@@ -213,11 +221,12 @@ function processWaitlist_(key, raw) {
     const sheet = waitlistSheet_();
     // Already waiting for this class? Nothing to add.
     const rows = sheet.getLastRow() > 1 ? sheet.getRange(2, 1, sheet.getLastRow() - 1, WAITLIST_HEADERS.length).getValues() : [];
-    const already = rows.some(function (r) { return r[1] === CLASS_TITLES[key] && String(r[3]).toLowerCase() === email.toLowerCase() && r[5] === 'Waiting'; });
+    const active = WORKSHOP_LISTS[key] ? function (st) { return String(st).indexOf('Subscribed') === 0; } : function (st) { return st === 'Waiting'; };
+    const already = rows.some(function (r) { return r[1] === listTitle_(key) && String(r[3]).toLowerCase() === email.toLowerCase() && active(r[5]); });
     if (!already) {
       const range = sheet.getRange(sheet.getLastRow() + 1, 1, 1, WAITLIST_HEADERS.length);
       range.setNumberFormat('@');
-      range.setValues([[Utilities.formatDate(new Date(), CONFIG.TIMEZONE, 'yyyy-MM-dd HH:mm:ss'), CLASS_TITLES[key], name, email, whatsapp, 'Waiting']]);
+      range.setValues([[Utilities.formatDate(new Date(), CONFIG.TIMEZONE, 'yyyy-MM-dd HH:mm:ss'), listTitle_(key), name, email, whatsapp, WORKSHOP_LISTS[key] ? 'Subscribed' : 'Waiting']]);
     }
     cache.put('rl_all', String(all + 1), 3600);
   } finally {
@@ -248,6 +257,75 @@ function checkReopened() {
     if (open && was === 'no') notifyWaitlist_(key);
   });
   CacheService.getScriptCache().remove('open_status');
+  try {
+    checkWorkshops_();
+  } catch (err) {
+    console.error('Workshop check failed: ' + err);
+  }
+}
+
+/**
+ * Reads SITE_URL/workshops.json (written by the site build: the workshops open right now). Any
+ * workshop not seen before is new: everyone subscribed to that list gets one email about it.
+ * The first run only records what is already there, so nobody is emailed about old news.
+ */
+function checkWorkshops_() {
+  const res = UrlFetchApp.fetch(CONFIG.SITE_URL + '/workshops.json', { muteHttpExceptions: true, followRedirects: true });
+  if (res.getResponseCode() !== 200) return;
+  const data = JSON.parse(res.getContentText());
+  const open = (data && data.open) || [];
+  const props = PropertiesService.getScriptProperties();
+  const seenRaw = props.getProperty('seen_workshops');
+  const seen = seenRaw ? JSON.parse(seenRaw) : [];
+  const fresh = open.filter(function (w) { return w && w.id && seen.indexOf(w.id) === -1 && WORKSHOP_LISTS[w.list]; });
+  if (seenRaw !== null) fresh.forEach(function (w) { notifyWorkshop_(w); });
+  props.setProperty('seen_workshops', JSON.stringify(seen.concat(fresh.map(function (w) { return w.id; })).slice(-200)));
+}
+
+function notifyWorkshop_(w) {
+  const sheet = waitlistSheet_();
+  if (sheet.getLastRow() < 2) return;
+  const rows = sheet.getRange(2, 1, sheet.getLastRow() - 1, WAITLIST_HEADERS.length).getValues();
+  const listName = WORKSHOP_LISTS[w.list];
+  const pageUrl = CONFIG.SITE_URL + '/programmes/' + w.list;
+  const forOwner = [];
+  rows.forEach(function (r, i) {
+    if (r[1] !== listName || String(r[5]).indexOf('Subscribed') !== 0) return;
+    if (MailApp.getRemainingDailyQuota() < CONFIG.MIN_QUOTA_FOR_CONFIRMATION) return;
+    const first = String(r[2]).split(' ')[0].slice(0, 40);
+    try {
+      MailApp.sendEmail({
+        to: String(r[3]),
+        subject: 'New workshop: ' + w.title,
+        name: 'Beginners Madrasah Classes',
+        replyTo: CONFIG.OWNER_EMAIL || undefined,
+        body: [
+          'Slm ' + first + ',',
+          '',
+          'A new workshop has just been announced: ' + w.title + '.',
+          'Details and registration: ' + pageUrl,
+          '',
+          'Questions? Reply to this email or WhatsApp us on ' + CONFIG.WHATSAPP_DISPLAY + '.',
+          '',
+          'Beginners Madrasah Classes',
+          '',
+          '---',
+          'You asked to hear about new ' + listName.toLowerCase() + '. To stop these emails, reply and say so.'
+        ].join('\n')
+      });
+      sheet.getRange(i + 2, 6).setValue('Subscribed (last emailed ' + Utilities.formatDate(new Date(), CONFIG.TIMEZONE, 'yyyy-MM-dd') + ')');
+      if (r[4]) {
+        const msg = 'Slm ' + first + ', a new workshop has been announced: ' + w.title + '. Details: ' + pageUrl;
+        forOwner.push(r[2] + ' (' + r[4] + '): https://wa.me/' + String(r[4]).replace('+', '') + '?text=' + encodeURIComponent(msg));
+      }
+    } catch (err) {
+      console.error('Workshop email failed for row ' + (i + 2) + ': ' + err);
+    }
+  });
+  if (forOwner.length) {
+    alert_('New workshop sent to the list: ' + w.title,
+      'Everyone on the ' + listName.toLowerCase() + ' list has been emailed. These people also left a WhatsApp number. Tap each link to send them a ready-made message:\n\n' + forOwner.join('\n\n'));
+  }
 }
 
 function notifyWaitlist_(key) {
