@@ -3,7 +3,8 @@ import { Link } from 'wouter';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, CalendarDays, Laptop, MapPin, UserRound } from 'lucide-react';
 import { SiWhatsapp } from 'react-icons/si';
-import { PROGRAMMES, type ProgrammeType } from '@/data/programmes';
+import { PROGRAMMES, programmeByPath, type ProgrammeType } from '@/data/programmes';
+import { ClosedBadge } from '@/components/closed-badge';
 import { Seo } from '@/components/seo';
 import { programmesJsonLd } from '@/lib/structured-data';
 import { CARD, ClosingBand, CONTAINER, PageHeader } from '@/components/page-shell';
@@ -89,6 +90,7 @@ export default function Programmes() {
                       <span className="bmc-eyebrow block !text-[0.66rem]">{who}</span>
                       <span className="mt-1 block font-display text-[1.18rem] leading-snug text-primary">{name}</span>
                       <span className="mt-1 block text-[0.92rem] leading-[1.55] text-foreground/75">{note}</span>
+                      {programmeByPath(href.replace('/programmes', ''))?.registrationClosed && <ClosedBadge className="mt-2" />}
                     </span>
                   </Link>
                 </li>
@@ -133,6 +135,7 @@ export default function Programmes() {
                         </span>
                       </div>
                       <div className="flex flex-1 flex-col px-2 pb-3 pt-5 sm:px-3">
+                        {p.registrationClosed && <ClosedBadge className="mb-2 self-start" />}
                         <h3 className="text-[1.5rem] leading-[1.15] text-primary">{p.title}</h3>
                         <Facts p={p} />
                         <p className="mt-3 flex-1 text-[0.98rem] leading-[1.65] text-foreground/80">{p.descLong}</p>

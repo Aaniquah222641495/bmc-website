@@ -2,6 +2,7 @@ import { Link } from 'wouter';
 import { ArrowRight } from 'lucide-react';
 import { SiWhatsapp } from 'react-icons/si';
 import { PROGRAMMES as ALL_PROGRAMMES } from '@/data/programmes';
+import { ClosedBadge } from '@/components/closed-badge';
 import { Seo } from '@/components/seo';
 import { homeJsonLd } from '@/lib/structured-data';
 import { GirihPattern, HeroGraphic, Rosette } from '@/components/ornaments';
@@ -267,6 +268,7 @@ export default function Home() {
                       <div className="min-w-0 flex-1">
                         <h4 className="font-display text-[1.12rem] leading-snug text-primary">{p.title}</h4>
                         <p className="mt-1 text-[0.9rem] text-foreground/70">{p.tag}</p>
+                        {p.registrationClosed && <ClosedBadge className="mt-1.5" />}
                         <p className="mt-1 font-utility text-sm font-semibold text-bmc-gold-ink sm:hidden">{p.price}</p>
                       </div>
                       <span className="hidden sm:inline shrink-0 text-right font-utility text-sm font-semibold text-bmc-gold-ink">{p.price}</span>
@@ -299,6 +301,7 @@ export default function Home() {
                   )}
                 </div>
                 <div className="px-2 sm:px-3 pt-6 pb-3 flex flex-col">
+                  {FOR_CHILD.registrationClosed && <ClosedBadge className="mb-2 self-start" />}
                   <h4 className="font-display text-primary leading-[1.15] text-[1.6rem]">{FOR_CHILD.title}</h4>
                   <p className="mt-3 text-foreground/80 leading-[1.7] text-[1rem]">{FOR_CHILD.descShort}</p>
                   <div className="mt-6 flex items-center justify-between">
