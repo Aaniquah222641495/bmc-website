@@ -60,8 +60,8 @@
     {
       "title": "Get Into Qur'an: In Person",
       "path": "/quran-classes",
-      "descShort": "A Qur'an programme for complete beginners. Step-by-step guidance toward confidently reading the Mushaf.",
-      "descLong": "A Qur'an programme for complete beginners. Step-by-step guidance toward confidently reading the Mushaf. Every Saturday morning in Mitchell's Plain, Cape Town.",
+      "descShort": "A Qur'an programme for women who are complete beginners. Step-by-step guidance toward confidently reading the Mushaf.",
+      "descLong": "A Qur'an programme for women who are complete beginners. Step-by-step guidance toward confidently reading the Mushaf. Every Saturday morning in Mitchell's Plain, Cape Town.",
       "tag": "In-Person · Cape Town",
       "price": "R200/month",
       "type": "inperson",
@@ -70,7 +70,7 @@
       "gradient": "from-amber-800 to-amber-950",
       "when": "Saturday mornings",
       "where": "Mitchell's Plain",
-      "who": "Complete beginners"
+      "who": "Women, complete beginners"
     },
     {
       "title": "In-Person Workshops",

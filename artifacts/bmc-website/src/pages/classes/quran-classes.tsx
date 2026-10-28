@@ -18,7 +18,7 @@ export default function QuranClasses() {
     <>
       <Seo
         title="Beginner Quran Class, Mitchell's Plain"
-        description="A beginner Quran reading programme in Mitchell's Plain, Cape Town — every Saturday morning, from the Arabic alphabet to confidently reciting the Mushaf."
+        description="A beginner Quran reading programme for women in Mitchell's Plain, Cape Town — every Saturday morning, from the Arabic alphabet to confidently reciting the Mushaf."
         path="/programmes/quran-classes"
         jsonLd={programmeJsonLd('/programmes/quran-classes')}
       />
@@ -27,11 +27,11 @@ export default function QuranClasses() {
         // Matches the questions in the shared registration form (forms.gle/7tFCxqL8Ypgv9Jps5), read 2026-10-27.
         formNeeds="Your full name, email, date of birth, WhatsApp number, and city and country."
         title="Get Into Qur'an: In Person"
-        description="A Qur'an programme for complete beginners or those wanting to start again, held every Saturday morning in Mitchell's Plain, Cape Town."
+        description="A Qur'an programme for women who are complete beginners or want to start again, held every Saturday morning in Mitchell's Plain, Cape Town."
         intro={
           <>
             <p>
-              This in-person Qur'an programme is designed for complete beginners, or for those who once learned but want to start again from the foundations. You will be guided step by step through Qur'an reading, with the goal of progressing to confidently reciting directly from the Mushaf.
+              This in-person Qur'an programme for women is designed for complete beginners, or for those who once learned but want to start again from the foundations. You will be guided step by step through Qur'an reading, with the goal of progressing to confidently reciting directly from the Mushaf.
             </p>
             <p>
               Classes are held every Saturday morning in Mitchell's Plain, Cape Town, giving you the added blessing of learning in community with other students on the same journey.
@@ -39,7 +39,7 @@ export default function QuranClasses() {
           </>
         }
         forYou={[
-          "You're a complete beginner at reading the Qur'an",
+          "You're a woman and a complete beginner at reading the Qur'an",
           'You learned once and want to start again from the foundations',
           "You can get to Mitchell's Plain on Saturday mornings",
           "You'd like to learn in person, with others on the same journey",
@@ -48,6 +48,7 @@ export default function QuranClasses() {
         included={INCLUDED}
         details={[
           { label: 'Format', value: 'In-Person' },
+          { label: 'Who it\'s for', value: 'Women' },
           { label: 'Schedule', value: 'Every Saturday morning' },
           { label: 'Location', value: "Mitchell's Plain, Cape Town" },
           { label: 'Fee', value: 'R200 per month' },
