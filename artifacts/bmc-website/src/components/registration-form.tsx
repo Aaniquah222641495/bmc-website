@@ -10,7 +10,7 @@ const WHATSAPP_NUMBER = '27686498593';
 const INPUT =
   'block w-full min-h-12 rounded-xl bg-bmc-paper px-4 py-3 font-utility text-[1rem] text-foreground shadow-[inset_0_0_0_1px_hsl(var(--bmc-gold)/0.45)] outline-none transition-shadow focus:shadow-[inset_0_0_0_2px_hsl(var(--primary))] aria-[invalid=true]:shadow-[inset_0_0_0_2px_hsl(0_62%_45%)]';
 
-type Phase = { name: 'form' } | { name: 'sending' } | { name: 'sent'; first: string } | { name: 'failed'; reason: 'closed' | 'rejected' | 'network' };
+type Phase = { name: 'form' } | { name: 'sending' } | { name: 'sent'; first: string; full: string } | { name: 'failed'; reason: 'closed' | 'rejected' | 'network' };
 
 /**
  * Our own registration form (ADR-0031). Answers go into the class's Google Form through the client's Apps Script.
@@ -45,7 +45,8 @@ export function RegistrationForm({ classKey, title, source, mode = 'register' }:
     setPhase({ name: 'sending' });
     const res = waitlist ? await submitWaitlist(classKey, values, source) : await submitRegistration(classKey, values, source, fields);
     const nameField = !waitlist && classKey === 'children' ? 'parentName' : 'name';
-    setPhase(res.status === 'sent' ? { name: 'sent', first: (values[nameField] ?? '').trim().split(/\s+/)[0] } : { name: 'failed', reason: res.reason });
+    const full = (values[nameField] ?? '').trim();
+    setPhase(res.status === 'sent' ? { name: 'sent', first: full.split(/\s+/)[0], full } : { name: 'failed', reason: res.reason });
     window.requestAnimationFrame(() => resultRef.current?.focus());
   };
 
@@ -68,6 +69,16 @@ export function RegistrationForm({ classKey, title, source, mode = 'register' }:
                 <p className="bmc-eyebrow mb-2">How to pay</p>
                 {programme?.price && <p className="mb-2 font-display text-[1.1rem] text-primary">Fee: {programme.price}</p>}
                 <p className="whitespace-pre-line font-utility text-[0.95rem] leading-[1.65] text-foreground/85">{PAYMENT_DETAILS.trim()}</p>
+                {/* Her process (founder 2026-10-28): register, pay, then send the proof of payment on WhatsApp. */}
+                <p className="mt-4 font-utility text-[0.95rem] font-semibold leading-[1.55] text-primary">Once you've paid, send your proof of payment to Mualimah Rukeya on WhatsApp.</p>
+                <a
+                  href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Slm, here is my proof of payment for ${title}${phase.full ? ` (${phase.full}${classKey === 'children' && values.childName ? `, for ${values.childName.trim()}` : ''})` : ''}`)}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="bmc-btn bmc-btn-primary mt-4 w-full"
+                >
+                  <SiWhatsapp className="size-[1.05rem]" aria-hidden="true" /> Send proof of payment
+                </a>
               </div>
             )}
             <p className="mx-auto mt-5 max-w-md text-[0.95rem] leading-[1.7] text-foreground/75">We've also sent a copy to your email.</p>

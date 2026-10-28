@@ -476,7 +476,8 @@ function sendConfirmation_(key, a) {
     'Shukran for registering for ' + what + '. Your registration has come through.',
     'Mualimah Rukeya will be in touch with the next steps, InshaAllah.',
     ''
-  ].concat(CONFIG.PAYMENT_DETAILS ? ['How to pay:', CONFIG.PAYMENT_DETAILS, ''] : []).concat([
+  ].concat(CONFIG.PAYMENT_DETAILS ? ['How to pay:', CONFIG.PAYMENT_DETAILS, '',
+    'Once you have paid, send your proof of payment to Mualimah Rukeya on WhatsApp: ' + CONFIG.WHATSAPP_DISPLAY + ' (https://wa.me/' + CONFIG.WHATSAPP_NUMBER + ').', ''] : []).concat([
     'Questions? Reply to this email or WhatsApp us on ' + CONFIG.WHATSAPP_DISPLAY + ' (https://wa.me/' + CONFIG.WHATSAPP_NUMBER + ').',
     '',
     'Beginners Madrasah Classes',
