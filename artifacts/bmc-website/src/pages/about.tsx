@@ -6,6 +6,9 @@ import { aboutJsonLd } from '@/lib/structured-data';
 import { CARD, ClosingBand, CONTAINER, PageHeader, SECTION_Y } from '@/components/page-shell';
 import { GirihPattern } from '@/components/ornaments';
 import { StoryPath } from '@/components/ornaments/story-path';
+import { BusyIcon, IconTile, LaptopHeartIcon, NoticeIcon, SeedlingIcon } from '@/components/ornaments/cute-icons';
+
+const STORY_ICONS = [SeedlingIcon, NoticeIcon, BusyIcon, LaptopHeartIcon];
 
 
 const GALLERY_IMAGES = [
@@ -116,10 +119,13 @@ export default function About() {
           </figure>
 
           <div className="space-y-12 md:space-y-14">
-            {STORY_SECTIONS.map(({ label, text }) => (
-              <div key={label} className="bmc-reveal">
-                <h2 className="bmc-eyebrow mb-3">{label}</h2>
-                <p className="max-w-[60ch] text-[1.08rem] leading-[1.8] text-foreground/85">{text}</p>
+            {STORY_SECTIONS.map(({ label, text }, k) => (
+              <div key={label} className="bmc-reveal grid grid-cols-[auto_1fr] gap-x-5">
+                <IconTile Icon={STORY_ICONS[k] ?? SeedlingIcon} />
+                <div>
+                  <h2 className="bmc-eyebrow mb-3 mt-1">{label}</h2>
+                  <p className="max-w-[60ch] text-[1.08rem] leading-[1.8] text-foreground/85">{text}</p>
+                </div>
               </div>
             ))}
           </div>

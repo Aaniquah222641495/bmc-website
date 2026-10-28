@@ -1,8 +1,7 @@
 import { useId, useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { SiWhatsapp } from 'react-icons/si';
-import { SeedlingIcon } from '@/components/ornaments/story-path';
-import { LaptopBookIcon } from '@/components/ornaments/steps-art';
+import { IconTile, LaptopClassIcon, PurseIcon, SeedlingIcon } from '@/components/ornaments/cute-icons';
 import { Seo } from '@/components/seo';
 import { CATEGORIES } from '@/data/faq';
 import { faqJsonLd } from '@/lib/structured-data';
@@ -10,22 +9,10 @@ import { ClosingBand, CONTAINER, PageHeader } from '@/components/page-shell';
 
 const WHATSAPP = "https://wa.me/27686498593?text=Slm%2C%20I%27d%20like%20to%20find%20out%20more%20about%20your%20programmes";
 
-/** A coin purse: payments and fees. Same 48-box line style as the other drawn icons. */
-function PurseIcon({ size = 28 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M9 20C9 17.8 10.8 16 13 16H35C37.2 16 39 17.8 39 20V36C39 38.2 37.2 40 35 40H13C10.8 40 9 38.2 9 36Z" />
-      <path d="M17 16C17 11 20 8 24 8S31 11 31 16" />
-      <path d="M39 25H32C30.3 25 29 26.3 29 28S30.3 31 32 31H39" />
-      <circle cx="33" cy="28" r="1" fill="currentColor" />
-    </svg>
-  );
-}
-
 /** Each topic's icon says what the topic is about. */
-const TOPIC_ICON: Record<string, (p: { size?: number }) => React.ReactElement> = {
+const TOPIC_ICON: Record<string, typeof SeedlingIcon> = {
   'Getting started': SeedlingIcon,
-  'Classes and logistics': LaptopBookIcon,
+  'Classes and logistics': LaptopClassIcon,
   'Payments and policies': PurseIcon,
 };
 
@@ -98,9 +85,7 @@ export default function Faq() {
               <div key={category.label} id={slug(category.label)} className="bmc-reveal grid scroll-mt-28 grid-cols-1 gap-6 lg:grid-cols-[0.7fr_2fr] lg:gap-14">
                 <div className="lg:sticky lg:top-32 lg:self-start">
                   {Icon && (
-                    <span className="mb-4 inline-flex size-14 items-center justify-center rounded-full bg-card text-primary shadow-soft ring-1 ring-[hsl(var(--bmc-gold)/0.5)]">
-                      <Icon size={28} />
-                    </span>
+                    <span className="mb-4 block"><IconTile Icon={Icon} size="lg" /></span>
                   )}
                   <h2 className="text-primary leading-[1.12]" style={{ fontSize: 'clamp(1.6rem, 2.6vw, 2.1rem)' }}>{category.label}</h2>
                   <p className="mt-2 font-utility text-[0.85rem] text-foreground/65">{category.items.length} questions</p>
@@ -143,9 +128,7 @@ function TopicCards() {
             href={`#${slug(c.label)}`}
             className="group flex items-center gap-4 rounded-[1.25rem] bg-card p-4 pr-5 shadow-soft transition-shadow duration-300 hover:shadow-lift"
           >
-            <span className="inline-flex size-14 shrink-0 items-center justify-center rounded-2xl bg-bmc-paper text-primary">
-              {Icon && <Icon size={30} />}
-            </span>
+            {Icon && <IconTile Icon={Icon} />}
             <span className="min-w-0 flex-1">
               <span className="block font-display text-[1.2rem] leading-tight text-primary">{c.label}</span>
               <span className="mt-0.5 block font-utility text-[0.82rem] text-foreground/65">{c.items.length} questions</span>

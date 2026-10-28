@@ -1,4 +1,5 @@
 import { CARD } from '@/components/page-shell';
+import { IconTile, iconFor } from '@/components/ornaments/cute-icons';
 
 /**
  * Shared building blocks for the individual class/programme pages
@@ -38,10 +39,8 @@ export function IncludedList({ items, heading = "What you'll learn" }: IncludedL
         {items.map((item) => {
           const [lead, rest] = splitLead(item);
           return (
-            <li key={item} className="flex items-start gap-3.5 rounded-2xl bg-card p-5 leading-[1.6] text-foreground/85 shadow-soft">
-              <span className="mt-0.5 inline-flex size-7 shrink-0 items-center justify-center rounded-full bg-bmc-gold-light text-primary" aria-hidden="true">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12.5L10 17.5 19 7" /></svg>
-              </span>
+            <li key={item} className="bmc-lift flex items-center gap-4 rounded-2xl bg-card p-4 pr-5 leading-[1.6] text-foreground/85 shadow-soft">
+              <IconTile Icon={iconFor(item)} />
               <span>
                 {lead ? (
                   <>
