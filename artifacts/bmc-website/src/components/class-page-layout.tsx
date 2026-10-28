@@ -1,9 +1,11 @@
-import { type ReactNode, useState } from 'react';
+import { type ReactNode, useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'wouter';
 import { ArrowRight, ChevronDown, ExternalLink } from 'lucide-react';
 import { SiWhatsapp } from 'react-icons/si';
 import { programmeByPath } from '@/data/programmes';
+import { CLASS_BY_PATH, fetchOpenStatus, REGISTER_ENDPOINT } from '@/data/registration';
+import { RegistrationForm } from '@/components/registration-form';
 import { DetailsGrid, IncludedList, type DetailItem } from '@/components/class-page-blocks';
 import { CARD, CONTAINER, H2, H2_STYLE, SECTION_Y } from '@/components/page-shell';
 import { ProgrammeHero } from '@/components/programme-hero';
@@ -61,20 +63,43 @@ export function ClassPageLayout({
   heroAction,
 }: ClassPageLayoutProps) {
   const FORM_URL = formUrl ?? DEFAULT_FORM_URL;
-  // CMS switch (content/settings/programmes.json): while closed, no form, just a "tell me when it opens" WhatsApp.
-  const closed = showRegistration && programmeByPath(path)?.registrationClosed === true;
+  // Our own form when the client's Apps Script is deployed (ADR-0031); otherwise the embedded Google Form.
+  const classKey = CLASS_BY_PATH[path];
+  const ownForm = Boolean(REGISTER_ENDPOINT && classKey);
+  // With our own form, her Google Form decides: open there means open here (so the waitlist email and
+  // the page always agree). The CMS box is the fallback before the status arrives, or without the script.
+  const [liveOpen, setLiveOpen] = useState<boolean | null>(null);
+  useEffect(() => {
+    if (!ownForm || !showRegistration) return;
+    let live = true;
+    fetchOpenStatus().then((open) => {
+      if (live && open && classKey && typeof open[classKey] === 'boolean') setLiveOpen(open[classKey] as boolean);
+    });
+    return () => {
+      live = false;
+    };
+  }, [ownForm, showRegistration, classKey]);
+  const cmsClosed = programmeByPath(path)?.registrationClosed === true;
+  const closed = showRegistration && (liveOpen === null ? cmsClosed : !liveOpen);
   const WAITLIST = `https://wa.me/27686498593?text=${encodeURIComponent(`Slm, please let me know when registration for ${title} opens`)}`;
-  const waitlistButton = (cls: string) => (
-    <a href={WAITLIST} target="_blank" rel="noreferrer" className={cls}>
-      <SiWhatsapp className="size-[1.05rem]" aria-hidden="true" /> Tell me when it opens
-    </a>
-  );
+  const waitlistButton = (cls: string) =>
+    ownForm ? (
+      // Own form: jump to the "Tell me when it opens" form at the foot of the page.
+      <button type="button" onClick={openForm} className={cls}>
+        Tell me when it opens <ArrowRight size={16} aria-hidden="true" />
+      </button>
+    ) : (
+      <a href={WAITLIST} target="_blank" rel="noreferrer" className={cls}>
+        <SiWhatsapp className="size-[1.05rem]" aria-hidden="true" /> Tell me when it opens
+      </a>
+    );
   const [formOpen, setFormOpen] = useState(false);
 
   const openForm = () => {
     setFormOpen(true);
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     document.getElementById('register')?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+    if (ownForm) window.setTimeout(() => document.querySelector<HTMLElement>('#register form input:not([tabindex="-1"])')?.focus({ preventScroll: true }), reduce ? 0 : 600);
   };
 
   // The last doubts, answered in the FAQ's own words, right where the decision is made.
@@ -199,9 +224,17 @@ export function ClassPageLayout({
             <RegisterArt className="mx-auto mb-4 block h-auto w-48 md:w-56" />
             <h2 className={`mb-3 ${H2}`} style={H2_STYLE}>Registration opens again soon</h2>
             <p className="mx-auto mb-8 max-w-md leading-[1.7] text-foreground/80">
-              This class isn't taking new students right now. Send us a WhatsApp and we'll tell you as soon as registration opens, InshaAllah.
+              {ownForm
+                ? "This class isn't taking new students right now. Leave your details and we'll email you as soon as registration opens, InshaAllah."
+                : "This class isn't taking new students right now. Send us a WhatsApp and we'll tell you as soon as registration opens, InshaAllah."}
             </p>
-            {waitlistButton('bmc-btn bmc-btn-primary')}
+            {ownForm && classKey ? (
+              <div className="mx-auto max-w-2xl">
+                <RegistrationForm classKey={classKey} title={title} source={path.slice(1)} mode="waitlist" />
+              </div>
+            ) : (
+              waitlistButton('bmc-btn bmc-btn-primary')
+            )}
             <div className="mt-14">{questionList}</div>
           </div>
         </section>
@@ -213,19 +246,23 @@ export function ClassPageLayout({
             <RegisterArt className="mx-auto mb-4 block h-auto w-48 md:w-56" />
             <h2 className={`mb-3 ${H2}`} style={H2_STYLE}>Ready to join?</h2>
             <p className="mx-auto mb-10 max-w-lg leading-[1.7] text-foreground/80">
-              One short form, a few minutes. We'll be in touch once it comes through, and fees and how to pay are explained in the form.
+              {ownForm
+                ? "One short form, a few minutes. We'll be in touch once it comes through, with the next steps and payment options."
+                : "One short form, a few minutes. We'll be in touch once it comes through, and fees and how to pay are explained in the form."}
             </p>
 
             {questionList}
 
-            {!formOpen && (
+            {ownForm && classKey && <RegistrationForm classKey={classKey} title={title} source={path.slice(1)} />}
+
+            {!ownForm && !formOpen && (
               <button type="button" onClick={() => setFormOpen(true)} className="bmc-btn bmc-btn-primary">
                 Register now <ArrowRight size={16} aria-hidden="true" />
               </button>
             )}
 
             <AnimatePresence initial={false}>
-              {formOpen && (
+              {!ownForm && formOpen && (
                 <motion.div
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ height: 'auto', opacity: 1 }}
