@@ -15,6 +15,8 @@ export interface Programme {
   where?: string;
   who?: string;
   price: string;
+  /** CMS switch: true while the class is not taking new students (its Google Form is closed). */
+  registrationClosed?: boolean;
   type: ProgrammeType;
   image?: string;
   imagePosition?: string;
@@ -36,6 +38,11 @@ export const PROGRAMMES: Programme[] = programmesSettings.programmes as Programm
  * fields (title and type) so the client has nothing extra to maintain. If a
  * title is renamed and no keyword matches, the card simply shows fewer tags.
  */
+/** The programme for a path such as "/womens-classes". */
+export function programmeByPath(path: string): Programme | undefined {
+  return PROGRAMMES.find((p) => p.path === path);
+}
+
 export function programmeTags(p: Pick<Programme, 'title' | 'type'>): string[] {
   const tags: string[] = [];
   if (/women/i.test(p.title)) tags.push('Women');

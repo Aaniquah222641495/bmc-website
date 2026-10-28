@@ -126,6 +126,11 @@ export default function InPersonWorkshops() {
         heroImage="/assets/workshop-teaching.webp"
         heroImageAlt="Mualimah Rukeya teaching at an in-person workshop"
         showRegistration={false}
+        heroAction={
+          <a href="https://wa.me/27686498593?text=Slm%2C%20I%27d%20like%20to%20find%20out%20about%20upcoming%20in-person%20workshops" target="_blank" rel="noreferrer" className="bmc-btn bmc-btn-light">
+            <SiWhatsapp className="size-[1.1rem]" aria-hidden="true" /> Ask about the next one
+          </a>
+        }
         intro={
           <>
             <p>

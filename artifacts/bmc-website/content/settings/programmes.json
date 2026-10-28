@@ -12,7 +12,8 @@
       "gradient": "from-emerald-800 to-emerald-950",
       "when": "Your own pace",
       "where": "Google Classroom",
-      "who": "Women 18+"
+      "who": "Women 18+",
+      "registrationClosed": true
     },
     {
       "title": "Women's Hifdh Programme",

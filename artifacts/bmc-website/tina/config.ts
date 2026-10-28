@@ -106,6 +106,12 @@ export default defineConfig({
                 description: 'Short, shown with a person icon, e.g. "Women 18+". Leave empty to hide.',
               },
               {
+                type: 'boolean',
+                name: 'registrationClosed',
+                label: 'Registration closed',
+                description: 'Tick when this class is not taking new students. The class page then hides the form and offers a WhatsApp "tell me when it opens" button instead. Untick when the form is open again.',
+              },
+              {
                 type: 'string',
                 name: 'price',
                 label: 'Price label',

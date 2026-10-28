@@ -1,7 +1,9 @@
 import { type ReactNode, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'wouter';
-import { ArrowRight, ChevronDown } from 'lucide-react';
+import { ArrowRight, ChevronDown, ExternalLink } from 'lucide-react';
+import { SiWhatsapp } from 'react-icons/si';
+import { programmeByPath } from '@/data/programmes';
 import { ChecklistIcon, ClockIcon, IconTile, ReplyHeartIcon } from '@/components/ornaments/cute-icons';
 import { DetailsGrid, IncludedList, type DetailItem } from '@/components/class-page-blocks';
 import { CARD, CONTAINER, H2, H2_STYLE, SECTION_Y } from '@/components/page-shell';
@@ -36,6 +38,8 @@ export interface ClassPageLayoutProps {
   /** What the visitor should have ready, matching the questions in this class's Google Form. Keep in step with the form. */
   formNeeds?: string;
   showRegistration?: boolean;
+  /** Hero action for pages without registration (e.g. ask about the next in-person workshop). */
+  heroAction?: ReactNode;
 }
 
 const DEFAULT_FORM_URL = 'https://forms.gle/7tFCxqL8Ypgv9Jps5';
@@ -56,8 +60,17 @@ export function ClassPageLayout({
   formUrl,
   formNeeds = 'Your name and contact details.',
   showRegistration = true,
+  heroAction,
 }: ClassPageLayoutProps) {
   const FORM_URL = formUrl ?? DEFAULT_FORM_URL;
+  // CMS switch (content/settings/programmes.json): while closed, no form, just a "tell me when it opens" WhatsApp.
+  const closed = showRegistration && programmeByPath(path)?.registrationClosed === true;
+  const WAITLIST = `https://wa.me/27686498593?text=${encodeURIComponent(`Slm, please let me know when registration for ${title} opens`)}`;
+  const waitlistButton = (cls: string) => (
+    <a href={WAITLIST} target="_blank" rel="noreferrer" className={cls}>
+      <SiWhatsapp className="size-[1.05rem]" aria-hidden="true" /> Tell me when it opens
+    </a>
+  );
   const [formOpen, setFormOpen] = useState(false);
 
   const openForm = () => {
@@ -73,11 +86,15 @@ export function ClassPageLayout({
         title={title}
         intro={description}
         actions={
-          showRegistration ? (
+          closed ? (
+            waitlistButton('bmc-btn bmc-btn-light')
+          ) : showRegistration ? (
             <button type="button" onClick={openForm} className="bmc-btn bmc-btn-light">
               Register now <ArrowRight size={16} aria-hidden="true" />
             </button>
-          ) : undefined
+          ) : (
+            heroAction
+          )
         }
       />
 
@@ -113,7 +130,15 @@ export function ClassPageLayout({
 
           <aside className="rounded-[1.5rem] bg-bmc-gold-light/45 p-7 shadow-soft ring-1 ring-[hsl(var(--bmc-gold)/0.35)] md:p-9 lg:sticky lg:top-28" aria-label="Programme details">
             <DetailsGrid items={details} />
-            {showRegistration && (
+            {closed && (
+              <>
+                <p className="mt-9 rounded-xl bg-bmc-paper/80 px-4 py-3 font-utility text-[0.92rem] leading-[1.5] text-primary">
+                  <strong>Registration is closed for now.</strong> We'll let you know when it opens again.
+                </p>
+                {waitlistButton('bmc-btn bmc-btn-primary mt-4 w-full')}
+              </>
+            )}
+            {showRegistration && !closed && (
               <button type="button" onClick={openForm} className="bmc-btn bmc-btn-primary mt-9 w-full">
                 Register now <ArrowRight size={16} aria-hidden="true" />
               </button>
@@ -169,7 +194,20 @@ export function ClassPageLayout({
         </section>
       )}
 
-      {showRegistration && (
+      {closed && (
+        <section id="register" className={`${SECTION_Y} scroll-mt-20 bg-[hsl(var(--bmc-gold-light)/0.35)]`}>
+          <div className={`${CONTAINER} mx-auto max-w-2xl text-center`}>
+            <RegisterArt className="mx-auto mb-4 block h-auto w-48 md:w-56" />
+            <h2 className={`mb-3 ${H2}`} style={H2_STYLE}>Registration opens again soon</h2>
+            <p className="mx-auto mb-8 max-w-md leading-[1.7] text-foreground/80">
+              This class isn't taking new students right now. Send us a WhatsApp and we'll tell you as soon as registration opens, InshaAllah.
+            </p>
+            {waitlistButton('bmc-btn bmc-btn-primary')}
+          </div>
+        </section>
+      )}
+
+      {showRegistration && !closed && (
         <section id="register" className={`${SECTION_Y} scroll-mt-20 bg-[hsl(var(--bmc-gold-light)/0.35)]`}>
           <div className={`${CONTAINER} mx-auto max-w-4xl text-center`}>
             <RegisterArt className="mx-auto mb-4 block h-auto w-48 md:w-56" />
@@ -210,13 +248,19 @@ export function ClassPageLayout({
                 >
                   <div className="p-1">
                     <div className={`${CARD} overflow-hidden`}>
-                      <div className="flex items-center justify-between gap-4 bg-bmc-paper px-6 py-3">
+                      <div className="flex flex-col gap-1 bg-bmc-paper px-6 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
                         <p className="font-utility text-sm tracking-wide text-foreground/80">
                           Complete the form below to register for <strong className="text-primary">{title}</strong>
                         </p>
-                        <button type="button" onClick={() => setFormOpen(false)} className="bmc-link-inline inline-flex min-h-11 items-center whitespace-nowrap font-utility text-sm">
-                          Hide form
-                        </button>
+                        <span className="flex shrink-0 items-center gap-4">
+                          {/* Fallback: sign-in or cookie walls do not work inside an embedded form, but do in a full tab. */}
+                          <a href={FORM_URL} target="_blank" rel="noreferrer" className="bmc-link-inline inline-flex min-h-11 items-center gap-1.5 whitespace-nowrap font-utility text-sm">
+                            Open in new tab <ExternalLink size={14} aria-hidden="true" />
+                          </a>
+                          <button type="button" onClick={() => setFormOpen(false)} className="bmc-link-inline inline-flex min-h-11 items-center whitespace-nowrap font-utility text-sm">
+                            Hide form
+                          </button>
+                        </span>
                       </div>
                       <iframe
                         src={`${FORM_URL}?embedded=true`}
