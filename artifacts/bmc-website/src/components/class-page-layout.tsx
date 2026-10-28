@@ -1,5 +1,6 @@
 import { type ReactNode, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'wouter';
 import { ArrowRight, Clock, ClipboardList, MessageCircleHeart } from 'lucide-react';
 import { DetailsGrid, IncludedList, type DetailItem } from '@/components/class-page-blocks';
 import { CARD, CONTAINER, H2, H2_STYLE, SECTION_Y } from '@/components/page-shell';
@@ -94,6 +95,26 @@ export function ClassPageLayout({
                 Register now <ArrowRight size={16} aria-hidden="true" />
               </button>
             )}
+            {/* Who teaches: Mualimah Rukeya teaches every class (founder, 2026-10-28). A known face lowers the beginner's fear. */}
+            <div className="mt-8 flex items-center gap-4 rounded-[1.1rem] bg-bmc-paper/80 p-4">
+              <span className="block size-16 shrink-0 overflow-hidden rounded-[0.9rem]">
+                <img
+                  src="/assets/photo-founder-teaching.webp"
+                  alt="Mualimah Rukeya"
+                  width={64}
+                  height={64}
+                  loading="lazy"
+                  decoding="async"
+                  className="h-full w-full scale-[2.4] object-cover"
+                  style={{ objectPosition: '50% 40%', transformOrigin: '80% 42%' }}
+                />
+              </span>
+              <span className="min-w-0">
+                <span className="bmc-eyebrow block !text-[0.66rem]">Your teacher</span>
+                <span className="mt-0.5 block font-display text-[1.1rem] leading-snug text-primary">Mualimah Rukeya</span>
+                <Link href="/about" className="bmc-link-inline font-utility text-[0.85rem]">Read her story</Link>
+              </span>
+            </div>
           </aside>
         </div>
       </section>
