@@ -61,7 +61,7 @@ export default function Contact() {
       <PageHeader
         eyebrow="WhatsApp is quickest"
         title="Get in touch"
-        intro="We'd love to hear from you. Reach out on any of the platforms below and we'll get back to you as soon as possible, InshaAllah."
+        intro="Send us a message and we'll get back to you as soon as possible, InshaAllah."
         art={<ChatCard />}
       />
 
@@ -72,7 +72,7 @@ export default function Contact() {
             <p className="bmc-eyebrow mb-3">Ready to register?</p>
             <h2 className="text-primary leading-[1.12]" style={{ fontSize: 'clamp(1.6rem, 2.6vw, 2.1rem)' }}>Choose your class first</h2>
             <p className="mt-4 flex-1 leading-[1.7] text-foreground/80">
-              For class registrations, please use the Register button on the relevant class page.
+              Each class has its own short form on its page. Pick your class and register there.
             </p>
             <div className="mt-7">
               <Link href="/programmes" className="bmc-btn bmc-btn-primary">
@@ -113,7 +113,7 @@ export default function Contact() {
         title="Ready to start your journey?"
         actions={
           <Link href="/programmes" className="bmc-btn bmc-btn-light">
-            Explore Our Programmes
+            Find your class
           </Link>
         }
       >

@@ -30,7 +30,7 @@ function splitLead(item: string): [string | null, string] {
   return [null, item];
 }
 
-export function IncludedList({ items, heading = "What's Included" }: IncludedListProps) {
+export function IncludedList({ items, heading = "What you'll learn" }: IncludedListProps) {
   return (
     <div>
       <h2 className="mb-7 text-[1.6rem] leading-tight text-primary md:text-[1.9rem]">{heading}</h2>

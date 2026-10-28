@@ -24,9 +24,9 @@ function PurseIcon({ size = 28 }: { size?: number }) {
 
 /** Each topic's icon says what the topic is about. */
 const TOPIC_ICON: Record<string, (p: { size?: number }) => React.ReactElement> = {
-  'Getting Started': SeedlingIcon,
-  'Classes & Logistics': LaptopBookIcon,
-  'Payments & Policies': PurseIcon,
+  'Getting started': SeedlingIcon,
+  'Classes and logistics': LaptopBookIcon,
+  'Payments and policies': PurseIcon,
 };
 
 const slug = (label: string) => label.toLowerCase().replace(/&/g, 'and').replace(/[^a-z]+/g, '-');

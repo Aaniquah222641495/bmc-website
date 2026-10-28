@@ -137,12 +137,12 @@ export default function InPersonWorkshops() {
           </>
         }
         included={INCLUDED}
-        includedHeading="What to Expect"
+        includedHeading="What to expect"
         details={[
           { label: 'Format', value: 'In-Person' },
           { label: 'Duration', value: 'Once-off session' },
           { label: 'Location', value: 'Varies by workshop' },
-          { label: 'Investment', value: 'From R100' },
+          { label: 'Fee', value: 'From R100' },
         ]}
         after={
           <>

@@ -166,7 +166,7 @@ export default function Testimonials() {
         title="Ready to start your own journey?"
         actions={
           <Link href="/programmes" className="bmc-btn bmc-btn-light">
-            Explore Our Programmes
+            Find your class
           </Link>
         }
       >

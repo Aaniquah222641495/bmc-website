@@ -42,7 +42,7 @@ export default function QuranClasses() {
           { label: 'Format', value: 'In-Person' },
           { label: 'Schedule', value: 'Every Saturday morning' },
           { label: 'Location', value: "Mitchell's Plain, Cape Town" },
-          { label: 'Investment', value: 'R200 per month' },
+          { label: 'Fee', value: 'R200 per month' },
         ]}
       />
     </>

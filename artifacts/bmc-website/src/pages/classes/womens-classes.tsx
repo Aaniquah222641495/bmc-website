@@ -33,11 +33,15 @@ export default function WomensClasses() {
           </p>
         }
         included={INCLUDED}
+        quote={{
+          text: "I am thoroughly enjoying myself in the class. Mualimah takes her time with each topic and always makes sure that everyone is on the same page before moving on or starting a new topic. The class is perfect for beginners, reverts or even just a refresher course to bring you closer to the Almighty. Alhamdulillah, I've learnt so much in the short period of time.",
+          name: 'Naadhirah Gilbert',
+        }}
         details={[
           { label: 'Format', value: 'Online · Google Classroom (pre-recorded)' },
           { label: 'Who it\'s for', value: 'Women 18+' },
           { label: 'Access', value: 'Learn at your own pace, anytime' },
-          { label: 'Investment', value: 'R150 per month' },
+          { label: 'Fee', value: 'R150 per month' },
         ]}
       />
     </>

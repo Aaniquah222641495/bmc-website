@@ -17,6 +17,8 @@ export interface ClassPageLayoutProps {
   includedHeading?: string;
   /** Who it's for, when, where and how much. */
   details: DetailItem[];
+  /** A verbatim student quote for this class (peer proof). Only use quotes the client gave for this class. */
+  quote?: { text: string; name: string };
   /** Extra blocks in the main column (e.g. a note for parents). */
   children?: ReactNode;
   /** Full-width sections after the main block (e.g. previous workshops). */
@@ -40,6 +42,7 @@ export function ClassPageLayout({
   included,
   includedHeading,
   details,
+  quote,
   children,
   after,
   formUrl,
@@ -75,6 +78,12 @@ export function ClassPageLayout({
           <div className="space-y-10 md:space-y-12">
             <div className="max-w-[60ch] space-y-5 text-[1.1rem] leading-[1.75] text-foreground/85">{intro}</div>
             <IncludedList items={included} heading={includedHeading} />
+            {quote && (
+              <figure className="rounded-[1.5rem] bg-primary p-7 text-primary-foreground shadow-soft md:p-9">
+                <blockquote className="font-display text-[1.2rem] italic leading-[1.6] md:text-[1.3rem]">"{quote.text}"</blockquote>
+                <figcaption className="bmc-eyebrow on-dark mt-5">{quote.name}</figcaption>
+              </figure>
+            )}
             {children}
           </div>
 
@@ -95,8 +104,8 @@ export function ClassPageLayout({
         <section id="register" className={`${SECTION_Y} scroll-mt-20 bg-[hsl(var(--bmc-gold-light)/0.35)]`}>
           <div className={`${CONTAINER} mx-auto max-w-4xl text-center`}>
             <RegisterArt className="mx-auto mb-4 block h-auto w-48 md:w-56" />
-            <h2 className={`mb-3 ${H2}`} style={H2_STYLE}>Register below</h2>
-            <p className="mx-auto mb-10 max-w-md leading-[1.7] text-foreground/80">Before you start, here is what to expect.</p>
+            <h2 className={`mb-3 ${H2}`} style={H2_STYLE}>Ready to join?</h2>
+            <p className="mx-auto mb-10 max-w-md leading-[1.7] text-foreground/80">Here is what to expect before you start.</p>
 
             {/* Before you start: tell a nervous beginner how long it takes, what to have ready and what happens next. */}
             <ul className="mx-auto mb-10 grid max-w-3xl grid-cols-1 gap-4 text-left sm:grid-cols-3">

@@ -256,7 +256,7 @@ export default defineConfig({
             name: 'details',
             label: 'Detail chips',
             list: true,
-            description: 'Available-now workshops: Format / Date / Time / Investment.',
+            description: 'Available-now workshops: Format / Date / Time / Fee.',
             ui: {
               itemProps: (item?: { label?: string }) => ({
                 label: item?.label ?? 'Detail',

@@ -44,7 +44,7 @@ export default function ChildrensClasses() {
           { label: 'Format', value: 'Live Online · Microsoft Teams' },
           { label: 'Schedule', value: 'Mon, Tue & Thu (3x per week)' },
           { label: 'Ages', value: 'Children aged 6–13' },
-          { label: 'Investment', value: 'R150 per month' },
+          { label: 'Fee', value: 'R150 per month' },
         ]}
       >
         {/* Parent note */}

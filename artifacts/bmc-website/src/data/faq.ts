@@ -1,7 +1,7 @@
 // FAQ shown on /faq and used verbatim for FAQPage structured data (lib/structured-data.ts).
 export const CATEGORIES = [
   {
-    label: 'Getting Started',
+    label: 'Getting started',
     items: [
       {
         q: 'Are classes suitable for complete beginners?',
@@ -18,7 +18,7 @@ export const CATEGORIES = [
     ],
   },
   {
-    label: 'Classes & Logistics',
+    label: 'Classes and logistics',
     items: [
       {
         q: 'How do online classes work?',
@@ -39,7 +39,7 @@ export const CATEGORIES = [
     ],
   },
   {
-    label: 'Payments & Policies',
+    label: 'Payments and policies',
     items: [
       {
         q: 'How do I pay for my class?',

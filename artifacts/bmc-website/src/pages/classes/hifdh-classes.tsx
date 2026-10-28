@@ -43,7 +43,7 @@ export default function HifdhClasses() {
           { label: 'Format', value: 'Live Online · Microsoft Teams' },
           { label: 'Schedule', value: 'Mon, Wed & Fri (3x per week)' },
           { label: 'Who it\'s for', value: 'Women beginning or continuing Hifdh' },
-          { label: 'Investment', value: 'R200 per month' },
+          { label: 'Fee', value: 'R200 per month' },
         ]}
       >
         {/* Inspirational note */}

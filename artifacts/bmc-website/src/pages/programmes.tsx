@@ -33,8 +33,8 @@ export default function Programmes() {
         jsonLd={programmesJsonLd()}
       />
       <PageHeader
-        title="Our programmes"
-        intro="Designed to meet you wherever you are on your journey, whether you're taking your very first steps or looking to deepen your knowledge."
+        title="Find your class"
+        intro="Every class is made for beginners. Learn online from home, or in person in Cape Town."
       >
           {/* The choice is the hero: two drawn scenes that switch the list below */}
         <div role="group" aria-label="Choose how you would like to learn" className="mx-auto grid w-full max-w-3xl grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-5">

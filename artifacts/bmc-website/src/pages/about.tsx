@@ -74,8 +74,8 @@ const STORY_SECTIONS = [
 
 const STATS = [
   { num: '300+', label: 'Google Classroom students' },
-  { num: '4', label: "Children's classes" },
-  { num: '1', label: 'Hifdh programme' },
+  { num: '6', label: 'Programmes for women and children' },
+  { num: '3', label: "Live children's classes a week" },
   { num: '2024', label: 'Year established' },
 ];
 
@@ -89,7 +89,7 @@ export default function About() {
         jsonLd={aboutJsonLd()}
       />
       <PageHeader
-        title="Our Story"
+        title="Our story"
         intro="How a passion for teaching grew into a thriving Islamic learning community."
         art={<StoryPath />}
       />
@@ -145,8 +145,8 @@ export default function About() {
       <section className={`${SECTION_Y} bg-background`}>
         <div className={`${CONTAINER} grid gap-8 md:grid-cols-2 lg:gap-12`}>
           {[
-            { title: 'Our Mission', start: 0, tone: 'green', text: 'To make authentic Islamic education accessible to every woman and child, wherever they are on their journey: affordable, flexible, and always welcoming.' },
-            { title: 'Our Vision', start: 4, tone: 'gold', text: 'A world where no Muslim woman or child feels too late, too lost, or too busy to begin learning their deen.' },
+            { title: 'Our mission', start: 0, tone: 'green', text: 'To make authentic Islamic education accessible to every woman and child, wherever they are on their journey: affordable, flexible, and always welcoming.' },
+            { title: 'Our vision', start: 4, tone: 'gold', text: 'A world where no Muslim woman or child feels too late, too lost, or too busy to begin learning their deen.' },
           ].map(({ title, start, tone, text }) => (
             <div
               key={title}
@@ -167,7 +167,7 @@ export default function About() {
       <ClosingBand
         actions={
           <Link href="/programmes" className="bmc-btn bmc-btn-light">
-            Explore Our Programmes
+            Find your class
           </Link>
         }
       >

@@ -42,7 +42,7 @@ export function ProgrammeHero({
       />
       <div className={`relative ${CONTAINER}`}>
         <Link href="/programmes" className="mb-8 inline-flex min-h-11 items-center gap-2 font-utility text-sm font-semibold text-bmc-gold-light hover:text-primary-foreground md:mb-10">
-          <ArrowLeft size={16} aria-hidden="true" /> Back to Programmes
+          <ArrowLeft size={16} aria-hidden="true" /> Back to programmes
         </Link>
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
           <div>
