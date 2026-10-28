@@ -394,6 +394,9 @@
   transition: scale 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease, rotate 0.45s ease;
   cursor: default;
 }
+.hl-letter:nth-child(4n + 2) { color: hsl(158 36% 34%); }
+.hl-letter:nth-child(4n + 3) { color: hsl(8 58% 62%); opacity: 0.32; }
+.hl-letter:nth-child(4n + 4) { color: hsl(42 70% 50%); opacity: 0.36; }
 .hl-letter:hover { scale: 1.9; opacity: 0.95; rotate: 0deg; z-index: 2; }
 @media (prefers-reduced-motion: no-preference) {
   @keyframes hl-in { from { opacity: 0; } }

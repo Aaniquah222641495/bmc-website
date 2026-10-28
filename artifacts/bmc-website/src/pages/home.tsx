@@ -140,7 +140,7 @@ export default function Home() {
           aria-hidden="true"
           style={{
             background:
-              'radial-gradient(60% 70% at 74% 46%, hsl(var(--bmc-paper)) 0%, transparent 70%), radial-gradient(42% 52% at 0% 100%, hsl(var(--bmc-gold-light) / 0.22) 0%, transparent 70%)',
+              'radial-gradient(40rem 34rem at 80% 46%, hsl(32 85% 88% / 0.85) 0%, transparent 70%), radial-gradient(36rem 30rem at 0% 100%, hsl(150 38% 84% / 0.7) 0%, transparent 72%), radial-gradient(30rem 20rem at 38% 0%, hsl(10 70% 92% / 0.6) 0%, transparent 70%)',
           }}
         />
         <Rosette className="absolute left-0 bottom-0 h-[34rem] w-[48rem]" origin="0% 100%" opacity={0.2} />
@@ -148,8 +148,8 @@ export default function Home() {
         {/* Masjid skyline along the foot of the hero: a community learning space, at a glance */}
         <MasjidSkyline
           className="hg-fade absolute inset-x-0 bottom-0 mx-auto h-24 w-full max-w-[90rem] sm:h-32 lg:h-40 pointer-events-none"
-          color="hsl(40 34% 87%)"
-          crescent="hsl(40 58% 62%)"
+          color="hsl(152 26% 84%)"
+          crescent="hsl(40 70% 58%)"
         />
 
         <HeroLetters />
