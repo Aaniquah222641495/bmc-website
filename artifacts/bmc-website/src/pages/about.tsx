@@ -190,7 +190,7 @@ export default function About() {
           <blockquote className="font-display text-[1.25rem] italic leading-[1.6] md:text-[1.5rem]">
             "Alhamdulillah for how far Allah has brought us, and we pray that this is only the beginning. We ask Allah to accept this effort, place barakah in it, and allow Beginners Madrasah Classes to continue benefiting communities for many years to come."
           </blockquote>
-          <figcaption className="bmc-eyebrow on-dark mt-7">Mualimah Rukeya</figcaption>
+          <figcaption className="bmc-eyebrow mt-7">Mualimah Rukeya</figcaption>
         </figure>
       </ClosingBand>
     </>

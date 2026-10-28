@@ -145,7 +145,7 @@ export function RegistrationForm({ classKey, title, source, mode = 'register' }:
           </>
         ) : (
           <>
-            {waitlist ? 'Tell me when it opens' : 'Send my registration'} <ArrowRight size={16} aria-hidden="true" />
+            {waitlist ? (workshopList ? 'Keep me posted' : 'Tell me when it opens') : 'Send my registration'} <ArrowRight size={16} aria-hidden="true" />
           </>
         )}
       </button>

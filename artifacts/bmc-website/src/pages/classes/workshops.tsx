@@ -140,7 +140,7 @@ export default function Workshops() {
                 <p className="font-display text-[1.35rem] leading-snug text-primary">New dates are on the way</p>
                 <p className="mt-1.5 leading-[1.7] text-foreground/80">
                   No workshops are open for registration right now. Have a look at the previous
-                  workshops below, or follow us to hear when new dates are announced.
+                  workshops below, or {REGISTER_ENDPOINT ? 'leave your email below' : 'follow us'} to hear when new dates are announced.
                 </p>
               </div>
               <NotifyButton whatsapp={NOTIFY} className="bmc-btn bmc-btn-primary whitespace-nowrap" label="Notify me" />
@@ -194,7 +194,7 @@ export default function Workshops() {
 
           <div className="bmc-reveal flex flex-col rounded-[1.75rem] bg-card p-8 shadow-soft md:p-10">
             <p className="bmc-eyebrow mb-3">Stay updated</p>
-            <h2 className="text-primary leading-[1.12]" style={{ fontSize: 'clamp(1.6rem, 2.6vw, 2rem)' }}>Hear about the next one first</h2>
+            <h2 className="text-primary leading-[1.12]" style={{ fontSize: 'clamp(1.6rem, 2.6vw, 2rem)' }}>{REGISTER_ENDPOINT ? 'Follow along' : 'Hear about the next one first'}</h2>
             <p className="mt-3 leading-[1.7] text-foreground/80">
               New workshop dates are announced on Instagram and TikTok. Follow along so you don't miss the next one.
             </p>

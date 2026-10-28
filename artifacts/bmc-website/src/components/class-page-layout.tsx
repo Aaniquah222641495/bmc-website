@@ -222,7 +222,7 @@ export function ClassPageLayout({
         <section id="register" className={`${SECTION_Y} scroll-mt-20 bg-[hsl(var(--bmc-gold-light)/0.35)]`}>
           <div className={`${CONTAINER} mx-auto max-w-3xl text-center`}>
             <RegisterArt className="mx-auto mb-4 block h-auto w-48 md:w-56" />
-            <h2 className={`mb-3 ${H2}`} style={H2_STYLE}>Registration opens again soon</h2>
+            <h2 className={`mb-3 ${H2}`} style={H2_STYLE}>Be the first to know when it opens</h2>
             <p className="mx-auto mb-8 max-w-md leading-[1.7] text-foreground/80">
               {ownForm
                 ? "This class isn't taking new students right now. Leave your details and we'll email you as soon as registration opens, InshaAllah."
@@ -247,7 +247,7 @@ export function ClassPageLayout({
             <h2 className={`mb-3 ${H2}`} style={H2_STYLE}>Ready to join?</h2>
             <p className="mx-auto mb-10 max-w-lg leading-[1.7] text-foreground/80">
               {ownForm
-                ? "One short form, a few minutes. We'll be in touch once it comes through, with the next steps and payment options."
+                ? "One short form, a few minutes. As soon as it's sent you'll see how to pay, and Mualimah Rukeya will be in touch with the next steps."
                 : "One short form, a few minutes. We'll be in touch once it comes through, and fees and how to pay are explained in the form."}
             </p>
 

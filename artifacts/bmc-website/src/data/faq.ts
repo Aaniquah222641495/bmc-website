@@ -43,7 +43,7 @@ export const CATEGORIES = [
     items: [
       {
         q: 'How do I pay for my class?',
-        a: 'Payment details are provided upon registration. Please complete the registration form and Mualimah Rukeya will follow up with payment options. You can also contact us directly on WhatsApp for assistance.',
+        a: 'Payment is by EFT (bank transfer). You get the bank details when you register, with your name and surname as the reference. Once you have paid, send your proof of payment to Mualimah Rukeya on WhatsApp. If anything is unclear, just message us.',
       },
       {
         q: 'What is the refund policy?',

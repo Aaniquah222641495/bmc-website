@@ -51,7 +51,7 @@ const STEPS = [
   },
   {
     title: 'Fill in the form',
-    desc: 'Each class page has a short registration form. We will be in touch once it comes through.',
+    desc: 'Each class page has a short registration form. Then pay by EFT and send your proof of payment on WhatsApp.',
     cta: 'Questions first? Ask on WhatsApp',
     href: WHATSAPP,
     external: true,
@@ -466,6 +466,7 @@ export default function Home() {
             Moments from our classes
           </h2>
           <ul
+            tabIndex={0}
             className="-mx-5 px-5 md:mx-0 md:px-0 flex gap-5 overflow-x-auto snap-x snap-mandatory pb-6 md:pb-0 md:overflow-visible md:grid md:grid-cols-4 md:auto-rows-[15rem] lg:auto-rows-[17rem] md:gap-6"
             aria-label="Photos from our classes and workshops"
           >

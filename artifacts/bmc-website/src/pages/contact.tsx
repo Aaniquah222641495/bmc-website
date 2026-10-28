@@ -37,7 +37,7 @@ function ChatCard() {
         <p className="ml-auto max-w-[85%] rounded-2xl rounded-br-md bg-[#dcf3e3] px-4 py-3 font-utility text-[0.95rem] leading-snug text-foreground shadow-soft">
           {PREFILL}
         </p>
-        <p className="font-utility text-[0.78rem] text-foreground/55">This message is ready for you. Just tap send.</p>
+        <p className="font-utility text-[0.78rem] text-foreground/70">This message is ready for you. Just tap send.</p>
       </div>
       <div className="flex items-center justify-between gap-3 bg-card px-5 py-4">
         <span className="font-utility text-[0.95rem] font-semibold text-primary">Open WhatsApp</span>
