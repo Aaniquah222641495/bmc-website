@@ -176,22 +176,58 @@ function FieldWithTerms({ terms, children }: { terms: string; children: React.Re
             Close
           </button>
         </div>
-        <div className="px-6 pb-8 text-[0.95rem] leading-[1.65] text-foreground/85 md:px-8">
+        <div className="px-6 pb-8 md:px-8">
           {blocks.map((b, i) => (
-            <div key={i} className="mb-4 last:mb-0">
-              {b.split('\n').map((line, j) =>
-                /:\s*$/.test(line) ? (
-                  <p key={j} className="mt-1 font-utility font-bold text-primary">{line.replace(/:\s*$/, '')}</p>
-                ) : (
-                  <p key={j}>{line}</p>
-                ),
-              )}
-            </div>
+            <TermsSection key={i} text={b} />
           ))}
         </div>
       </dialog>
     </div>
   );
+}
+
+/**
+ * One block of her terms, easy to scan: the line ending in ":" is the heading, short lines with no
+ * full stop (e.g. "Monthly Fees") are sub-headings, everything else is a bullet. Her words are not
+ * changed; amounts (R50), dates and "non-refundable" are bold so the money rules stand out.
+ */
+function TermsSection({ text }: { text: string }) {
+  const lines = text.split('\n').map((l) => l.replace(/^\s*[-\u2022*]\s*/, '').trim()).filter(Boolean);
+  const groups: { sub?: string; items: string[] }[] = [];
+  let heading = '';
+  for (const line of lines) {
+    if (/:\s*$/.test(line) && !heading && groups.length === 0) heading = line.replace(/:\s*$/, '');
+    else if (line.split(/\s+/).length <= 4 && !/[.!?]$/.test(line)) groups.push({ sub: line.replace(/:\s*$/, ''), items: [] });
+    else {
+      if (groups.length === 0) groups.push({ items: [] });
+      groups[groups.length - 1].items.push(line);
+    }
+  }
+  return (
+    <section className="mb-6 rounded-xl bg-bmc-paper p-5 last:mb-0">
+      {heading && <h4 className="mb-3 font-display text-[1.15rem] leading-snug text-primary">{heading}</h4>}
+      {groups.map((g, i) => (
+        <div key={i} className={i > 0 ? 'mt-4' : ''}>
+          {g.sub && <p className="mb-2 font-utility text-[0.8rem] font-bold uppercase tracking-[0.12em] text-bmc-gold-ink">{g.sub}</p>}
+          <ul className="space-y-2">
+            {g.items.map((item, j) => (
+              <li key={j} className="flex gap-3 text-[0.95rem] leading-[1.6] text-foreground/85">
+                <span className="mt-[0.6rem] size-1.5 shrink-0 rounded-full bg-bmc-gold" aria-hidden="true" />
+                <span>{emphasise(item)}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </section>
+  );
+}
+
+/** Bold the money rules: rand amounts, dates like "1st of each month" or "June 7th", and "non-refundable". */
+function emphasise(line: string) {
+  const re = /(R\d[\d\s,]*(?:\.\d+)?(?:\s*per month)?|\b\d{1,2}(?:st|nd|rd|th)(?: of each month)?\b|\b(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2}(?:st|nd|rd|th)?\b|non-refundable)/gi;
+  const parts = line.split(re);
+  return parts.map((part, i) => (i % 2 === 1 ? <strong key={i} className="font-semibold text-primary">{part}</strong> : part));
 }
 
 function Field({ f, uid, value, error, onChange, disabled }: { f: RegField; uid: string; value: string; error?: string; onChange: (v: string) => void; disabled: boolean }) {
