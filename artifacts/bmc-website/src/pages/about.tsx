@@ -16,7 +16,6 @@ const GALLERY_IMAGES = [
   '/assets/photo-wudhu-workshop-2.webp',
   '/assets/photo-workshop-audience.webp',
   '/assets/photo-workshop-stage.webp',
-  '/assets/photo-workshop-awards.webp',
   '/assets/photo-achievement.webp',
   '/assets/photo-quran-completion.webp',
   '/assets/photo-quran-lesson.webp',
@@ -114,7 +113,7 @@ export default function About() {
             </div>
             <figcaption className="mt-6 text-center lg:text-left">
               <span className="block font-display text-[1.25rem] text-primary">Mualimah Rukeya</span>
-              <span className="bmc-eyebrow mt-1.5 block !text-[0.68rem]">Founder &amp; Teacher</span>
+              <span className="bmc-eyebrow mt-1.5 block !text-[0.74rem]">Founder &amp; Teacher</span>
             </figcaption>
           </figure>
 
@@ -161,8 +160,8 @@ export default function About() {
       <section className={`${SECTION_Y} bg-bmc-paper`}>
         <div className={`${CONTAINER} grid gap-8 md:grid-cols-2 lg:gap-12`}>
           {[
-            { title: 'Our mission', start: 0, tone: 'green', text: 'To make authentic Islamic education accessible to every woman and child, wherever they are on their journey: affordable, flexible, and always welcoming.' },
-            { title: 'Our vision', start: 4, tone: 'gold', text: 'A world where no Muslim woman or child feels too late, too lost, or too busy to begin learning their deen.' },
+            { title: 'Our mission', start: 3, tone: 'green', text: 'To make authentic Islamic education accessible to every woman and child, wherever they are on their journey: affordable, flexible, and always welcoming.' },
+            { title: 'Our vision', start: 1, tone: 'gold', text: 'A world where no Muslim woman or child feels too late, too lost, or too busy to begin learning their deen.' },
           ].map(({ title, start, tone, text }) => (
             <div
               key={title}
@@ -182,7 +181,7 @@ export default function About() {
       {/* Closing du'a */}
       <ClosingBand
         actions={
-          <Link href="/programmes" className="bmc-btn bmc-btn-light">
+          <Link href="/programmes" className="bmc-btn bmc-btn-primary">
             Find your class
           </Link>
         }

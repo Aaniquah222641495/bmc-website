@@ -53,7 +53,7 @@ function CurrentWorkshopCard({ workshop }: { workshop: Workshop }) {
         <dl className="mb-10 grid gap-4 sm:grid-cols-2">
           {(workshop.details ?? []).map(({ label, value }) => (
             <div key={label} className="rounded-xl bg-white/10 p-4">
-              <dt className="bmc-eyebrow on-dark !text-[0.66rem]">{label}</dt>
+              <dt className="bmc-eyebrow on-dark !text-[0.74rem]">{label}</dt>
               <dd className="mt-1 font-display text-[1.1rem] text-primary-foreground">{value}</dd>
             </div>
           ))}

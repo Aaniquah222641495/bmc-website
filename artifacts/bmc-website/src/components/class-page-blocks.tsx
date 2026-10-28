@@ -64,7 +64,7 @@ export function DetailsGrid({ items }: { items: DetailItem[] }) {
     <dl className="space-y-6">
       {items.map(({ label, value }) => (
         <div key={label}>
-          <dt className="bmc-eyebrow !text-[0.68rem]">{label}</dt>
+          <dt className="bmc-eyebrow !text-[0.74rem]">{label}</dt>
           <dd className="mt-1.5 font-display text-[1.2rem] leading-snug text-primary">{value}</dd>
         </div>
       ))}
@@ -92,8 +92,8 @@ export function PastWorkshopsGrid({ workshops, gridClassName = 'sm:grid-cols-2' 
             </div>
           )}
           <div className="flex flex-1 flex-col px-2 pb-3 pt-6 sm:px-4">
-            {!workshop.image && <p className="bmc-eyebrow mb-2 !text-[0.66rem]">Past</p>}
-            <p className="bmc-eyebrow mb-2 !text-[0.68rem]">{workshop.type}</p>
+            {!workshop.image && <p className="bmc-eyebrow mb-2 !text-[0.74rem]">Past</p>}
+            <p className="bmc-eyebrow mb-2 !text-[0.74rem]">{workshop.type}</p>
             <h3 className="mb-3 text-[1.35rem] leading-snug text-primary">{workshop.title}</h3>
             <p className="text-[0.98rem] leading-[1.7] text-foreground/80">{workshop.description}</p>
           </div>

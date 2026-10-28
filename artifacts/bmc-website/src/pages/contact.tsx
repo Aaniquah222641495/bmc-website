@@ -112,7 +112,7 @@ export default function Contact() {
       <ClosingBand
         title="Ready to start your journey?"
         actions={
-          <Link href="/programmes" className="bmc-btn bmc-btn-light">
+          <Link href="/programmes" className="bmc-btn bmc-btn-primary">
             Find your class
           </Link>
         }

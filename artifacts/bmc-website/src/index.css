@@ -292,9 +292,9 @@
 /* Eyebrow: small letter-spaced caps in readable gold-ink (about 7:1 on ivory). */
 .bmc-eyebrow {
   font-family: var(--font-utility);
-  font-size: 0.72rem;
+  font-size: 0.8rem;
   font-weight: 700;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: hsl(var(--bmc-gold-ink));
 }

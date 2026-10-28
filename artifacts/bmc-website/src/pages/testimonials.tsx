@@ -164,7 +164,7 @@ export default function Testimonials() {
       <ClosingBand
         title="Ready to start your own journey?"
         actions={
-          <Link href="/programmes" className="bmc-btn bmc-btn-light">
+          <Link href="/programmes" className="bmc-btn bmc-btn-primary">
             Find your class
           </Link>
         }

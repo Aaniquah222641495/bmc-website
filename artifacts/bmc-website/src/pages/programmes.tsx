@@ -1,6 +1,4 @@
-import { useState } from 'react';
 import { Link } from 'wouter';
-import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, CalendarDays, Laptop, MapPin, UserRound } from 'lucide-react';
 import { SiWhatsapp } from 'react-icons/si';
 import { PROGRAMMES, programmeByPath, type ProgrammeType } from '@/data/programmes';
@@ -31,8 +29,12 @@ const TABS: { id: Tab; label: string; sub: string; Art: typeof OnlineArt }[] = [
 ];
 
 export default function Programmes() {
-  const [active, setActive] = useState<Tab>('online');
-  const visible = PROGRAMMES.filter(p => p.type === active);
+  // Both groups are always on the page (only six programmes): the header choices jump to them.
+  const jump = (id: Tab) => (e: React.MouseEvent) => {
+    e.preventDefault();
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.getElementById(id)?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+  };
 
   return (
     <>
@@ -46,17 +48,16 @@ export default function Programmes() {
         title="Find your class"
         intro="Every class is made for beginners. Learn online from home, or in person in Cape Town."
       >
-          {/* The choice is the hero: two drawn scenes that switch the list below */}
-        <div role="group" aria-label="Choose how you would like to learn" className="mx-auto grid w-full max-w-3xl grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-5">
+          {/* The choice is the hero: two drawn scenes that jump to each group below */}
+        <nav aria-label="Choose how you would like to learn" className="mx-auto grid w-full max-w-3xl grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-5">
           {TABS.map(({ id, label, sub, Art }) => {
-            const on = active === id;
+            const on = true;
             const count = PROGRAMMES.filter((p) => p.type === id).length;
             return (
-              <button
+              <a
                 key={id}
-                type="button"
-                aria-pressed={on}
-                onClick={() => setActive(id)}
+                href={`#${id}`}
+                onClick={jump(id)}
                 className={`group flex items-center gap-4 rounded-[1.4rem] p-3 pr-5 text-left transition-all duration-300 motion-reduce:transition-none sm:p-5 sm:pb-6 ${
                   on
                     ? 'bg-card shadow-lift ring-2 ring-[hsl(var(--bmc-gold)/0.7)]'
@@ -71,10 +72,10 @@ export default function Programmes() {
                   {count} programmes
                 </span>
                 </span>
-              </button>
+              </a>
             );
           })}
-        </div>
+        </nav>
       </PageHeader>
 
       <section className="bg-bmc-paper pb-24 pt-16 md:pb-32 md:pt-24">
@@ -87,7 +88,7 @@ export default function Programmes() {
                   <Link href={href} className="bmc-lift group flex w-full items-start gap-4 rounded-[1.25rem] bg-card p-5 shadow-soft transition-shadow duration-300 hover:shadow-lift">
                     <IconTile Icon={Icon} />
                     <span className="min-w-0">
-                      <span className="bmc-eyebrow block !text-[0.66rem]">{who}</span>
+                      <span className="bmc-eyebrow block !text-[0.74rem]">{who}</span>
                       <span className="mt-1 block font-display text-[1.18rem] leading-snug text-primary">{name}</span>
                       <span className="mt-1 block text-[0.92rem] leading-[1.55] text-foreground/75">{note}</span>
                       {programmeByPath(href.replace('/programmes', ''))?.registrationClosed && <ClosedBadge className="mt-2" />}
@@ -97,69 +98,62 @@ export default function Programmes() {
               ))}
             </ul>
           </div>
-          <h2 className="mb-8 text-center text-[1.6rem] leading-tight text-primary md:text-[1.9rem]">
-            {active === 'online' ? 'All online programmes' : 'All in-person programmes'}
-          </h2>
-          <AnimatePresence mode="wait" initial={false}>
-            <motion.ul
-              key={active}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -6 }}
-              transition={{ duration: 0.25 }}
-              className="mx-auto grid max-w-6xl grid-cols-1 gap-8 md:grid-cols-2 lg:gap-10"
-            >
-              {visible.map((p) => {
-                return (
-                  <li key={p.path} className="flex">
-                    <Link
-                      href={`/programmes${p.path}`}
-                      className={`group flex w-full flex-col p-3 transition-shadow duration-500 hover:shadow-lift sm:p-4 ${CARD} bmc-lift`}
-                    >
-                      <div className={`relative aspect-[2/1] overflow-hidden rounded-[0.9rem] bg-gradient-to-br ${p.gradient}`}>
-                        {p.image && (
-                          <img
-                            src={p.image}
-                            alt=""
-                            width={1200}
-                            height={750}
-                            loading="lazy"
-                            decoding="async"
-                            style={{ objectPosition: p.imagePosition ?? 'top' }}
-                            className="h-full w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.02] motion-reduce:transition-none"
-                          />
-                        )}
-                        <span className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-card/95 px-3 py-1 font-utility text-[0.72rem] font-bold uppercase tracking-[0.12em] text-primary shadow-soft">
-                          <span className={`size-1.5 rounded-full ${p.type === 'online' ? 'bg-[#25D366]' : 'bg-bmc-gold'}`} aria-hidden="true" />
-                          {FORMAT_LABEL[p.type]}
-                        </span>
-                      </div>
-                      <div className="flex flex-1 flex-col px-2 pb-3 pt-5 sm:px-3">
-                        {p.registrationClosed && <ClosedBadge className="mb-2 self-start" />}
-                        <h3 className="text-[1.5rem] leading-[1.15] text-primary">{p.title}</h3>
-                        <Facts p={p} />
-                        <p className="mt-3 flex-1 text-[0.98rem] leading-[1.65] text-foreground/80">{p.descLong}</p>
-                        <div className="mt-5 flex items-center justify-between">
-                          <span className="font-display text-xl font-medium text-primary">{p.price}</span>
-                          <span className="bmc-link !min-h-0 group-hover:text-bmc-gold-ink">
-                            View details
-                            <ArrowRight size={15} className="transition-transform group-hover:translate-x-1 motion-reduce:transition-none" aria-hidden="true" />
-                          </span>
-                        </div>
-                      </div>
-                    </Link>
-                  </li>
-                );
-              })}
-            </motion.ul>
-          </AnimatePresence>
+          {TABS.map(({ id, label }) => (
+            <section key={id} id={id} aria-labelledby={`${id}-title`} className="scroll-mt-24 [&+&]:mt-16 md:[&+&]:mt-24">
+              <h2 id={`${id}-title`} className="mx-auto mb-8 max-w-6xl text-[1.6rem] leading-tight text-primary md:text-[1.9rem]">{label}</h2>
+              <ul className="mx-auto grid max-w-6xl grid-cols-1 gap-8 md:grid-cols-2 lg:gap-10">
+              {PROGRAMMES.filter((p) => p.type === id).map((p) => {
+                    return (
+                      <li key={p.path} className="flex">
+                        <Link
+                          href={`/programmes${p.path}`}
+                          className={`group flex w-full flex-col p-3 transition-shadow duration-500 hover:shadow-lift sm:p-4 ${CARD} bmc-lift`}
+                        >
+                          <div className={`relative aspect-[2/1] overflow-hidden rounded-[0.9rem] bg-gradient-to-br ${p.gradient}`}>
+                            {p.image && (
+                              <img
+                                src={p.image}
+                                alt=""
+                                width={1200}
+                                height={750}
+                                loading="lazy"
+                                decoding="async"
+                                style={{ objectPosition: p.imagePosition ?? 'top' }}
+                                className="h-full w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.02] motion-reduce:transition-none"
+                              />
+                            )}
+                            <span className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-card/95 px-3 py-1 font-utility text-[0.72rem] font-bold uppercase tracking-[0.12em] text-primary shadow-soft">
+                              <span className={`size-1.5 rounded-full ${p.type === 'online' ? 'bg-[#25D366]' : 'bg-bmc-gold'}`} aria-hidden="true" />
+                              {FORMAT_LABEL[p.type]}
+                            </span>
+                          </div>
+                          <div className="flex flex-1 flex-col px-2 pb-3 pt-5 sm:px-3">
+                            {p.registrationClosed && <ClosedBadge className="mb-2 self-start" />}
+                            <h3 className="text-[1.5rem] leading-[1.15] text-primary">{p.title}</h3>
+                            <Facts p={p} />
+                            <p className="mt-3 flex-1 text-[0.98rem] leading-[1.65] text-foreground/80">{p.descLong}</p>
+                            <div className="mt-5 flex items-center justify-between">
+                              <span className="font-display text-xl font-medium text-primary">{p.price}</span>
+                              <span className="bmc-link !min-h-0 group-hover:text-bmc-gold-ink">
+                                View details
+                                <ArrowRight size={15} className="transition-transform group-hover:translate-x-1 motion-reduce:transition-none" aria-hidden="true" />
+                              </span>
+                            </div>
+                          </div>
+                        </Link>
+                      </li>
+                    );
+                  })}
+              </ul>
+            </section>
+          ))}
         </div>
       </section>
 
       <ClosingBand
         title="Not sure where to start?"
         actions={
-          <a href={WHATSAPP} target="_blank" rel="noreferrer" className="bmc-btn bmc-btn-light">
+          <a href={WHATSAPP} target="_blank" rel="noreferrer" className="bmc-btn bmc-btn-primary">
             <SiWhatsapp className="size-[1.1rem]" aria-hidden="true" />
             Ask us on WhatsApp
           </a>

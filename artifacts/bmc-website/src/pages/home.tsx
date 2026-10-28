@@ -73,6 +73,8 @@ const MOMENTS = [
     height: 1000,
     cls: 'md:col-start-1 md:row-span-2',
     pos: 'center 72%',
+    // The top half of this photo is ceiling: zoom in on the teacher and the certificates.
+    zoom: { scale: 1.5, origin: '58% 88%' },
   },
   {
     src: '/assets/photo-ramadan-preparation.webp',
@@ -97,6 +99,8 @@ const MOMENTS = [
     height: 1000,
     cls: '',
     pos: 'center 55%',
+    // Same hall, same ceiling: zoom in on the two women and the certificate.
+    zoom: { scale: 1.45, origin: '50% 92%' },
   },
   {
     src: '/assets/photo-wudhu-workshop-1.webp',
@@ -118,7 +122,7 @@ const WORRIES = [
 ];
 
 // Shared type sizes for the calmer, lighter display scale.
-const H2_STYLE = { fontSize: 'clamp(2.25rem, 4.6vw, 3.6rem)' } as const;
+const H2_STYLE = { fontSize: 'clamp(1.95rem, 3.4vw, 2.75rem)' } as const;
 const H2 = 'text-primary leading-[1.08] tracking-[-0.018em]';
 const SECTION = 'py-20 md:py-28';
 
@@ -431,7 +435,7 @@ export default function Home() {
             </div>
             <figcaption className="mt-6 text-center lg:text-left">
               <span className="block font-display text-[1.25rem] text-primary">Mualimah Rukeya</span>
-              <span className="bmc-eyebrow mt-1.5 block !text-[0.68rem]">Founder &amp; Teacher</span>
+              <span className="bmc-eyebrow mt-1.5 block !text-[0.74rem]">Founder &amp; Teacher</span>
             </figcaption>
           </figure>
 
@@ -468,7 +472,7 @@ export default function Home() {
             {MOMENTS.map((m) => (
               <li
                 key={m.src}
-                className={`bmc-reveal bmc-photo snap-center shrink-0 basis-[72%] sm:basis-[46%] md:basis-auto aspect-[4/5] md:aspect-auto ${m.cls}`}
+                className={`bmc-reveal bmc-photo overflow-hidden snap-center shrink-0 basis-[72%] sm:basis-[46%] md:basis-auto aspect-[4/5] md:aspect-auto ${m.cls}`}
               >
                 <img
                   src={m.src}
@@ -477,7 +481,7 @@ export default function Home() {
                   height={m.height}
                   loading="lazy"
                   decoding="async"
-                  style={{ objectPosition: m.pos }}
+                  style={{ objectPosition: m.pos, ...('zoom' in m && m.zoom ? { transform: `scale(${m.zoom.scale})`, transformOrigin: m.zoom.origin } : {}) }}
                   className="h-full w-full object-cover"
                 />
               </li>
@@ -487,14 +491,13 @@ export default function Home() {
       </section>
 
       {/* Closing invitation: her women's class illustration, and the masjid skyline leading into the footer */}
-      <section className="relative overflow-hidden bg-primary text-primary-foreground">
-        <GirihPattern />
+      <section className="relative overflow-hidden bg-[hsl(var(--bmc-gold-light)/0.42)] text-foreground">
         <div className="relative container mx-auto px-5 md:px-10 pt-20 pb-36 md:pt-28 md:pb-48 grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-12 lg:gap-16 items-center">
           <div className="bmc-reveal relative mx-auto w-full max-w-[20rem] sm:max-w-[28rem] lg:max-w-[34rem]">
             <div
               aria-hidden="true"
               className="absolute -inset-[12%] rounded-full"
-              style={{ background: 'radial-gradient(closest-side, hsl(var(--bmc-gold-light) / 0.28), transparent 72%)' }}
+              style={{ background: 'radial-gradient(closest-side, hsl(var(--bmc-paper) / 0.9), transparent 72%)' }}
             />
             <img
               src="/assets/womens-circle.webp"
@@ -503,21 +506,21 @@ export default function Home() {
               height={796}
               loading="lazy"
               decoding="async"
-              className="relative w-full h-auto drop-shadow-[0_30px_40px_hsl(158_50%_5%/0.45)]"
+              className="relative w-full h-auto drop-shadow-[0_24px_30px_hsl(158_40%_20%/0.22)]"
             />
           </div>
           <div className="bmc-reveal text-center lg:text-left">
-            <h2 className="text-primary-foreground leading-[1.08] tracking-[-0.018em] mb-6 max-w-2xl mx-auto lg:mx-0" style={{ fontSize: 'clamp(2.25rem, 4.8vw, 3.8rem)' }}>
+            <h2 className="text-primary leading-[1.08] tracking-[-0.018em] mb-6 max-w-2xl mx-auto lg:mx-0" style={{ fontSize: 'clamp(2.1rem, 4vw, 3.2rem)' }}>
               There is a place for you here
             </h2>
-            <p className="text-[1.15rem] text-primary-foreground/85 max-w-xl mx-auto lg:mx-0 mb-11 leading-[1.7]">
+            <p className="text-[1.15rem] text-foreground/80 max-w-xl mx-auto lg:mx-0 mb-11 leading-[1.7]">
               Whether you are taking your very first steps or returning to your roots, choose your class and register in a few minutes.
             </p>
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4">
-              <Link href="/programmes" className="bmc-btn bmc-btn-light">
+              <Link href="/programmes" className="bmc-btn bmc-btn-primary">
                 Find your class
               </Link>
-              <a href={WHATSAPP} target="_blank" rel="noreferrer" className="bmc-btn bmc-btn-outline">
+              <a href={WHATSAPP} target="_blank" rel="noreferrer" className="bmc-btn bmc-btn-soft">
                 <SiWhatsapp className="size-[1.1rem]" aria-hidden="true" />
                 Ask on WhatsApp
               </a>

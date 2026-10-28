@@ -4,7 +4,6 @@ import { Link } from 'wouter';
 import { ArrowRight, ChevronDown, ExternalLink } from 'lucide-react';
 import { SiWhatsapp } from 'react-icons/si';
 import { programmeByPath } from '@/data/programmes';
-import { ChecklistIcon, ClockIcon, IconTile, ReplyHeartIcon } from '@/components/ornaments/cute-icons';
 import { DetailsGrid, IncludedList, type DetailItem } from '@/components/class-page-blocks';
 import { CARD, CONTAINER, H2, H2_STYLE, SECTION_Y } from '@/components/page-shell';
 import { ProgrammeHero } from '@/components/programme-hero';
@@ -35,7 +34,7 @@ export interface ClassPageLayoutProps {
   heroImage?: string;
   heroImageAlt?: string;
   formUrl?: string; // per-class registration form URL
-  /** What the visitor should have ready, matching the questions in this class's Google Form. Keep in step with the form. */
+  /** @deprecated No longer shown (the "Ready to join" cards were folded into one line); kept so pages compile. */
   formNeeds?: string;
   showRegistration?: boolean;
   /** Hero action for pages without registration (e.g. ask about the next in-person workshop). */
@@ -58,7 +57,6 @@ export function ClassPageLayout({
   children,
   after,
   formUrl,
-  formNeeds = 'Your name and contact details.',
   showRegistration = true,
   heroAction,
 }: ClassPageLayoutProps) {
@@ -78,6 +76,30 @@ export function ClassPageLayout({
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     document.getElementById('register')?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
   };
+
+  // The last doubts, answered in the FAQ's own words, right where the decision is made.
+  const questionList =
+    questions && questions.length > 0 ? (
+      <div className="mx-auto mb-10 max-w-3xl text-left">
+        <h3 className="mb-4 text-center font-display text-[1.3rem] text-primary">Before you register</h3>
+        <div className="space-y-3">
+          {questions.map(({ q, a }) => (
+            <details key={q} className="group rounded-2xl bg-card shadow-soft [&_summary::-webkit-details-marker]:hidden">
+              <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 px-6 py-4 font-display text-[1.08rem] leading-snug text-primary">
+                {q}
+                <span className="inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-bmc-gold-light/70 transition-transform duration-300 group-open:rotate-180 motion-reduce:transition-none" aria-hidden="true">
+                  <ChevronDown size={16} />
+                </span>
+              </summary>
+              <p className="px-6 pb-6 leading-[1.75] text-foreground/85">{a}</p>
+            </details>
+          ))}
+        </div>
+        <p className="mt-4 text-center font-utility text-sm text-foreground/75">
+          More answers on the <Link href="/faq" className="bmc-link-inline">FAQ page</Link>.
+        </p>
+      </div>
+    ) : null;
 
   return (
     <>
@@ -128,18 +150,20 @@ export function ClassPageLayout({
             {children}
           </div>
 
-          <aside className="rounded-[1.5rem] bg-bmc-gold-light/45 p-7 shadow-soft ring-1 ring-[hsl(var(--bmc-gold)/0.35)] md:p-9 lg:sticky lg:top-28" aria-label="Programme details">
+          {/* On phones the facts come straight after the header (price, when, who), not four screens down. */}
+          <aside className="order-first rounded-[1.5rem] bg-bmc-gold-light/45 p-7 lg:order-none shadow-soft ring-1 ring-[hsl(var(--bmc-gold)/0.35)] md:p-9 lg:sticky lg:top-28" aria-label="Programme details">
             <DetailsGrid items={details} />
             {closed && (
               <>
                 <p className="mt-9 rounded-xl bg-bmc-paper/80 px-4 py-3 font-utility text-[0.92rem] leading-[1.5] text-primary">
                   <strong>Registration is closed for now.</strong> We'll let you know when it opens again.
                 </p>
-                {waitlistButton('bmc-btn bmc-btn-primary mt-4 w-full')}
+                {waitlistButton('bmc-btn bmc-btn-primary mt-4 hidden w-full lg:inline-flex')}
               </>
             )}
             {showRegistration && !closed && (
-              <button type="button" onClick={openForm} className="bmc-btn bmc-btn-primary mt-9 w-full">
+              // Phones already have the Register button in the header right above this card.
+              <button type="button" onClick={openForm} className="bmc-btn bmc-btn-primary mt-9 hidden w-full lg:inline-flex">
                 Register now <ArrowRight size={16} aria-hidden="true" />
               </button>
             )}
@@ -158,7 +182,7 @@ export function ClassPageLayout({
                 />
               </span>
               <span className="min-w-0">
-                <span className="bmc-eyebrow block !text-[0.66rem]">Your teacher</span>
+                <span className="bmc-eyebrow block !text-[0.74rem]">Your teacher</span>
                 <span className="mt-0.5 block font-display text-[1.1rem] leading-snug text-primary">Mualimah Rukeya</span>
                 <Link href="/about" className="bmc-link-inline font-utility text-[0.85rem]">Read her story</Link>
               </span>
@@ -169,40 +193,16 @@ export function ClassPageLayout({
 
       {after}
 
-      {/* Answer the last doubts right before the decision, in the FAQ's own words. */}
-      {questions && questions.length > 0 && (
-        <section className={`${SECTION_Y} bg-bmc-paper !pt-0`}>
-          <div className={`${CONTAINER} mx-auto max-w-3xl`}>
-            <h2 className={`mb-8 text-center ${H2}`} style={H2_STYLE}>Before you register</h2>
-            <div className="space-y-3">
-              {questions.map(({ q, a }) => (
-                <details key={q} className="group rounded-2xl bg-card shadow-soft [&_summary::-webkit-details-marker]:hidden">
-                  <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 px-6 py-4 font-display text-[1.12rem] leading-snug text-primary">
-                    {q}
-                    <span className="inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-bmc-gold-light/70 transition-transform duration-300 group-open:rotate-180 motion-reduce:transition-none" aria-hidden="true">
-                      <ChevronDown size={16} />
-                    </span>
-                  </summary>
-                  <p className="px-6 pb-6 leading-[1.75] text-foreground/85">{a}</p>
-                </details>
-              ))}
-            </div>
-            <p className="mt-6 text-center font-utility text-sm text-foreground/75">
-              More answers on the <Link href="/faq" className="bmc-link-inline">FAQ page</Link>.
-            </p>
-          </div>
-        </section>
-      )}
-
       {closed && (
         <section id="register" className={`${SECTION_Y} scroll-mt-20 bg-[hsl(var(--bmc-gold-light)/0.35)]`}>
-          <div className={`${CONTAINER} mx-auto max-w-2xl text-center`}>
+          <div className={`${CONTAINER} mx-auto max-w-3xl text-center`}>
             <RegisterArt className="mx-auto mb-4 block h-auto w-48 md:w-56" />
             <h2 className={`mb-3 ${H2}`} style={H2_STYLE}>Registration opens again soon</h2>
             <p className="mx-auto mb-8 max-w-md leading-[1.7] text-foreground/80">
               This class isn't taking new students right now. Send us a WhatsApp and we'll tell you as soon as registration opens, InshaAllah.
             </p>
             {waitlistButton('bmc-btn bmc-btn-primary')}
+            <div className="mt-14">{questionList}</div>
           </div>
         </section>
       )}
@@ -212,24 +212,11 @@ export function ClassPageLayout({
           <div className={`${CONTAINER} mx-auto max-w-4xl text-center`}>
             <RegisterArt className="mx-auto mb-4 block h-auto w-48 md:w-56" />
             <h2 className={`mb-3 ${H2}`} style={H2_STYLE}>Ready to join?</h2>
-            <p className="mx-auto mb-10 max-w-md leading-[1.7] text-foreground/80">Here is what to expect before you start.</p>
+            <p className="mx-auto mb-10 max-w-lg leading-[1.7] text-foreground/80">
+              One short form, a few minutes. We'll be in touch once it comes through, and fees and how to pay are explained in the form.
+            </p>
 
-            {/* Before you start: tell a nervous beginner how long it takes, what to have ready and what happens next. */}
-            <ul className="mx-auto mb-10 grid max-w-3xl grid-cols-1 gap-4 text-left sm:grid-cols-3">
-              {[
-                { Icon: ClockIcon, title: 'Takes a few minutes', text: 'One short form, on this page.' },
-                { Icon: ChecklistIcon, title: 'Have ready', text: formNeeds },
-                { Icon: ReplyHeartIcon, title: 'What happens next', text: "We'll be in touch once your form comes through. Fees and how to pay are explained in the form." },
-              ].map(({ Icon, title: t, text }) => (
-                <li key={t} className="flex flex-col gap-3 rounded-[1.1rem] bg-bmc-paper p-5 shadow-soft">
-                  <IconTile Icon={Icon} />
-                  <span>
-                    <span className="block font-display text-[1.08rem] leading-snug text-primary">{t}</span>
-                    <span className="mt-1 block text-[0.92rem] leading-[1.6] text-foreground/80">{text}</span>
-                  </span>
-                </li>
-              ))}
-            </ul>
+            {questionList}
 
             {!formOpen && (
               <button type="button" onClick={() => setFormOpen(true)} className="bmc-btn bmc-btn-primary">

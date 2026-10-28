@@ -22,7 +22,7 @@ import {
 
 export const CONTAINER = 'container mx-auto px-5 md:px-10';
 export const SECTION_Y = 'py-20 md:py-32';
-export const H2_STYLE = { fontSize: 'clamp(2rem, 4vw, 3.1rem)' } as const;
+export const H2_STYLE = { fontSize: 'clamp(1.85rem, 3.2vw, 2.6rem)' } as const;
 export const H2 = 'text-primary leading-[1.1] tracking-[-0.018em]';
 /** Raised white card: soft shadow plus a hairline gold ring, the same as Home's programme cards. */
 export const CARD = 'rounded-[1.25rem] bg-card shadow-soft ring-1 ring-[hsl(var(--bmc-gold)/0.3)]';
@@ -185,7 +185,7 @@ export function SectionHead({
   );
 }
 
-/** Dark closing band with the masjid skyline leading into the footer (same as Home's closing). */
+/** Light closing band (warm gold on ivory) so the page does not end in two dark blocks; the dark skyline is the step into the footer. */
 export function ClosingBand({
   title,
   children,
@@ -196,16 +196,15 @@ export function ClosingBand({
   actions?: ReactNode;
 }) {
   return (
-    <section className="relative overflow-hidden bg-primary text-primary-foreground">
-      <GirihPattern />
+    <section className="relative overflow-hidden bg-[hsl(var(--bmc-gold-light)/0.42)] text-foreground">
       <div className={`relative ${CONTAINER} pb-40 pt-24 text-center md:pb-52 md:pt-32`}>
         <div className="bmc-reveal mx-auto max-w-3xl">
           {title && (
-            <h2 className="mx-auto mb-6 max-w-2xl leading-[1.1] tracking-[-0.018em] text-primary-foreground" style={{ fontSize: 'clamp(2rem, 4.2vw, 3.2rem)' }}>
+            <h2 className="mx-auto mb-6 max-w-2xl leading-[1.1] tracking-[-0.018em] text-primary" style={{ fontSize: 'clamp(1.95rem, 3.6vw, 2.8rem)' }}>
               {title}
             </h2>
           )}
-          {children && <div className="mx-auto mb-11 max-w-2xl text-[1.12rem] leading-[1.7] text-primary-foreground/85">{children}</div>}
+          {children && <div className="mx-auto mb-11 max-w-2xl text-[1.12rem] leading-[1.7] text-foreground/80">{children}</div>}
           {actions && <div className="flex flex-wrap items-center justify-center gap-4">{actions}</div>}
         </div>
       </div>

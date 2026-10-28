@@ -104,7 +104,7 @@ export default function Faq() {
       <ClosingBand
         title="Still have questions?"
         actions={
-          <a href={WHATSAPP} target="_blank" rel="noreferrer" className="bmc-btn bmc-btn-light">
+          <a href={WHATSAPP} target="_blank" rel="noreferrer" className="bmc-btn bmc-btn-primary">
             <SiWhatsapp className="size-[1.1rem]" aria-hidden="true" />
             Chat on WhatsApp
           </a>
