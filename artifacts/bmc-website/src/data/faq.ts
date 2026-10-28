@@ -52,3 +52,13 @@ export const CATEGORIES = [
     ],
   },
 ];
+
+/** Look up FAQ answers by their exact question, so class pages reuse the same wording as /faq. */
+export function faqByQuestion(...questions: string[]): { q: string; a: string }[] {
+  const all = CATEGORIES.flatMap((c) => c.items);
+  return questions.map((q) => {
+    const hit = all.find((i) => i.q === q);
+    if (!hit) throw new Error(`FAQ question not found: ${q}`);
+    return hit;
+  });
+}

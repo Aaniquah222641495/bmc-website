@@ -1,7 +1,7 @@
 import { type ReactNode, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'wouter';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ChevronDown } from 'lucide-react';
 import { ChecklistIcon, ClockIcon, IconTile, ReplyHeartIcon } from '@/components/ornaments/cute-icons';
 import { DetailsGrid, IncludedList, type DetailItem } from '@/components/class-page-blocks';
 import { CARD, CONTAINER, H2, H2_STYLE, SECTION_Y } from '@/components/page-shell';
@@ -19,6 +19,10 @@ export interface ClassPageLayoutProps {
   includedHeading?: string;
   /** Who it's for, when, where and how much. */
   details: DetailItem[];
+  /** "This is for you if": lines a visitor can recognise herself in. Only facts already on the site. */
+  forYou?: string[];
+  /** Questions people ask before registering, taken verbatim from the FAQ (faqByQuestion). */
+  questions?: { q: string; a: string }[];
   /** A verbatim student quote for this class (peer proof). Only use quotes the client gave for this class. */
   quote?: { text: string; name: string };
   /** Extra blocks in the main column (e.g. a note for parents). */
@@ -44,6 +48,8 @@ export function ClassPageLayout({
   included,
   includedHeading,
   details,
+  forYou,
+  questions,
   quote,
   children,
   after,
@@ -78,6 +84,22 @@ export function ClassPageLayout({
       <section className={`${SECTION_Y} bg-bmc-paper !pt-16 md:!pt-24`}>
         <div className={`${CONTAINER} grid grid-cols-1 items-start gap-12 lg:grid-cols-[1fr_21rem] lg:gap-16 xl:grid-cols-[1fr_23rem]`}>
           <div className="space-y-10 md:space-y-12">
+            {/* Self-identification first: a nervous beginner looks for "people like me" before reading details. */}
+            {forYou && forYou.length > 0 && (
+              <div className="rounded-[1.5rem] bg-card p-7 shadow-soft md:p-9">
+                <h2 className="mb-5 text-[1.6rem] leading-tight text-primary md:text-[1.9rem]">This is for you if</h2>
+                <ul className="space-y-3.5">
+                  {forYou.map((line) => (
+                    <li key={line} className="flex items-start gap-3.5 text-[1.05rem] leading-[1.6] text-foreground/85">
+                      <span className="mt-[0.2rem] inline-flex size-6 shrink-0 items-center justify-center rounded-full bg-bmc-gold-light text-primary" aria-hidden="true">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12.5L10 17.5 19 7" /></svg>
+                      </span>
+                      {line}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
             <div className="max-w-[60ch] space-y-5 text-[1.1rem] leading-[1.75] text-foreground/85">{intro}</div>
             <IncludedList items={included} heading={includedHeading} />
             {quote && (
@@ -121,6 +143,31 @@ export function ClassPageLayout({
       </section>
 
       {after}
+
+      {/* Answer the last doubts right before the decision, in the FAQ's own words. */}
+      {questions && questions.length > 0 && (
+        <section className={`${SECTION_Y} bg-bmc-paper !pt-0`}>
+          <div className={`${CONTAINER} mx-auto max-w-3xl`}>
+            <h2 className={`mb-8 text-center ${H2}`} style={H2_STYLE}>Before you register</h2>
+            <div className="space-y-3">
+              {questions.map(({ q, a }) => (
+                <details key={q} className="group rounded-2xl bg-card shadow-soft [&_summary::-webkit-details-marker]:hidden">
+                  <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 px-6 py-4 font-display text-[1.12rem] leading-snug text-primary">
+                    {q}
+                    <span className="inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-bmc-gold-light/70 transition-transform duration-300 group-open:rotate-180 motion-reduce:transition-none" aria-hidden="true">
+                      <ChevronDown size={16} />
+                    </span>
+                  </summary>
+                  <p className="px-6 pb-6 leading-[1.75] text-foreground/85">{a}</p>
+                </details>
+              ))}
+            </div>
+            <p className="mt-6 text-center font-utility text-sm text-foreground/75">
+              More answers on the <Link href="/faq" className="bmc-link-inline">FAQ page</Link>.
+            </p>
+          </div>
+        </section>
+      )}
 
       {showRegistration && (
         <section id="register" className={`${SECTION_Y} scroll-mt-20 bg-[hsl(var(--bmc-gold-light)/0.35)]`}>

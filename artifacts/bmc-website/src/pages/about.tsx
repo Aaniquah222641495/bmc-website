@@ -92,8 +92,8 @@ export default function About() {
         jsonLd={aboutJsonLd()}
       />
       <PageHeader
-        title="Our story"
-        intro="How a passion for teaching grew into a thriving Islamic learning community."
+        title="Meet Mualimah Rukeya"
+        intro="Founder of Beginners Madrasah Classes, and the teacher in every class. This is how it began."
         art={<StoryPath />}
       />
 
@@ -147,8 +147,18 @@ export default function About() {
         </div>
       </section>
 
+      {/* A student's words about her: liking and trust come from peers, not from us. Verbatim. */}
+      <section className="bg-bmc-paper pt-20 md:pt-28">
+        <figure className={`${CONTAINER} bmc-reveal mx-auto max-w-3xl text-center`}>
+          <blockquote className="font-display text-[1.35rem] italic leading-[1.55] text-primary md:text-[1.65rem]">
+            "She makes each and every individual feel equal and comfortable in the class. She brings out the confidence in each person, and alhamdulillah she tends to keep a smile on her face and ours."
+          </blockquote>
+          <figcaption className="bmc-eyebrow mt-6">Nasheetah De Jongh, student</figcaption>
+        </figure>
+      </section>
+
       {/* Mission and vision */}
-      <section className={`${SECTION_Y} bg-background`}>
+      <section className={`${SECTION_Y} bg-bmc-paper`}>
         <div className={`${CONTAINER} grid gap-8 md:grid-cols-2 lg:gap-12`}>
           {[
             { title: 'Our mission', start: 0, tone: 'green', text: 'To make authentic Islamic education accessible to every woman and child, wherever they are on their journey: affordable, flexible, and always welcoming.' },

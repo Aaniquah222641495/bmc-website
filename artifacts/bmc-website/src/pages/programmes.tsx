@@ -8,6 +8,15 @@ import { Seo } from '@/components/seo';
 import { programmesJsonLd } from '@/lib/structured-data';
 import { CARD, ClosingBand, CONTAINER, PageHeader } from '@/components/page-shell';
 import { InPersonArt, OnlineArt } from '@/components/ornaments/programmes-art';
+import { IconTile, LettersIcon, MushafIcon, SeedlingIcon } from '@/components/ornaments/cute-icons';
+
+// Fewer choices for a first-time visitor: three starting points, each backed by the site's own facts
+// (the FAQ names the Women's Online Madrasah as the place for reverts and beginners to start).
+const QUICK_PICKS = [
+  { Icon: SeedlingIcon, who: 'New to it all, or a revert?', name: "Women's Online Madrasah", note: 'Learn at your own pace. R150 a month.', href: '/programmes/womens-classes' },
+  { Icon: LettersIcon, who: 'For your child (6 to 13)', name: "Children's Online Madrasah", note: 'Live classes three times a week. R150 a month.', href: '/programmes/childrens-classes' },
+  { Icon: MushafIcon, who: 'Rather learn in person?', name: "Get Into Qur'an", note: "Saturday mornings in Mitchell's Plain. R200 a month.", href: '/programmes/quran-classes' },
+];
 
 type Tab = ProgrammeType;
 
@@ -69,6 +78,26 @@ export default function Programmes() {
 
       <section className="bg-bmc-paper pb-24 pt-16 md:pb-32 md:pt-24">
         <div className={CONTAINER}>
+          <div className="mx-auto mb-14 max-w-6xl md:mb-20">
+            <h2 className="mb-6 text-center text-[1.6rem] leading-tight text-primary md:text-[1.9rem]">Not sure? Start here</h2>
+            <ul className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-5">
+              {QUICK_PICKS.map(({ Icon, who, name, note, href }) => (
+                <li key={href} className="flex">
+                  <Link href={href} className="bmc-lift group flex w-full items-start gap-4 rounded-[1.25rem] bg-card p-5 shadow-soft transition-shadow duration-300 hover:shadow-lift">
+                    <IconTile Icon={Icon} />
+                    <span className="min-w-0">
+                      <span className="bmc-eyebrow block !text-[0.66rem]">{who}</span>
+                      <span className="mt-1 block font-display text-[1.18rem] leading-snug text-primary">{name}</span>
+                      <span className="mt-1 block text-[0.92rem] leading-[1.55] text-foreground/75">{note}</span>
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <h2 className="mb-8 text-center text-[1.6rem] leading-tight text-primary md:text-[1.9rem]">
+            {active === 'online' ? 'All online programmes' : 'All in-person programmes'}
+          </h2>
           <AnimatePresence mode="wait" initial={false}>
             <motion.ul
               key={active}
@@ -104,7 +133,7 @@ export default function Programmes() {
                         </span>
                       </div>
                       <div className="flex flex-1 flex-col px-2 pb-3 pt-5 sm:px-3">
-                        <h2 className="text-[1.5rem] leading-[1.15] text-primary">{p.title}</h2>
+                        <h3 className="text-[1.5rem] leading-[1.15] text-primary">{p.title}</h3>
                         <Facts p={p} />
                         <p className="mt-3 flex-1 text-[0.98rem] leading-[1.65] text-foreground/80">{p.descLong}</p>
                         <div className="mt-5 flex items-center justify-between">

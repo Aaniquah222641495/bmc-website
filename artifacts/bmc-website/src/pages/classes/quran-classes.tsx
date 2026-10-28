@@ -1,6 +1,7 @@
 import { ClassPageLayout } from '@/components/class-page-layout';
 import { Seo } from '@/components/seo';
 import { programmeJsonLd } from '@/lib/structured-data';
+import { faqByQuestion } from '@/data/faq';
 
 
 const INCLUDED = [
@@ -37,6 +38,13 @@ export default function QuranClasses() {
             </p>
           </>
         }
+        forYou={[
+          "You're a complete beginner at reading the Qur'an",
+          'You learned once and want to start again from the foundations',
+          "You can get to Mitchell's Plain on Saturday mornings",
+          "You'd like to learn in person, with others on the same journey",
+        ]}
+        questions={faqByQuestion("Are classes suitable for complete beginners?", "What do I need to get started?", "How do I pay for my class?")}
         included={INCLUDED}
         details={[
           { label: 'Format', value: 'In-Person' },

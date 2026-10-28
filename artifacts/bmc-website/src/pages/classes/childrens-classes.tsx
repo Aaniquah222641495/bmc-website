@@ -1,6 +1,7 @@
 import { ClassPageLayout } from '@/components/class-page-layout';
 import { Seo } from '@/components/seo';
 import { programmeJsonLd } from '@/lib/structured-data';
+import { faqByQuestion } from '@/data/faq';
 import { CARD } from '@/components/page-shell';
 
 
@@ -39,6 +40,13 @@ export default function ChildrensClasses() {
             </p>
           </>
         }
+        forYou={[
+          'Your child is between 6 and 13',
+          'You want a steady routine: live classes on Monday, Tuesday and Thursday',
+          "You'd like regular feedback on how your child is doing",
+          'Learning from home suits your family',
+        ]}
+        questions={faqByQuestion("How do I join the Children's Classes?", "What if I miss a session?", "How do I pay for my class?")}
         included={INCLUDED}
         details={[
           { label: 'Format', value: 'Live Online · Microsoft Teams' },

@@ -1,6 +1,7 @@
 import { ClassPageLayout } from '@/components/class-page-layout';
 import { Seo } from '@/components/seo';
 import { programmeJsonLd } from '@/lib/structured-data';
+import { faqByQuestion } from '@/data/faq';
 import { GirihPattern } from '@/components/ornaments';
 
 
@@ -38,6 +39,12 @@ export default function HifdhClasses() {
             </p>
           </>
         }
+        forYou={[
+          "You're a woman beginning or continuing Hifdh",
+          'You can join live on Monday, Wednesday and Friday',
+          "You'd like a personal plan and someone to keep you on track",
+        ]}
+        questions={faqByQuestion("What platform are classes held on?", "What if I miss a session?", "How do I pay for my class?")}
         included={INCLUDED}
         details={[
           { label: 'Format', value: 'Live Online · Microsoft Teams' },
