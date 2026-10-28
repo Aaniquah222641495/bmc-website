@@ -79,7 +79,9 @@ export const REG_FIELDS: Record<ClassKey, RegField[]> = {
  */
 const DEFAULT_ENDPOINT = '';
 const raw = ((import.meta.env.VITE_REGISTER_ENDPOINT as string | undefined) ?? '').trim() || DEFAULT_ENDPOINT;
-export const REGISTER_ENDPOINT = /^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec$/.test(raw) ? raw : '';
+/** Local demo only (VITE_REGISTER_DEMO=1, never set on Netlify): forms show, nothing is sent anywhere. */
+const DEMO = import.meta.env.VITE_REGISTER_DEMO === '1';
+export const REGISTER_ENDPOINT = DEMO ? 'demo' : /^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec$/.test(raw) ? raw : '';
 
 /** South African numbers become +27...; international ones keep their country code. Same rule as the script. */
 export function normalisePhone(input: string): string | null {
@@ -162,6 +164,11 @@ export async function submitRegistration(classKey: ClassKey, values: Record<stri
 }
 
 async function post(payload: object): Promise<SubmitResult> {
+  if (DEMO) {
+    console.info('Demo registration (not sent):', payload);
+    await new Promise((r) => window.setTimeout(r, 900));
+    return { status: 'sent' };
+  }
   const controller = new AbortController();
   const timer = window.setTimeout(() => controller.abort(), 25000);
   try {
@@ -185,7 +192,7 @@ async function post(payload: object): Promise<SubmitResult> {
 
 /** Which classes' Google Forms are accepting responses right now (null if unknown). */
 export async function fetchOpenStatus(): Promise<Partial<Record<ClassKey, boolean>> | null> {
-  if (!REGISTER_ENDPOINT) return null;
+  if (!REGISTER_ENDPOINT || DEMO) return null;
   try {
     const res = await fetch(`${REGISTER_ENDPOINT}?status=1`, { credentials: 'omit', redirect: 'follow' });
     const data = (await res.json()) as { ok?: boolean; open?: Partial<Record<ClassKey, boolean>> };
