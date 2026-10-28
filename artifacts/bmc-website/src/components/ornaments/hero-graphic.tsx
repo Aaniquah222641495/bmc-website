@@ -144,9 +144,6 @@ export function HeroGraphic({ className = '' }: { className?: string }) {
   const clip = `hg-clip-${uid}`;
   const shade = `hg-shade-${uid}`;
   const glowG = `hg-glow-${uid}`;
-  const dawn = `hg-dawn-${uid}`;
-  const frame = `hg-frame-${uid}`;
-  const sun = `hg-sun-${uid}`;
 
   const star8 = 'M-12-12H12V12H-12ZM0-17L17 0 0 17-17 0Z';
 
@@ -162,7 +159,7 @@ export function HeroGraphic({ className = '' }: { className?: string }) {
         className="hg-glow pointer-events-none absolute -inset-[14%]"
         style={{
           background:
-            'radial-gradient(50% 46% at 50% 44%, hsl(36 90% 80% / 0.42) 0%, hsl(150 40% 80% / 0.18) 50%, transparent 74%)',
+            'radial-gradient(50% 46% at 50% 44%, hsl(var(--bmc-gold-light) / 0.38) 0%, hsl(var(--bmc-gold-light) / 0.12) 48%, transparent 74%)',
         }}
       />
 
@@ -190,24 +187,6 @@ export function HeroGraphic({ className = '' }: { className?: string }) {
             <stop offset="0" stopColor="hsl(42 62% 90%)" />
             <stop offset="1" stopColor="hsl(39 48% 80%)" />
           </linearGradient>
-          {/* Colour pass (founder 2026-10-28: "it lacks colour"): a dawn sky inside the arch, deep green above to
-              warm peach and gold behind the class. "It's never too late to begin": the day is just starting. */}
-          <linearGradient id={dawn} gradientUnits="userSpaceOnUse" x1="0" y1="20" x2="0" y2="520">
-            <stop offset="0" stopColor="hsl(160 48% 15%)" />
-            <stop offset="0.38" stopColor="hsl(166 36% 27%)" />
-            <stop offset="0.62" stopColor="hsl(150 26% 52%)" />
-            <stop offset="0.8" stopColor="hsl(28 72% 78%)" />
-            <stop offset="1" stopColor="hsl(40 86% 86%)" />
-          </linearGradient>
-          <radialGradient id={sun} gradientUnits="userSpaceOnUse" cx="240" cy="470" r="200">
-            <stop offset="0" stopColor="hsl(44 100% 92%)" stopOpacity="0.95" />
-            <stop offset="0.45" stopColor="hsl(36 90% 80%)" stopOpacity="0.5" />
-            <stop offset="1" stopColor="hsl(30 80% 75%)" stopOpacity="0" />
-          </radialGradient>
-          <linearGradient id={frame} gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="540">
-            <stop offset="0" stopColor="hsl(158 38% 26%)" />
-            <stop offset="1" stopColor="hsl(158 46% 15%)" />
-          </linearGradient>
           <radialGradient id={paper} gradientUnits="userSpaceOnUse" cx="240" cy="330" r="270">
             <stop offset="0" stopColor="hsl(42 70% 99%)" />
             <stop offset="0.65" stopColor="hsl(41 50% 96%)" />
@@ -221,7 +200,7 @@ export function HeroGraphic({ className = '' }: { className?: string }) {
             <rect x="0" y="-60" width="480" height="664" fill={`url(#${latFade})`} />
           </mask>
           <pattern id={lat} width="56" height="56" patternUnits="userSpaceOnUse" x="-4" y="-2">
-            <g fill="none" stroke="#e8cf86" strokeOpacity="0.42" strokeWidth="0.9" transform="scale(1.1666)">
+            <g fill="none" stroke="#b8923a" strokeOpacity="0.7" strokeWidth="0.9" transform="scale(1.1666)">
               {[
                 [24, 24],
                 [0, 0],
@@ -250,7 +229,7 @@ export function HeroGraphic({ className = '' }: { className?: string }) {
         <ellipse cx="240" cy="588" rx="232" ry="14" fill={`url(#${glowG})`} className="hg-fade" style={d(0.8, 1.2)} />
 
         {/* Outer arch: band fill, then a drawn gold edge */}
-        <path d={OUTER_D} fill={`url(#${frame})`} className="hg-fade" style={d(0.2, 1.1)} />
+        <path d={OUTER_D} fill={`url(#${band})`} className="hg-fade" style={d(0.2, 1.1)} />
         <path d={OUTER_D} fill="none" stroke={`url(#${gold})`} strokeWidth="2.2" strokeLinejoin="round" pathLength={1} className="hg-draw" style={d(0, 1.9)} />
 
         {/* Bead ring */}
@@ -264,15 +243,11 @@ export function HeroGraphic({ className = '' }: { className?: string }) {
         <path d={MID_D} fill="none" stroke={`url(#${gold})`} strokeWidth="1.5" strokeLinecap="round" pathLength={1} className="hg-draw" style={d(0.3, 1.7)} />
 
         {/* Ivory panel with scalloped edge */}
-        <path d={PANEL_D} fill={`url(#${dawn})`} className="hg-fade" style={d(0.55, 1.1)} />
+        <path d={PANEL_D} fill={`url(#${paper})`} className="hg-fade" style={d(0.55, 1.1)} />
         <g clipPath={`url(#${clip})`}>
           <rect x="0" y="-60" width="480" height="664" fill={`url(#${lat})`} mask={`url(#${latMask})`} className="hg-fade" style={d(1.0, 1.6)} />
-          <circle cx="240" cy="470" r="200" fill={`url(#${sun})`} className="hg-fade" style={d(0.9, 1.4)} />
-          {/* A crescent moon still in the sky */}
-          <g transform="translate(330 120) rotate(-25)" className="hg-fade" style={d(1.3, 1)}>
-            <path d="M0-20A20 20 0 1 0 0 20A22 22 0 0 1 0-20Z" fill="hsl(44 90% 82%)" />
-          </g>
         </g>
+        <path d={PANEL_D} fill={`url(#${shade})`} className="hg-fade" style={d(0.8, 1.2)} />
         <path d={PANEL_D} fill="none" stroke={`url(#${gold})`} strokeWidth="1.7" strokeLinejoin="round" pathLength={1} className="hg-draw" style={d(0.5, 1.9)} />
 
         {/* Stars */}
