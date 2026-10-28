@@ -28,6 +28,8 @@ const CONFIG = {
     hifdh: '',
     quran: ''
   },
+  // Added to the confirmation email after a registration. Same text as "Banking details" in the site editor.
+  PAYMENT_DETAILS: 'FNB\nMiss R Baradien\nAcc: 63165815524\nBranch c: 250655\nCurrent Account\nNB! Reference your name and surname.',
   SITE_URL: 'https://beginnersmadrasah.co.za',
   WHATSAPP_NUMBER: '27686498593',
   WHATSAPP_DISPLAY: '068 649 8593',
@@ -50,6 +52,9 @@ const CLASS_TITLES = {
 const ADULT_CONSENT = 'I agree that Beginners Madrasah Classes may keep these details, including my answer about my faith, to arrange my classes and contact me about them.';
 const CHILD_CONSENT = "I am this child's parent or guardian, and I agree that Beginners Madrasah Classes may keep these details to arrange my child's classes and contact me about them.";
 
+// Sent only for classes whose terms are filled in on the website (site editor > Terms and conditions).
+const TERMS_FIELD = { id: 'terms', question: 'I agree to the terms and conditions', kind: 'consent', optional: true, help: 'I have read and agree to the terms and conditions on the registration form.' };
+
 // question: the Google Form question title, word for word. kind: how the website checks it.
 const ADULT_FIELDS = [
   { id: 'name', question: 'Full Name & Surname', kind: 'text', max: 100 },
@@ -58,7 +63,8 @@ const ADULT_FIELDS = [
   { id: 'whatsapp', question: 'WhatsApp Number', kind: 'phone' },
   { id: 'faith', question: 'Are you a', kind: 'choice', options: ['Revert', 'Born Muslim', 'Non-Muslim'] },
   { id: 'city', question: 'City & Country', kind: 'text', max: 100 },
-  { id: 'consent', question: 'Consent', kind: 'consent', help: ADULT_CONSENT }
+  { id: 'consent', question: 'Consent', kind: 'consent', help: ADULT_CONSENT },
+  TERMS_FIELD
 ];
 const CHILD_FIELDS = [
   { id: 'parentName', question: "Parent or guardian's full name", kind: 'text', max: 100 },
@@ -67,7 +73,8 @@ const CHILD_FIELDS = [
   { id: 'childName', question: "Child's full name", kind: 'text', max: 100 },
   { id: 'childAge', question: "Child's age", kind: 'choice', options: ['6', '7', '8', '9', '10', '11', '12', '13'] },
   { id: 'city', question: 'City & Country', kind: 'text', max: 100 },
-  { id: 'consent', question: 'Parent consent', kind: 'consent', help: CHILD_CONSENT }
+  { id: 'consent', question: 'Parent consent', kind: 'consent', help: CHILD_CONSENT },
+  TERMS_FIELD
 ];
 const FIELDS = { womens: ADULT_FIELDS, hifdh: ADULT_FIELDS, quran: ADULT_FIELDS, children: CHILD_FIELDS };
 
@@ -322,6 +329,7 @@ function submitToForm_(form, key, a) {
       return;
     }
     const value = a[f.id];
+    if (f.optional && !value) { used[f.id] = true; return; } // e.g. no terms for this class
     if (type === T.TEXT) response.withItemResponse(item.asTextItem().createResponse(textValue_(f, value)));
     else if (type === T.PARAGRAPH_TEXT) response.withItemResponse(item.asParagraphTextItem().createResponse(textValue_(f, value)));
     else if (type === T.DATE) response.withItemResponse(item.asDateItem().createResponse(dateValue_(value)));
@@ -337,7 +345,7 @@ function submitToForm_(form, key, a) {
     used[f.id] = true;
   });
 
-  const unmatched = fields.filter(function (f) { return !used[f.id]; }).map(function (f) { return f.question; });
+  const unmatched = fields.filter(function (f) { return !used[f.id] && !(f.optional && !a[f.id]); }).map(function (f) { return f.question; });
   if (missingRequired.length) {
     return 'The Google Form has required questions the website does not ask: ' + missingRequired.join('; ') + '. Run checkForms() for details.';
   }
@@ -388,7 +396,7 @@ function validate_(key, raw) {
   let ok = true;
   FIELDS[key].forEach(function (f) {
     let v = clean_(raw[f.id], f.max || 120);
-    if (f.kind === 'consent') { ok = ok && v === 'yes'; answers[f.id] = v; return; }
+    if (f.kind === 'consent') { ok = ok && (v === 'yes' || (f.optional && v === '')); answers[f.id] = v; return; }
     if (!v) { ok = false; return; }
     if (f.max && v.length > f.max) ok = false;
     if (f.kind === 'email' && !/^[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$/.test(v)) ok = false;
@@ -449,7 +457,7 @@ function backup_(key, problem, a) {
 }
 
 function summary_(key, a) {
-  return FIELDS[key].map(function (f) { return f.question + ': ' + (f.kind === 'consent' ? (a[f.id] === 'yes' ? 'Yes' : 'No') : a[f.id]); }).join('\n');
+  return FIELDS[key].filter(function (f) { return !(f.optional && !a[f.id]); }).map(function (f) { return f.question + ': ' + (f.kind === 'consent' ? (a[f.id] === 'yes' ? 'Yes' : 'No') : a[f.id]); }).join('\n');
 }
 
 function alert_(subject, body) {
@@ -466,8 +474,9 @@ function sendConfirmation_(key, a) {
     'Slm ' + first + ',',
     '',
     'Shukran for registering for ' + what + '. Your registration has come through.',
-    'Mualimah Rukeya will be in touch with the next steps and payment options, InshaAllah.',
-    '',
+    'Mualimah Rukeya will be in touch with the next steps, InshaAllah.',
+    ''
+  ].concat(CONFIG.PAYMENT_DETAILS ? ['How to pay:', CONFIG.PAYMENT_DETAILS, ''] : []).concat([
     'Questions? Reply to this email or WhatsApp us on ' + CONFIG.WHATSAPP_DISPLAY + ' (https://wa.me/' + CONFIG.WHATSAPP_NUMBER + ').',
     '',
     'Beginners Madrasah Classes',
@@ -476,7 +485,7 @@ function sendConfirmation_(key, a) {
     '---',
     'You are receiving this because this email address was used to register on ' + CONFIG.SITE_URL + '. ' +
       'We only use your details to arrange your class. To have them deleted, reply and say so.'
-  ].join('\n');
+  ]).join('\n');
   MailApp.sendEmail({ to: a.email, subject: 'We received your registration | Beginners Madrasah Classes', body: body, name: 'Beginners Madrasah Classes', replyTo: CONFIG.OWNER_EMAIL || undefined });
 }
 
@@ -510,7 +519,7 @@ function setup() {
 
 function addQuestion_(form, f) {
   if (f.kind === 'choice') form.addMultipleChoiceItem().setTitle(f.question).setChoiceValues(f.options).setRequired(true);
-  else if (f.kind === 'consent') form.addCheckboxItem().setTitle(f.question).setHelpText(f.help).setChoiceValues(['I agree']).setRequired(true);
+  else if (f.kind === 'consent') form.addCheckboxItem().setTitle(f.question).setHelpText(f.help).setChoiceValues(['I agree']).setRequired(!f.optional);
   else if (f.kind === 'date') form.addDateItem().setTitle(f.question).setRequired(true);
   else form.addTextItem().setTitle(f.question).setRequired(true);
 }

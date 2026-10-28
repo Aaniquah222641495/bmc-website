@@ -17,6 +17,8 @@ export interface Programme {
   price: string;
   /** CMS switch: true while the class is not taking new students (its Google Form is closed). */
   registrationClosed?: boolean;
+  /** CMS: terms shown on the registration form, with a required "I agree" tick box. */
+  terms?: string;
   type: ProgrammeType;
   image?: string;
   imagePosition?: string;
@@ -32,6 +34,9 @@ export interface Programme {
  * developer to build the page it links to.
  */
 export const PROGRAMMES: Programme[] = programmesSettings.programmes as Programme[];
+
+/** CMS: banking details shown on the thank-you screen after registering. */
+export const PAYMENT_DETAILS: string = (programmesSettings as { paymentDetails?: string }).paymentDetails ?? '';
 
 /**
  * Small audience/format tags for the homepage cards, derived from existing

@@ -1,4 +1,5 @@
 {
+  "paymentDetails": "FNB\nMiss R Baradien\nAcc: 63165815524\nBranch c: 250655\nCurrent Account\nNB! Reference your name and surname.",
   "programmes": [
     {
       "title": "Women's Online Madrasah",
@@ -13,7 +14,8 @@
       "when": "Your own pace",
       "where": "Google Classroom",
       "who": "Women 18+",
-      "registrationClosed": true
+      "registrationClosed": true,
+      "terms": "Class Format & Content:\nYou will receive 2 pre-recorded lessons per week via Google Classroom.\nAll homework must be submitted as part of your progress.\nExams are compulsory and must be completed within the given time frame.\n\nAttendance & Accountability:\nEven if you do not watch the videos during a particular month, but you remain enrolled, you are still liable to pay the monthly fee.\nYour progress is monitored, and homework & exam completion will be tracked.\n\nFees:\nRegistration Fee\nA non-refundable registration fee of R50 is required.\nRegistration must be paid before June 7th for your seat/spot to be secured in the class.\nStudents who do not pay the registration fee on time may lose their placement.\nMonthly Fees\nThe monthly fee is R150 per month.\nPayment Deadline\nAll fees must be paid by the 1st of each month at the latest.\nIf, for any reason, you are unable to pay on time, you must inform the Mu’allimah before the due date.\nFees are non-refundable once access to the classroom is granted.\n\nCommitment & Conduct:\nThis is a safe, non-judgmental learning space. All students must be respectful and sincere.\nAny inappropriate behaviour may result in removal from the class.\n\nPrivacy:\nAll personal information will be kept confidential.\nPlease do not share videos, content, or class materials with anyone who is not registered."
     },
     {
       "title": "Women's Hifdh Programme",

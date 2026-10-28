@@ -2,7 +2,8 @@ import { useId, useRef, useState, type FormEvent } from 'react';
 import { ArrowRight, Loader2 } from 'lucide-react';
 import { SiWhatsapp } from 'react-icons/si';
 import { Link } from 'wouter';
-import { REG_FIELDS, submitRegistration, submitWaitlist, validate, waitlistFields, type ClassKey, type RegField } from '@/data/registration';
+import { REG_FIELDS, submitRegistration, submitWaitlist, TERMS_FIELD, validate, waitlistFields, type ClassKey, type RegField } from '@/data/registration';
+import { PAYMENT_DETAILS, programmeByPath } from '@/data/programmes';
 
 const WHATSAPP_NUMBER = '27686498593';
 
@@ -17,7 +18,9 @@ type Phase = { name: 'form' } | { name: 'sending' } | { name: 'sent'; first: str
  */
 export function RegistrationForm({ classKey, title, source, mode = 'register' }: { classKey: ClassKey; title: string; source: string; mode?: 'register' | 'waitlist' }) {
   const waitlist = mode === 'waitlist';
-  const fields = waitlist ? waitlistFields(title) : REG_FIELDS[classKey];
+  const programme = programmeByPath(`/${source}`);
+  const terms = waitlist ? '' : (programme?.terms ?? '').trim();
+  const fields = waitlist ? waitlistFields(title) : terms ? [...REG_FIELDS[classKey], TERMS_FIELD] : REG_FIELDS[classKey];
   const uid = useId();
   const [values, setValues] = useState<Record<string, string>>({});
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -40,7 +43,7 @@ export function RegistrationForm({ classKey, title, source, mode = 'register' }:
       return;
     }
     setPhase({ name: 'sending' });
-    const res = waitlist ? await submitWaitlist(classKey, values, source) : await submitRegistration(classKey, values, source);
+    const res = waitlist ? await submitWaitlist(classKey, values, source) : await submitRegistration(classKey, values, source, fields);
     const nameField = !waitlist && classKey === 'children' ? 'parentName' : 'name';
     setPhase(res.status === 'sent' ? { name: 'sent', first: (values[nameField] ?? '').trim().split(/\s+/)[0] } : { name: 'failed', reason: res.reason });
     window.requestAnimationFrame(() => resultRef.current?.focus());
@@ -58,9 +61,16 @@ export function RegistrationForm({ classKey, title, source, mode = 'register' }:
         ) : (
           <>
             <p className="mx-auto mt-4 max-w-md leading-[1.7] text-foreground/85">
-              Your registration for <strong className="text-primary">{title}</strong> has come through. Mualimah Rukeya will be in touch with the next steps and payment options, InshaAllah.
+              Your registration for <strong className="text-primary">{title}</strong> has come through. Mualimah Rukeya will be in touch with the next steps{PAYMENT_DETAILS.trim() ? '' : ' and payment options'}, InshaAllah.
             </p>
-            <p className="mx-auto mt-4 max-w-md text-[0.95rem] leading-[1.7] text-foreground/75">We've also sent a copy to your email.</p>
+            {PAYMENT_DETAILS.trim() && (
+              <div className="mx-auto mt-7 max-w-sm rounded-xl bg-bmc-paper p-5 text-left">
+                <p className="bmc-eyebrow mb-2">How to pay</p>
+                {programme?.price && <p className="mb-2 font-display text-[1.1rem] text-primary">Fee: {programme.price}</p>}
+                <p className="whitespace-pre-line font-utility text-[0.95rem] leading-[1.65] text-foreground/85">{PAYMENT_DETAILS.trim()}</p>
+              </div>
+            )}
+            <p className="mx-auto mt-5 max-w-md text-[0.95rem] leading-[1.7] text-foreground/75">We've also sent a copy to your email.</p>
           </>
         )}
       </div>
@@ -92,7 +102,9 @@ export function RegistrationForm({ classKey, title, source, mode = 'register' }:
 
       <div className="grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-2">
         {fields.map((f) => (
-          <Field key={f.id} f={f} uid={uid} value={values[f.id] ?? ''} error={errors[f.id]} onChange={(v) => set(f.id, v)} disabled={sending} />
+          <FieldWithTerms key={f.id} terms={f.id === 'terms' ? terms : ''}>
+            <Field f={f} uid={uid} value={values[f.id] ?? ''} error={errors[f.id]} onChange={(v) => set(f.id, v)} disabled={sending} />
+          </FieldWithTerms>
         ))}
       </div>
 
@@ -121,6 +133,31 @@ export function RegistrationForm({ classKey, title, source, mode = 'register' }:
         )}
       </button>
     </form>
+  );
+}
+
+/** The class's terms, in her words: lines ending in ":" are headings. Scrolls if long. */
+function FieldWithTerms({ terms, children }: { terms: string; children: React.ReactNode }) {
+  if (!terms) return <>{children}</>;
+  const blocks = terms.split(/\n\s*\n/);
+  return (
+    <>
+      <section aria-label="Terms and conditions" tabIndex={0} className="max-h-80 overflow-y-auto rounded-xl bg-bmc-paper p-5 text-[0.92rem] leading-[1.6] text-foreground/85 outline-none focus-visible:ring-2 focus-visible:ring-primary sm:col-span-2">
+        <h3 className="mb-3 font-display text-[1.15rem] text-primary">Terms and conditions</h3>
+        {blocks.map((b, i) => (
+          <div key={i} className="mb-3 last:mb-0">
+            {b.split('\n').map((line, j) =>
+              /:\s*$/.test(line) ? (
+                <p key={j} className="mt-1 font-utility font-bold text-primary">{line.replace(/:\s*$/, '')}</p>
+              ) : (
+                <p key={j}>{line}</p>
+              ),
+            )}
+          </div>
+        ))}
+      </section>
+      {children}
+    </>
   );
 }
 

@@ -64,6 +64,10 @@ const CHILD_FIELDS: RegField[] = [
   },
 ];
 
+/** Added to a class's form only when its CMS terms are filled in. The Google Form question title is TERMS_QUESTION. */
+export const TERMS_QUESTION = 'I agree to the terms and conditions';
+export const TERMS_FIELD: RegField = { id: 'terms', question: TERMS_QUESTION, label: 'I have read and agree to the terms and conditions above.', kind: 'consent', required: true };
+
 export const REG_FIELDS: Record<ClassKey, RegField[]> = {
   womens: ADULT_FIELDS,
   hifdh: ADULT_FIELDS,
@@ -153,10 +157,10 @@ export type SubmitResult = { status: 'sent' } | { status: 'failed'; reason: 'clo
  * Posts as text/plain JSON (a "simple" request, so no CORS preflight, which Apps Script cannot answer).
  * Any failure means we cannot be sure it was saved, so the form offers WhatsApp instead.
  */
-export async function submitRegistration(classKey: ClassKey, values: Record<string, string>, source: string): Promise<SubmitResult> {
+export async function submitRegistration(classKey: ClassKey, values: Record<string, string>, source: string, fields: RegField[] = REG_FIELDS[classKey]): Promise<SubmitResult> {
   if (!REGISTER_ENDPOINT) return { status: 'failed', reason: 'network' };
   const answers: Record<string, string> = {};
-  for (const f of REG_FIELDS[classKey]) {
+  for (const f of fields) {
     const v = (values[f.id] ?? '').trim();
     answers[f.id] = f.kind === 'phone' ? normalisePhone(v) ?? v : v;
   }

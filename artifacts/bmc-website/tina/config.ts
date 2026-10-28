@@ -42,6 +42,13 @@ export default defineConfig({
         },
         fields: [
           {
+            type: 'string',
+            name: 'paymentDetails',
+            label: 'Banking details',
+            description: 'Shown on the thank-you screen after someone registers. (The confirmation email uses the copy in the Google script: change both.)',
+            ui: { component: 'textarea' },
+          },
+          {
             type: 'object',
             name: 'programmes',
             label: 'Programme cards',
@@ -104,6 +111,13 @@ export default defineConfig({
                 name: 'who',
                 label: 'Fact: who it is for',
                 description: 'Short, shown with a person icon, e.g. "Women 18+". Leave empty to hide.',
+              },
+              {
+                type: 'string',
+                name: 'terms',
+                label: 'Terms and conditions',
+                description: 'Shown on the registration form with an "I agree" tick box. Lines ending in ":" become headings. Leave empty for no terms.',
+                ui: { component: 'textarea' },
               },
               {
                 type: 'boolean',
