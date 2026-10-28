@@ -395,6 +395,7 @@
   cursor: default;
 }
 .hl-letter:hover { scale: 1.9; opacity: 0.95; rotate: 0deg; z-index: 2; }
+.on-dark .hl-letter { color: hsl(var(--bmc-gold-light)); opacity: 0.2; }
 @media (prefers-reduced-motion: no-preference) {
   @keyframes hl-in { from { opacity: 0; } }
   @keyframes hl-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }

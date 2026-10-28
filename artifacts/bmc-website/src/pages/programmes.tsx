@@ -59,7 +59,7 @@ export default function Programmes() {
                 className={`group flex items-center gap-4 rounded-[1.4rem] p-3 pr-5 text-left transition-all duration-300 motion-reduce:transition-none sm:p-5 sm:pb-6 ${
                   on
                     ? 'bg-card shadow-lift ring-2 ring-[hsl(var(--bmc-gold)/0.7)]'
-                    : 'bg-card/55 shadow-soft hover:bg-card'
+                    : 'bg-bmc-paper shadow-soft hover:bg-card'
                 }`}
               >
                 <OnlineOrInPerson Art={Art} on={on} />

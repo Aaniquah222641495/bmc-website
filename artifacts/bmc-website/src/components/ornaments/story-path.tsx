@@ -66,8 +66,8 @@ function Node({ m, k, labelSide }: { m: (typeof MILESTONES)[number]; k: number; 
         <Icon size={28} />
       </span>
       <span className={`whitespace-nowrap ${labelSide === 'right' ? 'text-left' : 'text-right'}`}>
-        <span className="block font-display text-[1.15rem] leading-tight text-primary">{m.title}</span>
-        <span className="block font-utility text-[0.85rem] text-foreground/70">{m.sub}</span>
+        <span className="block font-display text-[1.15rem] leading-tight text-primary-foreground">{m.title}</span>
+        <span className="block font-utility text-[0.85rem] text-primary-foreground/75">{m.sub}</span>
       </span>
     </div>
   );
@@ -86,7 +86,7 @@ export function StoryPath() {
               <stop offset="1" stopColor="#9b7a2a" />
             </linearGradient>
           </defs>
-          <path d={PATH} fill="none" stroke="hsl(40 30% 86%)" strokeWidth="14" strokeLinecap="round" />
+          <path d={PATH} fill="none" stroke="hsl(158 30% 30%)" strokeWidth="14" strokeLinecap="round" />
           <path d={PATH} fill="none" stroke="url(#sp-gold)" strokeWidth="2.4" strokeLinecap="round" strokeDasharray="1 0" pathLength={1} className="hg-draw" style={{ ['--hg-dur' as string]: '2.2s', ['--hg-d' as string]: '0.3s' }} />
           {/* little footsteps of light along the way */}
           {[0.18, 0.33, 0.5, 0.66, 0.82].map((t, k) => (
@@ -108,8 +108,8 @@ export function StoryPath() {
               <Icon size={24} />
             </span>
             <span>
-              <span className="block font-display text-[1.1rem] leading-tight text-primary">{title}</span>
-              <span className="block font-utility text-[0.85rem] text-foreground/70">{sub}</span>
+              <span className="block font-display text-[1.1rem] leading-tight text-primary-foreground">{title}</span>
+              <span className="block font-utility text-[0.85rem] text-primary-foreground/75">{sub}</span>
             </span>
           </li>
         ))}

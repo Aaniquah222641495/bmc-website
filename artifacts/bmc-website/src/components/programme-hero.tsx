@@ -38,7 +38,7 @@ export function ProgrammeHero({
       <div
         className="pointer-events-none absolute inset-0"
         aria-hidden="true"
-        style={{ background: 'radial-gradient(50% 70% at 82% 45%, hsl(var(--bmc-gold) / 0.22) 0%, transparent 70%)' }}
+        style={{ background: 'radial-gradient(42rem 30rem at 82% 45%, hsl(var(--bmc-gold) / 0.22) 0%, transparent 70%)' }}
       />
       <div className={`relative ${CONTAINER}`}>
         <Link href="/programmes" className="mb-8 inline-flex min-h-11 items-center gap-2 font-utility text-sm font-semibold text-bmc-gold-light hover:text-primary-foreground md:mb-10">

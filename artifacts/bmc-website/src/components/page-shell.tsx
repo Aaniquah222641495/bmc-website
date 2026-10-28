@@ -104,22 +104,24 @@ export function PageHeader({
 }) {
   const split = Boolean(image || art);
   return (
-    <header className="relative overflow-hidden bg-background pt-32 pb-20 md:pt-40 md:pb-28">
+    // Forest green like the programme pages (founder 2026-10-28, option 1): one brand colour across every inner page.
+    <header className="on-dark relative overflow-hidden bg-primary pt-32 pb-20 text-primary-foreground md:pt-40 md:pb-28">
+      <GirihPattern />
       <div
         className="pointer-events-none absolute inset-0"
         aria-hidden="true"
         style={{
           background:
-            'radial-gradient(55% 80% at 50% 38%, hsl(var(--bmc-paper)) 0%, transparent 72%), radial-gradient(42% 52% at 0% 100%, hsl(var(--bmc-gold-light) / 0.2) 0%, transparent 70%)',
+            'radial-gradient(42rem 30rem at 80% 42%, hsl(var(--bmc-gold) / 0.22) 0%, transparent 70%), radial-gradient(34rem 24rem at 0% 100%, hsl(var(--bmc-gold) / 0.12) 0%, transparent 70%)',
         }}
       />
-      <Rosette className="absolute right-0 top-0 hidden h-[24rem] w-[36rem] sm:block" origin="100% 0%" opacity={0.12} />
+      <Rosette className="absolute right-0 top-0 hidden h-[24rem] w-[36rem] sm:block" origin="100% 0%" opacity={0.1} />
       {!split && <HeroLetters items={HEADER_SCATTER} />}
 
       <div className={`relative ${CONTAINER}`}>
         {back && (
           <div className="mb-8 md:mb-10">
-            <Link href={back.href} className="bmc-link">
+            <Link href={back.href} className="inline-flex min-h-11 items-center gap-2 font-utility text-sm font-semibold text-bmc-gold-light hover:text-primary-foreground">
               <ArrowLeft size={16} aria-hidden="true" /> {back.label}
             </Link>
           </div>
@@ -129,14 +131,14 @@ export function PageHeader({
             {mark && <div className={`mb-6 ${split ? '' : 'flex justify-center'}`}>{mark}</div>}
             {eyebrow && <p className="bmc-rise bmc-eyebrow mb-5 leading-[1.9]">{eyebrow}</p>}
             <h1
-              className="bmc-rise text-primary leading-[1.04] tracking-[-0.024em]"
+              className="bmc-rise text-primary-foreground leading-[1.04] tracking-[-0.024em]"
               style={{ fontSize: 'clamp(2.5rem, 5.6vw, 4.3rem)' }}
             >
               {title}
             </h1>
             {intro && (
               <p
-                className="bmc-rise bmc-rise-2 mt-7 leading-[1.7] text-foreground/80"
+                className="bmc-rise bmc-rise-2 mt-7 leading-[1.7] text-primary-foreground/85"
                 style={{ fontSize: 'clamp(1.05rem, 1.5vw, 1.2rem)', maxWidth: '44ch' }}
               >
                 {intro}

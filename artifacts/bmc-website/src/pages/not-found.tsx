@@ -17,11 +17,11 @@ export default function NotFound() {
         mark={<img src="/assets/mascot-figures.webp" alt="" width={789} height={437} className="mx-auto h-auto w-56 sm:w-72" />}
       >
         <div className="flex flex-wrap items-center justify-center gap-4">
-          <Link href="/" className="bmc-btn bmc-btn-primary">
+          <Link href="/" className="bmc-btn bmc-btn-light">
             Back to home
           </Link>
           <Link href="/programmes" className="bmc-btn bmc-btn-soft">
-            See the programmes
+            Find your class
           </Link>
         </div>
       </PageHeader>

@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Link } from 'wouter';
-import { GirihPattern } from '@/components/ornaments';
 import { Seo } from '@/components/seo';
 import { simplePageJsonLd } from '@/lib/structured-data';
 import { CARD, ClosingBand, CONTAINER, H2, H2_STYLE, PageHeader, SECTION_Y, SectionHead } from '@/components/page-shell';
@@ -178,18 +177,17 @@ export default function Testimonials() {
 
 function FeaturedQuote() {
   return (
-    <figure className="relative overflow-hidden rounded-[1.75rem] bg-primary p-8 text-primary-foreground shadow-lift md:p-11">
-      <GirihPattern />
+    <figure className="relative overflow-hidden rounded-[1.75rem] bg-bmc-paper p-8 text-primary shadow-lift md:p-11">
       <div className="relative">
         <span
-          className="block select-none font-display leading-none text-bmc-gold-light"
+          className="block select-none font-display leading-none text-bmc-gold-ink"
           style={{ fontSize: 'clamp(4.5rem, 8vw, 6.5rem)', height: 'clamp(3rem, 5.2vw, 4.2rem)' }}
           aria-hidden="true"
         >
           &ldquo;
         </span>
         <blockquote className="mt-2 font-display text-[1.18rem] font-normal italic leading-[1.5] md:text-[1.3rem]">{FEATURED.quote}</blockquote>
-        <figcaption className="mt-7 font-utility text-[0.75rem] font-bold uppercase tracking-[0.16em] text-bmc-gold-light">{FEATURED.tag}</figcaption>
+        <figcaption className="mt-7 font-utility text-[0.75rem] font-bold uppercase tracking-[0.16em] text-bmc-gold-ink">{FEATURED.tag}</figcaption>
       </div>
     </figure>
   );

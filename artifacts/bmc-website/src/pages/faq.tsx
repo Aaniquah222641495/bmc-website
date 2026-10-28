@@ -71,7 +71,7 @@ export default function Faq() {
         intro="Can't find your answer here? We're always happy to help."
         art={<TopicCards />}
       >
-        <a href={WHATSAPP} target="_blank" rel="noreferrer" className="bmc-btn bmc-btn-primary">
+        <a href={WHATSAPP} target="_blank" rel="noreferrer" className="bmc-btn bmc-btn-light">
           <SiWhatsapp className="size-[1.1rem]" aria-hidden="true" />
           Ask us on WhatsApp
         </a>
