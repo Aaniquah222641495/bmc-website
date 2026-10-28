@@ -135,13 +135,13 @@
   --input: var(--bmc-cream-dark);
   --ring: var(--bmc-gold);
 
-  --app-font-sans: 'Nunito Sans', system-ui, sans-serif;
-  --app-font-serif: 'Lora', Georgia, serif;
+  --app-font-sans: 'Nunito Sans Variable', 'Nunito Sans', system-ui, sans-serif;
+  --app-font-serif: 'Lora Variable', 'Lora', Georgia, serif;
   --app-font-mono: Menlo, monospace;
   
-  --font-display: 'Lora', Georgia, serif;
-  --font-body: 'Nunito Sans', system-ui, sans-serif;
-  --font-utility: 'Nunito Sans', system-ui, sans-serif;
+  --font-display: 'Lora Variable', 'Lora', Georgia, serif;
+  --font-body: 'Nunito Sans Variable', 'Nunito Sans', system-ui, sans-serif;
+  --font-utility: 'Nunito Sans Variable', 'Nunito Sans', system-ui, sans-serif;
 
   --radius: 0.5rem;
   --bmc-gold-metal: linear-gradient(135deg, hsl(41 52% 40%) 0%, hsl(45 68% 64%) 38%, hsl(44 78% 80%) 52%, hsl(42 55% 48%) 100%);
