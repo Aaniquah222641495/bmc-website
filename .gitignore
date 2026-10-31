@@ -56,3 +56,6 @@ artifacts/bmc-website/public/admin
 .env
 .env.*
 !.env.example
+
+# Cloudflare local dev
+.wrangler/

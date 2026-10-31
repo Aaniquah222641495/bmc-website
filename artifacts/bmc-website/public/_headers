@@ -1,0 +1,18 @@
+# Cloudflare Workers static assets headers (moved from netlify.toml, 2026-10-31).
+# Security headers on every response. SAMEORIGIN (not DENY) so Tina's admin can preview pages.
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; frame-src https://docs.google.com https://forms.gle; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests
+
+# /admin (TinaCMS) loads from Tina Cloud, so it gets no CSP.
+/admin
+  ! Content-Security-Policy
+/admin/*
+  ! Content-Security-Policy
+
+# Images and fonts under /assets have no hashed names: cache a week, not forever.
+/assets/*
+  Cache-Control: public, max-age=604800
