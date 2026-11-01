@@ -85,8 +85,8 @@ export const REG_FIELDS: Record<ClassKey, RegField[]> = {
  */
 const DEFAULT_ENDPOINT = '';
 const raw = ((import.meta.env.VITE_REGISTER_ENDPOINT as string | undefined) ?? '').trim() || DEFAULT_ENDPOINT;
-/** Local demo only (VITE_REGISTER_DEMO=1, never set on Netlify): forms show, nothing is sent anywhere. */
-const DEMO = import.meta.env.VITE_REGISTER_DEMO === '1';
+/** Demo (VITE_REGISTER_DEMO=1: local, or Cloudflare preview builds, never main): forms show, nothing is sent anywhere. */
+export const DEMO = import.meta.env.VITE_REGISTER_DEMO === '1';
 export const REGISTER_ENDPOINT = DEMO ? 'demo' : /^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec$/.test(raw) ? raw : '';
 
 /** South African numbers become +27...; international ones keep their country code. Same rule as the script. */

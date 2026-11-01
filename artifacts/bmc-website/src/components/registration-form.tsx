@@ -2,7 +2,7 @@ import { useId, useRef, useState, type FormEvent } from 'react';
 import { ArrowRight, Loader2 } from 'lucide-react';
 import { SiWhatsapp } from 'react-icons/si';
 import { Link } from 'wouter';
-import { REG_FIELDS, submitRegistration, submitWaitlist, TERMS_FIELD, validate, waitlistFields, type ClassKey, type RegField, type WorkshopListKey } from '@/data/registration';
+import { DEMO, REG_FIELDS, submitRegistration, submitWaitlist, TERMS_FIELD, validate, waitlistFields, type ClassKey, type RegField, type WorkshopListKey } from '@/data/registration';
 import { PAYMENT_DETAILS, programmeByPath } from '@/data/programmes';
 
 const WHATSAPP_NUMBER = '27686498593';
@@ -99,6 +99,11 @@ export function RegistrationForm({ classKey, title, source, mode = 'register' }:
 
   return (
     <form ref={formRef} onSubmit={onSubmit} noValidate className="rounded-[1.25rem] bg-card p-6 text-left shadow-soft md:p-10" aria-label={`Register for ${title}`}>
+      {DEMO && (
+        <p className="mb-6 rounded-lg bg-secondary px-4 py-3 text-sm text-foreground">
+          Preview only: this form is not connected yet, so nothing you type here is sent.
+        </p>
+      )}
       {phase.name === 'failed' && (
         <div ref={resultRef} tabIndex={-1} role="alert" className="mb-8 rounded-xl bg-bmc-gold-light/50 p-5 outline-none">
           <p className="font-display text-[1.15rem] text-primary">
