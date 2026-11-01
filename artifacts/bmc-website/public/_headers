@@ -1,6 +1,7 @@
 # Cloudflare Workers static assets headers (moved from netlify.toml, 2026-10-31).
 # Security headers on every response. SAMEORIGIN (not DENY) so Tina's admin can preview pages.
 /*
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
   X-Content-Type-Options: nosniff
   X-Frame-Options: SAMEORIGIN
   Referrer-Policy: strict-origin-when-cross-origin
