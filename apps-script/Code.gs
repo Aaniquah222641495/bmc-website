@@ -53,6 +53,9 @@ const CLASS_TITLES = {
 };
 // Shown in the confirmation email. From her 2027 forms.
 const CLASS_FEES = { womens: 'R50 registration fee, then R150 per month', children: 'R50 registration fee, then R150 per month', hifdh: 'R50 registration fee, then R200 per month', quranOnline: 'R50 registration fee, then R150 per month', quran: '' };
+// Registration closes by itself at this time (SAST). Mualimah Rukeya: Women's closes on 1 January 2027,
+// so it stays open all of that day. Closed once only: if she reopens the form later, it stays open.
+const CLOSE_AT = { womens: '2027-01-02T00:00:00+02:00' };
 const CLASS_PATHS = { womens: '/womens-classes', hifdh: '/hifdh-classes', quranOnline: '/online-quran-classes', quran: '/quran-classes', children: '/childrens-classes' };
 
 // Workshop lists: no registration here (workshops have their own links); people are emailed
@@ -287,6 +290,12 @@ function checkReopened() {
       const form = form_(key);
       if (!form) return;
       open = form.isAcceptingResponses();
+      if (open && CLOSE_AT[key] && new Date() >= new Date(CLOSE_AT[key]) && !props.getProperty('autoclosed_' + key)) {
+        form.setAcceptingResponses(false);
+        props.setProperty('autoclosed_' + key, 'yes');
+        open = false;
+        alert_('Registration closed: ' + CLASS_TITLES[key], 'The ' + CLASS_TITLES[key] + ' form closed itself as planned. The website now shows the waitlist button. To reopen, open the form and switch Accepting responses back on.');
+      }
     } catch (err) {
       console.error('Could not check ' + key + ': ' + err);
       return;
@@ -576,7 +585,7 @@ function sendConfirmation_(key, a) {
   const text = [
     'Slm ' + first + ',', '',
     'Shukran for registering for ' + what + '. Your registration has come through.',
-    'Your place is confirmed once the registration fee is paid.', '',
+    'Please pay the registration fee straight away: your place is only secured once it is paid.', '',
     'Fees: ' + (CLASS_FEES[key] || 'see the class page'), '',
     'How to pay:', CONFIG.PAYMENT_DETAILS, '',
     'Once you have paid, send your proof of payment to Mualimah Rukeya on WhatsApp: ' + CONFIG.WHATSAPP_DISPLAY + ' (' + popLink + ').', '',
@@ -588,7 +597,7 @@ function sendConfirmation_(key, a) {
     heading: 'Shukran, ' + first,
     paragraphs: [
       'Your registration for <strong>' + esc_(what) + '</strong> has come through, Alhamdulillah.',
-      'Your place is confirmed once the registration fee is paid. Mualimah Rukeya will be in touch with the next steps, InshaAllah.'
+      'Please pay the registration fee straight away: your place is only secured once it is paid. Mualimah Rukeya will be in touch with the next steps, InshaAllah.'
     ],
     box: {
       title: 'How to pay',
