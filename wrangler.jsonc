@@ -1,0 +1,17 @@
+// Cloudflare Workers static assets (same set-up as the studio site, ADR-0029/ADR-0024).
+// The site is static: no Worker script, only the prerendered files. _headers and _redirects
+// in the output folder still apply.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "beginners-madrasah",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./artifacts/bmc-website/dist/public",
+    // Unknown paths get our prerendered 404.html with a real 404 status.
+    "not_found_handling": "404-page",
+    // /about serves about.html; /about.html forwards to /about.
+    "html_handling": "auto-trailing-slash"
+  },
+  // Branch previews in Workers Builds.
+  "previews": {}
+}
