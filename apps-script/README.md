@@ -41,3 +41,20 @@ Deploy > Manage deployments > pencil > Version: New version > Deploy. The URL st
 ## Limits
 - Free Google accounts can send about 100 emails a day. If a big waitlist exceeds that, the rest go out the next hour.
 - WhatsApp cannot be sent automatically without WhatsApp's paid business API; the alert email gives her tap-to-send links instead.
+
+## Inbox labels (set up 2026-11-01)
+
+beginnersmadrasah@gmail.com has Gmail filters that label mail by class, from the subject line.
+Every email this script sends puts the class name in the subject, so replies sort too.
+
+| Label | Filter (subject) |
+|---|---|
+| Women's Madrasah | "Online Madrasah" but not Children, or "Registration Form: Beginners Madrasah" |
+| Children's Madrasah | Children |
+| Hifdh | Hifdh or Hifth |
+| Qur'an Online | Get Into ... Online, not "In Person" |
+| Qur'an In Person | Get Into ... "In Person" |
+| Workshops | workshop |
+
+Mail stays in the Inbox as well. If a class or form is renamed, update its filter
+(Gmail > Settings > Filters and blocked addresses).

@@ -599,7 +599,8 @@ function sendConfirmation_(key, a) {
     after: 'Questions? Reply to this email or WhatsApp us on ' + esc_(CONFIG.WHATSAPP_DISPLAY) + '.',
     footer: footer
   });
-  sendBranded_(a.email, 'We received your registration | Beginners Madrasah Classes', text, html);
+  // The class name is in the subject so replies sort into that class's Gmail label (see README: Inbox labels).
+  sendBranded_(a.email, 'Registration received: ' + CLASS_TITLES[key] + ' | Beginners Madrasah', text, html);
 }
 
 /* ------------------------------------------------------------------ */
