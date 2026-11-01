@@ -131,12 +131,12 @@ export const REG_FIELDS: Record<ClassKey, RegField[]> = {
 };
 
 /**
- * The client's Apps Script web app URL (public by design, no secret). Empty until it is deployed in
- * her Google account: while empty, class pages keep the embedded Google Form exactly as before.
+ * The client's Apps Script web app URL (public by design, no secret). Deployed 2026-11-01 in
+ * beginnersmadrasah@gmail.com ("Website registrations v1"). If emptied, class pages fall back to the Google Form embed.
  * VITE_REGISTER_ENDPOINT overrides it for a test deployment. Anything that is not an Apps Script
  * web app URL is ignored, so a typo can never send registrations elsewhere.
  */
-const DEFAULT_ENDPOINT = '';
+const DEFAULT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxSU-_BJknbo5qr4zlWzPZ5pgXDAdah7LUVpMwrNObe0ppHBu0mlVZM2nRM4K_6qRTFbQ/exec';
 const raw = ((import.meta.env.VITE_REGISTER_ENDPOINT as string | undefined) ?? '').trim() || DEFAULT_ENDPOINT;
 /** Demo (VITE_REGISTER_DEMO=1: local, or Cloudflare preview builds, never main): forms show, nothing is sent anywhere. */
 export const DEMO = import.meta.env.VITE_REGISTER_DEMO === '1';

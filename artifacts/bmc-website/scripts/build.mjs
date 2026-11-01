@@ -8,10 +8,9 @@ import { fileURLToPath } from 'node:url';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const vite = path.join(root, 'node_modules', '.bin', 'vite');
 const env = { ...process.env, BUILD_TIME: process.env.BUILD_TIME ?? new Date().toISOString() };
-// Cloudflare preview builds (any branch but main) show the new forms in demo mode until the
-// client's Apps Script endpoint exists: nothing is sent, and a note on the form says so.
-const branch = process.env.WORKERS_CI_BRANCH;
-if (branch && branch !== 'main' && !process.env.VITE_REGISTER_ENDPOINT) env.VITE_REGISTER_DEMO = '1';
+// Preview builds used to run the forms in demo mode. Since 2026-11-01 her Apps Script endpoint is
+// live (src/data/registration.ts), so previews send real registrations, like main. To test without
+// sending anything, build with VITE_REGISTER_DEMO=1.
 
 const run = (cmd, args) => {
   const r = spawnSync(cmd, args, { cwd: root, env, stdio: 'inherit' });
