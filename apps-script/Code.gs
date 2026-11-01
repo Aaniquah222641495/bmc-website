@@ -31,6 +31,8 @@ const CONFIG = {
   // Added to the confirmation email after a registration. Same as the banking details on her forms.
   PAYMENT_DETAILS: 'Bank: FNB\nAccount holder: Beginners Madrasah\nAccount number: 63165815524\nBranch code: 250655\nAccount type: Current Account\nReference: your name and surname',
   SITE_URL: 'https://beginnersmadrasah.co.za',
+  // Used only until the new site is live, for the email header image.
+  PREVIEW_URL: 'https://feat-redesign-cloudflare-beginners-madrasah.thedigitalpantryza.workers.dev',
   WHATSAPP_NUMBER: '27686498593',
   WHATSAPP_DISPLAY: '068 649 8593',
   TIMEZONE: 'Africa/Johannesburg',
@@ -49,6 +51,8 @@ const CLASS_TITLES = {
   quran: "Get Into Qur'an In Person",
   children: "Children's Online Madrasah"
 };
+// Shown in the confirmation email. From her 2027 forms.
+const CLASS_FEES = { womens: 'R50 registration fee, then R150 per month', children: 'R50 registration fee, then R150 per month', hifdh: 'R50 registration fee, then R200 per month', quranOnline: 'R50 registration fee, then R150 per month', quran: '' };
 const CLASS_PATHS = { womens: '/womens-classes', hifdh: '/hifdh-classes', quranOnline: '/online-quran-classes', quran: '/quran-classes', children: '/childrens-classes' };
 
 // Workshop lists: no registration here (workshops have their own links); people are emailed
@@ -329,25 +333,13 @@ function notifyWorkshop_(w) {
     if (MailApp.getRemainingDailyQuota() < CONFIG.MIN_QUOTA_FOR_CONFIRMATION) return;
     const first = String(r[2]).split(' ')[0].slice(0, 40);
     try {
-      MailApp.sendEmail({
-        to: String(r[3]),
-        subject: 'New workshop: ' + w.title,
-        name: 'Beginners Madrasah Classes',
-        replyTo: CONFIG.OWNER_EMAIL || undefined,
-        body: [
-          'Slm ' + first + ',',
-          '',
-          'A new workshop has just been announced: ' + w.title + '.',
-          'Details and registration: ' + pageUrl,
-          '',
-          'Questions? Reply to this email or WhatsApp us on ' + CONFIG.WHATSAPP_DISPLAY + '.',
-          '',
-          'Beginners Madrasah Classes',
-          '',
-          '---',
-          'You asked to hear about new ' + listName.toLowerCase() + '. To stop these emails, reply and say so.'
-        ].join('\n')
-      });
+      sendBranded_(String(r[3]), 'New workshop: ' + w.title, [
+        'Slm ' + first + ',', '', 'A new workshop has just been announced: ' + w.title + '.', 'Details and registration: ' + pageUrl, '',
+        'Questions? Reply to this email or WhatsApp us on ' + CONFIG.WHATSAPP_DISPLAY + '.', '', 'Beginners Madrasah Classes', '', '---',
+        'You asked to hear about new ' + listName.toLowerCase() + '. To stop these emails, reply and say so.'].join('\n'),
+        emailHtml_({ eyebrow: 'New workshop', heading: 'Slm ' + first, paragraphs: ['A new workshop has just been announced: <strong>' + esc_(w.title) + '</strong>.'],
+          button: { label: 'See the workshop', href: pageUrl }, after: 'Questions? Reply to this email or WhatsApp us on ' + esc_(CONFIG.WHATSAPP_DISPLAY) + '.',
+          footer: 'You asked to hear about new ' + listName.toLowerCase() + '. To stop these emails, reply and say so.' }));
       sheet.getRange(i + 2, 6).setValue('Subscribed (last emailed ' + Utilities.formatDate(new Date(), CONFIG.TIMEZONE, 'yyyy-MM-dd') + ')');
       if (r[4]) {
         const msg = 'Slm ' + first + ', a new workshop has been announced: ' + w.title + '. Details: ' + pageUrl;
@@ -375,25 +367,13 @@ function notifyWaitlist_(key) {
     if (MailApp.getRemainingDailyQuota() < CONFIG.MIN_QUOTA_FOR_CONFIRMATION) return; // the rest go next hour
     const first = String(r[2]).split(' ')[0].slice(0, 40);
     try {
-      MailApp.sendEmail({
-        to: String(r[3]),
-        subject: 'Registration is open: ' + CLASS_TITLES[key],
-        name: 'Beginners Madrasah Classes',
-        replyTo: CONFIG.OWNER_EMAIL || undefined,
-        body: [
-          'Slm ' + first + ',',
-          '',
-          'You asked us to let you know: registration for ' + CLASS_TITLES[key] + ' is now open.',
-          'Register here: ' + pageUrl,
-          '',
-          'Questions? Reply to this email or WhatsApp us on ' + CONFIG.WHATSAPP_DISPLAY + '.',
-          '',
-          'Beginners Madrasah Classes',
-          '',
-          '---',
-          'You asked to be told once when this class opened. This is that one email; you are now off the list.'
-        ].join('\n')
-      });
+      sendBranded_(String(r[3]), 'Registration is open: ' + CLASS_TITLES[key], [
+        'Slm ' + first + ',', '', 'You asked us to let you know: registration for ' + CLASS_TITLES[key] + ' is now open.', 'Register here: ' + pageUrl, '',
+        'Questions? Reply to this email or WhatsApp us on ' + CONFIG.WHATSAPP_DISPLAY + '.', '', 'Beginners Madrasah Classes', '', '---',
+        'You asked to be told once when this class opened. This is that one email; you are now off the list.'].join('\n'),
+        emailHtml_({ eyebrow: 'Registration is open', heading: 'Slm ' + first, paragraphs: ['You asked us to let you know: registration for <strong>' + esc_(CLASS_TITLES[key]) + '</strong> is now open.'],
+          button: { label: 'Register now', href: pageUrl }, after: 'Questions? Reply to this email or WhatsApp us on ' + esc_(CONFIG.WHATSAPP_DISPLAY) + '.',
+          footer: 'You asked to be told once when this class opened. This is that one email; you are now off the list.' }));
       sheet.getRange(i + 2, 6).setValue('Emailed ' + Utilities.formatDate(new Date(), CONFIG.TIMEZONE, 'yyyy-MM-dd'));
       if (r[4]) {
         const msg = 'Slm ' + first + ', registration for ' + CLASS_TITLES[key] + ' is now open: ' + pageUrl;
@@ -495,7 +475,8 @@ function textValue_(f, value) {
   if (f.kind === 'consent') return 'Yes: ' + (f.help || 'agreed');
   return value;
 }
-function dateValue_(iso) { const p = iso.split('-'); return new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2])); }
+// Noon, so no time zone can move it to the day before.
+function dateValue_(iso) { const p = iso.split('-'); return new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2]), 12); }
 
 /* ------------------------------------------------------------------ */
 /* Validation (mirrors src/data/registration.ts)                       */
@@ -582,29 +563,119 @@ function alert_(subject, body) {
   MailApp.sendEmail({ to: CONFIG.OWNER_EMAIL, subject: subject, body: body, name: 'Beginners Madrasah website' });
 }
 
-/** One plain confirmation to the person who registered. Plain text only. */
+/** One confirmation to the person who registered: branded HTML, with the same words as plain text. */
 function sendConfirmation_(key, a) {
   const nameField = key === 'children' ? 'parentName' : 'name';
-  const first = String(a[nameField] || '').split(' ')[0].slice(0, 40);
-  const what = key === 'children' ? CLASS_TITLES[key] + ' for ' + String(a.childName || '').split(' ')[0] : CLASS_TITLES[key];
-  const body = [
-    'Slm ' + first + ',',
-    '',
+  const fullName = String(a[nameField] || '');
+  const first = fullName.split(' ')[0].slice(0, 40);
+  const child = key === 'children' ? String(a.childName || '').split(' ')[0] : '';
+  const what = child ? CLASS_TITLES[key] + ' for ' + child : CLASS_TITLES[key];
+  const popText = 'Slm, here is my proof of payment for ' + CLASS_TITLES[key] + ' (' + fullName + (key === 'children' ? ', for ' + String(a.childName || '') : '') + ')';
+  const popLink = 'https://wa.me/' + CONFIG.WHATSAPP_NUMBER + '?text=' + encodeURIComponent(popText);
+  const footer = 'You are receiving this because this email address was used to register on ' + CONFIG.SITE_URL.replace('https://', '') + '. We only use your details to arrange your class. To have them deleted, reply and say so.';
+  const text = [
+    'Slm ' + first + ',', '',
     'Shukran for registering for ' + what + '. Your registration has come through.',
-    'Mualimah Rukeya will be in touch with the next steps, InshaAllah.',
-    ''
-  ].concat(CONFIG.PAYMENT_DETAILS ? ['How to pay:', CONFIG.PAYMENT_DETAILS, '',
-    'Once you have paid, send your proof of payment to Mualimah Rukeya on WhatsApp: ' + CONFIG.WHATSAPP_DISPLAY + ' (https://wa.me/' + CONFIG.WHATSAPP_NUMBER + ').', ''] : []).concat([
-    'Questions? Reply to this email or WhatsApp us on ' + CONFIG.WHATSAPP_DISPLAY + ' (https://wa.me/' + CONFIG.WHATSAPP_NUMBER + ').',
-    '',
-    'Beginners Madrasah Classes',
-    CONFIG.SITE_URL,
-    '',
-    '---',
-    'You are receiving this because this email address was used to register on ' + CONFIG.SITE_URL + '. ' +
-      'We only use your details to arrange your class. To have them deleted, reply and say so.'
-  ]).join('\n');
-  MailApp.sendEmail({ to: a.email, subject: 'We received your registration | Beginners Madrasah Classes', body: body, name: 'Beginners Madrasah Classes', replyTo: CONFIG.OWNER_EMAIL || undefined });
+    'Your place is confirmed once the registration fee is paid.', '',
+    'Fees: ' + (CLASS_FEES[key] || 'see the class page'), '',
+    'How to pay:', CONFIG.PAYMENT_DETAILS, '',
+    'Once you have paid, send your proof of payment to Mualimah Rukeya on WhatsApp: ' + CONFIG.WHATSAPP_DISPLAY + ' (' + popLink + ').', '',
+    'Questions? Reply to this email or WhatsApp us on ' + CONFIG.WHATSAPP_DISPLAY + '.', '',
+    'Beginners Madrasah Classes', CONFIG.SITE_URL, '', '---', footer
+  ].join('\n');
+  const html = emailHtml_({
+    eyebrow: 'Registration received',
+    heading: 'Shukran, ' + first,
+    paragraphs: [
+      'Your registration for <strong>' + esc_(what) + '</strong> has come through, Alhamdulillah.',
+      'Your place is confirmed once the registration fee is paid. Mualimah Rukeya will be in touch with the next steps, InshaAllah.'
+    ],
+    box: {
+      title: 'How to pay',
+      lead: CLASS_FEES[key] ? esc_(CLASS_FEES[key]) : '',
+      lines: CONFIG.PAYMENT_DETAILS.split('\n')
+    },
+    button: { label: 'Send proof of payment on WhatsApp', href: popLink },
+    after: 'Questions? Reply to this email or WhatsApp us on ' + esc_(CONFIG.WHATSAPP_DISPLAY) + '.',
+    footer: footer
+  });
+  sendBranded_(a.email, 'We received your registration | Beginners Madrasah Classes', text, html);
+}
+
+/* ------------------------------------------------------------------ */
+/* Branded emails: the website's colours and the class figures         */
+/* ------------------------------------------------------------------ */
+
+const BRAND = { green: '#143328', gold: '#C9A84C', goldInk: '#71541A', cream: '#F7F3EE', paper: '#FCFBF8', text: '#2C2C2C' };
+
+function esc_(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+
+function sendBranded_(to, subject, text, html) {
+  const fig = figures_();
+  const msg = { to: to, subject: subject, body: text, name: 'Beginners Madrasah Classes', replyTo: CONFIG.OWNER_EMAIL || undefined };
+  if (fig) { msg.htmlBody = html; msg.inlineImages = { bmcfigures: fig }; }
+  else msg.htmlBody = html.replace(/<td style="padding-right:12px;"><img src="cid:bmcfigures"[^>]*><\/td>/, '');
+  MailApp.sendEmail(msg);
+}
+
+/** The figures from the website header (public/assets/email-figures.png), cached for 6 hours. Null if the site cannot be reached. */
+function figures_() {
+  const cache = CacheService.getScriptCache();
+  let b64 = cache.get('email_figures');
+  if (!b64) {
+    const urls = [CONFIG.SITE_URL, CONFIG.PREVIEW_URL].filter(Boolean).map(function (u) { return u + '/assets/email-figures.png'; });
+    for (let i = 0; i < urls.length && !b64; i++) {
+      try {
+        const res = UrlFetchApp.fetch(urls[i], { muteHttpExceptions: true, followRedirects: true });
+        if (res.getResponseCode() === 200 && /image\/png/.test(String(res.getHeaders()['Content-Type'] || ''))) b64 = Utilities.base64Encode(res.getContent());
+      } catch (err) { console.warn('Could not fetch ' + urls[i] + ': ' + err); }
+    }
+    if (!b64) return null;
+    cache.put('email_figures', b64, 21600);
+  }
+  return Utilities.newBlob(Utilities.base64Decode(b64), 'image/png', 'bmc-figures.png');
+}
+
+/** One simple, table-based layout that holds up in Gmail, Outlook and phone mail apps. Text passed in must already be escaped. */
+function emailHtml_(o) {
+  const serif = "Georgia,'Times New Roman',serif";
+  const sans = "-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif";
+  const p = o.paragraphs.map(function (t) { return '<p style="margin:0 0 14px;font:16px/1.65 ' + sans + ';color:' + BRAND.text + ';">' + t + '</p>'; }).join('');
+  const box = o.box ? '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:22px 0 6px;background:' + BRAND.cream + ';border-radius:14px;border:1px solid #E8DDBF;"><tr><td style="padding:20px 22px;">' +
+    '<p style="margin:0 0 8px;font:700 12px/1.4 ' + sans + ';letter-spacing:.12em;text-transform:uppercase;color:' + BRAND.goldInk + ';">' + esc_(o.box.title) + '</p>' +
+    (o.box.lead ? '<p style="margin:0 0 10px;font:600 17px/1.4 ' + serif + ';color:' + BRAND.green + ';">' + o.box.lead + '</p>' : '') +
+    '<p style="margin:0;font:15px/1.7 ' + sans + ';color:' + BRAND.text + ';">' + o.box.lines.map(esc_).join('<br>') + '</p></td></tr></table>' : '';
+  const btn = o.button ? '<table role="presentation" cellpadding="0" cellspacing="0" style="margin:18px 0 8px;"><tr><td style="background:' + BRAND.green + ';border-radius:999px;">' +
+    '<a href="' + esc_(o.button.href) + '" style="display:inline-block;padding:14px 26px;font:600 15px/1 ' + sans + ';color:#FFFFFF;text-decoration:none;border-radius:999px;">' + esc_(o.button.label) + '</a></td></tr></table>' : '';
+  return '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"></head>' +
+    '<body style="margin:0;padding:0;background:' + BRAND.cream + ';">' +
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:' + BRAND.cream + ';"><tr><td align="center" style="padding:28px 14px;">' +
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;">' +
+    // Header: figures and name, like the website.
+    '<tr><td style="padding:0 6px 18px;"><table role="presentation" cellpadding="0" cellspacing="0"><tr>' +
+    '<td style="padding-right:12px;"><img src="cid:bmcfigures" width="92" height="51" alt="" style="display:block;border:0;"></td>' +
+    '<td><div style="font:600 21px/1.05 ' + serif + ';color:' + BRAND.green + ';">Beginners Madrasah</div><div style="font:italic 18px/1.2 ' + serif + ';color:' + BRAND.goldInk + ';">Classes</div></td>' +
+    '</tr></table></td></tr>' +
+    // Card
+    '<tr><td style="background:' + BRAND.paper + ';border-radius:20px;border-top:4px solid ' + BRAND.gold + ';padding:30px 28px 26px;">' +
+    '<p style="margin:0 0 6px;font:700 12px/1.4 ' + sans + ';letter-spacing:.14em;text-transform:uppercase;color:' + BRAND.goldInk + ';">' + esc_(o.eyebrow) + '</p>' +
+    '<h1 style="margin:0 0 16px;font:600 28px/1.2 ' + serif + ';color:' + BRAND.green + ';">' + esc_(o.heading) + '</h1>' +
+    p + box + btn +
+    (o.after ? '<p style="margin:18px 0 0;font:15px/1.65 ' + sans + ';color:' + BRAND.text + ';">' + o.after + '</p>' : '') +
+    '<p style="margin:18px 0 0;font:15px/1.65 ' + sans + ';color:' + BRAND.text + ';">Warm regards,<br><span style="font:600 16px ' + serif + ';color:' + BRAND.green + ';">Mualimah Rukeya</span><br>Beginners Madrasah Classes</p>' +
+    '</td></tr>' +
+    // Footer
+    '<tr><td style="padding:18px 10px 0;text-align:center;font:12px/1.6 ' + sans + ';color:#6B6B6B;">' +
+    '<a href="' + esc_(CONFIG.SITE_URL) + '" style="color:' + BRAND.goldInk + ';text-decoration:none;font-weight:600;">' + esc_(CONFIG.SITE_URL.replace('https://', '')) + '</a> &middot; WhatsApp ' + esc_(CONFIG.WHATSAPP_DISPLAY) +
+    (o.footer ? '<br><br>' + esc_(o.footer) : '') + '</td></tr>' +
+    '</table></td></tr></table></body></html>';
+}
+
+/** Sends one of each branded email to OWNER_EMAIL, with made-up details, to see how they look. */
+function previewEmails() {
+  sendConfirmation_('children', { parentName: 'Test Parent', childName: 'Test Child', email: CONFIG.OWNER_EMAIL });
+  const html = emailHtml_({ eyebrow: 'Registration is open', heading: 'Slm Test', paragraphs: ["You asked us to let you know: registration for <strong>Women's Online Madrasah</strong> is now open."], button: { label: 'Register now', href: CONFIG.SITE_URL + '/programmes/womens-classes' }, after: '', footer: 'Preview of the waitlist email.' });
+  sendBranded_(CONFIG.OWNER_EMAIL, 'Preview: waitlist email | Beginners Madrasah Classes', 'Preview', html);
 }
 
 /* ------------------------------------------------------------------ */
@@ -668,3 +739,4 @@ function testRegistration() {
   });
   console.log(JSON.stringify(result));
 }
+
