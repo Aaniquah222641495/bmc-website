@@ -454,7 +454,9 @@ function submitToForm_(form, key, a) {
   if (missingRequired.length) {
     return 'The Google Form has required questions the website does not ask: ' + missingRequired.join('; ') + '. Run checkForms() for details.';
   }
-  response.submit();
+  const submitted = response.submit();
+  // Marks it as a website registration, so onDirectSubmit does not send a second confirmation.
+  PropertiesService.getScriptProperties().setProperty('viaSite_' + submitted.getId(), '1');
   if (unmatched.length) {
     // The response went in, but some answers had no matching question. Keep the full set too.
     return 'Submitted to the Google Form, but these answers had no matching question there: ' + unmatched.join('; ') + '.';
@@ -701,6 +703,7 @@ function setup() {
   // Hourly reopen check for the waitlist (only one trigger, however often setup() is run).
   const exists = ScriptApp.getProjectTriggers().some(function (t) { return t.getHandlerFunction() === 'checkReopened'; });
   if (!exists) ScriptApp.newTrigger('checkReopened').timeBased().everyHours(1).create();
+  installDirectSubmitTriggers();
   checkReopened(); // records whether each form is open now, so the first real reopening is noticed
   console.log('Emails left today: ' + MailApp.getRemainingDailyQuota());
 }
@@ -790,4 +793,40 @@ function answersFromResponse_(key, r) {
   FIELDS[key].forEach(function (f) { const v = byTitle[norm_(f.question)]; if (v !== undefined && v !== null) a[f.id] = String(v); });
   if (!a.email) { try { a.email = r.getRespondentEmail() || ''; } catch (e) { a.email = ''; } }
   return a;
+}
+
+/* ------------------------------------------------------------------ */
+/* Direct Google Form registrations (old links shared on WhatsApp)    */
+/* get the same branded confirmation. Website registrations are       */
+/* marked viaSite_<id> when submitted and are skipped here.           */
+/* ------------------------------------------------------------------ */
+function installDirectSubmitTriggers() {
+  const have = ScriptApp.getProjectTriggers().filter(function (t) { return t.getHandlerFunction() === 'onDirectSubmit'; })
+    .map(function (t) { return t.getTriggerSourceId(); });
+  Object.keys(CONFIG.FORMS).forEach(function (key) {
+    const form = form_(key);
+    if (!form) return;
+    if (have.indexOf(form.getId()) === -1) ScriptApp.newTrigger('onDirectSubmit').forForm(form).onFormSubmit().create();
+    console.log('Direct-submit confirmation on: ' + CLASS_TITLES[key]);
+  });
+}
+
+function keyForForm_(formId) {
+  return Object.keys(CONFIG.FORMS).filter(function (key) {
+    return CONFIG.FORMS[key] && CONFIG.FORMS[key].indexOf('/d/' + formId + '/') !== -1;
+  })[0] || '';
+}
+
+function onDirectSubmit(e) {
+  const r = e.response, id = r.getId();
+  const key = keyForForm_(e.source.getId());
+  if (!key) return;
+  Utilities.sleep(15000); // lets a website registration finish marking itself first
+  const props = PropertiesService.getScriptProperties();
+  if (props.getProperty('viaSite_' + id)) { props.deleteProperty('viaSite_' + id); return; }
+  if (props.getProperty('confirmed_' + id)) return;
+  const a = answersFromResponse_(key, r);
+  if (!a.email || !CONFIG.SEND_CONFIRMATION || MailApp.getRemainingDailyQuota() < CONFIG.MIN_QUOTA_FOR_CONFIRMATION) return;
+  sendConfirmation_(key, a);
+  props.setProperty('confirmed_' + id, new Date().toISOString());
 }
