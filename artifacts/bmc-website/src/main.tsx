@@ -3,6 +3,11 @@ import { createRoot, hydrateRoot } from 'react-dom/client';
 import App from './App';
 import { ErrorBoundary } from '@/components/error-boundary';
 
+// Fonts are served from our own site, not Google, so visitors' details are not sent to Google (POPIA review 2026-10-28).
+import '@fontsource-variable/lora/wght.css';
+import '@fontsource-variable/lora/wght-italic.css';
+import '@fontsource-variable/nunito-sans/opsz.css';
+import '@fontsource-variable/nunito-sans/opsz-italic.css';
 import './index.css';
 
 const root = document.getElementById('root')!;

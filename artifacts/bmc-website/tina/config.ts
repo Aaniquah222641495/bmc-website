@@ -42,6 +42,13 @@ export default defineConfig({
         },
         fields: [
           {
+            type: 'string',
+            name: 'paymentDetails',
+            label: 'Banking details',
+            description: 'Shown on the thank-you screen after someone registers. (The confirmation email uses the copy in the Google script: change both.)',
+            ui: { component: 'textarea' },
+          },
+          {
             type: 'object',
             name: 'programmes',
             label: 'Programme cards',
@@ -86,6 +93,37 @@ export default defineConfig({
                 label: 'Tag pill',
                 required: true,
                 description: 'Small label on the card, e.g. "Online · Self-paced".',
+              },
+              {
+                type: 'string',
+                name: 'when',
+                label: 'Fact: when',
+                description: 'Short, shown with a calendar icon on the Programmes card, e.g. "Mon, Wed & Fri". Leave empty to hide.',
+              },
+              {
+                type: 'string',
+                name: 'where',
+                label: 'Fact: where',
+                description: 'Short, shown with a laptop (online) or pin (in person) icon, e.g. "Microsoft Teams". Leave empty to hide.',
+              },
+              {
+                type: 'string',
+                name: 'who',
+                label: 'Fact: who it is for',
+                description: 'Short, shown with a person icon, e.g. "Women 18+". Leave empty to hide.',
+              },
+              {
+                type: 'string',
+                name: 'terms',
+                label: 'Terms and conditions',
+                description: 'Shown on the registration form with an "I agree" tick box. Lines ending in ":" become headings. Leave empty for no terms.',
+                ui: { component: 'textarea' },
+              },
+              {
+                type: 'boolean',
+                name: 'registrationClosed',
+                label: 'Registration closed',
+                description: 'Tick when this class is not taking new students. The class page then hides the form and offers a WhatsApp "tell me when it opens" button instead. Untick when the form is open again.',
               },
               {
                 type: 'string',
@@ -238,7 +276,7 @@ export default defineConfig({
             name: 'details',
             label: 'Detail chips',
             list: true,
-            description: 'Available-now workshops: Format / Date / Time / Investment.',
+            description: 'Available-now workshops: Format / Date / Time / Fee.',
             ui: {
               itemProps: (item?: { label?: string }) => ({
                 label: item?.label ?? 'Detail',

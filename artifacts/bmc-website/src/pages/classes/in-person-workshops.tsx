@@ -1,13 +1,17 @@
+import { SiWhatsapp } from 'react-icons/si';
 import { useState, useEffect } from 'react';
 import { ClassPageLayout } from '@/components/class-page-layout';
-import { IncludedList, DetailsGrid, PastWorkshopsGrid } from '@/components/class-page-blocks';
+import { PastWorkshopsGrid } from '@/components/class-page-blocks';
+import { CARD, CONTAINER, SECTION_Y, SectionHead } from '@/components/page-shell';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Seo } from '@/components/seo';
 import { programmeJsonLd } from '@/lib/structured-data';
 
 import { pastInPersonWorkshops, type Workshop } from '@/data/workshops';
 import { useNow } from '@/hooks/use-now';
+import { NotifyButton, NotifySection } from '@/components/workshop-notify';
+import { REGISTER_ENDPOINT } from '@/data/registration';
 
 const INCLUDED = [
   'Interactive, face-to-face learning with real discussion',
@@ -44,62 +48,63 @@ function WorkshopGallery() {
     setIndex((prev) => (prev + dir + GALLERY_IMAGES.length) % GALLERY_IMAGES.length);
   };
 
+  // Auto-advance only for people who have not asked for reduced motion, and pause while hovered or focused.
   useEffect(() => {
-    if (paused) return;
+    if (paused || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const timer = setInterval(() => go(1), 4000);
     return () => clearInterval(timer);
   }, [paused, index]);
+
+  const arrow =
+    'absolute top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-bmc-paper/90 text-primary shadow-soft transition-colors hover:bg-bmc-paper';
 
   return (
     <div
       className="relative"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
+      onFocus={() => setPaused(true)}
+      onBlur={() => setPaused(false)}
     >
-      <div className="relative aspect-[4/3] rounded-xl overflow-hidden bg-muted">
-        <AnimatePresence initial={false} custom={direction} mode="wait">
-          <motion.img
-            key={index}
-            src={GALLERY_IMAGES[index]}
-            alt="Sisters at a Beginners Madrasah in-person workshop"
-            custom={direction}
-            initial={{ opacity: 0, x: direction >= 0 ? 60 : -60 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: direction >= 0 ? -60 : 60 }}
-            transition={{ duration: 0.35, ease: 'easeInOut' }}
-            className="absolute inset-0 w-full h-full object-cover"
-            draggable={false}
-            loading="lazy"
-          />
-        </AnimatePresence>
+      <div className="bmc-photo">
+        <div className="relative aspect-[4/3] overflow-hidden rounded-[11px] bg-muted">
+          <AnimatePresence initial={false} custom={direction} mode="wait">
+            <motion.img
+              key={index}
+              src={GALLERY_IMAGES[index]}
+              alt="Sisters at a Beginners Madrasah in-person workshop"
+              custom={direction}
+              initial={{ opacity: 0, x: direction >= 0 ? 60 : -60 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: direction >= 0 ? -60 : 60 }}
+              transition={{ duration: 0.35, ease: 'easeInOut' }}
+              className="absolute inset-0 h-full w-full object-cover"
+              draggable={false}
+              loading="lazy"
+            />
+          </AnimatePresence>
 
-        <button
-          type="button"
-          onClick={() => go(-1)}
-          aria-label="Previous photo"
-          className="absolute left-3 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-primary rounded-full p-2 shadow-md transition-colors"
-        >
-          <ChevronLeft className="w-5 h-5" />
-        </button>
-        <button
-          type="button"
-          onClick={() => go(1)}
-          aria-label="Next photo"
-          className="absolute right-3 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-primary rounded-full p-2 shadow-md transition-colors"
-        >
-          <ChevronRight className="w-5 h-5" />
-        </button>
+          <button type="button" onClick={() => go(-1)} aria-label="Previous photo" className={`${arrow} left-3`}>
+            <ChevronLeft className="h-5 w-5" aria-hidden="true" />
+          </button>
+          <button type="button" onClick={() => go(1)} aria-label="Next photo" className={`${arrow} right-3`}>
+            <ChevronRight className="h-5 w-5" aria-hidden="true" />
+          </button>
+        </div>
       </div>
 
-      <div className="flex justify-center gap-2 mt-4">
+      <div className="mt-5 flex justify-center">
         {GALLERY_IMAGES.map((src, i) => (
           <button
             key={src}
             type="button"
             onClick={() => { setDirection(i > index ? 1 : -1); setIndex(i); }}
             aria-label={`Go to photo ${i + 1}`}
-            className={`h-2 rounded-full transition-all ${i === index ? 'w-6 bg-accent' : 'w-2 bg-border'}`}
-          />
+            aria-current={i === index}
+            className="group flex h-11 w-8 items-center justify-center"
+          >
+            <span className={`h-2 rounded-full transition-all ${i === index ? 'w-6 bg-bmc-gold-ink' : 'w-2 bg-bmc-gold-ink/35 group-hover:bg-bmc-gold-ink/60'}`} />
+          </button>
         ))}
       </div>
     </div>
@@ -117,71 +122,76 @@ export default function InPersonWorkshops() {
         jsonLd={programmeJsonLd('/programmes/in-person-workshops')}
       />
       <ClassPageLayout
-      title="In-Person Workshops"
-      description="Interactive face-to-face workshops covering important Islamic topics, with opportunities for discussion, questions and practical learning."
-      heroImage="/assets/workshop-teaching.webp"
-      showRegistration={false}
-    >
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.3 }}
-        className="space-y-10"
-      >
-        {/* Description */}
-        <div>
-          <p className="font-body text-lg text-foreground/80 leading-relaxed mb-4">
-            Our in-person workshops bring the community together for focused, face-to-face sessions on practical Islamic topics. These once-off events give you the chance to learn, ask questions, and engage with others in a warm and welcoming setting.
-          </p>
-          <p className="font-body text-lg text-foreground/80 leading-relaxed">
-            Each workshop is designed to be accessible for complete beginners while offering real depth, so whether you are new to a topic or looking to strengthen your knowledge, you will leave with something valuable.
-          </p>
-        </div>
+        path="/in-person-workshops"
+        title="In-Person Workshops"
+        description="Interactive face-to-face workshops covering important Islamic topics, with opportunities for discussion, questions and practical learning."
+        heroImage="/assets/workshop-teaching.webp"
+        heroImageAlt="Mualimah Rukeya teaching at an in-person workshop"
+        showRegistration={false}
+        heroAction={
+          <NotifyButton whatsapp="https://wa.me/27686498593?text=Slm%2C%20I%27d%20like%20to%20find%20out%20about%20upcoming%20in-person%20workshops" className="bmc-btn bmc-btn-light" />
+        }
+        intro={
+          <>
+            <p>
+              Our in-person workshops bring the community together for focused, face-to-face sessions on practical Islamic topics. These once-off events give you the chance to learn, ask questions, and engage with others in a warm and welcoming setting.
+            </p>
+            <p>
+              Each workshop is designed to be accessible for complete beginners while offering real depth, so whether you are new to a topic or looking to strengthen your knowledge, you will leave with something valuable.
+            </p>
+          </>
+        }
+        included={INCLUDED}
+        includedHeading="What to expect"
+        details={[
+          { label: 'Format', value: 'In-Person' },
+          { label: 'Duration', value: 'Once-off session' },
+          { label: 'Location', value: 'Varies by workshop' },
+          { label: 'Fee', value: 'From R100' },
+        ]}
+        after={
+          <>
+            {/* Previous workshops beside the photo gallery */}
+            <section className={`${SECTION_Y} bg-background`}>
+              <div className={`${CONTAINER} grid grid-cols-1 items-start gap-12 lg:grid-cols-2 lg:gap-16`}>
+                {PAST_WORKSHOPS.length > 0 && (
+                  <div>
+                    <SectionHead title="Previous workshops" className="mb-10" />
+                    <PastWorkshopsGrid workshops={PAST_WORKSHOPS} gridClassName="" />
+                  </div>
+                )}
+                <div className="bmc-reveal">
+                  <SectionHead title="From our workshops" className="mb-10" />
+                  <WorkshopGallery />
+                </div>
+              </div>
+            </section>
 
-        <IncludedList items={INCLUDED} heading="What to Expect" />
-
-        <DetailsGrid
-          items={[
-            { label: 'Format', value: 'In-Person' },
-            { label: 'Duration', value: 'Once-off session' },
-            { label: 'Location', value: 'Varies by workshop' },
-            { label: 'Investment', value: 'From R100' },
-          ]}
-        />
-
-        {/* Past Workshops */}
-        <div>
-          <div className="flex items-center gap-3 mb-6">
-            <div className="h-px bg-border flex-1" />
-            <span className="font-utility text-sm text-foreground/50 uppercase tracking-widest whitespace-nowrap">Previous Workshops</span>
-            <div className="h-px bg-border flex-1" />
-          </div>
-
-          <PastWorkshopsGrid workshops={PAST_WORKSHOPS} delayBase={0.45} />
-        </div>
-
-        {/* Gallery */}
-        <div className="bg-card border border-border rounded-2xl p-7 md:p-8">
-          <h2 className="font-display text-2xl text-primary mb-6">From Our Workshops</h2>
-          <WorkshopGallery />
-        </div>
-
-        {/* CTA */}
-        <div className="bg-accent/10 border border-accent/30 rounded-2xl p-7 text-center">
-          <p className="font-body text-foreground/80 leading-relaxed max-w-lg mx-auto mb-6">
-            Workshop dates and locations are announced on Instagram and TikTok. Send us a WhatsApp message to be added to the notification list.
-          </p>
-          <a
-            href="https://wa.me/27686498593?text=Slm%2C%20I%27d%20like%20to%20find%20out%20about%20upcoming%20in-person%20workshops"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-2 bg-accent hover:bg-accent/90 text-primary font-utility font-bold px-8 py-4 rounded-full transition-all hover:-translate-y-1 hover:shadow-lg"
-          >
-            Enquire via WhatsApp &rarr;
-          </a>
-        </div>
-      </motion.div>
-    </ClassPageLayout>
+            {/* Enquiry: the notify form when the client's script is live, otherwise WhatsApp */}
+            <NotifySection listKey="in-person-workshops" title="In-person workshop" source="in-person-workshops" />
+            {!REGISTER_ENDPOINT && (
+            <section className="bg-bmc-paper pb-24 md:pb-32">
+              <div className={`${CONTAINER} mx-auto max-w-4xl`}>
+                <div className="bmc-reveal flex flex-col items-center gap-6 rounded-[1.75rem] bg-bmc-gold-light/45 p-8 text-center sm:flex-row sm:p-10 sm:text-left">
+                  <SiWhatsapp className="size-12 shrink-0 text-[#25D366]" aria-hidden="true" />
+                  <p className="flex-1 leading-[1.75] text-foreground/85">
+                    Workshop dates and locations are announced on Instagram and TikTok. Send us a WhatsApp message to be added to the notification list.
+                  </p>
+                  <a
+                    href="https://wa.me/27686498593?text=Slm%2C%20I%27d%20like%20to%20find%20out%20about%20upcoming%20in-person%20workshops"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="bmc-btn bmc-btn-primary whitespace-nowrap"
+                  >
+                    Enquire via WhatsApp <ArrowRight size={16} aria-hidden="true" />
+                  </a>
+                </div>
+              </div>
+            </section>
+            )}
+          </>
+        }
+      />
     </>
   );
 }

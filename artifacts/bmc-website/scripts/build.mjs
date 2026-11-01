@@ -17,3 +17,4 @@ const run = (cmd, args) => {
 run(vite, ['build', '--config', 'vite.config.ts']);
 run(vite, ['build', '--config', 'vite.config.ts', '--ssr', 'src/entry-server.tsx', '--outDir', 'dist/server']);
 run(process.execPath, ['scripts/prerender.mjs']);
+run(process.execPath, ['scripts/workshops-json.mjs']);

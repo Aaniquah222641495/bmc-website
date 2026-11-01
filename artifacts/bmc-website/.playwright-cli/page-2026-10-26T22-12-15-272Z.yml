@@ -1,0 +1,243 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - navigation "Main" [ref=e5]:
+        - link "Beginners Madrasah Classes, home" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e7]: Beginners Madrasah Classes
+        - generic [ref=e8]:
+          - list [ref=e9]:
+            - listitem [ref=e10]:
+              - link "Home" [ref=e11] [cursor=pointer]:
+                - /url: /
+            - listitem [ref=e13]:
+              - link "About" [ref=e14] [cursor=pointer]:
+                - /url: /about
+            - listitem [ref=e16]:
+              - link "Programmes" [ref=e17] [cursor=pointer]:
+                - /url: /programmes
+            - listitem [ref=e19]:
+              - link "Testimonials" [ref=e20] [cursor=pointer]:
+                - /url: /testimonials
+            - listitem [ref=e22]:
+              - link "FAQ" [ref=e23] [cursor=pointer]:
+                - /url: /faq
+            - listitem [ref=e25]:
+              - link "Contact" [ref=e26] [cursor=pointer]:
+                - /url: /contact
+          - link "Start Learning" [ref=e28] [cursor=pointer]:
+            - /url: /programmes
+    - main [ref=e29]:
+      - generic [ref=e31]:
+        - generic [ref=e32]:
+          - paragraph [ref=e33]: Est. 2024 · Six programmes · Online and in Cape Town
+          - heading "Beginners Madrasah Classes" [level=1] [ref=e34]
+          - paragraph [ref=e35]: A warm, safe, beginner-friendly Islamic learning space for women and children, online and in-person.
+          - generic [ref=e36]:
+            - link "Register Now" [ref=e37] [cursor=pointer]:
+              - /url: https://wa.me/27686498593
+            - link "View Programmes" [ref=e38] [cursor=pointer]:
+              - /url: /programmes
+        - generic [ref=e41]: Illustration of Mualimah and two students reading the Qur'an at wooden stands
+      - list [ref=e210]:
+        - listitem [ref=e211]:
+          - heading "Beginner Friendly" [level=2] [ref=e219]
+          - paragraph [ref=e220]: No prior knowledge needed. We start from absolute zero.
+        - listitem [ref=e221]:
+          - heading "Safe Environment" [level=2] [ref=e229]
+          - paragraph [ref=e230]: A warm, nurturing space where every question is welcome.
+        - listitem [ref=e231]:
+          - heading "Learn from Anywhere" [level=2] [ref=e239]
+          - paragraph [ref=e240]: Online classes accessible from home, anywhere in the world.
+        - listitem [ref=e241]:
+          - heading "Affordable Learning" [level=2] [ref=e251]
+          - paragraph [ref=e252]: Quality Islamic education from just R150 per month.
+      - generic [ref=e254]:
+        - generic [ref=e255]:
+          - heading "How to start" [level=2] [ref=e263]
+          - paragraph [ref=e264]: No prior knowledge needed. We start from absolute zero.
+        - list [ref=e265]:
+          - listitem [ref=e266]:
+            - img "A woman in a mustard hijab typing on a laptop at a white table" [ref=e268]
+            - paragraph [aria-hidden] [ref=e269]:
+              - generic [ref=e270]: "01"
+            - 'heading "Step 1: Choose a programme" [level=3] [ref=e271]':
+              - generic [ref=e272]: "Step 1:"
+              - text: Choose a programme
+            - paragraph [ref=e273]: "Pick the class that suits you: for women, for children, Qur'an, Hifdh or workshops, online or in person."
+            - link "View programmes" [ref=e274] [cursor=pointer]:
+              - /url: /programmes
+          - listitem [ref=e277]:
+            - img "A closed pink Mushaf resting on a white cloth with pink prayer beads and flowers" [ref=e279]
+            - paragraph [aria-hidden] [ref=e280]:
+              - generic [ref=e281]: "02"
+            - 'heading "Step 2: Register" [level=3] [ref=e282]':
+              - generic [ref=e283]: "Step 2:"
+              - text: Register
+            - paragraph [ref=e284]: Send us a message on WhatsApp and we will help you register.
+            - link "Register on WhatsApp" [ref=e285] [cursor=pointer]:
+              - /url: https://wa.me/27686498593
+          - listitem [ref=e288]:
+            - img "A table with lit candles, two gold lanterns, a small framed print and a cup of coffee" [ref=e290]
+            - paragraph [aria-hidden] [ref=e291]:
+              - generic [ref=e292]: "03"
+            - 'heading "Step 3: Join your first class" [level=3] [ref=e293]':
+              - generic [ref=e294]: "Step 3:"
+              - text: Join your first class
+            - paragraph [ref=e295]: Begin in a warm, nurturing space where every question is welcome.
+      - generic [ref=e297]:
+        - figure "Mualimah Rukeya Founder & Teacher" [ref=e298]:
+          - img "Mualimah Rukeya teaching a workshop" [ref=e300]
+          - generic [ref=e301]:
+            - generic [ref=e302]: Mualimah Rukeya
+            - generic [ref=e303]: Founder & Teacher
+        - generic [ref=e304]:
+          - heading "Born from a passion for teaching" [level=2] [ref=e312]
+          - paragraph [ref=e313]: Alhamdulillah, what started as a small class has grown into a thriving learning community, offering six programmes to hundreds of students across South Africa and beyond.
+          - paragraph [ref=e314]: Mualimah Rukeya has been teaching Islamic sciences since 2024, guiding women and children toward a deeper connection with their faith in a safe, nurturing environment.
+          - paragraph [ref=e315]: She founded Beginners Madrasah Classes to make authentic Islamic education accessible to all, wherever you are.
+          - link "Read Our Story" [ref=e316] [cursor=pointer]:
+            - /url: /about
+      - generic [ref=e320]:
+        - generic [ref=e321]:
+          - heading "Our programmes" [level=2] [ref=e330]
+          - link "See all programmes" [ref=e331] [cursor=pointer]:
+            - /url: /programmes
+        - generic [ref=e334]:
+          - link "Online · Self-paced Women's Online Madrasah Programme tags Beginner-friendly Islamic studies for women 18+. Pre-recorded lessons on Google Classroom so you can learn at your own pace. R150/month Learn more" [ref=e335] [cursor=pointer]:
+            - /url: /programmes/womens-classes
+            - generic [ref=e337]:
+              - paragraph [ref=e338]: Online · Self-paced
+              - heading "Women's Online Madrasah" [level=3] [ref=e339]
+              - list "Programme tags" [ref=e340]:
+                - listitem [ref=e341]: Women
+              - paragraph [ref=e342]: Beginner-friendly Islamic studies for women 18+. Pre-recorded lessons on Google Classroom so you can learn at your own pace.
+              - generic [ref=e343]:
+                - generic [ref=e344]: R150/month
+                - generic [ref=e345]: Learn more
+          - list [ref=e348]:
+            - listitem [ref=e349]:
+              - link "In-Person Workshops Programme tags From R100" [ref=e350] [cursor=pointer]:
+                - /url: /programmes/in-person-workshops
+                - generic [ref=e352]:
+                  - heading "In-Person Workshops" [level=3] [ref=e353]
+                  - list "Programme tags" [ref=e354]:
+                    - listitem [ref=e355]: Workshops
+                    - listitem [ref=e356]: In person
+                  - paragraph [ref=e357]: From R100
+            - listitem [ref=e360]:
+              - 'link "Get Into Qur''an: In Person Programme tags R200/month" [ref=e361] [cursor=pointer]':
+                - /url: /programmes/quran-classes
+                - generic [ref=e363]:
+                  - 'heading "Get Into Qur''an: In Person" [level=3] [ref=e364]'
+                  - list "Programme tags" [ref=e365]:
+                    - listitem [ref=e366]: In person
+                  - paragraph [ref=e367]: R200/month
+            - listitem [ref=e370]:
+              - link "Women's Hifdh Programme Programme tags R200/month" [ref=e371] [cursor=pointer]:
+                - /url: /programmes/hifdh-classes
+                - generic [ref=e373]:
+                  - heading "Women's Hifdh Programme" [level=3] [ref=e374]
+                  - list "Programme tags" [ref=e375]:
+                    - listitem [ref=e376]: Women
+                    - listitem [ref=e377]: Hifdh
+                  - paragraph [ref=e378]: R200/month
+            - listitem [ref=e381]:
+              - link "Children's Online Madrasah Programme tags R150/month" [ref=e382] [cursor=pointer]:
+                - /url: /programmes/childrens-classes
+                - generic [ref=e384]:
+                  - heading "Children's Online Madrasah" [level=3] [ref=e385]
+                  - list "Programme tags" [ref=e386]:
+                    - listitem [ref=e387]: Children
+                  - paragraph [ref=e388]: R150/month
+            - listitem [ref=e391]:
+              - link "Online Workshops & Short Courses Programme tags From R100" [ref=e392] [cursor=pointer]:
+                - /url: /programmes/workshops
+                - generic [ref=e394]:
+                  - heading "Online Workshops & Short Courses" [level=3] [ref=e395]
+                  - list "Programme tags" [ref=e396]:
+                    - listitem [ref=e397]: Workshops
+                  - paragraph [ref=e398]: From R100
+      - generic [ref=e402]:
+        - heading "Moments from our classes" [level=2] [ref=e410]
+        - list "Photos from our classes and workshops" [ref=e411]:
+          - listitem [ref=e412]:
+            - img "A teacher speaking at a workshop, with framed certificates on a table beside her" [ref=e413]
+          - listitem [ref=e414]:
+            - img "A bowl of dates beside an ornate decorative box and an open Qur'an" [ref=e415]
+          - listitem [ref=e416]:
+            - img "Two women sitting outdoors reading together from a book on a small table" [ref=e417]
+          - listitem [ref=e418]:
+            - img "Two women standing together, one holding a framed certificate, in a workshop hall" [ref=e419]
+          - listitem [ref=e420]:
+            - img "A presenter standing in front of a slide titled Wudhu, Ghusl and Salaah Workshop" [ref=e421]
+      - generic [ref=e423]:
+        - heading "What Our Students Say" [level=2] [ref=e432]
+        - figure "Aaliyah Arendse" [ref=e433]:
+          - generic [aria-hidden] [ref=e434]: “
+          - blockquote [ref=e435]: Even though I'm a very shy and nervous person, she makes you feel comfortable in every class. Best decision I've made.
+        - generic [ref=e437]:
+          - figure "Naadhirah Gilbert" [ref=e438]:
+            - blockquote [ref=e439]: “Mualimah takes her time with each topic and always makes sure that everyone is on the same page. The class is perfect for beginners, reverts or even just a refresher course.”
+          - figure "Yasmeen Zingitwa" [ref=e441]:
+            - blockquote [ref=e442]: “I've been amazed at how much I've learned over such a short period of time. I encourage anyone considering joining to take this step!”
+        - link "Read All Stories" [ref=e445] [cursor=pointer]:
+          - /url: /testimonials
+      - generic [ref=e449]:
+        - img "Illustration of a teacher reading with a circle of women students, each with a book, inside an arch" [ref=e452]
+        - generic [ref=e453]:
+          - heading "A Safe Space for Growth" [level=2] [ref=e462]
+          - paragraph [ref=e463]: Whether you are taking your very first steps or returning to your roots, there is a place for you here.
+          - generic [ref=e464]:
+            - link "Start Your Journey" [ref=e465] [cursor=pointer]:
+              - /url: /programmes
+            - link "Chat on WhatsApp" [ref=e466] [cursor=pointer]:
+              - /url: https://wa.me/27686498593
+    - contentinfo [ref=e469]:
+      - generic [ref=e470]:
+        - generic [ref=e471]:
+          - generic [ref=e472]:
+            - img "Illustration of Mualimah and two students reading the Qur'an, with the Beginners Madrasah Classes banner" [ref=e474]
+            - paragraph [ref=e475]: Foundations of Islamic Knowledge. A warm, safe, beginner-friendly Islamic learning space for women and children.
+          - navigation "Footer" [ref=e476]:
+            - heading "Quick Links" [level=2] [ref=e477]
+            - list [ref=e478]:
+              - listitem [ref=e479]:
+                - link "Home" [ref=e480] [cursor=pointer]:
+                  - /url: /
+              - listitem [ref=e481]:
+                - link "About Mualimah Rukeya" [ref=e482] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e483]:
+                - link "Programmes" [ref=e484] [cursor=pointer]:
+                  - /url: /programmes
+              - listitem [ref=e485]:
+                - link "Testimonials" [ref=e486] [cursor=pointer]:
+                  - /url: /testimonials
+              - listitem [ref=e487]:
+                - link "FAQ" [ref=e488] [cursor=pointer]:
+                  - /url: /faq
+              - listitem [ref=e489]:
+                - link "Contact Us" [ref=e490] [cursor=pointer]:
+                  - /url: /contact
+          - generic [ref=e491]:
+            - heading "Connect" [level=2] [ref=e492]
+            - list [ref=e493]:
+              - listitem [ref=e494]:
+                - link "068 649 8593" [ref=e495] [cursor=pointer]:
+                  - /url: https://wa.me/27686498593
+              - listitem [ref=e499]:
+                - link "@beginners_classes" [ref=e500] [cursor=pointer]:
+                  - /url: https://instagram.com/beginners_classes
+              - listitem [ref=e504]:
+                - link "@rukeyabaradien_" [ref=e505] [cursor=pointer]:
+                  - /url: https://tiktok.com/@rukeyabaradien_
+              - listitem [ref=e509]: beginnersmadrasah.co.za
+        - generic [ref=e510]:
+          - paragraph [ref=e511]: © 2026 Beginners Madrasah Classes. All rights reserved.
+          - paragraph [ref=e517]:
+            - text: Website by
+            - link "Digital Pantry" [ref=e518] [cursor=pointer]:
+              - /url: https://digitalpantry.co.za
+  - region "Notifications (F8)":
+    - list
