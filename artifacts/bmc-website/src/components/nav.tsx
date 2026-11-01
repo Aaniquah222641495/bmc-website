@@ -1,140 +1,148 @@
 import { Link, useLocation } from 'wouter';
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import { GirihPattern } from '@/components/ornaments';
+
+const NAV_LINKS = [
+  { label: 'Home', href: '/' },
+  { label: 'About', href: '/about' },
+  { label: 'Programmes', href: '/programmes' },
+  { label: 'Testimonials', href: '/testimonials' },
+  { label: 'FAQ', href: '/faq' },
+  { label: 'Contact', href: '/contact' },
+];
 
 export function Nav() {
   const [location] = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => setIsScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const navLinks = [
-    { label: 'Home', href: '/' },
-    { label: 'About', href: '/about' },
-    { label: 'Programmes', href: '/programmes' },
-    { label: 'Testimonials', href: '/testimonials' },
-    { label: 'FAQ', href: '/faq' },
-    { label: 'Contact', href: '/contact' },
-  ];
+  // Close the menu on Escape and lock page scroll while it is open.
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false);
+    document.addEventListener('keydown', onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [open]);
+
+  useEffect(() => setOpen(false), [location]);
 
   return (
     <>
-      <nav
+      <header
         className={cn(
-          'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
-          isScrolled ? 'bg-card shadow-sm py-4' : 'bg-transparent py-6'
+          'fixed top-0 inset-x-0 z-50 bg-background/95 backdrop-blur-md transition-shadow duration-300',
+          isScrolled ? 'shadow-[0_18px_32px_-22px_hsl(158_44%_8%/0.4)]' : 'shadow-none',
         )}
       >
-        <div className="container mx-auto px-4 md:px-8 flex items-center justify-between">
-          <Link href="/">
-            <div className="flex items-center gap-3 cursor-pointer group">
-              <img src="/assets/bmc-logo.webp" alt="BMC Logo" className="h-10 w-auto object-contain transition-transform group-hover:scale-105" />
-            </div>
+        <nav aria-label="Main" className="container mx-auto px-5 md:px-10 h-[4.5rem] flex items-center justify-between">
+          <Link href="/" aria-label="Beginners Madrasah Classes, home" className="rounded-md inline-flex min-h-11 items-center gap-2.5">
+            <img src="/assets/mascot-figures-sm.webp" alt="" width={231} height={128} className="h-11 sm:h-14 w-auto shrink-0" />
+            <span className="flex flex-col font-display text-primary leading-[1.02]">
+              <span className="font-semibold text-[1.05rem] sm:text-[1.3rem] tracking-[0.005em]">Beginners Madrasah</span>
+              <span className="italic font-normal text-bmc-gold-ink text-[0.98rem] sm:text-[1.18rem]">Classes</span>
+            </span>
           </Link>
 
-          {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-8">
-            <div className="flex gap-6">
-              {navLinks.map((link) => (
-                <Link key={link.href} href={link.href}>
-                  <span
-                    className={cn(
-                      'font-utility text-sm font-medium tracking-wide transition-colors relative group py-1 cursor-pointer',
-                      location === link.href ? 'text-primary' : 'text-foreground/80 hover:text-primary'
-                    )}
-                  >
-                    {link.label}
-                    <span
+          <div className="hidden lg:flex items-center gap-9">
+            <ul className="flex gap-6 lg:gap-8">
+              {NAV_LINKS.map((link) => {
+                const active = location === link.href;
+                return (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      aria-current={active ? 'page' : undefined}
                       className={cn(
-                        'absolute bottom-0 left-0 h-[2px] bg-accent transition-all duration-300',
-                        location === link.href ? 'w-full' : 'w-0 group-hover:w-full'
+                        'group relative inline-flex min-h-11 items-center px-0.5 font-utility text-[0.9rem] font-semibold tracking-[0.03em] transition-colors',
+                        active ? 'text-primary' : 'text-foreground/75 hover:text-primary',
                       )}
-                    />
-                  </span>
-                </Link>
-              ))}
-            </div>
-            
-            <Link href="/programmes" className="bg-accent hover:bg-accent/90 text-primary font-utility font-medium px-6 py-2.5 rounded-full transition-all hover:shadow-md active:scale-95 cursor-pointer">
-                Start Learning
+                    >
+                      <span
+                        aria-hidden="true"
+                        className={cn(
+                          'absolute left-1/2 bottom-1 size-[5px] -translate-x-1/2 rotate-45 bg-[image:var(--bmc-gold-metal)] transition-[opacity,transform] duration-300 motion-reduce:transition-none',
+                          active ? 'opacity-100 scale-100' : 'opacity-0 scale-50 group-hover:opacity-60 group-hover:scale-100',
+                        )}
+                      />
+                      {link.label}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+            <Link
+              href="/programmes"
+              className="bmc-btn bmc-btn-primary !min-h-11 !px-6 !py-2 !text-[0.88rem]"
+            >
+              Find your class
             </Link>
           </div>
 
-          {/* Mobile Toggle */}
           <button
-            className="md:hidden text-primary p-2"
-            onClick={() => setIsMobileMenuOpen(true)}
+            type="button"
+            className="lg:hidden p-2 -mr-2 text-primary rounded-md"
+            onClick={() => setOpen(true)}
             aria-label="Open menu"
+            aria-expanded={open}
+            aria-controls="mobile-menu"
           >
             <Menu className="w-6 h-6" />
           </button>
-        </div>
-      </nav>
+        </nav>
+      </header>
 
-      {/* Mobile Menu Overlay */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: '-100%' }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: '-100%' }}
-            transition={{ type: 'tween', duration: 0.3 }}
-            className="fixed inset-0 z-[60] bg-primary flex flex-col"
-          >
-            <div className="flex justify-end p-6">
-              <button
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="text-primary-foreground p-2"
-                aria-label="Close menu"
-              >
-                <X className="w-8 h-8" />
-              </button>
-            </div>
-            
-            <div className="flex-1 flex flex-col items-center justify-center gap-8 pb-20">
-              {navLinks.map((link, i) => (
-                <motion.div
-                  key={link.href}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 + i * 0.1 }}
+      {open && (
+        <div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Menu" className="fixed inset-0 z-[60] bg-primary text-primary-foreground flex flex-col overflow-hidden">
+          <GirihPattern />
+          <div className="relative flex items-center justify-between px-5 h-[4.5rem]">
+            <span className="font-display text-lg">Beginners Madrasah</span>
+            <button
+              type="button"
+              onClick={() => setOpen(false)}
+              className="p-2 -mr-2 rounded-md focus-visible:outline-bmc-gold-light"
+              aria-label="Close menu"
+              autoFocus
+            >
+              <X className="w-7 h-7" />
+            </button>
+          </div>
+          <ul className="relative flex-1 flex flex-col justify-center gap-1 px-8 pb-16">
+            {NAV_LINKS.map((link) => (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  aria-current={location === link.href ? 'page' : undefined}
+                  className={cn(
+                    'block py-3 font-display font-normal text-3xl tracking-tight',
+                    location === link.href ? 'text-bmc-gold-light' : 'text-primary-foreground hover:text-bmc-gold-light',
+                  )}
                 >
-                  <Link href={link.href}>
-                    <span 
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className={cn(
-                        "text-3xl font-display font-bold text-primary-foreground transition-colors cursor-pointer",
-                        location === link.href ? "text-accent" : "hover:text-accent"
-                      )}
-                    >
-                      {link.label}
-                    </span>
-                  </Link>
-                </motion.div>
-              ))}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 + navLinks.length * 0.1 }}
-                className="mt-8"
-              >
-                <Link href="/programmes" onClick={() => setIsMobileMenuOpen(false)} className="bg-accent text-primary font-utility text-lg font-bold px-8 py-4 rounded-full inline-block">
-                    Start Learning
+                  {link.label}
                 </Link>
-              </motion.div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+              </li>
+            ))}
+            <li className="pt-6">
+              <Link href="/programmes" className="bmc-btn bmc-btn-light">
+                Find your class
+              </Link>
+            </li>
+          </ul>
+        </div>
+      )}
     </>
   );
 }

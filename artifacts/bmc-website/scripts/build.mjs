@@ -8,6 +8,9 @@ import { fileURLToPath } from 'node:url';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const vite = path.join(root, 'node_modules', '.bin', 'vite');
 const env = { ...process.env, BUILD_TIME: process.env.BUILD_TIME ?? new Date().toISOString() };
+// Preview builds used to run the forms in demo mode. Since 2026-11-01 her Apps Script endpoint is
+// live (src/data/registration.ts), so previews send real registrations, like main. To test without
+// sending anything, build with VITE_REGISTER_DEMO=1.
 
 const run = (cmd, args) => {
   const r = spawnSync(cmd, args, { cwd: root, env, stdio: 'inherit' });
@@ -17,3 +20,4 @@ const run = (cmd, args) => {
 run(vite, ['build', '--config', 'vite.config.ts']);
 run(vite, ['build', '--config', 'vite.config.ts', '--ssr', 'src/entry-server.tsx', '--outDir', 'dist/server']);
 run(process.execPath, ['scripts/prerender.mjs']);
+run(process.execPath, ['scripts/workshops-json.mjs']);

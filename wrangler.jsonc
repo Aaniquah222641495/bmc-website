@@ -5,6 +5,8 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "beginners-madrasah",
   "compatibility_date": "2026-10-01",
+  // Live only on beginnersmadrasah.co.za; the production workers.dev address stays off.
+  "workers_dev": false,
   "assets": {
     "directory": "./artifacts/bmc-website/dist/public",
     // Unknown paths get our prerendered 404.html with a real 404 status.

@@ -1,45 +1,57 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useId, useState } from 'react';
 import { ChevronDown } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { SiWhatsapp } from 'react-icons/si';
+import { IconTile, LaptopClassIcon, PurseIcon, SeedlingIcon } from '@/components/ornaments/cute-icons';
 import { Seo } from '@/components/seo';
 import { CATEGORIES } from '@/data/faq';
 import { faqJsonLd } from '@/lib/structured-data';
+import { ClosingBand, CONTAINER, PageHeader } from '@/components/page-shell';
 
+const WHATSAPP = "https://wa.me/27686498593?text=Slm%2C%20I%27d%20like%20to%20find%20out%20more%20about%20your%20programmes";
+
+/** Each topic's icon says what the topic is about. */
+const TOPIC_ICON: Record<string, typeof SeedlingIcon> = {
+  'Getting started': SeedlingIcon,
+  'Classes and logistics': LaptopClassIcon,
+  'Payments and policies': PurseIcon,
+};
+
+const slug = (label: string) => label.toLowerCase().replace(/&/g, 'and').replace(/[^a-z]+/g, '-');
 
 function FaqItem({ q, a }: { q: string; a: string }) {
   const [open, setOpen] = useState(false);
+  const id = useId();
 
   return (
-    <div className="border-b border-border/60 last:border-b-0">
-      <button
-        onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between gap-4 py-5 text-left group"
-      >
-        <span className="font-display text-base md:text-lg text-primary group-hover:text-accent transition-colors leading-snug">
-          {q}
-        </span>
-        <span className={cn(
-          'flex-shrink-0 w-7 h-7 rounded-full border border-accent/40 flex items-center justify-center text-accent transition-all',
-          open ? 'bg-accent text-primary rotate-180' : 'group-hover:border-accent'
-        )}>
-          <ChevronDown className="w-3.5 h-3.5" />
-        </span>
-      </button>
-
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: 'easeInOut' }}
-            className="overflow-hidden"
+    <div className={`rounded-2xl bg-card shadow-soft transition-shadow duration-300 ${open ? 'shadow-lift' : 'hover:shadow-lift'}`}>
+      <h3>
+        <button
+          type="button"
+          onClick={() => setOpen(!open)}
+          aria-expanded={open}
+          aria-controls={id}
+          className="group flex min-h-14 w-full items-center justify-between gap-5 rounded-2xl px-5 py-4 text-left md:px-6"
+        >
+          <span className="font-display text-[1.05rem] font-medium leading-snug text-primary md:text-[1.2rem]">{q}</span>
+          <span
+            aria-hidden="true"
+            className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-all duration-300 motion-reduce:transition-none ${
+              open ? 'rotate-180 bg-primary text-bmc-gold-light' : 'bg-bmc-gold-light/35 text-bmc-gold-ink group-hover:bg-bmc-gold-light/60'
+            }`}
           >
-            <p className="font-body text-foreground/75 leading-relaxed pb-5 pr-11">{a}</p>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            <ChevronDown className="h-4 w-4" />
+          </span>
+        </button>
+      </h3>
+      <div
+        id={id}
+        aria-hidden={!open}
+        className={`grid transition-[grid-template-rows] duration-300 ease-out motion-reduce:transition-none ${open ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}
+      >
+        <div className="overflow-hidden">
+          <p className={`px-5 pb-6 pr-16 leading-[1.75] text-foreground/85 md:px-6 md:pr-20 ${open ? '' : 'invisible'}`}>{a}</p>
+        </div>
+      </div>
     </div>
   );
 }
@@ -53,87 +65,78 @@ export default function Faq() {
         path="/faq"
         jsonLd={faqJsonLd()}
       />
-      <div className="min-h-screen bg-background pt-32 pb-24 relative overflow-hidden">
+      <PageHeader
+        eyebrow="Need help?"
+        title="Frequently asked questions"
+        intro="Can't find your answer here? We're always happy to help."
+        art={<TopicCards />}
+      >
+        <a href={WHATSAPP} target="_blank" rel="noreferrer" className="bmc-btn bmc-btn-light">
+          <SiWhatsapp className="size-[1.1rem]" aria-hidden="true" />
+          Ask us on WhatsApp
+        </a>
+      </PageHeader>
 
-      {/* Hanging lanterns — bleeds off the right edge, alongside the cards */}
-      <motion.img
-        initial={{ opacity: 0, y: -16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1, duration: 0.6 }}
-        src="/assets/faq-lanterns.webp"
-        alt=""
-        aria-hidden="true"
-        className="hidden lg:block absolute top-16 right-0 xl:right-6 w-80 xl:w-[26rem] pointer-events-none select-none"
-      />
-
-      <div className="container mx-auto px-4 max-w-3xl relative">
-
-        {/* Header */}
-        <div className="text-center mb-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
-            <p className="font-utility text-xs text-accent uppercase tracking-widest mb-3">Need help?</p>
-            <h1 className="text-4xl md:text-5xl font-display text-primary mb-4">
-              Frequently Asked Questions
-            </h1>
-            <div className="w-24 h-1 bg-accent mx-auto mb-6" />
-            <p className="font-body text-foreground/70 text-lg">
-              Can't find your answer here? We're always happy to help.
-            </p>
-          </motion.div>
-        </div>
-
-        {/* FAQ Categories */}
-        <div className="relative space-y-8">
-          {CATEGORIES.map((category, ci) => (
-            <motion.div
-              key={category.label}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: ci * 0.08 }}
-              className="relative bg-card border border-border rounded-2xl shadow-sm px-7 md:px-8 py-2"
-            >
-              <div className="flex items-center gap-3 pt-5 pb-1">
-                <img src="/assets/bullet.webp" alt="" width={16} height={16} loading="lazy" decoding="async" className="flex-shrink-0" />
-                <h2 className="font-utility text-xs text-accent uppercase tracking-widest font-bold">
-                  {category.label}
-                </h2>
+      <section className="bg-bmc-paper pb-28 pt-16 md:pb-36 md:pt-24">
+        <div className={`${CONTAINER} mx-auto max-w-6xl space-y-16 md:space-y-24`}>
+          {CATEGORIES.map((category) => {
+            const Icon = TOPIC_ICON[category.label];
+            return (
+              <div key={category.label} id={slug(category.label)} className="bmc-reveal grid scroll-mt-28 grid-cols-1 gap-6 lg:grid-cols-[0.7fr_2fr] lg:gap-14">
+                <div className="lg:sticky lg:top-32 lg:self-start">
+                  {Icon && (
+                    <span className="mb-4 block"><IconTile Icon={Icon} size="lg" /></span>
+                  )}
+                  <h2 className="text-primary leading-[1.12]" style={{ fontSize: 'clamp(1.6rem, 2.6vw, 2.1rem)' }}>{category.label}</h2>
+                  <p className="mt-2 font-utility text-[0.85rem] text-foreground/65">{category.items.length} questions</p>
+                </div>
+                <div className="space-y-3">
+                  {category.items.map((item, i) => (
+                    <FaqItem key={i} q={item.q} a={item.a} />
+                  ))}
+                </div>
               </div>
-              <div>
-                {category.items.map((item, i) => (
-                  <FaqItem key={i} q={item.q} a={item.a} />
-                ))}
-              </div>
-            </motion.div>
-          ))}
+            );
+          })}
         </div>
+      </section>
 
-        {/* CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mt-16 text-center bg-primary rounded-2xl p-10 text-white"
-        >
-          <div className="text-3xl text-accent mb-4">★</div>
-          <h2 className="font-display text-2xl mb-3">Still have questions?</h2>
-          <p className="font-body text-white/80 mb-6">
-            We'd love to hear from you. Send us a message on WhatsApp and we'll get back to you as soon as possible.
-          </p>
-          <a
-            href="https://wa.me/27686498593?text=Slm%2C%20I%27d%20like%20to%20find%20out%20more%20about%20your%20programmes"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-3 bg-accent hover:bg-accent/90 text-primary font-utility font-bold px-8 py-4 rounded-full transition-all hover:-translate-y-1 hover:shadow-lg"
-          >
+      <ClosingBand
+        title="Still have questions?"
+        actions={
+          <a href={WHATSAPP} target="_blank" rel="noreferrer" className="bmc-btn bmc-btn-primary">
+            <SiWhatsapp className="size-[1.1rem]" aria-hidden="true" />
             Chat on WhatsApp
           </a>
-        </motion.div>
-      </div>
-      </div>
+        }
+      >
+        We'd love to hear from you. Send us a message on WhatsApp and we'll get back to you as soon as possible.
+      </ClosingBand>
     </>
+  );
+}
+
+/** Hero art: the three topics as jump links, each with its own icon and question count. */
+function TopicCards() {
+  return (
+    <nav aria-label="FAQ topics" className="mx-auto grid w-full max-w-md gap-3 lg:ml-auto">
+      {CATEGORIES.map((c) => {
+        const Icon = TOPIC_ICON[c.label];
+        return (
+          <a
+            key={c.label}
+            href={`#${slug(c.label)}`}
+            className="group flex items-center gap-4 rounded-[1.25rem] bg-card p-4 pr-5 shadow-soft transition-shadow duration-300 hover:shadow-lift"
+          >
+            {Icon && <IconTile Icon={Icon} />}
+            <span className="min-w-0 flex-1">
+              <span className="block font-display text-[1.2rem] leading-tight text-primary">{c.label}</span>
+              <span className="mt-0.5 block font-utility text-[0.82rem] text-foreground/65">{c.items.length} questions</span>
+            </span>
+            <ChevronDown size={18} className="-rotate-90 text-bmc-gold-ink transition-transform group-hover:translate-x-0.5 motion-reduce:transition-none" aria-hidden="true" />
+          </a>
+        );
+      })}
+    </nav>
   );
 }

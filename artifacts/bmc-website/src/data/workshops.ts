@@ -32,7 +32,7 @@ export interface Workshop {
   subtitle?: string;
   /** Shown on the past-workshops grid, e.g. "Online" or "In-Person". */
   typeLabel?: string;
-  /** Available workshops only: Format / Date / Time / Investment chips. */
+  /** Available workshops only: Format / Date / Time / Fee chips. */
   details?: WorkshopDetail[];
   topicsLabel?: string;
   topics?: string[];

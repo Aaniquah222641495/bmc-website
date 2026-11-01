@@ -1,21 +1,40 @@
-import { useState } from 'react';
 import { Link } from 'wouter';
-import { motion, AnimatePresence } from 'framer-motion';
-import { PROGRAMMES, type ProgrammeType } from '@/data/programmes';
+import { ArrowRight, CalendarDays, Laptop, MapPin, UserRound } from 'lucide-react';
+import { SiWhatsapp } from 'react-icons/si';
+import { PROGRAMMES, programmeByPath, type ProgrammeType } from '@/data/programmes';
+import { ClosedBadge } from '@/components/closed-badge';
 import { Seo } from '@/components/seo';
 import { programmesJsonLd } from '@/lib/structured-data';
+import { CARD, ClosingBand, CONTAINER, PageHeader } from '@/components/page-shell';
+import { InPersonArt, OnlineArt } from '@/components/ornaments/programmes-art';
+import { IconTile, LettersIcon, MushafIcon, SeedlingIcon } from '@/components/ornaments/cute-icons';
 
+// Fewer choices for a first-time visitor: three starting points, each backed by the site's own facts
+// (the FAQ names the Women's Online Madrasah as the place for reverts and beginners to start).
+const QUICK_PICKS = [
+  { Icon: SeedlingIcon, who: 'New to it all, or a revert?', name: "Women's Online Madrasah", note: 'Learn at your own pace. R150 a month.', href: '/programmes/womens-classes' },
+  { Icon: LettersIcon, who: 'For your child (6 to 13)', name: "Children's Online Madrasah", note: 'Live classes three times a week. R150 a month.', href: '/programmes/childrens-classes' },
+  { Icon: MushafIcon, who: 'Rather learn in person?', name: "Get Into Qur'an", note: "For women, Saturday mornings in Mitchell's Plain. R200 a month.", href: '/programmes/quran-classes' },
+];
 
 type Tab = ProgrammeType;
 
-const TABS: { id: Tab; label: string; sub: string }[] = [
-  { id: 'online',   label: 'Online Classes',   sub: '4 programmes' },
-  { id: 'inperson', label: 'In-Person Classes', sub: '2 programmes' },
+const WHATSAPP = 'https://wa.me/27686498593';
+
+const FORMAT_LABEL: Record<Tab, string> = { online: 'Online', inperson: 'In person' };
+
+const TABS: { id: Tab; label: string; sub: string; Art: typeof OnlineArt }[] = [
+  { id: 'online',   label: 'Learn online',    sub: 'From home, live or in your own time', Art: OnlineArt },
+  { id: 'inperson', label: 'Learn in person', sub: 'Classes and workshops in Cape Town', Art: InPersonArt },
 ];
 
 export default function Programmes() {
-  const [active, setActive] = useState<Tab>('online');
-  const visible = PROGRAMMES.filter(p => p.type === active);
+  // Both groups are always on the page (only six programmes): the header choices jump to them.
+  const jump = (id: Tab) => (e: React.MouseEvent) => {
+    e.preventDefault();
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.getElementById(id)?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+  };
 
   return (
     <>
@@ -25,123 +44,152 @@ export default function Programmes() {
         path="/programmes"
         jsonLd={programmesJsonLd()}
       />
-      <div className="min-h-screen bg-background pt-32 pb-20">
-      <div className="container mx-auto px-4 max-w-6xl">
-
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-12 max-w-3xl mx-auto"
-        >
-          <h1 className="text-4xl md:text-5xl font-display text-primary mb-4">Our Programmes</h1>
-          <div className="w-24 h-1 bg-accent mx-auto mb-6" />
-          <p className="font-body text-lg text-foreground/70 leading-relaxed">
-            Designed to meet you wherever you are on your journey, whether you're taking your very first steps or looking to deepen your knowledge. <span className="text-accent">☽</span>
-          </p>
-        </motion.div>
-
-        {/* Tabs */}
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="flex justify-center mb-12"
-        >
-          <div className="inline-flex bg-card border border-border rounded-2xl p-1.5 gap-1">
-            {TABS.map(({ id, label, sub }) => (
-              <button
+      <PageHeader
+        title="Find your class"
+        intro="Every class is made for beginners. Learn online from home, or in person in Cape Town."
+      >
+          {/* The choice is the hero: two drawn scenes that jump to each group below */}
+        <nav aria-label="Choose how you would like to learn" className="mx-auto grid w-full max-w-3xl grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-5">
+          {TABS.map(({ id, label, sub, Art }) => {
+            const on = true;
+            const count = PROGRAMMES.filter((p) => p.type === id).length;
+            return (
+              <a
                 key={id}
-                onClick={() => setActive(id)}
-                className={`relative px-8 py-3 rounded-xl font-utility text-sm font-bold transition-all duration-200 flex flex-col items-center gap-0.5 ${
-                  active === id
-                    ? 'bg-primary text-white shadow-md'
-                    : 'text-foreground/60 hover:text-primary'
+                href={`#${id}`}
+                onClick={jump(id)}
+                className={`group flex items-center gap-4 rounded-[1.4rem] p-3 pr-5 text-left transition-all duration-300 motion-reduce:transition-none sm:p-5 sm:pb-6 ${
+                  on
+                    ? 'bg-card shadow-lift ring-2 ring-[hsl(var(--bmc-gold)/0.7)]'
+                    : 'bg-bmc-paper shadow-soft hover:bg-card'
                 }`}
               >
-                {active === id && (
-                  <motion.div
-                    layoutId="tab-bg"
-                    className="absolute inset-0 bg-primary rounded-xl"
-                    style={{ zIndex: 0 }}
-                  />
-                )}
-                <span className="relative z-10 tracking-wide">{label}</span>
-                <span className={`relative z-10 text-[0.65rem] font-normal tracking-widest uppercase ${active === id ? 'text-accent' : 'text-foreground/40'}`}>
-                  {sub}
+                <OnlineOrInPerson Art={Art} on={on} />
+                <span className="min-w-0">
+                <span className="block font-display text-[1.25rem] leading-tight text-primary sm:text-[1.35rem]">{label}</span>
+                <span className="mt-1 block font-utility text-[0.85rem] leading-snug text-foreground/70">{sub}</span>
+                <span className={`mt-2 block font-utility text-[0.68rem] font-bold uppercase tracking-[0.14em] ${on ? 'text-bmc-gold-ink' : 'text-foreground/55'}`}>
+                  {count} programmes
                 </span>
-              </button>
-            ))}
+                </span>
+              </a>
+            );
+          })}
+        </nav>
+      </PageHeader>
+
+      <section className="bg-bmc-paper pb-24 pt-16 md:pb-32 md:pt-24">
+        <div className={CONTAINER}>
+          <div className="mx-auto mb-14 max-w-6xl md:mb-20">
+            <h2 className="mb-6 text-center text-[1.6rem] leading-tight text-primary md:text-[1.9rem]">Not sure? Start here</h2>
+            <ul className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-5">
+              {QUICK_PICKS.map(({ Icon, who, name, note, href }) => (
+                <li key={href} className="flex">
+                  <Link href={href} className="bmc-lift group flex w-full items-start gap-4 rounded-[1.25rem] bg-card p-5 shadow-soft transition-shadow duration-300 hover:shadow-lift">
+                    <IconTile Icon={Icon} />
+                    <span className="min-w-0">
+                      <span className="bmc-eyebrow block !text-[0.74rem]">{who}</span>
+                      <span className="mt-1 block font-display text-[1.18rem] leading-snug text-primary">{name}</span>
+                      <span className="mt-1 block text-[0.92rem] leading-[1.55] text-foreground/75">{note}</span>
+                      {programmeByPath(href.replace('/programmes', ''))?.registrationClosed && <ClosedBadge className="mt-2" />}
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
-        </motion.div>
+          {TABS.map(({ id, label }) => (
+            <section key={id} id={id} aria-labelledby={`${id}-title`} className="scroll-mt-24 [&+&]:mt-16 md:[&+&]:mt-24">
+              <h2 id={`${id}-title`} className="mx-auto mb-8 max-w-6xl text-[1.6rem] leading-tight text-primary md:text-[1.9rem]">{label}</h2>
+              <ul className="mx-auto grid max-w-6xl grid-cols-1 gap-8 md:grid-cols-2 lg:gap-10">
+              {PROGRAMMES.filter((p) => p.type === id).map((p) => {
+                    return (
+                      <li key={p.path} className="flex">
+                        <Link
+                          href={`/programmes${p.path}`}
+                          className={`group flex w-full flex-col p-3 transition-shadow duration-500 hover:shadow-lift sm:p-4 ${CARD} bmc-lift`}
+                        >
+                          <div className={`relative aspect-[2/1] overflow-hidden rounded-[0.9rem] bg-gradient-to-br ${p.gradient}`}>
+                            {p.image && (
+                              <img
+                                src={p.image}
+                                alt=""
+                                width={1200}
+                                height={750}
+                                loading="lazy"
+                                decoding="async"
+                                style={{ objectPosition: p.imagePosition ?? 'top' }}
+                                className="h-full w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.02] motion-reduce:transition-none"
+                              />
+                            )}
+                            <span className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-card/95 px-3 py-1 font-utility text-[0.72rem] font-bold uppercase tracking-[0.12em] text-primary shadow-soft">
+                              <span className={`size-1.5 rounded-full ${p.type === 'online' ? 'bg-[#25D366]' : 'bg-bmc-gold'}`} aria-hidden="true" />
+                              {FORMAT_LABEL[p.type]}
+                            </span>
+                          </div>
+                          <div className="flex flex-1 flex-col px-2 pb-3 pt-5 sm:px-3">
+                            {p.registrationClosed && <ClosedBadge className="mb-2 self-start" />}
+                            <h3 className="text-[1.5rem] leading-[1.15] text-primary">{p.title}</h3>
+                            <Facts p={p} />
+                            <p className="mt-3 flex-1 text-[0.98rem] leading-[1.65] text-foreground/80">{p.descLong}</p>
+                            <div className="mt-5 flex items-center justify-between">
+                              <span className="font-display text-xl font-medium text-primary">{p.price}</span>
+                              <span className="bmc-link !min-h-0 group-hover:text-bmc-gold-ink">
+                                View details
+                                <ArrowRight size={15} className="transition-transform group-hover:translate-x-1 motion-reduce:transition-none" aria-hidden="true" />
+                              </span>
+                            </div>
+                          </div>
+                        </Link>
+                      </li>
+                    );
+                  })}
+              </ul>
+            </section>
+          ))}
+        </div>
+      </section>
 
-        {/* Cards grid */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={active}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.25 }}
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
-          >
-            {visible.map(({ title, path, descLong: desc, tag, price, image, imagePosition, gradient }, i) => (
-              <motion.div
-                key={path}
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.07 }}
-                className="h-full"
-              >
-                <Link href={`/programmes${path}`}>
-                  <div className="bg-card rounded-2xl border border-border hover:border-accent hover:shadow-xl transition-all cursor-pointer h-full flex flex-col group overflow-hidden">
-
-                    {/* Image block */}
-                    <div className={`relative w-full h-52 overflow-hidden bg-gradient-to-br ${gradient} shrink-0`}>
-                      {image ? (
-                        <img
-                          src={image}
-                          alt={title}
-                          loading="lazy"
-                          style={{ objectPosition: imagePosition ?? 'top' }}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        />
-                      ) : (
-                        <div
-                          className="absolute inset-0 opacity-15"
-                          style={{
-                            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 6 L32.5 16 L42 13 L36 21 L46 25 L36 29 L42 37 L32.5 34 L30 44 L27.5 34 L18 37 L24 29 L14 25 L24 21 L18 13 L27.5 16 Z' fill='none' stroke='%23C9A84C' stroke-width='0.8'/%3E%3C/svg%3E")`,
-                          }}
-                        />
-                      )}
-                      <span className="absolute top-3 left-3 bg-black/40 backdrop-blur-sm text-white font-utility text-[0.65rem] uppercase tracking-widest px-2.5 py-1 rounded-full">
-                        {tag}
-                      </span>
-                    </div>
-
-                    {/* Content */}
-                    <div className="p-6 flex flex-col flex-1">
-                      <h3 className="text-xl font-display text-primary mb-2 leading-snug group-hover:text-accent transition-colors">
-                        {title}
-                      </h3>
-                      <p className="text-foreground/65 font-body text-sm leading-relaxed flex-1">{desc}</p>
-                      <div className="flex items-center justify-between mt-5 pt-4 border-t border-border">
-                        <span className="font-utility text-xs font-bold text-accent bg-accent/10 px-3 py-1 rounded-full">{price}</span>
-                        <span className="text-primary font-utility font-bold group-hover:text-accent transition-colors flex items-center gap-1 text-sm">
-                          View Details <span className="group-hover:translate-x-1 transition-transform inline-block">&rarr;</span>
-                        </span>
-                      </div>
-                    </div>
-
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
-          </motion.div>
-        </AnimatePresence>
-
-      </div>
-      </div>
+      <ClosingBand
+        title="Not sure where to start?"
+        actions={
+          <a href={WHATSAPP} target="_blank" rel="noreferrer" className="bmc-btn bmc-btn-primary">
+            <SiWhatsapp className="size-[1.1rem]" aria-hidden="true" />
+            Ask us on WhatsApp
+          </a>
+        }
+      >
+        Send us a message and we will help you choose the class that suits you.
+      </ClosingBand>
     </>
+  );
+}
+
+function OnlineOrInPerson({ Art, on }: { Art: typeof OnlineArt; on: boolean }) {
+  return (
+    <span className={`block w-28 shrink-0 overflow-hidden rounded-2xl bg-bmc-paper p-1.5 transition-transform sm:w-32 duration-500 motion-reduce:transition-none ${on ? '' : 'group-hover:-translate-y-0.5'}`}>
+      <Art className={`block h-auto w-full transition-opacity duration-300 ${on ? 'opacity-100' : 'opacity-75'}`} />
+    </span>
+  );
+}
+
+/** Quick facts: each icon names the fact beside it (when / where / who). Empty facts are hidden. */
+function Facts({ p }: { p: (typeof PROGRAMMES)[number] }) {
+  const facts = [
+    { Icon: CalendarDays, label: 'When', value: p.when },
+    { Icon: p.type === 'online' ? Laptop : MapPin, label: 'Where', value: p.where },
+    { Icon: UserRound, label: 'For', value: p.who },
+  ].filter((f) => f.value);
+  if (!facts.length) return null;
+  return (
+    <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 font-utility text-[0.88rem] text-foreground/80">
+      {facts.map(({ Icon, label, value }) => (
+        <li key={label} className="inline-flex items-center gap-1.5">
+          <Icon size={16} className="shrink-0 text-bmc-gold-ink" aria-hidden="true" />
+          <span className="sr-only">{label}: </span>
+          {value}
+        </li>
+      ))}
+    </ul>
   );
 }

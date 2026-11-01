@@ -1,50 +1,133 @@
 import { Link } from 'wouter';
-import { motion } from 'framer-motion';
-import { Wifi, ShieldCheck, BadgeDollarSign, BookOpen } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
+import { SiWhatsapp } from 'react-icons/si';
 import { PROGRAMMES as ALL_PROGRAMMES } from '@/data/programmes';
+import { ClosedBadge } from '@/components/closed-badge';
 import { Seo } from '@/components/seo';
 import { homeJsonLd } from '@/lib/structured-data';
+import { GirihPattern, HeroGraphic, Rosette } from '@/components/ornaments';
+import { BookStackIcon, HeroLetters, MasjidIcon, MasjidSkyline, SlateIcon } from '@/components/ornaments/madrasah';
+import { ChooseArt, FirstClassArt, LaptopBookIcon, RegisterArt } from '@/components/ornaments/steps-art';
 
-
+// Real student words, supplied by the client (see pages/testimonials.tsx). Verbatim only: consecutive
+// sentences may be quoted on their own, but never reordered, joined or reworded.
+const HERO_QUOTE = {
+  name: 'Aaliyah Arendse',
+  quote: "Even though I'm a very shy and nervous person, she makes you feel comfortable in every class.",
+};
 const TESTIMONIALS_PREVIEW = [
+  {
+    name: 'Saarah Hercules',
+    quote:
+      "Mualimah Rukeya is patient and supportive, and caters to all ladies, young and old. Being a revert, I've felt comfortable and very supported from the start, alhamdulillah.",
+  },
+  {
+    name: 'Zaytoon Jordaan',
+    quote:
+      "You make learning about Islam easy, and there's an atmosphere that makes me feel safe to ask for help if I am stuck or lost.",
+  },
   {
     name: 'Naadhirah Gilbert',
     quote:
-      "Mualimah takes her time with each topic and always makes sure that everyone is on the same page. The class is perfect for beginners, reverts or even just a refresher course.",
-  },
-  {
-    name: 'Aaliyah Arendse',
-    quote:
-      "Even though I'm a very shy and nervous person, she makes you feel comfortable in every class. Best decision I've made.",
-  },
-  {
-    name: 'Yasmeen Zingitwa',
-    quote:
-      "I've been amazed at how much I've learned over such a short period of time. I encourage anyone considering joining to take this step!",
+      'Mualimah takes her time with each topic and always makes sure that everyone is on the same page before moving on or starting a new topic. The class is perfect for beginners, reverts or even just a refresher course to bring you closer to the Almighty.',
   },
 ];
 
-// Curated order for the homepage teaser (alternates online/in-person for variety).
-const FEATURED_PATHS = [
-  '/womens-classes',
-  '/in-person-workshops',
-  '/quran-classes',
-  '/hifdh-classes',
-  '/childrens-classes',
-  '/workshops',
-];
-const PROGRAMMES = FEATURED_PATHS.map(
-  (path) => ALL_PROGRAMMES.find((p) => p.path === path)!,
-);
+// Programmes grouped by who they are for, so a visitor recognises herself (or her child) at a glance.
+// Content comes from content/settings/programmes.json.
+const byPath = (path: string) => ALL_PROGRAMMES.find((p) => p.path === path)!;
+const FOR_YOU = ['/womens-classes', '/quran-classes', '/online-quran-classes', '/hifdh-classes', '/workshops', '/in-person-workshops'].map(byPath);
+const FOR_CHILD = byPath('/childrens-classes');
 
-const PILLARS = [
-  { Icon: Wifi,            title: 'Learn from Anywhere',  desc: 'Online classes accessible from home, anywhere in the world.' },
-  { Icon: BookOpen,        title: 'Beginner Friendly',     desc: 'No prior knowledge needed. We start from absolute zero.' },
-  { Icon: ShieldCheck,     title: 'Safe Environment',      desc: 'A warm, nurturing space where every question is welcome.' },
-  { Icon: BadgeDollarSign, title: 'Affordable Learning',   desc: 'Quality Islamic education from just R150 per month.' },
+const WHATSAPP = 'https://wa.me/27686498593';
+
+const STEPS = [
+  {
+    title: 'Choose a programme',
+    desc: 'Pick the class that suits you: for women, for children, Qur\'an, Hifdh or workshops, online or in person.',
+    cta: 'View programmes',
+    href: '/programmes',
+    Art: ChooseArt,
+  },
+  {
+    title: 'Fill in the form',
+    desc: 'Each class page has a short registration form. Then pay by EFT and send your proof of payment on WhatsApp.',
+    cta: 'Questions first? Ask on WhatsApp',
+    href: WHATSAPP,
+    external: true,
+    Art: RegisterArt,
+  },
+  {
+    title: 'Join your first class',
+    desc: 'Begin in a warm, nurturing space where every question is welcome.',
+    Art: FirstClassArt,
+  },
 ];
+
+// Real photos for the Moments gallery. No event names or dates are claimed.
+const MOMENTS = [
+  {
+    src: '/assets/photo-workshop-awards.webp',
+    alt: 'A teacher speaking at a workshop, with framed certificates on a table beside her',
+    width: 750,
+    height: 1000,
+    cls: 'md:col-start-1 md:row-span-2',
+    pos: 'center 72%',
+    // The top half of this photo is ceiling: zoom in on the teacher and the certificates.
+    zoom: { scale: 1.5, origin: '58% 88%' },
+  },
+  {
+    src: '/assets/photo-ramadan-preparation.webp',
+    alt: 'A bowl of dates beside an ornate decorative box and an open Qur\'an',
+    width: 924,
+    height: 614,
+    cls: 'md:col-span-2',
+    pos: 'center',
+  },
+  {
+    src: '/assets/photo-quran-lesson.webp',
+    alt: 'Two women sitting outdoors reading together from a book on a small table',
+    width: 800,
+    height: 1067,
+    cls: 'md:col-start-4 md:row-start-1 md:row-span-2',
+    pos: 'center 40%',
+  },
+  {
+    src: '/assets/photo-achievement.webp',
+    alt: 'Two women standing together, one holding a framed certificate, in a workshop hall',
+    width: 750,
+    height: 1000,
+    cls: '',
+    pos: 'center 55%',
+    // Same hall, same ceiling: zoom in on the two women and the certificate.
+    zoom: { scale: 1.45, origin: '50% 92%' },
+  },
+  {
+    src: '/assets/photo-wudhu-workshop-1.webp',
+    alt: 'A presenter standing in front of a slide titled Wudhu, Ghusl and Salaah Workshop',
+    width: 800,
+    height: 1067,
+    cls: '',
+    pos: 'center 45%',
+  },
+];
+
+// The four worries beginners bring, answered in one line each. Every answer is backed by the
+// programme data or a student's own words.
+const WORRIES = [
+  { Icon: SlateIcon, worry: "I don't know where to start.", answer: 'You do not need to. We start from absolute zero.' },
+  { Icon: MasjidIcon, worry: "I'm shy to ask questions.", answer: 'Every question is welcome, and Mualimah takes her time with each topic.' },
+  { Icon: LaptopBookIcon, worry: "I don't have much time.", answer: 'Learn online from home, live or at your own pace.' },
+  { Icon: BookStackIcon, worry: 'Can I afford it?', answer: 'Monthly classes from R150. Workshops from R100.' },
+];
+
+// Shared type sizes for the calmer, lighter display scale.
+const H2_STYLE = { fontSize: 'clamp(1.95rem, 3.4vw, 2.75rem)' } as const;
+const H2 = 'text-primary leading-[1.08] tracking-[-0.018em]';
+const SECTION = 'py-20 md:py-28';
 
 export default function Home() {
+  const [lead, ...others] = TESTIMONIALS_PREVIEW;
   return (
     <>
       <Seo
@@ -53,393 +136,418 @@ export default function Home() {
         path="/"
         jsonLd={homeJsonLd()}
       />
-      <div className="flex flex-col min-h-screen">
 
-      {/* ── Hero Section ─────────────────────────────────────── */}
-      <section className="relative min-h-[calc(100vh-80px)] flex items-center bg-background pt-20 overflow-hidden">
-
-        {/* Faint tiling gold star texture */}
+      {/* Hero: lead with the promise a nervous beginner needs to hear, then one peer voice as proof. */}
+      <section className="relative overflow-hidden bg-background pt-32 pb-24 md:pt-40 md:pb-32">
+        {/* Quiet warmth and a large faint khatam rosette: decoration only, behind everything, never under text. */}
         <div
           className="absolute inset-0 pointer-events-none"
           aria-hidden="true"
           style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 8 L43.5 22 L57 18 L48 29 L62 33 L48 37 L57 48 L43.5 44 L40 58 L36.5 44 L23 48 L32 37 L18 33 L32 29 L23 18 L36.5 22 Z' fill='none' stroke='%23C9A84C' stroke-width='0.6'/%3E%3C/svg%3E")`,
-            opacity: 0.05,
+            background:
+              'radial-gradient(60% 70% at 74% 46%, hsl(var(--bmc-paper)) 0%, transparent 70%), radial-gradient(42% 52% at 0% 100%, hsl(var(--bmc-gold-light) / 0.22) 0%, transparent 70%)',
           }}
         />
-
-        {/* Corner lace arch — top-left (hidden on mobile/tablet, where it crowds the heading) */}
-        <img
-          src="/assets/deco-corner.webp"
-          alt=""
-          aria-hidden="true"
-          loading="lazy"
-          decoding="async"
-          className="absolute top-0 left-0 pointer-events-none select-none hidden lg:block"
-          style={{ width: 'clamp(160px, 18vw, 280px)', opacity: 0.55 }}
-        />
-        {/* Corner lace arch — bottom-right (rotated 180°, hidden on mobile/tablet) */}
-        <img
-          src="/assets/deco-corner.webp"
-          alt=""
-          aria-hidden="true"
-          loading="lazy"
-          decoding="async"
-          className="absolute bottom-0 right-0 pointer-events-none select-none hidden lg:block"
-          style={{ width: 'clamp(160px, 18vw, 280px)', opacity: 0.55, transform: 'rotate(180deg)' }}
-        />
-        {/* Hanging lanterns — top-centre (hidden on mobile/tablet, where there isn't room above the heading) */}
-        <img
-          src="/assets/deco-lanterns.webp"
-          alt=""
-          aria-hidden="true"
-          loading="lazy"
-          decoding="async"
-          className="absolute top-0 left-1/2 pointer-events-none select-none hidden lg:block"
-          style={{ width: 'clamp(140px, 16vw, 240px)', opacity: 0.6, transform: 'translateX(-50%)' }}
+        <Rosette className="absolute left-0 bottom-0 h-[34rem] w-[48rem]" origin="0% 100%" opacity={0.2} />
+        <Rosette className="absolute right-0 top-0 hidden h-[30rem] w-[44rem] sm:block" origin="100% 0%" opacity={0.14} />
+        {/* Masjid skyline along the foot of the hero: a community learning space, at a glance */}
+        <MasjidSkyline
+          className="hg-fade absolute inset-x-0 bottom-0 mx-auto h-24 w-full max-w-[90rem] sm:h-32 lg:h-40 pointer-events-none"
+          color="hsl(40 34% 87%)"
+          crescent="hsl(40 58% 62%)"
         />
 
-        <div className="container mx-auto px-4 md:px-16 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+        <HeroLetters />
 
-          {/* ── Left: Text ─────────────────────────────────────── */}
-          <motion.div
-            className="flex flex-col items-start"
-            initial={{ opacity: 0, x: -32 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <div className="relative w-full">
-              {/* Small illustration, top-right of the heading — mobile/tablet only; lg+ uses the full-size illustration column */}
-              <img
-                src="/assets/mascot-2.webp"
-                alt="Beginners Madrasah Classes illustrated mascot"
-                className="absolute top-1/2 -translate-y-1/2 right-0 w-24 sm:w-28 lg:hidden"
-                fetchPriority="high"
-                decoding="async"
-                draggable={false}
-              />
-              <h1 className="font-display text-primary leading-[1.1] mb-3 pr-28 sm:pr-32 lg:pr-0" style={{ fontSize: 'clamp(2.4rem, 4.5vw, 4rem)' }}>
-                Beginners<br />
-                Madrasah<br />
-                <span className="text-accent italic">Classes</span>
-              </h1>
-            </div>
-
-            {/* EST badge — sits directly under the title */}
-            <div className="flex items-center gap-2 mb-5">
-              <div className="w-5 h-px bg-accent" />
-              <span className="font-utility uppercase tracking-[0.2em] text-accent/70" style={{ fontSize: '0.62rem' }}>
-                Est 2024 · Foundations of Islamic Knowledge
-              </span>
-            </div>
-
-            {/* Gold diamond rule — anchored left */}
-            <div className="flex items-center gap-3 mb-6 w-48">
-              <div className="h-px flex-1 bg-gradient-to-r from-accent to-transparent" />
-              <div className="w-2 h-2 rotate-45 shrink-0 bg-accent" />
-              <div className="h-px flex-1 bg-gradient-to-l from-accent to-transparent" />
-            </div>
-
-            <p className="font-body text-foreground/65 leading-relaxed mb-10" style={{ fontSize: 'clamp(1rem, 1.4vw, 1.1rem)', maxWidth: '38ch' }}>
-              A warm, safe, beginner-friendly Islamic learning space for women and children, online and in-person.
+        <div className="pointer-events-none relative container mx-auto px-5 md:px-10 grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-12 lg:gap-20 items-center">
+          <div className="pointer-events-auto">
+            <p className="bmc-rise bmc-eyebrow mb-6 leading-[1.9]">
+              Islamic classes &middot; Online and in Cape Town
             </p>
-
-            <div className="flex flex-wrap gap-4 items-center">
-              <Link
-                href="/programmes"
-                className="rounded-full border-2 border-primary text-primary font-utility font-bold px-8 py-3 hover:bg-primary hover:text-white transition-all"
-                style={{ fontSize: '0.88rem', letterSpacing: '0.06em' }}
-              >
-                View Programmes
+            <h1
+              className="bmc-rise text-primary leading-[1.02] tracking-[-0.025em] mb-7"
+              style={{ fontSize: 'clamp(2.7rem, 6.4vw, 5rem)' }}
+            >
+              It&rsquo;s never too late to <span className="italic font-normal text-bmc-gold-ink">begin.</span>
+            </h1>
+            <p
+              className="bmc-rise bmc-rise-2 text-foreground/80 leading-[1.7] mb-10"
+              style={{ fontSize: 'clamp(1.05rem, 1.5vw, 1.2rem)', maxWidth: '38ch' }}
+            >
+              Patient, beginner-friendly Islamic classes for women and children. No prior knowledge needed. From R150 a month.
+            </p>
+            <div className="bmc-rise bmc-rise-3 flex flex-wrap gap-x-8 gap-y-3 items-center">
+              <Link href="/programmes" className="bmc-btn bmc-btn-primary">
+                Find your class <ArrowRight size={16} aria-hidden="true" />
               </Link>
-              <a href="https://wa.me/27686498593" target="_blank" rel="noreferrer">
-                <button
-                  className="rounded-full bg-accent text-primary font-utility font-bold px-8 py-3 hover:bg-accent/90 transition-all"
-                  style={{ fontSize: '0.88rem', letterSpacing: '0.06em', boxShadow: '0 6px 24px rgba(201,168,76,0.38)' }}
-                >
-                  Register Now
-                </button>
+              <a href={WHATSAPP} target="_blank" rel="noreferrer" className="bmc-link">
+                <SiWhatsapp className="size-[1rem]" aria-hidden="true" />
+                Questions? Ask on WhatsApp
               </a>
             </div>
 
-            {/* Stats strip */}
-            <div className="flex items-center gap-8 mt-12 pt-8 border-t border-border">
-              {[
-                { num: '200+', label: 'Students enrolled' },
-                { num: '6',   label: 'Programmes' },
-                { num: '2+',  label: 'Years teaching' },
-              ].map(({ num, label }) => (
-                <div key={label}>
-                  <p className="font-display text-primary text-2xl font-bold leading-none mb-1">{num}</p>
-                  <p className="font-utility text-foreground/50 text-xs tracking-wide">{label}</p>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* ── Right: Illustration (lg+ only — mobile/tablet use the small version beside the heading) ── */}
-          <motion.div
-            className="relative hidden lg:flex justify-center items-center"
-            initial={{ opacity: 0, x: 32 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <motion.img
-              src="/assets/mascot-2.webp"
-              alt="Beginners Madrasah Classes illustrated mascot"
-              className="w-full max-w-[260px] sm:max-w-sm lg:max-w-md xl:max-w-lg mx-auto"
-              fetchPriority="high"
-              decoding="async"
-              draggable={false}
-              animate={{ y: [0, -14, 0] }}
-              transition={{ repeat: Infinity, duration: 4.5, ease: "easeInOut" }}
-            />
-          </motion.div>
-
-        </div>
-      </section>
-
-      {/* ── Why Choose BMC ───────────────────────────────────── */}
-      <section className="islamic-pattern py-20 relative text-white">
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
-            {PILLARS.map(({ Icon, title, desc }, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="text-center flex flex-col items-center group"
-              >
-                <div className="w-16 h-16 rounded-full border border-accent flex items-center justify-center mb-4 group-hover:bg-accent group-hover:text-primary transition-colors text-accent">
-                  <Icon size={26} strokeWidth={1.5} />
-                </div>
-                <h3 className="font-display text-xl mb-2">{title}</h3>
-                <p className="font-body text-sm text-white/70 leading-relaxed">{desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Our Story Teaser ─────────────────────────────────── */}
-      <section className="py-20 bg-background">
-        <div className="container mx-auto px-4 max-w-5xl">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="flex flex-col md:flex-row items-center gap-10 bg-card border border-border rounded-2xl overflow-hidden shadow-lg"
-          >
-            {/* Accent bar — top on mobile, left on desktop */}
-            <div className="md:hidden h-1.5 w-full bg-accent shrink-0" />
-            <div className="hidden md:block w-1.5 self-stretch bg-accent shrink-0" />
-
-            <div className="flex-1 py-10 px-8 md:pl-0 md:pr-12">
-              <p className="font-utility text-xs text-accent uppercase tracking-widest mb-3">Our Story</p>
-              <h2 className="font-display text-3xl md:text-4xl text-primary mb-5 leading-snug">
-                Born from a passion<br className="hidden md:block" /> for teaching
-              </h2>
-              <p className="font-body text-foreground/70 leading-relaxed mb-6" style={{ maxWidth: '52ch' }}>
-                Alhamdulillah, what started as a small class has grown into a thriving learning community, offering six programmes to hundreds of students across South Africa and beyond.
-              </p>
-              <Link href="/about">
-                <span className="inline-flex items-center gap-2 text-accent font-utility font-bold text-sm hover:gap-3 transition-all cursor-pointer uppercase tracking-widest">
-                  Read Our Story &rarr;
-                </span>
-              </Link>
-            </div>
-
-            {/* Stats */}
-            <div className="grid grid-cols-2 gap-px bg-border w-full md:w-72 shrink-0 md:self-stretch">
-              {[
-                { num: '300+', label: 'Students' },
-                { num: '6',    label: 'Programmes' },
-                { num: '2024', label: 'Established' },
-                { num: '2+',   label: 'Years teaching' },
-              ].map(({ num, label }) => (
-                <div key={label} className="bg-muted flex flex-col items-center justify-center p-6">
-                  <p className="font-display text-2xl text-accent font-bold">{num}</p>
-                  <p className="font-utility text-xs text-foreground/50 uppercase tracking-wide mt-1">{label}</p>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ── Featured Programmes ──────────────────────────────── */}
-      <section className="py-24 bg-background">
-        <div className="container mx-auto px-4 max-w-6xl">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-display text-primary mb-4">Featured Programmes</h2>
-            <div className="w-24 h-1 bg-accent mx-auto" />
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {PROGRAMMES.map(({ title, path, descShort: desc, price, tag, image, imagePosition, gradient }, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08 }}
-                className="h-full"
-              >
-                <Link href={`/programmes${path}`}>
-                  <div className="bg-card rounded-2xl border border-border hover:border-accent hover:shadow-xl transition-all cursor-pointer h-full flex flex-col group overflow-hidden">
-
-                    {/* Image block */}
-                    <div className={`relative w-full h-48 overflow-hidden bg-gradient-to-br ${gradient} shrink-0`}>
-                      {image ? (
-                        <img
-                          src={image}
-                          alt={title}
-                          loading="lazy"
-                          style={{ objectPosition: imagePosition ?? 'top' }}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        />
-                      ) : (
-                        /* Placeholder: Islamic pattern overlay on gradient */
-                        <div className="absolute inset-0 flex items-center justify-center opacity-20"
-                          style={{
-                            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 6 L32.5 16 L42 13 L36 21 L46 25 L36 29 L42 37 L32.5 34 L30 44 L27.5 34 L18 37 L24 29 L14 25 L24 21 L18 13 L27.5 16 Z' fill='none' stroke='%23C9A84C' stroke-width='0.8'/%3E%3C/svg%3E")`,
-                          }}
-                        />
-                      )}
-                      {/* Tag pill */}
-                      <span className="absolute top-3 left-3 bg-black/40 backdrop-blur-sm text-white font-utility text-[0.65rem] uppercase tracking-widest px-2.5 py-1 rounded-full">
-                        {tag}
-                      </span>
-                    </div>
-
-                    {/* Content */}
-                    <div className="p-6 flex flex-col flex-1">
-                      <h3 className="text-lg font-display text-primary mb-2 leading-snug">{title}</h3>
-                      <p className="text-foreground/65 font-body text-sm leading-relaxed flex-1">{desc}</p>
-                      <div className="flex items-center justify-between mt-5 pt-4 border-t border-border">
-                        <span className="font-utility text-xs font-bold text-accent bg-accent/10 px-3 py-1 rounded-full">{price}</span>
-                        <span className="text-primary font-utility font-bold group-hover:text-accent transition-colors flex items-center gap-1 text-sm">
-                          Learn More <span className="group-hover:translate-x-1 transition-transform inline-block">&rarr;</span>
-                        </span>
-                      </div>
-                    </div>
-
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── About Strip ──────────────────────────────────────── */}
-      <section className="py-24 bg-muted border-y border-border relative overflow-hidden">
-        <div className="container mx-auto px-4 max-w-6xl">
-          <div className="flex flex-col lg:flex-row gap-12 items-center">
-            <div className="w-full lg:w-1/2">
-              <div className="aspect-[4/5] rounded-[2rem] border-2 border-accent/30 relative overflow-hidden shadow-xl">
-                <img
-                  src="/assets/photo-founder-teaching.webp"
-                  alt="Mualimah Rukeya teaching a workshop"
-                  loading="lazy"
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
-                <div className="absolute bottom-0 left-0 right-0 bg-primary/80 backdrop-blur-sm px-6 py-4">
-                  <h3 className="font-display text-lg text-white">Mualimah Rukeya</h3>
-                  <p className="font-utility text-xs text-accent uppercase tracking-widest">Founder & Teacher</p>
-                </div>
+            <figure className="bmc-rise bmc-rise-3 mt-12 flex max-w-[30rem] items-start gap-4">
+              <Initial name={HERO_QUOTE.name} />
+              <div>
+                <blockquote className="font-display italic text-primary leading-[1.4] text-[1.12rem]">
+                  &ldquo;{HERO_QUOTE.quote}&rdquo;
+                </blockquote>
+                <figcaption className="mt-2 font-utility text-[0.85rem] font-semibold tracking-[0.03em] text-foreground/70">
+                  {HERO_QUOTE.name}, student
+                </figcaption>
               </div>
+            </figure>
+          </div>
+
+          {/* Mascot inside a code-drawn mihrab arch (HeroGraphic). Mascot-2 is the brand's mascot (founder, 2026-10-26). */}
+          <div className="pointer-events-auto flex justify-center lg:justify-end">
+            <HeroGraphic className="max-w-[17rem] sm:max-w-[22rem] lg:max-w-[27rem]" />
+          </div>
+        </div>
+      </section>
+
+      {/* The worries beginners bring, said in their own words and answered in one line each. */}
+      <section className="relative overflow-hidden bg-primary text-primary-foreground">
+        <GirihPattern />
+        <div className="relative container mx-auto px-5 md:px-10 py-16 md:py-24">
+          <h2
+            className="text-center text-primary-foreground leading-[1.1] tracking-[-0.015em] mb-12 md:mb-16"
+            style={{ fontSize: 'clamp(1.7rem, 3vw, 2.4rem)' }}
+          >
+            Every beginner asks these
+          </h2>
+          <ul className="grid grid-cols-2 lg:grid-cols-4 gap-x-5 gap-y-10 sm:gap-x-8 lg:gap-y-0">
+            {WORRIES.map(({ Icon, worry, answer }) => (
+              <li key={worry} className="bmc-reveal flex flex-col items-center text-center lg:px-4">
+                <div className="bmc-gold-frame relative size-12 sm:size-16 rounded-full flex items-center justify-center mb-5 text-bmc-gold-light" aria-hidden="true">
+                  <Icon size={34} strokeWidth={1.25} />
+                </div>
+                <p className="font-display italic text-[1.12rem] sm:text-[1.35rem] leading-snug text-bmc-gold-light mb-3">
+                  &ldquo;{worry}&rdquo;
+                </p>
+                <p className="text-primary-foreground/85 leading-[1.65] text-[0.9rem] sm:text-[0.98rem] max-w-[17rem]">{answer}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* Programmes, grouped by who they are for */}
+      <section className={`${SECTION} bg-bmc-paper`}>
+        <div className="container mx-auto px-5 md:px-10">
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-12 md:mb-16">
+            <h2 className={H2} style={H2_STYLE}>
+              Find your class
+            </h2>
+            <Link href="/programmes" className="bmc-link">
+              Compare all programmes <ArrowRight size={16} aria-hidden="true" />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] gap-8 lg:gap-12 items-start">
+            <div className="bmc-reveal">
+              <h3 className="text-[1.5rem] leading-tight text-primary">For you</h3>
+              <p className="mt-1.5 mb-5 text-foreground/75 text-[0.98rem]">Classes and workshops for women, online or in Cape Town.</p>
+              <ul className="flex flex-col overflow-hidden rounded-[1.25rem] bg-card shadow-soft ring-1 ring-[hsl(var(--bmc-gold)/0.3)] gap-1 p-2">
+                {FOR_YOU.map((p) => (
+                  <li key={p.path}>
+                    <Link
+                      href={`/programmes${p.path}`}
+                      className="group flex items-center gap-4 rounded-[0.9rem] p-3 sm:p-4 transition-colors duration-300 hover:bg-bmc-paper"
+                    >
+                      <div className={`relative h-[4.5rem] w-[4.5rem] sm:h-20 sm:w-20 shrink-0 overflow-hidden rounded-[0.7rem] bg-gradient-to-br ${p.gradient}`}>
+                        {p.image && (
+                          <img
+                            src={p.image}
+                            alt=""
+                            width={96}
+                            height={96}
+                            loading="lazy"
+                            decoding="async"
+                            style={{ objectPosition: p.imagePosition ?? 'top' }}
+                            className="w-full h-full object-cover"
+                          />
+                        )}
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <h4 className="font-display text-[1.12rem] leading-snug text-primary">{p.title}</h4>
+                        <p className="mt-1 text-[0.9rem] text-foreground/70">{p.tag}</p>
+                        {p.registrationClosed && <ClosedBadge className="mt-1.5" />}
+                        <p className="mt-1 font-utility text-sm font-semibold text-bmc-gold-ink sm:hidden">{p.price}</p>
+                      </div>
+                      <span className="hidden sm:inline shrink-0 text-right font-utility text-sm font-semibold text-bmc-gold-ink">{p.price}</span>
+                      <ArrowRight size={18} className="shrink-0 text-primary transition-transform group-hover:translate-x-1 motion-reduce:transition-none" aria-hidden="true" />
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
 
-            <div className="w-full lg:w-1/2">
-              <h2 className="text-4xl font-display text-primary mb-6">About Our Founder</h2>
-              <p className="text-lg font-body text-foreground/80 leading-relaxed mb-6">
-                Mualimah Rukeya has been teaching Islamic sciences since 2024, guiding women and children toward a deeper connection with their faith in a safe, nurturing environment.
-              </p>
-              <p className="text-lg font-body text-foreground/80 leading-relaxed mb-8">
-                She founded Beginners Madrasah Classes to make authentic Islamic education accessible to all, wherever you are.
-              </p>
-              <Link href="/about" className="border-b-2 border-accent text-primary font-utility font-bold pb-1 hover:text-accent transition-colors inline-block">
-                Read More
+            <div className="bmc-reveal">
+              <h3 className="text-[1.5rem] leading-tight text-primary">For your child</h3>
+              <p className="mt-1.5 mb-5 text-foreground/75 text-[0.98rem]">Live online madrasah for ages 6 to 13.</p>
+              <Link
+                href={`/programmes${FOR_CHILD.path}`}
+                className="group flex flex-col rounded-[1.25rem] bg-card p-3 sm:p-4 shadow-soft ring-1 ring-[hsl(var(--bmc-gold)/0.3)] bmc-lift transition-shadow duration-500 hover:shadow-lift"
+              >
+                <div className={`relative aspect-[4/3] overflow-hidden rounded-[0.9rem] bg-gradient-to-br ${FOR_CHILD.gradient}`}>
+                  {FOR_CHILD.image && (
+                    <img
+                      src={FOR_CHILD.image}
+                      alt=""
+                      width={1200}
+                      height={900}
+                      loading="lazy"
+                      decoding="async"
+                      style={{ objectPosition: FOR_CHILD.imagePosition ?? 'center' }}
+                      className="w-full h-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.02] motion-reduce:transition-none"
+                    />
+                  )}
+                </div>
+                <div className="px-2 sm:px-3 pt-6 pb-3 flex flex-col">
+                  {FOR_CHILD.registrationClosed && <ClosedBadge className="mb-2 self-start" />}
+                  <h4 className="font-display text-primary leading-[1.15] text-[1.6rem]">{FOR_CHILD.title}</h4>
+                  <p className="mt-3 text-foreground/80 leading-[1.7] text-[1rem]">{FOR_CHILD.descShort}</p>
+                  <div className="mt-6 flex items-center justify-between">
+                    <span className="font-display text-xl font-medium text-primary">{FOR_CHILD.price}</span>
+                    <span className="bmc-link !min-h-0 group-hover:text-bmc-gold-ink">
+                      Learn more
+                      <ArrowRight size={15} className="transition-transform group-hover:translate-x-1 motion-reduce:transition-none" aria-hidden="true" />
+                    </span>
+                  </div>
+                </div>
               </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── Testimonials Preview ─────────────────────────────── */}
-      <section className="py-24 bg-background">
-        <div className="container mx-auto px-4 max-w-6xl">
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16 max-w-xl mx-auto"
-          >
-            <p className="font-utility text-xs text-accent uppercase tracking-widest mb-3">In their own words</p>
-            <h2 className="text-4xl font-display text-primary mb-4">What Our Students Say</h2>
-            <div className="w-24 h-1 bg-accent mx-auto" />
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-            {TESTIMONIALS_PREVIEW.map((t, i) => (
-              <motion.div
-                key={t.name}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                whileHover={{ y: -6 }}
-                className="relative overflow-hidden bg-card border border-border rounded-2xl shadow-sm hover:shadow-xl hover:border-accent/40 transition-shadow duration-300 p-7 flex flex-col"
-              >
-                <span className="absolute -top-2 right-4 font-display text-7xl leading-none text-accent/10 select-none pointer-events-none" aria-hidden="true">
-                  &rdquo;
-                </span>
-                <p className="font-body text-foreground/80 leading-relaxed flex-1 mb-6 relative">"{t.quote}"</p>
-                <div className="flex items-center gap-3 pt-4 border-t border-border/60 relative">
-                  <div className="w-9 h-9 rounded-full bg-accent/15 text-accent font-display font-bold flex items-center justify-center flex-shrink-0">
-                    {t.name.charAt(0)}
-                  </div>
-                  <span className="font-utility text-sm text-primary font-medium">{t.name}</span>
+      {/* How to start */}
+      <section className={`${SECTION} bg-background`}>
+        <div className="container mx-auto px-5 md:px-10">
+          <div className="max-w-2xl mb-12 md:mb-16">
+            <h2 className={`${H2} mb-5`} style={H2_STYLE}>
+              How to start
+            </h2>
+            <p className="text-foreground/80 leading-[1.7] text-[1.1rem]">Registering takes a few minutes, with a short form on each class page.</p>
+          </div>
+          <ol className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-10 lg:gap-14">
+            {STEPS.map((step, i) => (
+              <li key={step.title} className="bmc-reveal relative flex flex-col">
+                <div
+                  className="mb-7 flex aspect-[16/9] items-center justify-center rounded-2xl shadow-soft"
+                  style={{ background: 'radial-gradient(70% 70% at 50% 45%, hsl(42 70% 97%), hsl(40 36% 90%))' }}
+                >
+                  <step.Art className="h-[78%] w-auto" />
                 </div>
-              </motion.div>
+                <p className="mb-3" aria-hidden="true">
+                  <span className="font-display italic text-bmc-gold-ink text-[1.4rem] leading-none">0{i + 1}</span>
+                </p>
+                <h3 className="text-[1.55rem] leading-tight text-primary mb-3">
+                  <span className="sr-only">Step {i + 1}: </span>
+                  {step.title}
+                </h3>
+                <p className="text-foreground/80 leading-[1.7] text-[1rem] mb-5">{step.desc}</p>
+                {step.href &&
+                  (step.external ? (
+                    <a href={step.href} target="_blank" rel="noreferrer" className="bmc-link mt-auto self-start">
+                      {step.cta} <ArrowRight size={16} aria-hidden="true" />
+                    </a>
+                  ) : (
+                    <Link href={step.href} className="bmc-link mt-auto self-start">
+                      {step.cta} <ArrowRight size={16} aria-hidden="true" />
+                    </Link>
+                  ))}
+              </li>
             ))}
+          </ol>
+        </div>
+      </section>
+
+      {/* Testimonials: one featured voice on deep green, two more beside it. Quotes verbatim. */}
+      <section className={`relative overflow-hidden ${SECTION}`} style={{ backgroundColor: 'hsl(40 26% 91%)' }}>
+        <div className="container mx-auto px-5 md:px-10">
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-12 md:mb-16">
+            <h2 className={H2} style={H2_STYLE}>
+              What our students say
+            </h2>
+            <Link href="/testimonials" className="bmc-link">
+              Read all stories <ArrowRight size={16} aria-hidden="true" />
+            </Link>
           </div>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-center"
-          >
-            <Link href="/testimonials">
-              <span className="inline-flex items-center gap-2 text-accent font-utility font-bold text-sm hover:gap-3 transition-all cursor-pointer uppercase tracking-widest">
-                Read All Stories &rarr;
-              </span>
+          <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] gap-6 md:gap-8 items-stretch">
+            <figure className="bmc-reveal relative overflow-hidden rounded-[1.75rem] bg-primary text-primary-foreground p-9 md:p-14 shadow-lift flex flex-col justify-between min-h-[22rem]">
+              <GirihPattern />
+              <div className="relative">
+                <span
+                  className="block font-display leading-none select-none text-bmc-gold-light"
+                  style={{ fontSize: 'clamp(5rem, 9vw, 7rem)', height: 'clamp(3.2rem, 5.8vw, 4.4rem)' }}
+                  aria-hidden="true"
+                >
+                  &ldquo;
+                </span>
+                <blockquote
+                  className="mt-4 font-display italic font-normal leading-[1.32] tracking-[-0.01em]"
+                  style={{ fontSize: 'clamp(1.45rem, 2.4vw, 1.95rem)' }}
+                >
+                  {lead.quote}
+                </blockquote>
+              </div>
+              <figcaption className="relative mt-10 flex items-center gap-4">
+                <Initial name={lead.name} dark />
+                <span className="font-utility font-semibold tracking-[0.04em] text-primary-foreground/90">{lead.name}</span>
+              </figcaption>
+            </figure>
+
+            <div className="grid grid-cols-1 gap-6 md:gap-8">
+              {others.map((t) => (
+                <figure
+                  key={t.name}
+                  className="bmc-reveal flex flex-col justify-between rounded-[1.5rem] bg-bmc-paper p-8 md:p-10 shadow-soft"
+                >
+                  <blockquote className="text-foreground/90 leading-[1.75] text-[1.06rem]">&ldquo;{t.quote}&rdquo;</blockquote>
+                  <figcaption className="mt-7 flex items-center gap-3.5">
+                    <Initial name={t.name} />
+                    <span className="font-utility font-semibold tracking-[0.03em] text-primary">{t.name}</span>
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Meet your teacher */}
+      <section className={`${SECTION} bg-background`}>
+        <div className="container mx-auto px-5 md:px-10 grid grid-cols-1 lg:grid-cols-[0.8fr_1.2fr] gap-14 lg:gap-24 items-center">
+          <figure className="bmc-reveal relative max-w-sm mx-auto lg:mx-0 w-full">
+            <div className="bmc-photo">
+              <img
+                src="/assets/photo-founder-teaching.webp"
+                alt="Mualimah Rukeya teaching a workshop"
+                width={1000}
+                height={1333}
+                loading="lazy"
+                decoding="async"
+                className="aspect-[4/5] w-full object-cover"
+              />
+            </div>
+            <figcaption className="mt-6 text-center lg:text-left">
+              <span className="block font-display text-[1.25rem] text-primary">Mualimah Rukeya</span>
+              <span className="bmc-eyebrow mt-1.5 block !text-[0.74rem]">Founder &amp; Teacher</span>
+            </figcaption>
+          </figure>
+
+          <div className="bmc-reveal">
+            <h2 className={`${H2} mb-8`} style={H2_STYLE}>
+              Meet your teacher
+            </h2>
+            <p className="text-foreground/85 leading-[1.75] mb-6 text-[1.15rem]" style={{ maxWidth: '56ch' }}>
+              Mualimah Rukeya has been teaching Islamic sciences since 2024, guiding women and children toward a deeper connection with their faith in a safe, nurturing environment.
+            </p>
+            <p className="text-foreground/80 leading-[1.75] mb-6 text-[1.05rem]" style={{ maxWidth: '56ch' }}>
+              Alhamdulillah, what started as a small class has grown into a thriving learning community, offering six programmes to hundreds of students across South Africa and beyond.
+            </p>
+            <p className="text-foreground/80 leading-[1.75] mb-9 text-[1.05rem]" style={{ maxWidth: '56ch' }}>
+              She founded Beginners Madrasah Classes to make authentic Islamic education accessible to all, wherever you are.
+            </p>
+            <Link href="/about" className="bmc-link">
+              Read our story <ArrowRight size={16} aria-hidden="true" />
             </Link>
-          </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* ── Closing CTA ──────────────────────────────────────── */}
-      <section className="islamic-pattern py-24 text-center text-white relative">
-        <div className="absolute inset-0 bg-primary/40 mix-blend-multiply" />
-        <div className="container mx-auto px-4 relative z-10">
-          <h2 className="text-4xl md:text-5xl font-display mb-6 max-w-2xl mx-auto leading-tight">
-            A Safe Space for Growth
+      {/* Moments */}
+      <section className={`${SECTION} bg-bmc-paper`}>
+        <div className="container mx-auto px-5 md:px-10">
+          <h2 className={`${H2} mb-12 md:mb-16`} style={H2_STYLE}>
+            Moments from our classes
           </h2>
-          <p className="text-xl font-body text-white/90 max-w-xl mx-auto mb-10">
-            Whether you are taking your very first steps or returning to your roots, there is a place for you here.
-          </p>
-          <Link href="/programmes" className="bg-white text-primary font-utility font-bold px-10 py-4 rounded-full hover:bg-accent hover:text-white transition-all shadow-xl inline-block">
-            Start Your Journey
-          </Link>
+          <ul
+            tabIndex={0}
+            className="-mx-5 px-5 md:mx-0 md:px-0 flex gap-5 overflow-x-auto snap-x snap-mandatory pb-6 md:pb-0 md:overflow-visible md:grid md:grid-cols-4 md:auto-rows-[15rem] lg:auto-rows-[17rem] md:gap-6"
+            aria-label="Photos from our classes and workshops"
+          >
+            {MOMENTS.map((m) => (
+              <li
+                key={m.src}
+                className={`bmc-reveal bmc-photo overflow-hidden snap-center shrink-0 basis-[72%] sm:basis-[46%] md:basis-auto aspect-[4/5] md:aspect-auto ${m.cls}`}
+              >
+                <img
+                  src={m.src}
+                  alt={m.alt}
+                  width={m.width}
+                  height={m.height}
+                  loading="lazy"
+                  decoding="async"
+                  style={{ objectPosition: m.pos, ...('zoom' in m && m.zoom ? { transform: `scale(${m.zoom.scale})`, transformOrigin: m.zoom.origin } : {}) }}
+                  className="h-full w-full object-cover"
+                />
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
-      </div>
+      {/* Closing invitation: her women's class illustration, and the masjid skyline leading into the footer */}
+      <section className="relative overflow-hidden bg-[hsl(var(--bmc-gold-light)/0.42)] text-foreground">
+        <div className="relative container mx-auto px-5 md:px-10 pt-20 pb-36 md:pt-28 md:pb-48 grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-12 lg:gap-16 items-center">
+          <div className="bmc-reveal relative mx-auto w-full max-w-[20rem] sm:max-w-[28rem] lg:max-w-[34rem]">
+            <div
+              aria-hidden="true"
+              className="absolute -inset-[12%] rounded-full"
+              style={{ background: 'radial-gradient(closest-side, hsl(var(--bmc-paper) / 0.9), transparent 72%)' }}
+            />
+            <img
+              src="/assets/womens-circle.webp"
+              alt="Illustration of a teacher reading with a circle of women students on a green mat, with books and a laptop"
+              width={1100}
+              height={796}
+              loading="lazy"
+              decoding="async"
+              className="relative w-full h-auto drop-shadow-[0_24px_30px_hsl(158_40%_20%/0.22)]"
+            />
+          </div>
+          <div className="bmc-reveal text-center lg:text-left">
+            <h2 className="text-primary leading-[1.08] tracking-[-0.018em] mb-6 max-w-2xl mx-auto lg:mx-0" style={{ fontSize: 'clamp(2.1rem, 4vw, 3.2rem)' }}>
+              There is a place for you here
+            </h2>
+            <p className="text-[1.15rem] text-foreground/80 max-w-xl mx-auto lg:mx-0 mb-11 leading-[1.7]">
+              Whether you are taking your very first steps or returning to your roots, choose your class and register in a few minutes.
+            </p>
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4">
+              <Link href="/programmes" className="bmc-btn bmc-btn-primary">
+                Find your class
+              </Link>
+              <a href={WHATSAPP} target="_blank" rel="noreferrer" className="bmc-btn bmc-btn-soft">
+                <SiWhatsapp className="size-[1.1rem]" aria-hidden="true" />
+                Ask on WhatsApp
+              </a>
+            </div>
+          </div>
+        </div>
+        <MasjidSkyline
+          className="absolute inset-x-0 bottom-0 mx-auto h-28 w-full max-w-[90rem] sm:h-36 lg:h-44 pointer-events-none"
+          color="hsl(158 46% 10.5%)"
+          crescent="hsl(40 58% 62%)"
+        />
+      </section>
     </>
+  );
+}
+
+/** Initial of a student's first name in a small round badge (decorative; the name is shown beside it). */
+function Initial({ name, dark = false }: { name: string; dark?: boolean }) {
+  return (
+    <span
+      aria-hidden="true"
+      className={`inline-flex size-11 shrink-0 items-center justify-center rounded-full font-display text-lg ${
+        dark ? 'bg-bmc-gold-light text-primary' : 'bg-primary text-bmc-gold-light'
+      }`}
+    >
+      {name.trim().charAt(0)}
+    </span>
   );
 }

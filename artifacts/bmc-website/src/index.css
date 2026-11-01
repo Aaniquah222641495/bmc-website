@@ -65,31 +65,39 @@
   --font-body: var(--font-body);
   --font-utility: var(--font-utility);
 
-  --color-bmc-cream: hsl(39 30% 93%);
-  --color-bmc-forest-green: hsl(155 42% 18%);
-  --color-bmc-sage-green: hsl(153 40% 30%);
+  --color-bmc-cream: hsl(40 32% 95%);
+  --color-bmc-forest-green: hsl(158 44% 14%);
+  --color-bmc-sage-green: hsl(155 36% 25%);
   --color-bmc-gold: hsl(44 53% 54%);
   --color-bmc-gold-light: hsl(43 80% 72%);
   --color-bmc-charcoal: hsl(0 0% 17%);
   --color-bmc-white: hsl(0 0% 100%);
-  --color-bmc-cream-dark: hsl(42 28% 89%);
+  --color-bmc-cream-dark: hsl(40 24% 88%);
+  --color-bmc-gold-ink: hsl(40 64% 27%);
+  --color-bmc-paper: hsl(40 42% 98%);
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
+  /* Soft, deep shadows (two layers: contact + ambient). */
+  --shadow-soft: 0 1px 2px hsl(158 44% 8% / 0.05), 0 28px 56px -32px hsl(158 44% 8% / 0.32);
+  --shadow-lift: 0 1px 2px hsl(158 44% 8% / 0.06), 0 36px 64px -30px hsl(158 44% 8% / 0.4);
 }
 
 :root {
   /* BMC Colors */
-  --bmc-cream: 39 30% 93%; /* #F5F0E8 */
-  --bmc-forest-green: 155 42% 18%; /* #1B4332 */
-  --bmc-sage-green: 153 40% 30%; /* #2D6A4F */
+  --bmc-cream: 40 32% 95%; /* warm ivory */
+  --bmc-forest-green: 158 44% 14%; /* deep forest */
+  --bmc-sage-green: 155 36% 25%;
   --bmc-gold: 44 53% 54%; /* #C9A84C */
   --bmc-gold-light: 43 80% 72%; /* #F0D080 */
   --bmc-charcoal: 0 0% 17%; /* #2C2C2C */
   --bmc-white: 0 0% 100%; /* #FFFFFF */
-  --bmc-cream-dark: 42 28% 89%; /* #EDE8DC */
+  --bmc-cream-dark: 40 24% 88%;
+  --bmc-gold-ink: 40 64% 27%; /* gold dark enough for text on ivory (about 7:1) */
+  --bmc-paper: 40 42% 98%; /* lighter ivory for raised surfaces */
 
   --background: var(--bmc-cream);
   --foreground: var(--bmc-charcoal);
@@ -113,7 +121,7 @@
   --secondary-border: var(--bmc-forest-green);
 
   --muted: var(--bmc-cream-dark);
-  --muted-foreground: var(--bmc-charcoal);
+  --muted-foreground: 0 0% 30%;
   --muted-border: 42 20% 80%;
 
   --accent: var(--bmc-gold);
@@ -127,15 +135,16 @@
   --input: var(--bmc-cream-dark);
   --ring: var(--bmc-gold);
 
-  --app-font-sans: 'DM Sans', sans-serif;
-  --app-font-serif: 'Lora', serif;
+  --app-font-sans: 'Nunito Sans Variable', 'Nunito Sans', system-ui, sans-serif;
+  --app-font-serif: 'Lora Variable', 'Lora', Georgia, serif;
   --app-font-mono: Menlo, monospace;
   
-  --font-display: 'Playfair Display', serif;
-  --font-body: 'Lora', serif;
-  --font-utility: 'DM Sans', sans-serif;
+  --font-display: 'Lora Variable', 'Lora', Georgia, serif;
+  --font-body: 'Nunito Sans Variable', 'Nunito Sans', system-ui, sans-serif;
+  --font-utility: 'Nunito Sans Variable', 'Nunito Sans', system-ui, sans-serif;
 
   --radius: 0.5rem;
+  --bmc-gold-metal: linear-gradient(135deg, hsl(41 52% 40%) 0%, hsl(45 68% 64%) 38%, hsl(44 78% 80%) 52%, hsl(42 55% 48%) 100%);
 }
 
 .dark {
@@ -183,27 +192,223 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-display font-bold;
+    @apply font-display font-medium;
+    letter-spacing: -0.012em;
+    text-wrap: balance;
+  }
+  p, li { text-wrap: pretty; }
+
+  ::selection { background: hsl(var(--bmc-gold-light) / 0.55); color: hsl(var(--bmc-forest-green)); }
+  :focus-visible { outline: 2px solid hsl(var(--bmc-forest-green)); outline-offset: 3px; border-radius: 6px; }
+  a { text-decoration: none; }
+  .bg-primary :focus-visible, .islamic-pattern :focus-visible, footer :focus-visible { outline-color: hsl(var(--bmc-gold-light)); }
+}
+
+/* Calm entrance for the first screen: a short rise, no fade, so the headline is always visible (LCP-safe). */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes bmc-rise { from { transform: translateY(14px); } to { transform: none; } }
+  .bmc-rise { animation: bmc-rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
+  .bmc-rise-2 { animation-delay: 0.12s; }
+  .bmc-rise-3 { animation-delay: 0.24s; }
+}
+
+/* Scroll reveal: progressive enhancement, no JS. Browsers without scroll-driven animations (or with reduced motion)
+   just show the content. fill-mode "backwards" means the element returns to its normal style afterwards,
+   so hover transforms on the same element keep working. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    @keyframes bmc-reveal { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+    .bmc-reveal {
+      animation: bmc-reveal linear backwards;
+      animation-timeline: view();
+      animation-range: entry 4% entry 42%;
+    }
+    .bmc-reveal:nth-child(2) { animation-range: entry 10% entry 48%; }
+    .bmc-reveal:nth-child(3) { animation-range: entry 16% entry 54%; }
+    .bmc-reveal:nth-child(n+4) { animation-range: entry 22% entry 60%; }
   }
 }
 
-/* Islamic Geometric Pattern */
+/* Hover lift for photos and cards (calm, 4px). Off under reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+  .bmc-photo { transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s ease; }
+  .bmc-photo:hover { transform: translateY(-4px); box-shadow: 0 0 0 1px hsl(var(--bmc-gold) / 0.55), var(--shadow-lift); }
+  .bmc-lift { transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s ease; }
+  .bmc-lift:hover { transform: translateY(-5px); }
+  .bmc-btn:hover { transform: translateY(-1px); }
+  .bmc-btn:active { transform: translateY(1px); }
+}
+
+/* ───────── Hero graphic: draw-in intro, then a gentle idle loop ───────── */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes hg-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+  @keyframes hg-fade { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes hg-drop { from { opacity: 0; transform: translateY(-14px); } to { opacity: 1; transform: none; } }
+  @keyframes hg-rise { from { opacity: 0; transform: translateY(22px) scale(0.985); } to { opacity: 1; transform: none; } }
+  @keyframes hg-sway { 0%, 100% { transform: rotate(-2.4deg); } 50% { transform: rotate(2.4deg); } }
+  @keyframes hg-twinkle { 0%, 100% { opacity: 0.35; transform: scale(0.72); } 50% { opacity: 1; transform: scale(1); } }
+  @keyframes hg-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+  @keyframes hg-glow { from { opacity: 0; transform: scale(0.92); } to { opacity: 1; transform: none; } }
+
+  .hg-draw { stroke-dasharray: 1; animation: hg-draw var(--hg-dur, 1.5s) cubic-bezier(0.45, 0, 0.2, 1) var(--hg-d, 0s) backwards; }
+  .hg-fade { animation: hg-fade var(--hg-dur, 0.9s) ease-out var(--hg-d, 0s) backwards; }
+  .hg-drop { animation: hg-drop 1s cubic-bezier(0.16, 1, 0.3, 1) var(--hg-d, 0s) backwards; }
+  .hg-glow { animation: hg-glow 1.8s ease-out 0.1s backwards; }
+  .hg-mascot { animation: hg-rise 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.55s backwards; }
+  .hg-sway { transform-box: fill-box; transform-origin: 50% 0; animation: hg-sway var(--hg-s, 6s) ease-in-out var(--hg-sd, 0s) infinite; }
+  .hg-float { animation: hg-float var(--hg-f, 6s) ease-in-out var(--hg-fd, 0s) infinite; }
+  .hg-star { transform-box: fill-box; transform-origin: 50% 50%; animation: hg-twinkle var(--hg-t, 4s) ease-in-out var(--hg-td, 0s) infinite; }
+}
+
+/* ───────── Refined system: patterns, buttons, links, eyebrows, frames ───────── */
+
+/* Tone-on-tone 8-point star lattice for dark green bands (very low contrast). Same geometry as <GirihPattern />. */
 .islamic-pattern {
   background-color: hsl(var(--bmc-forest-green));
-  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%232D6A4F' fill-opacity='0.2'%3E%3Cpath d='M30 0l30 30-30 30L0 30zM15 15l15 15-15 15L0 30zM45 15l15 15-15 15L30 30zM30 15l15 15-15 15L15 30z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg width='48' height='48' viewBox='-24 -24 48 48' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Cdefs%3E%3Cpath id='s' d='M-12-12H12V12H-12ZM0-17L17 0 0 17-17 0Z'/%3E%3C/defs%3E%3Cg fill='none' stroke='%23E8D9A8' stroke-opacity='0.085' stroke-width='0.7'%3E%3Cuse xlink:href='%23s'/%3E%3Cuse xlink:href='%23s' x='24' y='24'/%3E%3Cuse xlink:href='%23s' x='-24' y='24'/%3E%3Cuse xlink:href='%23s' x='24' y='-24'/%3E%3Cuse xlink:href='%23s' x='-24' y='-24'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 48px 48px;
+  background-position: center;
 }
 
-/* Mughal arch container */
-.mughal-arch-wrap {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* Dark bands: no hairline rules (founder, 2026-10-26). Class kept for the gold focus ring selector above. */
+
+/* Decorative glyph gold (solid, never body text). */
+.bmc-gold-text { color: hsl(40 52% 44%); }
+
+/* 1px metallic gold border that follows border-radius (used on the hero arch). */
+.bmc-gold-frame::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: var(--bmc-gold-metal);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  pointer-events: none;
 }
 
-.gold-divider {
-  height: 1px;
-  background: linear-gradient(90deg, transparent, hsl(var(--bmc-gold)), transparent);
-  width: 100%;
-  margin: 2rem 0;
+/* Eyebrow: small letter-spaced caps in readable gold-ink (about 7:1 on ivory). */
+.bmc-eyebrow {
+  font-family: var(--font-utility);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: hsl(var(--bmc-gold-ink));
+}
+.on-dark .bmc-eyebrow, .bmc-eyebrow.on-dark { color: hsl(var(--bmc-gold-light)); }
+
+/* Photo frame: ivory mat, hairline gold ring, deep soft shadow. */
+.bmc-photo {
+  padding: 6px;
+  border-radius: 16px;
+  background: hsl(var(--bmc-paper));
+  box-shadow: 0 0 0 1px hsl(var(--bmc-gold) / 0.38), var(--shadow-soft);
+}
+.bmc-photo > img, .bmc-photo > picture > img { border-radius: 11px; display: block; }
+
+@layer components {
+  /* Buttons: pill, no chunky shadows. */
+  .bmc-btn {
+    display: inline-flex;
+    min-height: 2.9rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 9999px;
+    padding: 0.75rem 1.9rem;
+    font-family: var(--font-utility);
+    font-size: 0.92rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.15s ease;
+  }
+  .bmc-btn-primary {
+    background: linear-gradient(180deg, hsl(158 40% 19%), hsl(158 44% 14%));
+    color: hsl(var(--bmc-paper));
+    box-shadow: inset 0 0 0 1px hsl(var(--bmc-gold) / 0.55), inset 0 1px 0 hsl(0 0% 100% / 0.1), 0 14px 24px -16px hsl(158 44% 8% / 0.55);
+  }
+  .bmc-btn-primary:hover {
+    background: linear-gradient(180deg, hsl(158 38% 24%), hsl(158 42% 17%));
+    box-shadow: inset 0 0 0 1px hsl(var(--bmc-gold-light) / 0.8), inset 0 1px 0 hsl(0 0% 100% / 0.12), 0 18px 28px -16px hsl(158 44% 8% / 0.55);
+  }
+  .bmc-btn-light {
+    background: hsl(var(--bmc-paper));
+    color: hsl(var(--bmc-forest-green));
+    box-shadow: inset 0 0 0 1px hsl(var(--bmc-gold) / 0.6);
+  }
+  .bmc-btn-light:hover { background: hsl(var(--bmc-gold-light)); }
+  .bmc-btn-outline {
+    color: hsl(var(--bmc-paper));
+    box-shadow: inset 0 0 0 1px hsl(var(--bmc-gold-light) / 0.65);
+  }
+  /* Secondary button on light backgrounds */
+  .bmc-btn-soft {
+    color: hsl(var(--primary));
+    background: hsl(var(--card));
+    box-shadow: 0 1px 2px hsl(158 40% 12% / 0.08), inset 0 0 0 1px hsl(var(--bmc-gold) / 0.45);
+  }
+  .bmc-btn-soft:hover { background: hsl(var(--bmc-gold-light) / 0.45); }
+  .bmc-btn-outline:hover { background: hsl(0 0% 100% / 0.08); box-shadow: inset 0 0 0 1px hsl(var(--bmc-gold-light)); }
+  .bmc-btn-light:focus-visible, .bmc-btn-outline:focus-visible { outline-color: hsl(var(--bmc-gold-light)); }
+
+  /* Text link without underline: colour, weight and a moving arrow mark it as a link. */
+  .bmc-link {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-utility);
+    font-size: 0.92rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: hsl(var(--bmc-forest-green));
+    transition: color 0.25s ease;
+  }
+  .bmc-link svg { transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+  .bmc-link:hover { color: hsl(var(--bmc-gold-ink)); }
+  .bmc-link:hover svg { transform: translateX(4px); }
+
+  /* Inline link inside a sentence: heavier weight and deep colour, no underline. */
+  .bmc-link-inline {
+    font-weight: 700;
+    color: hsl(var(--bmc-forest-green));
+    transition: color 0.25s ease;
+  }
+  .bmc-link-inline:hover { color: hsl(var(--bmc-gold-ink)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bmc-link svg, .bmc-btn { transition: none; }
+  .bmc-link:hover svg { transform: none; }
+}
+
+/* ───────── Hero letters: scattered alphabet that grows on hover ───────── */
+.hl-letter {
+  color: hsl(var(--bmc-gold-ink));
+  opacity: 0.26;
+  translate: -50% -50%;
+  rotate: var(--hl-r, 0deg);
+  transition: scale 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease, rotate 0.45s ease;
+  cursor: default;
+}
+.hl-letter:hover { scale: 1.9; opacity: 0.95; rotate: 0deg; z-index: 2; }
+.on-dark .hl-letter { color: hsl(var(--bmc-gold-light)); opacity: 0.2; }
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes hl-in { from { opacity: 0; } }
+  @keyframes hl-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
+  .hl-letter { animation: hl-in 1.2s ease-out var(--hl-d, 0.6s) backwards; }
+  .hl-float { animation: hl-float var(--hl-f, 7s) ease-in-out var(--hl-fd, 0s) infinite; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hl-letter { transition: opacity 0.2s ease; }
+  .hl-letter:hover { scale: 1.4; }
+}
+
+/* ───────── About: story path milestones rise in one by one ───────── */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes sp-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  .sp-node { animation: sp-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) var(--sp-d, 0.8s) backwards; }
 }

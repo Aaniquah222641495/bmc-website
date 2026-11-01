@@ -1,8 +1,7 @@
 import { ClassPageLayout } from '@/components/class-page-layout';
-import { IncludedList, DetailsGrid } from '@/components/class-page-blocks';
-import { motion } from 'framer-motion';
 import { Seo } from '@/components/seo';
 import { programmeJsonLd } from '@/lib/structured-data';
+import { faqByQuestion } from '@/data/faq';
 
 
 const INCLUDED = [
@@ -19,42 +18,42 @@ export default function QuranClasses() {
     <>
       <Seo
         title="Beginner Quran Class, Mitchell's Plain"
-        description="A beginner Quran reading programme in Mitchell's Plain, Cape Town — every Saturday morning, from the Arabic alphabet to confidently reciting the Mushaf."
+        description="A beginner Quran reading programme for women in Woodlands, Mitchell's Plain, Cape Town: every Saturday, 09:00 to 10:30, from the Arabic alphabet to confidently reciting the Mushaf."
         path="/programmes/quran-classes"
         jsonLd={programmeJsonLd('/programmes/quran-classes')}
       />
       <ClassPageLayout
-      title="Get Into Quran: In Person"
-      description="A Quran programme for complete beginners or those wanting to start again, held every Saturday morning in Mitchell's Plain, Cape Town."
-    >
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.3 }}
-        className="space-y-10"
-      >
-        {/* Description */}
-        <div>
-          <p className="font-body text-lg text-foreground/80 leading-relaxed mb-4">
-            This in-person Quran programme is designed for complete beginners, or for those who once learned but want to start again from the foundations. You will be guided step by step through Quran reading, with the goal of progressing to confidently reciting directly from the Mushaf.
-          </p>
-          <p className="font-body text-lg text-foreground/80 leading-relaxed">
-            Classes are held every Saturday morning in Mitchell's Plain, Cape Town, giving you the added blessing of learning in community with other students on the same journey.
-          </p>
-        </div>
-
-        <IncludedList items={INCLUDED} />
-
-        <DetailsGrid
-          items={[
-            { label: 'Format', value: 'In-Person' },
-            { label: 'Schedule', value: 'Every Saturday morning' },
-            { label: 'Location', value: "Mitchell's Plain, Cape Town" },
-            { label: 'Investment', value: 'R200 per month' },
-          ]}
-        />
-      </motion.div>
-    </ClassPageLayout>
+        path="/quran-classes"
+        // Matches the questions in the shared registration form (forms.gle/7tFCxqL8Ypgv9Jps5), read 2026-10-27.
+        formNeeds="Your full name, email, date of birth, WhatsApp number, and city and country."
+        title="Get Into Qur'an: In Person"
+        description="A Qur'an programme for women who are complete beginners or want to start again, every Saturday morning in Woodlands, Mitchell's Plain."
+        intro={
+          <>
+            <p>
+              This in-person Qur'an programme for women is designed for complete beginners, or for those who once learned but want to start again from the foundations. You will be guided step by step through Qur'an reading, with the goal of progressing to confidently reciting directly from the Mushaf.
+            </p>
+            <p>
+              Classes are held every Saturday from 09:00 to 10:30 in Woodlands, Mitchell's Plain, giving you the added blessing of learning in community with other students on the same journey. The exact address is shared after you register. Can't make Saturdays? Get Into Qur'an also runs online on Zoom every Tuesday evening.
+            </p>
+          </>
+        }
+        forYou={[
+          "You're a woman and a complete beginner at reading the Qur'an",
+          'You learned once and want to start again from the foundations',
+          "You can get to Mitchell's Plain on Saturday mornings",
+          "You'd like to learn in person, with others on the same journey",
+        ]}
+        questions={faqByQuestion("Are classes suitable for complete beginners?", "What do I need to get started?", "How do I pay for my class?")}
+        included={INCLUDED}
+        details={[
+          { label: 'Format', value: 'In-Person' },
+          { label: 'Who it\'s for', value: 'Women' },
+          { label: 'Schedule', value: 'Saturdays, 09:00–10:30' },
+          { label: 'Location', value: "Woodlands, Mitchell's Plain (address after you register)" },
+          { label: 'Fee', value: 'R200 per month' },
+        ]}
+      />
     </>
   );
 }

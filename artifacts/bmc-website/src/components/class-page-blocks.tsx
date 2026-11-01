@@ -1,4 +1,5 @@
-import { motion } from 'framer-motion';
+import { CARD } from '@/components/page-shell';
+import { IconTile, iconFor } from '@/components/ornaments/cute-icons';
 
 /**
  * Shared building blocks for the individual class/programme pages
@@ -23,102 +24,81 @@ interface IncludedListProps {
   heading?: string;
 }
 
-export function IncludedList({ items, heading = "What's Included" }: IncludedListProps) {
+/** Bold the lead-in ("Tajweed: ...") when an item has a short label before a colon. Same words, just easier to scan. */
+function splitLead(item: string): [string | null, string] {
+  const i = item.indexOf(': ');
+  if (i > 0 && i <= 44) return [item.slice(0, i), item.slice(i + 2)];
+  return [null, item];
+}
+
+export function IncludedList({ items, heading = "What you'll learn" }: IncludedListProps) {
   return (
     <div>
-      <div className="flex items-center gap-4 mb-6">
-        <div className="h-px bg-accent w-8" />
-        <h2 className="font-display text-2xl text-primary whitespace-nowrap">{heading}</h2>
-      </div>
-      <ul className="space-y-3">
-        {items.map((item, i) => (
-          <motion.li
-            key={i}
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.4 + i * 0.06 }}
-            className="flex items-start gap-3 font-body text-foreground/80"
-          >
-            <img src="/assets/bullet.webp" alt="" width={16} height={16} loading="lazy" decoding="async" className="flex-shrink-0 mt-1" />
-            <span>{item}</span>
-          </motion.li>
-        ))}
+      <h2 className="mb-7 text-[1.6rem] leading-tight text-primary md:text-[1.9rem]">{heading}</h2>
+      <ul className="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
+        {items.map((item) => {
+          const [lead, rest] = splitLead(item);
+          return (
+            <li key={item} className="bmc-lift flex items-center gap-4 rounded-2xl bg-card p-4 pr-5 leading-[1.6] text-foreground/85 shadow-soft">
+              <IconTile Icon={iconFor(item)} />
+              <span>
+                {lead ? (
+                  <>
+                    <strong className="font-semibold text-primary">{lead}:</strong> {rest}
+                  </>
+                ) : (
+                  rest
+                )}
+              </span>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );
 }
 
-interface DetailsGridProps {
-  items: DetailItem[];
-}
-
-export function DetailsGrid({ items }: DetailsGridProps) {
+/** The at-a-glance facts: who it is for, when, how much. */
+export function DetailsGrid({ items }: { items: DetailItem[] }) {
   return (
-    <div className="grid sm:grid-cols-2 gap-4">
+    <dl className="space-y-6">
       {items.map(({ label, value }) => (
-        <div key={label} className="bg-muted rounded-xl p-5 border border-border">
-          <p className="font-utility text-xs text-foreground/50 uppercase tracking-widest mb-1">{label}</p>
-          <p className="font-display text-primary text-lg">{value}</p>
+        <div key={label}>
+          <dt className="bmc-eyebrow !text-[0.74rem]">{label}</dt>
+          <dd className="mt-1.5 font-display text-[1.2rem] leading-snug text-primary">{value}</dd>
         </div>
       ))}
-    </div>
+    </dl>
   );
 }
 
 interface PastWorkshopsGridProps {
   workshops: PastWorkshop[];
-  delayBase?: number;
-  delayStep?: number;
   /** Tailwind classes controlling the grid's responsive column count. */
   gridClassName?: string;
 }
 
-export function PastWorkshopsGrid({
-  workshops,
-  delayBase = 0.3,
-  delayStep = 0.08,
-  gridClassName = 'sm:grid-cols-2',
-}: PastWorkshopsGridProps) {
+export function PastWorkshopsGrid({ workshops, gridClassName = 'sm:grid-cols-2' }: PastWorkshopsGridProps) {
   return (
-    <div className={`grid ${gridClassName} gap-5`}>
-      {workshops.map((workshop, i) => (
-        <motion.div
-          key={workshop.title}
-          initial={{ opacity: 0, scale: 0.97 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: delayBase + i * delayStep }}
-          className="bg-card border border-border rounded-2xl relative overflow-hidden"
-        >
+    <ul className={`grid grid-cols-1 ${gridClassName} gap-6 md:gap-8`}>
+      {workshops.map((workshop) => (
+        <li key={workshop.title} className={`bmc-reveal ${CARD} flex flex-col p-3 sm:p-4`}>
           {workshop.image && (
-            <div className="relative w-full h-44 overflow-hidden">
-              <img
-                src={workshop.image}
-                alt={workshop.imageAlt ?? workshop.title}
-                loading="lazy"
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute top-4 right-4">
-                <span className="font-utility text-xs text-white/80 uppercase tracking-widest border border-white/30 bg-black/30 backdrop-blur-sm rounded-full px-3 py-1">
-                  Past
-                </span>
-              </div>
+            <div className="relative aspect-[16/10] overflow-hidden rounded-[0.9rem]">
+              <img src={workshop.image} alt={workshop.imageAlt ?? workshop.title} loading="lazy" decoding="async" className="h-full w-full object-cover" />
+              <span className="absolute left-3 top-3 rounded-full bg-primary/80 px-3 py-1 font-utility text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-primary-foreground backdrop-blur-sm">
+                Past
+              </span>
             </div>
           )}
-
-          <div className="p-7 relative">
-            {!workshop.image && (
-              <div className="absolute top-4 right-4">
-                <span className="font-utility text-xs text-foreground/30 uppercase tracking-widest border border-border rounded-full px-3 py-1">
-                  Past
-                </span>
-              </div>
-            )}
-            <h3 className="font-display text-xl text-primary mb-2">{workshop.title}</h3>
-            <p className="font-utility text-xs text-foreground/50 uppercase tracking-widest mb-3">{workshop.type}</p>
-            <p className="font-body text-foreground/70 text-sm leading-relaxed">{workshop.description}</p>
+          <div className="flex flex-1 flex-col px-2 pb-3 pt-6 sm:px-4">
+            {!workshop.image && <p className="bmc-eyebrow mb-2 !text-[0.74rem]">Past</p>}
+            <p className="bmc-eyebrow mb-2 !text-[0.74rem]">{workshop.type}</p>
+            <h3 className="mb-3 text-[1.35rem] leading-snug text-primary">{workshop.title}</h3>
+            <p className="text-[0.98rem] leading-[1.7] text-foreground/80">{workshop.description}</p>
           </div>
-        </motion.div>
+        </li>
       ))}
-    </div>
+    </ul>
   );
 }

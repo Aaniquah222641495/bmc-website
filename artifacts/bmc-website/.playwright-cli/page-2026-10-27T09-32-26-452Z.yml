@@ -1,0 +1,82 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - navigation "Main" [ref=e5]:
+        - link "Beginners Madrasah Classes, home" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e7]: BMC
+        - generic [ref=e8]:
+          - list [ref=e9]:
+            - listitem [ref=e10]:
+              - link "Home" [ref=e11] [cursor=pointer]:
+                - /url: /
+            - listitem [ref=e13]:
+              - link "About" [ref=e14] [cursor=pointer]:
+                - /url: /about
+            - listitem [ref=e16]:
+              - link "Programmes" [ref=e17] [cursor=pointer]:
+                - /url: /programmes
+            - listitem [ref=e19]:
+              - link "Testimonials" [ref=e20] [cursor=pointer]:
+                - /url: /testimonials
+            - listitem [ref=e22]:
+              - link "FAQ" [ref=e23] [cursor=pointer]:
+                - /url: /faq
+            - listitem [ref=e25]:
+              - link "Contact" [ref=e26] [cursor=pointer]:
+                - /url: /contact
+          - link "Start Learning" [ref=e28] [cursor=pointer]:
+            - /url: /programmes
+    - main [ref=e29]
+    - link "Chat with Beginners Madrasah Classes on WhatsApp" [ref=e32] [cursor=pointer]:
+      - /url: https://wa.me/27686498593
+    - contentinfo [ref=e35]:
+      - generic [ref=e36]:
+        - generic [ref=e37]:
+          - generic [ref=e38]:
+            - generic [ref=e39]:
+              - img "Illustration of Mualimah and two students reading the Qur'an at wooden stands" [ref=e40]
+              - generic [ref=e41]: BMC
+            - paragraph [ref=e42]: Foundations of Islamic Knowledge. A warm, safe, beginner-friendly Islamic learning space for women and children.
+          - navigation "Footer" [ref=e43]:
+            - heading "Quick Links" [level=2] [ref=e44]
+            - list [ref=e45]:
+              - listitem [ref=e46]:
+                - link "Home" [ref=e47] [cursor=pointer]:
+                  - /url: /
+              - listitem [ref=e48]:
+                - link "About Mualimah Rukeya" [ref=e49] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e50]:
+                - link "Programmes" [ref=e51] [cursor=pointer]:
+                  - /url: /programmes
+              - listitem [ref=e52]:
+                - link "Testimonials" [ref=e53] [cursor=pointer]:
+                  - /url: /testimonials
+              - listitem [ref=e54]:
+                - link "FAQ" [ref=e55] [cursor=pointer]:
+                  - /url: /faq
+              - listitem [ref=e56]:
+                - link "Contact Us" [ref=e57] [cursor=pointer]:
+                  - /url: /contact
+          - generic [ref=e58]:
+            - heading "Connect" [level=2] [ref=e59]
+            - list [ref=e60]:
+              - listitem [ref=e61]:
+                - link "068 649 8593" [ref=e62] [cursor=pointer]:
+                  - /url: https://wa.me/27686498593
+              - listitem [ref=e66]:
+                - link "@beginners_classes" [ref=e67] [cursor=pointer]:
+                  - /url: https://instagram.com/beginners_classes
+              - listitem [ref=e71]:
+                - link "@rukeyabaradien_" [ref=e72] [cursor=pointer]:
+                  - /url: https://tiktok.com/@rukeyabaradien_
+              - listitem [ref=e76]: beginnersmadrasah.co.za
+        - generic [ref=e77]:
+          - paragraph [ref=e78]: © 2026 Beginners Madrasah Classes. All rights reserved.
+          - paragraph [ref=e79]:
+            - text: Website by
+            - link "Digital Pantry" [ref=e80] [cursor=pointer]:
+              - /url: https://digitalpantry.co.za
+  - region "Notifications (F8)":
+    - list

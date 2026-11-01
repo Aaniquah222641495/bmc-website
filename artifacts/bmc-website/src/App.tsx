@@ -1,4 +1,5 @@
 import { type ReactNode, Suspense, lazy, useEffect } from 'react';
+import { MotionConfig } from 'framer-motion';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ErrorBoundary } from '@/components/error-boundary';
 import { Toaster } from '@/components/ui/toaster';
@@ -22,6 +23,7 @@ const Programmes = lazy(() => import('@/pages/programmes'));
 const WomensClasses = lazy(() => import('@/pages/classes/womens-classes'));
 const InPersonWorkshops = lazy(() => import('@/pages/classes/in-person-workshops'));
 const QuranClasses = lazy(() => import('@/pages/classes/quran-classes'));
+const OnlineQuranClasses = lazy(() => import('@/pages/classes/online-quran-classes'));
 const HifdhClasses = lazy(() => import('@/pages/classes/hifdh-classes'));
 const ChildrensClasses = lazy(() => import('@/pages/classes/childrens-classes'));
 const Workshops = lazy(() => import('@/pages/classes/workshops'));
@@ -65,6 +67,7 @@ function Router() {
                 <Redirect to="/programmes/in-person-workshops" />
               </Route>
               <Route path="/programmes/quran-classes" component={QuranClasses} />
+              <Route path="/programmes/online-quran-classes" component={OnlineQuranClasses} />
               <Route path="/programmes/hifdh-classes" component={HifdhClasses} />
               <Route path="/programmes/childrens-classes" component={ChildrensClasses} />
               <Route path="/programmes/workshops" component={Workshops} />
@@ -90,9 +93,12 @@ function App({ ssrPath }: { ssrPath?: string } = {}) {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')} ssrPath={ssrPath}>
-          <Router />
-        </WouterRouter>
+        {/* Respect the visitor's reduced-motion setting for every framer-motion animation. */}
+        <MotionConfig reducedMotion="user">
+          <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')} ssrPath={ssrPath}>
+            <Router />
+          </WouterRouter>
+        </MotionConfig>
         <Toaster />
       </TooltipProvider>
     </QueryClientProvider>

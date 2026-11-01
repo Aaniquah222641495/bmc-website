@@ -10,7 +10,15 @@ export interface Programme {
   /** Fuller copy, used on the Programmes page. */
   descLong: string;
   tag: string;
+  /** Optional short facts for the Programmes card (CMS). */
+  when?: string;
+  where?: string;
+  who?: string;
   price: string;
+  /** CMS switch: true while the class is not taking new students (its Google Form is closed). */
+  registrationClosed?: boolean;
+  /** CMS: terms shown on the registration form, with a required "I agree" tick box. */
+  terms?: string;
   type: ProgrammeType;
   image?: string;
   imagePosition?: string;
@@ -26,3 +34,26 @@ export interface Programme {
  * developer to build the page it links to.
  */
 export const PROGRAMMES: Programme[] = programmesSettings.programmes as Programme[];
+
+/** CMS: banking details shown on the thank-you screen after registering. */
+export const PAYMENT_DETAILS: string = (programmesSettings as { paymentDetails?: string }).paymentDetails ?? '';
+
+/**
+ * Small audience/format tags for the homepage cards, derived from existing
+ * fields (title and type) so the client has nothing extra to maintain. If a
+ * title is renamed and no keyword matches, the card simply shows fewer tags.
+ */
+/** The programme for a path such as "/womens-classes". */
+export function programmeByPath(path: string): Programme | undefined {
+  return PROGRAMMES.find((p) => p.path === path);
+}
+
+export function programmeTags(p: Pick<Programme, 'title' | 'type'>): string[] {
+  const tags: string[] = [];
+  if (/women/i.test(p.title)) tags.push('Women');
+  if (/children/i.test(p.title)) tags.push('Children');
+  if (/hifdh/i.test(p.title)) tags.push('Hifdh');
+  if (/workshop/i.test(p.title)) tags.push('Workshops');
+  if (p.type === 'inperson') tags.push('In person');
+  return tags;
+}

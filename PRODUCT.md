@@ -31,6 +31,8 @@ A warm, safe, beginner-friendly learning space, taught by Mualimah Rukeya, that 
 ## Brand Commitments
 - Beginners Madrasah Classes' own brand, not the Digital Pantry look. Has its own illustrated mascot.
 - Tone: warm, gentle, respectful and plain. No cheeky copy on faith content.
+- Never use bmc-logo-final.webp (emblem E, the ornate arch with "Est 2024") anywhere; mascot-2.webp is the correct mascot (founder 2026-10-26).
+- No decorative lines (hairline rules, gold bars under headings, link underlines). Use spacing, soft shadow and shape (founder 2026-10-26).
 
 ## Evidence on Hand
 - Student testimonials on the site are real and supplied by the client (confirmed by the founder, 2026-10-10). Use them as written; do not edit their meaning or add new ones.
