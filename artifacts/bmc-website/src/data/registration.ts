@@ -6,7 +6,7 @@
 // that is how the script finds where each answer goes. The same lists live in apps-script/Code.gs.
 // Change one, change both.
 
-export type FieldKind = 'text' | 'email' | 'phone' | 'date' | 'choice' | 'age' | 'consent';
+export type FieldKind = 'text' | 'longtext' | 'number' | 'email' | 'phone' | 'date' | 'choice' | 'age' | 'consent';
 
 export interface RegField {
   id: string;
@@ -20,15 +20,16 @@ export interface RegField {
   options?: string[];
   autoComplete?: string;
   max?: number;
+  /** Starts a new group on the form, with this heading (her form's section titles). */
+  section?: string;
 }
 
-/**
- * Off since 2026-11-01: the client built her own 2027 Google Forms (more questions, sections, her own
- * terms), so class pages embed those. Our form would need her exact questions first (ADR-0031).
- */
-export const USE_OWN_FORMS = false;
+/** On since 2026-11-01 (founder): our styled forms, matched to her 2027 Google Forms, for the classes below. */
+export const USE_OWN_FORMS = true;
 
-export type ClassKey = 'womens' | 'hifdh' | 'quran' | 'children';
+export type ClassKey = 'womens' | 'hifdh' | 'quranOnline' | 'quran' | 'children';
+/** Classes whose Google Form the script submits into. Others keep the embedded Google Form. */
+export const OWN_FORM_CLASSES: ClassKey[] = ['womens', 'children', 'hifdh', 'quranOnline'];
 /** Waitlist-only lists: no registration form, people are emailed when a new workshop is published. */
 export type WorkshopListKey = 'workshops' | 'in-person-workshops';
 
@@ -36,54 +37,96 @@ export type WorkshopListKey = 'workshops' | 'in-person-workshops';
 export const CLASS_BY_PATH: Record<string, ClassKey> = {
   '/womens-classes': 'womens',
   '/hifdh-classes': 'hifdh',
+  '/online-quran-classes': 'quranOnline',
   '/quran-classes': 'quran',
   '/childrens-classes': 'children',
 };
 
-const ADULT_CONSENT =
-  'I agree that Beginners Madrasah Classes may keep these details, including my answer about my faith, to arrange my classes and contact me about them.';
+// Her 2027 Google Forms (read 2026-11-01). `question` must match her question title word for word:
+// the Apps Script finds where each answer goes by title. Same lists live in apps-script/Code.gs.
+const EMAIL: RegField = { id: 'email', question: 'Email', kind: 'email', required: true, autoComplete: 'email', max: 254 };
+const UNDERSTAND = ['Yes I understand', 'No I need clarity'];
+const HEARD = ['WhatsApp', 'Facebook', 'Instagram', 'Family/Friend', 'Other'];
+const FEES_150 = 'Do you acknowledge the following fees?\nR50 once-off registration fee\nR150 monthly fee';
+const PHONE_HINT = 'South African, or with your country code from abroad';
 
-// Adult classes: the questions on the client's current Google Form (read 2026-10-28), plus consent.
-const ADULT_FIELDS: RegField[] = [
-  { id: 'name', question: 'Full Name & Surname', label: 'Full name and surname', kind: 'text', required: true, autoComplete: 'name', max: 100 },
-  { id: 'email', question: 'Email', kind: 'email', required: true, autoComplete: 'email', max: 254 },
-  { id: 'dob', question: 'Date of Birth', label: 'Date of birth', kind: 'date', required: true, autoComplete: 'bday' },
-  { id: 'whatsapp', question: 'WhatsApp Number', label: 'WhatsApp number', kind: 'phone', required: true, autoComplete: 'tel', hint: 'South African, or with your country code from abroad' },
-  { id: 'faith', question: 'Are you a', label: 'Are you a', kind: 'choice', required: true, options: ['Revert', 'Born Muslim', 'Non-Muslim'] },
+const WOMENS_FIELDS: RegField[] = [
+  { id: 'name', question: 'Full Name & Surname', label: 'Full name and surname', kind: 'text', required: true, autoComplete: 'name', max: 100, section: 'About you' },
+  EMAIL,
+  { id: 'whatsapp', question: 'WhatsApp Number', label: 'WhatsApp number', kind: 'phone', required: true, autoComplete: 'tel', hint: PHONE_HINT },
+  { id: 'age', question: 'Age', kind: 'number', required: true },
   { id: 'city', question: 'City & Country', label: 'City and country', kind: 'text', required: true, autoComplete: 'address-level2', max: 100 },
-  { id: 'consent', question: 'Consent', label: ADULT_CONSENT, kind: 'consent', required: true },
+  { id: 'faith', question: 'Are you a revert to Islam or a born Muslim?', kind: 'choice', required: true, options: ['Revert to Islam', 'Born Muslim'] },
+  { id: 'level', question: 'How would you describe your current level of Islamic knowledge?', kind: 'choice', required: true, options: ['Complete beginner', 'I have some basic Islamic knowledge', 'I have studied Islam before but would like to refresh my knowledge'], section: 'Islamic learning background' },
+  { id: 'reason', question: 'What encouraged you to register for Beginners Madrasah?', label: 'What encouraged you to register? (optional)', kind: 'longtext', required: false, max: 500 },
+  { id: 'recorded', question: 'Do you understand that this is not a live class and that lessons are pre-recorded?', kind: 'choice', required: true, options: UNDERSTAND, section: 'How the classes work' },
+  { id: 'classroom', question: 'Do you understand that lessons, activities and homework will be available through Google Classroom?', kind: 'choice', required: true, options: UNDERSTAND },
+  { id: 'fees', question: FEES_150, label: 'I acknowledge the fees: R50 once-off registration fee and R150 per month.', kind: 'consent', required: true, section: 'Fees' },
+  { id: 'monthly', question: 'Do you understand that monthly fees are payable while you are enrolled in the programme?', label: 'I understand that monthly fees are payable while I am enrolled in the programme.', kind: 'consent', required: true },
 ];
 
-// Children's class: a parent registers. Fields confirmed by the client 2026-11-01 (she added date of birth,
-// emergency contact, medical conditions or allergies, and parental consent). Medical details are special
-// personal information (POPIA): asked only to keep the child safe, covered by the consent below.
+// Children's class: a parent registers. Medical details are special personal information (POPIA):
+// asked only to keep the child safe, and covered by the parental consent at the end.
 const CHILD_FIELDS: RegField[] = [
-  { id: 'parentName', question: "Parent or guardian's full name", kind: 'text', required: true, autoComplete: 'name', max: 100 },
-  { id: 'email', question: "Parent's email", kind: 'email', required: true, autoComplete: 'email', max: 254 },
-  { id: 'whatsapp', question: "Parent's WhatsApp number", kind: 'phone', required: true, autoComplete: 'tel', hint: 'South African, or with your country code from abroad' },
-  { id: 'childName', question: "Child's full name", kind: 'text', required: true, autoComplete: 'off', max: 100 },
-  { id: 'childAge', question: "Child's age", kind: 'age', required: true, options: ['6', '7', '8', '9', '10', '11', '12', '13'] },
+  { id: 'childName', question: "Child's full name and surname", kind: 'text', required: true, autoComplete: 'off', max: 100, section: 'About your child' },
+  { id: 'childAge', question: "Child's Age", label: "Child's age", kind: 'age', required: true, options: ['6', '7', '8', '9', '10', '11', '12', '13'] },
   { id: 'childDob', question: "Child's date of birth", kind: 'date', required: true, autoComplete: 'off' },
-  { id: 'emergency', question: 'Emergency contact number', kind: 'phone', required: true, autoComplete: 'off', hint: 'Someone we can call if we cannot reach you' },
-  { id: 'medical', question: 'Medical conditions or allergies', kind: 'text', required: true, autoComplete: 'off', max: 300, hint: 'Write "None" if there are none' },
-  { id: 'city', question: 'City & Country', label: 'City and country', kind: 'text', required: true, autoComplete: 'address-level2', max: 100 },
+  { id: 'medical', question: 'Medical conditions or allergies', kind: 'longtext', required: true, max: 300, hint: 'So we can keep your child safe in class. Write "None" if there are none.' },
+  { id: 'experience', question: 'Does your child have any previous Madrasah experience?', kind: 'choice', required: true, options: ['Yes', 'No'] },
+  { id: 'support', question: 'Does your child have any learning difficulties or additional support needs we should be aware of?', kind: 'longtext', required: true, max: 300, hint: 'Write "None" if there are none.' },
+  { id: 'parentName', question: "Parent/Guardian's full name and surname", label: "Parent or guardian's full name and surname", kind: 'text', required: true, autoComplete: 'name', max: 100, section: 'Parent or guardian' },
+  { ...EMAIL, label: "Parent or guardian's email" },
+  { id: 'whatsapp', question: "Parent/Guardian's WhatsApp number", label: "Parent or guardian's WhatsApp number", kind: 'phone', required: true, autoComplete: 'tel', hint: PHONE_HINT },
+  { id: 'emergency', question: 'Emergency contact number', label: 'Emergency contact', kind: 'text', required: true, autoComplete: 'off', max: 120, hint: "Name and number of someone we can call if we can't reach you" },
+  { id: 'heard', question: 'How did you hear about Beginners Madrasah Classes?', label: 'How did you hear about us?', kind: 'choice', required: true, options: ['WhatsApp', 'Facebook / Instagram', 'Family or friend', 'Other'] },
+  { id: 'fees', question: FEES_150, label: 'I acknowledge the fees: R50 once-off registration fee and R150 per month.', kind: 'consent', required: true, section: 'Fees and consent' },
+  { id: 'monthly', question: 'Do you understand that monthly fees are payable while your child/children are enrolled in the programme?', label: 'I understand that monthly fees are payable while my child is enrolled, even if classes are missed.', kind: 'consent', required: true },
   {
     id: 'consent',
-    question: 'Parent consent',
-    label: "I am this child's parent or guardian. I give consent for my child to join the classes, and I agree that Beginners Madrasah Classes may keep these details, including any medical conditions or allergies, to arrange my child's classes, keep my child safe and contact me about them.",
+    question: 'Parental consent',
+    label: "I am this child's parent or legal guardian. I give consent for my child to join the classes, and for Beginners Madrasah Classes to keep these details, including any medical conditions or allergies, to arrange my child's classes and keep my child safe.",
     kind: 'consent',
     required: true,
   },
 ];
 
-/** Added to a class's form only when its CMS terms are filled in. The Google Form question title is TERMS_QUESTION. */
+const HIFDH_FIELDS: RegField[] = [
+  { id: 'name', question: 'Full name and surname', kind: 'text', required: true, autoComplete: 'name', max: 100, section: 'About you' },
+  EMAIL,
+  { id: 'whatsapp', question: 'WhatsApp number', kind: 'phone', required: true, autoComplete: 'tel', hint: PHONE_HINT },
+  { id: 'age', question: 'Age', kind: 'number', required: true, hint: 'The Hifdh programme is for sisters aged 16 and older' },
+  { id: 'previous', question: 'Have you previously attended Hifdh classes?', kind: 'choice', required: true, options: ['Yes', 'No'], section: "Qur'an reading and Hifdh experience" },
+  { id: 'goal', question: 'What is your main goal for joining the Hifdh programme?', kind: 'longtext', required: true, max: 500 },
+  { id: 'heard', question: 'How did you hear about Beginners Madrasah Classes?', label: 'How did you hear about us?', kind: 'choice', required: true, options: HEARD },
+];
+
+const QURAN_FIELDS: RegField[] = [
+  { id: 'name', question: 'Full name and surname', kind: 'text', required: true, autoComplete: 'name', max: 100, section: 'About you' },
+  EMAIL,
+  { id: 'whatsapp', question: 'WhatsApp number', kind: 'phone', required: true, autoComplete: 'tel', hint: PHONE_HINT },
+  { id: 'age', question: 'Age', kind: 'number', required: true },
+  { id: 'faith', question: 'Are you a revert to Islam or a born Muslim?', kind: 'choice', required: true, options: ['Born Muslim', 'Revert'] },
+  { id: 'previous', question: "Have you previously attended any Qur'an reading classes?", kind: 'choice', required: true, options: ['Yes', 'No'], section: "Your Qur'an reading" },
+  {
+    id: 'ability',
+    question: "How would you describe your current Qur'an reading ability?",
+    kind: 'choice',
+    required: true,
+    options: ['I am a complete beginner and do not know the Arabic letters.', 'I recognise some Arabic letters but cannot read words.', 'I can read some Arabic words but struggle to join them.', 'I can read slowly but need assistance.'],
+  },
+  { id: 'motivation', question: "What motivated you to join the Get Into Qur'an programme?", label: 'What motivated you to join? (optional)', kind: 'longtext', required: false, max: 500 },
+  { id: 'heard', question: 'How did you hear about Beginners Madrasah Classes?', label: 'How did you hear about us?', kind: 'choice', required: true, options: HEARD },
+];
+
+/** Added when a class's CMS terms are filled in. Shown and checked on the website only: her forms show the terms as text. */
 export const TERMS_QUESTION = 'I agree to the terms and conditions';
-export const TERMS_FIELD: RegField = { id: 'terms', question: TERMS_QUESTION, label: 'I have read and agree to the terms and conditions.', kind: 'consent', required: true };
+export const TERMS_FIELD: RegField = { id: 'terms', question: TERMS_QUESTION, label: 'I have read and agree to the terms and conditions.', kind: 'consent', required: true, section: 'Terms' };
 
 export const REG_FIELDS: Record<ClassKey, RegField[]> = {
-  womens: ADULT_FIELDS,
-  hifdh: ADULT_FIELDS,
-  quran: ADULT_FIELDS,
+  womens: WOMENS_FIELDS,
+  hifdh: HIFDH_FIELDS,
+  quranOnline: QURAN_FIELDS,
+  quran: QURAN_FIELDS,
   children: CHILD_FIELDS,
 };
 
@@ -125,6 +168,7 @@ export function validate(fields: RegField[], values: Record<string, string>): Re
     }
     if (f.max && v.length > f.max) errors[f.id] = `Please keep it under ${f.max} characters.`;
     else if (f.kind === 'email' && !EMAIL_RE.test(v)) errors[f.id] = "That email doesn't look right.";
+    else if (f.kind === 'number' && (!/^\d{1,3}$/.test(v) || Number(v) < 5 || Number(v) > 110)) errors[f.id] = 'Please write your age in numbers, like 25.';
     else if (f.kind === 'phone' && !normalisePhone(v)) errors[f.id] = 'Use a number like 068 123 4567, or +44... from abroad.';
     else if (f.kind === 'date') {
       const d = new Date(`${v}T00:00:00`);

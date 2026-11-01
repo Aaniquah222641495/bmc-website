@@ -19,25 +19,25 @@
 const CONFIG = {
   // Where alerts go (problems, and a copy of each registration if ALERT_EVERY_REGISTRATION is true).
   OWNER_EMAIL: 'beginnersmadrasah@gmail.com',
-  ALERT_EVERY_REGISTRATION: false, // Google Forms can email her itself (Responses > ... > Get email notifications)
-  // Edit links of the existing Google Forms (open the form, copy the address ending in /edit).
-  // Leave a class empty and setup() creates its form for you.
+  ALERT_EVERY_REGISTRATION: false, // Google Forms emails her itself (Responses > ... > Get email notifications)
+  // Edit links of her 2027 Google Forms. A class left empty keeps the Google Form embed on the website.
   FORMS: {
-    womens: '',
-    children: '',
-    hifdh: '',
-    quran: ''
+    womens: 'https://docs.google.com/forms/d/1yn1xhsaXcgDRSotpkRLDq0mfgvCw7FI9CoAu4RSxFwQ/edit',
+    children: 'https://docs.google.com/forms/d/1D98-F5GuClKXy6y7hlDmlhGSMpw8xk4Q__tq38AP4e0/edit',
+    hifdh: 'https://docs.google.com/forms/d/17MQUDWe_B0q32HZKlO35-rRsoTLkDac0Kph1NTkce7o/edit',
+    quranOnline: 'https://docs.google.com/forms/d/15gq6mDE7Au3irtyYzV-gzlCvrrJM4e0KNICaeZXe2ZQ/edit',
+    quran: '' // in person: her form is not published yet
   },
-  // Added to the confirmation email after a registration. Same text as "Banking details" in the site editor.
-  PAYMENT_DETAILS: 'FNB\nMiss R Baradien\nAcc: 63165815524\nBranch c: 250655\nCurrent Account\nNB! Reference your name and surname.',
+  // Added to the confirmation email after a registration. Same as the banking details on her forms.
+  PAYMENT_DETAILS: 'Bank: FNB\nAccount holder: Beginners Madrasah\nAccount number: 63165815524\nBranch code: 250655\nAccount type: Current Account\nReference: your name and surname',
   SITE_URL: 'https://beginnersmadrasah.co.za',
   WHATSAPP_NUMBER: '27686498593',
   WHATSAPP_DISPLAY: '068 649 8593',
   TIMEZONE: 'Africa/Johannesburg',
   SEND_CONFIRMATION: true,       // one plain "we received it" email to the person who registered
-  MAX_BODY_CHARS: 6000,
+  MAX_BODY_CHARS: 8000,
   DUPLICATE_WINDOW_SECONDS: 600,
-  MAX_PER_EMAIL_PER_HOUR: 4,
+  MAX_PER_EMAIL_PER_HOUR: 6,     // a parent may register several children
   MAX_PER_HOUR: 60,
   MIN_QUOTA_FOR_CONFIRMATION: 5
 };
@@ -45,9 +45,11 @@ const CONFIG = {
 const CLASS_TITLES = {
   womens: "Women's Online Madrasah",
   hifdh: "Women's Hifdh Programme",
-  quran: "Get Into Qur'an",
+  quranOnline: "Get Into Qur'an Online",
+  quran: "Get Into Qur'an In Person",
   children: "Children's Online Madrasah"
 };
+const CLASS_PATHS = { womens: '/womens-classes', hifdh: '/hifdh-classes', quranOnline: '/online-quran-classes', quran: '/quran-classes', children: '/childrens-classes' };
 
 // Workshop lists: no registration here (workshops have their own links); people are emailed
 // every time a new workshop is published on the site (checkWorkshops_, hourly).
@@ -57,37 +59,67 @@ const WORKSHOP_LISTS = {
 };
 function listTitle_(key) { return CLASS_TITLES[key] || WORKSHOP_LISTS[key]; }
 
-const ADULT_CONSENT = 'I agree that Beginners Madrasah Classes may keep these details, including my answer about my faith, to arrange my classes and contact me about them.';
-const CHILD_CONSENT = "I am this child's parent or guardian. I give consent for my child to join the classes, and I agree that Beginners Madrasah Classes may keep these details, including any medical conditions or allergies, to arrange my child's classes, keep my child safe and contact me about them.";
+// question: her Google Form question title, word for word (spaces and curly quotes do not matter).
+// kind: how it is checked. optional: may be left empty. A "consent" answer on a multiple-choice
+// question picks its first choice ("Yes I understand"); on a checkbox question, its first box.
+// The website's own terms tick box is not sent: her forms show the terms as text.
+// Same lists as src/data/registration.ts in the website code. Change one, change both.
+const EMAIL = { id: 'email', question: 'Email', kind: 'email', max: 254 };
+const UNDERSTAND = ['Yes I understand', 'No I need clarity'];
+const HEARD = ['WhatsApp', 'Facebook', 'Instagram', 'Family/Friend', 'Other'];
+const FEES_150 = 'Do you acknowledge the following fees?\nR50 once-off registration fee\nR150 monthly fee';
 
-// Sent only for classes whose terms are filled in on the website (site editor > Terms and conditions).
-const TERMS_FIELD = { id: 'terms', question: 'I agree to the terms and conditions', kind: 'consent', optional: true, help: 'I have read and agree to the terms and conditions on the registration form.' };
-
-// question: the Google Form question title, word for word. kind: how the website checks it.
-const ADULT_FIELDS = [
+const WOMENS_FIELDS = [
+  EMAIL,
   { id: 'name', question: 'Full Name & Surname', kind: 'text', max: 100 },
-  { id: 'email', question: 'Email', kind: 'email', max: 254 },
-  { id: 'dob', question: 'Date of Birth', kind: 'date' },
+  { id: 'age', question: 'Age', kind: 'number' },
   { id: 'whatsapp', question: 'WhatsApp Number', kind: 'phone' },
-  { id: 'faith', question: 'Are you a', kind: 'choice', options: ['Revert', 'Born Muslim', 'Non-Muslim'] },
   { id: 'city', question: 'City & Country', kind: 'text', max: 100 },
-  { id: 'consent', question: 'Consent', kind: 'consent', help: ADULT_CONSENT },
-  TERMS_FIELD
+  { id: 'faith', question: 'Are you a revert to Islam or a born Muslim?', kind: 'choice', options: ['Revert to Islam', 'Born Muslim'] },
+  { id: 'level', question: 'How would you describe your current level of Islamic knowledge?', kind: 'choice', options: ['Complete beginner', 'I have some basic Islamic knowledge', 'I have studied Islam before but would like to refresh my knowledge'] },
+  { id: 'reason', question: 'What encouraged you to register for Beginners Madrasah?', kind: 'text', max: 500, optional: true },
+  { id: 'recorded', question: 'Do you understand that this is not a live class and that lessons are pre-recorded?', kind: 'choice', options: UNDERSTAND },
+  { id: 'classroom', question: 'Do you understand that lessons, activities and homework will be available through Google Classroom?', kind: 'choice', options: UNDERSTAND },
+  { id: 'fees', question: FEES_150, kind: 'consent' },
+  { id: 'monthly', question: 'Do you understand that monthly fees are payable while you are enrolled in the programme?', kind: 'consent' }
 ];
 const CHILD_FIELDS = [
-  { id: 'parentName', question: "Parent or guardian's full name", kind: 'text', max: 100 },
-  { id: 'email', question: "Parent's email", kind: 'email', max: 254 },
-  { id: 'whatsapp', question: "Parent's WhatsApp number", kind: 'phone' },
-  { id: 'childName', question: "Child's full name", kind: 'text', max: 100 },
-  { id: 'childAge', question: "Child's age", kind: 'choice', options: ['6', '7', '8', '9', '10', '11', '12', '13'] },
+  EMAIL,
+  { id: 'childName', question: "Child's full name and surname", kind: 'text', max: 100 },
+  { id: 'childAge', question: "Child's Age", kind: 'choice', options: ['6', '7', '8', '9', '10', '11', '12', '13'] },
   { id: 'childDob', question: "Child's date of birth", kind: 'date' },
-  { id: 'emergency', question: 'Emergency contact number', kind: 'phone' },
   { id: 'medical', question: 'Medical conditions or allergies', kind: 'text', max: 300 },
-  { id: 'city', question: 'City & Country', kind: 'text', max: 100 },
-  { id: 'consent', question: 'Parent consent', kind: 'consent', help: CHILD_CONSENT },
-  TERMS_FIELD
+  { id: 'experience', question: 'Does your child have any previous Madrasah experience?', kind: 'choice', options: ['Yes', 'No'] },
+  { id: 'support', question: 'Does your child have any learning difficulties or additional support needs we should be aware of?', kind: 'text', max: 300 },
+  { id: 'parentName', question: "Parent/Guardian's full name and surname", kind: 'text', max: 100 },
+  { id: 'whatsapp', question: "Parent/Guardian's WhatsApp number", kind: 'phone' },
+  { id: 'emergency', question: 'Emergency contact number', kind: 'text', max: 120 },
+  { id: 'heard', question: 'How did you hear about Beginners Madrasah Classes?', kind: 'choice', options: ['WhatsApp', 'Facebook / Instagram', 'Family or friend', 'Other'] },
+  { id: 'fees', question: FEES_150, kind: 'consent' },
+  { id: 'monthly', question: 'Do you understand that monthly fees are payable while your child/children are enrolled in the programme?', kind: 'consent' },
+  { id: 'consent', question: 'Parental consent', kind: 'consent' }
 ];
-const FIELDS = { womens: ADULT_FIELDS, hifdh: ADULT_FIELDS, quran: ADULT_FIELDS, children: CHILD_FIELDS };
+const HIFDH_FIELDS = [
+  EMAIL,
+  { id: 'name', question: 'Full name and surname', kind: 'text', max: 100 },
+  { id: 'age', question: 'Age', kind: 'number' },
+  { id: 'whatsapp', question: 'WhatsApp number', kind: 'phone' },
+  { id: 'previous', question: 'Have you previously attended Hifdh classes?', kind: 'choice', options: ['Yes', 'No'] },
+  { id: 'goal', question: 'What is your main goal for joining the Hifdh programme?', kind: 'text', max: 500 },
+  { id: 'heard', question: 'How did you hear about Beginners Madrasah Classes?', kind: 'choice', options: HEARD }
+];
+const QURAN_FIELDS = [
+  EMAIL,
+  { id: 'name', question: 'Full name and surname', kind: 'text', max: 100 },
+  { id: 'age', question: 'Age', kind: 'number' },
+  { id: 'whatsapp', question: 'WhatsApp number', kind: 'phone' },
+  { id: 'previous', question: "Have you previously attended any Qur'an reading classes?", kind: 'choice', options: ['Yes', 'No'] },
+  { id: 'faith', question: 'Are you a revert to Islam or a born Muslim?', kind: 'choice', options: ['Born Muslim', 'Revert'] },
+  { id: 'ability', question: "How would you describe your current Qur'an reading ability?", kind: 'choice', options: ['I am a complete beginner and do not know the Arabic letters.', 'I recognise some Arabic letters but cannot read words.', 'I can read some Arabic words but struggle to join them.', 'I can read slowly but need assistance.'] },
+  { id: 'motivation', question: "What motivated you to join the Get Into Qur'an programme?", kind: 'text', max: 500, optional: true },
+  { id: 'heard', question: 'How did you hear about Beginners Madrasah Classes?', kind: 'choice', options: HEARD }
+];
+const FIELDS = { womens: WOMENS_FIELDS, children: CHILD_FIELDS, hifdh: HIFDH_FIELDS, quranOnline: QURAN_FIELDS, quran: QURAN_FIELDS };
 
 const BACKUP_HEADERS = ['Received (SAST)', 'Class', 'Why it is here', 'Answers'];
 const WAITLIST_HEADERS = ['Added (SAST)', 'Class', 'Name', 'Email', 'WhatsApp', 'Status'];
@@ -336,7 +368,7 @@ function notifyWaitlist_(key) {
   if (sheet.getLastRow() < 2) return;
   const range = sheet.getRange(2, 1, sheet.getLastRow() - 1, WAITLIST_HEADERS.length);
   const rows = range.getValues();
-  const pageUrl = CONFIG.SITE_URL + '/programmes' + ({ womens: '/womens-classes', hifdh: '/hifdh-classes', quran: '/quran-classes', children: '/childrens-classes' })[key];
+  const pageUrl = CONFIG.SITE_URL + '/programmes' + CLASS_PATHS[key];
   const forOwner = [];
   rows.forEach(function (r, i) {
     if (r[1] !== CLASS_TITLES[key] || r[5] !== 'Waiting') return;
@@ -414,7 +446,10 @@ function submitToForm_(form, key, a) {
     if (type === T.TEXT) response.withItemResponse(item.asTextItem().createResponse(textValue_(f, value)));
     else if (type === T.PARAGRAPH_TEXT) response.withItemResponse(item.asParagraphTextItem().createResponse(textValue_(f, value)));
     else if (type === T.DATE) response.withItemResponse(item.asDateItem().createResponse(dateValue_(value)));
-    else if (type === T.MULTIPLE_CHOICE) response.withItemResponse(item.asMultipleChoiceItem().createResponse(value));
+    else if (type === T.MULTIPLE_CHOICE) {
+      const mc = item.asMultipleChoiceItem();
+      response.withItemResponse(mc.createResponse(f.kind === 'consent' ? mc.getChoices()[0].getValue() : value));
+    }
     else if (type === T.LIST) response.withItemResponse(item.asListItem().createResponse(value));
     else if (type === T.CHECKBOX) {
       const cb = item.asCheckboxItem();
@@ -477,8 +512,9 @@ function validate_(key, raw) {
   let ok = true;
   FIELDS[key].forEach(function (f) {
     let v = clean_(raw[f.id], f.max || 120);
-    if (f.kind === 'consent') { ok = ok && (v === 'yes' || (f.optional && v === '')); answers[f.id] = v; return; }
-    if (!v) { ok = false; return; }
+    if (f.kind === 'consent') { ok = ok && v === 'yes'; answers[f.id] = v; return; }
+    if (!v) { if (!f.optional) ok = false; answers[f.id] = ''; return; }
+    if (f.kind === 'number' && !/^\d{1,3}$/.test(v)) ok = false;
     if (f.max && v.length > f.max) ok = false;
     if (f.kind === 'email' && !/^[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$/.test(v)) ok = false;
     if (f.kind === 'phone') {
@@ -575,21 +611,10 @@ function sendConfirmation_(key, a) {
 /* Run these by hand from the editor (see README)                      */
 /* ------------------------------------------------------------------ */
 
-/** Run once. Creates the backup sheet, creates a Google Form for any class without one, then checks every form. */
+/** Run once (and again after changing CONFIG). Backup sheet, email question on each form, hourly check. Never creates forms. */
 function setup() {
   console.log('Backup sheet: ' + backupSheet_().getParent().getUrl());
-  const props = PropertiesService.getScriptProperties();
-  Object.keys(CLASS_TITLES).forEach(function (key) {
-    if (form_(key)) return;
-    const form = FormApp.create('Registration: ' + CLASS_TITLES[key])
-      .setDescription('Registrations from ' + CONFIG.SITE_URL + ' arrive here. Please keep the question titles as they are: the website matches answers to them.')
-      .setCollectEmail(false)
-      .setAllowResponseEdits(false)
-      .setLimitOneResponsePerUser(false);
-    FIELDS[key].forEach(function (f) { addQuestion_(form, f); });
-    props.setProperty('form_' + key, form.getEditUrl());
-    console.log('Created form for ' + CLASS_TITLES[key] + ': ' + form.getEditUrl());
-  });
+  prepareForms();
   checkForms();
   waitlistSheet_();
   // Hourly reopen check for the waitlist (only one trigger, however often setup() is run).
@@ -599,11 +624,24 @@ function setup() {
   console.log('Emails left today: ' + MailApp.getRemainingDailyQuota());
 }
 
-function addQuestion_(form, f) {
-  if (f.kind === 'choice') form.addMultipleChoiceItem().setTitle(f.question).setChoiceValues(f.options).setRequired(true);
-  else if (f.kind === 'consent') form.addCheckboxItem().setTitle(f.question).setHelpText(f.help).setChoiceValues(['I agree']).setRequired(!f.optional);
-  else if (f.kind === 'date') form.addDateItem().setTitle(f.question).setRequired(true);
-  else form.addTextItem().setTitle(f.question).setRequired(true);
+/**
+ * A script cannot fill in Google's own "collect email" box, so each form gets a normal required
+ * "Email" question at the top instead, and the built-in box is switched off (nobody is asked twice).
+ */
+function prepareForms() {
+  Object.keys(CLASS_TITLES).forEach(function (key) {
+    const form = form_(key);
+    if (!form) return;
+    const has = form.getItems().some(function (i) { return norm_(i.getTitle()) === 'email'; });
+    if (!has) {
+      const v = FormApp.createTextValidation().setHelpText('Please enter a valid email address.').requireTextIsEmail().build();
+      const item = form.addTextItem().setTitle('Email').setRequired(true).setValidation(v);
+      if (key === 'children') item.setHelpText("Parent or guardian's email");
+      form.moveItem(item.getIndex(), 0);
+      console.log('Added Email question to ' + CLASS_TITLES[key]);
+    }
+    if (form.collectsEmail()) { form.setCollectEmail(false); console.log('Switched off built-in email collection on ' + CLASS_TITLES[key]); }
+  });
 }
 
 /** Lists, per class, questions the website sends that the form lacks, and required form questions the website does not ask. */
@@ -621,24 +659,12 @@ function checkForms() {
   });
 }
 
-/** Adds the questions checkForms() reported missing (for example Consent) to the end of each existing form. */
-function addMissingQuestions() {
-  Object.keys(CLASS_TITLES).forEach(function (key) {
-    const form = form_(key);
-    if (!form) return;
-    const titles = form.getItems().map(function (i) { return norm_(i.getTitle()); });
-    FIELDS[key].forEach(function (f) {
-      if (titles.indexOf(norm_(f.question)) === -1) { addQuestion_(form, f); console.log('Added "' + f.question + '" to ' + CLASS_TITLES[key]); }
-    });
-  });
-}
-
 /** Test with a pretend registration. Use a COPY of a form first (put its edit link in CONFIG.FORMS). */
 function testRegistration() {
   const result = processRegistration_({
     classKey: 'hifdh',
     website: '',
-    answers: { name: 'Test Person', email: CONFIG.OWNER_EMAIL || Session.getActiveUser().getEmail(), dob: '1990-03-14', whatsapp: '0686498593', faith: 'Born Muslim', city: 'Cape Town, South Africa', consent: 'yes' }
+    answers: { email: CONFIG.OWNER_EMAIL, name: 'TEST - script check (please delete)', age: '30', whatsapp: '0600000000', previous: 'No', goal: 'Test', heard: 'WhatsApp' }
   });
   console.log(JSON.stringify(result));
 }

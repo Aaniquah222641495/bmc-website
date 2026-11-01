@@ -1,4 +1,4 @@
-import { useId, useRef, useState, type FormEvent } from 'react';
+import { Fragment, useId, useRef, useState, type FormEvent } from 'react';
 import { ArrowRight, Loader2 } from 'lucide-react';
 import { SiWhatsapp } from 'react-icons/si';
 import { Link } from 'wouter';
@@ -120,13 +120,18 @@ export function RegistrationForm({ classKey, title, source, mode = 'register' }:
         </div>
       )}
 
-      {!waitlist && <p className="mb-6 font-utility text-sm text-foreground/70">All questions are needed to register.</p>}
+      {!waitlist && <p className="mb-6 font-utility text-sm text-foreground/70">All questions are needed to register, unless they say optional.</p>}
 
       <div className="grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-2">
-        {fields.map((f) => (
-          <FieldWithTerms key={f.id} terms={f.id === 'terms' ? terms : ''}>
-            <Field f={f} uid={uid} value={values[f.id] ?? ''} error={errors[f.id]} onChange={(v) => set(f.id, v)} disabled={sending} />
-          </FieldWithTerms>
+        {fields.map((f, i) => (
+          <Fragment key={f.id}>
+            {f.section && (
+              <h3 className={`font-display text-[1.25rem] leading-snug text-primary sm:col-span-2 ${i > 0 ? 'mt-4 border-t border-[hsl(var(--bmc-gold)/0.35)] pt-8' : ''}`}>{f.section}</h3>
+            )}
+            <FieldWithTerms terms={f.id === 'terms' ? terms : ''}>
+              <Field f={f} uid={uid} value={values[f.id] ?? ''} error={errors[f.id]} onChange={(v) => set(f.id, v)} disabled={sending} />
+            </FieldWithTerms>
+          </Fragment>
         ))}
       </div>
 
@@ -275,7 +280,7 @@ function Field({ f, uid, value, error, onChange, disabled }: { f: RegField; uid:
         <legend className="mb-2.5 font-utility text-[0.95rem] font-semibold text-primary">{label}</legend>
         <div className="flex flex-wrap gap-3">
           {f.options!.map((o) => (
-            <label key={o} className="inline-flex min-h-12 cursor-pointer items-center gap-2.5 rounded-full bg-bmc-paper px-5 shadow-[inset_0_0_0_1px_hsl(var(--bmc-gold)/0.45)] has-[:checked]:bg-primary has-[:checked]:text-primary-foreground has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-primary">
+            <label key={o} className="inline-flex min-h-12 cursor-pointer items-center gap-2.5 rounded-3xl bg-bmc-paper px-5 py-2.5 text-left shadow-[inset_0_0_0_1px_hsl(var(--bmc-gold)/0.45)] has-[:checked]:bg-primary has-[:checked]:text-primary-foreground has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-primary">
               <input type="radio" name={f.id} value={o} checked={value === o} onChange={() => onChange(o)} disabled={disabled} className="sr-only" aria-invalid={error ? true : undefined} />
               <span className="font-utility text-[0.95rem] font-semibold">{o}</span>
             </label>
@@ -287,7 +292,7 @@ function Field({ f, uid, value, error, onChange, disabled }: { f: RegField; uid:
   }
 
   return (
-    <div className={f.kind === 'text' && (f.id === 'name' || f.id === 'parentName' || f.id === 'childName') ? 'sm:col-span-2' : ''}>
+    <div className={f.kind === 'longtext' || (f.kind === 'text' && (f.id === 'name' || f.id === 'parentName' || f.id === 'childName')) ? 'sm:col-span-2' : ''}>
       <label htmlFor={id} className="mb-2 block font-utility text-[0.95rem] font-semibold text-primary">
         {label}
       </label>
@@ -300,14 +305,27 @@ function Field({ f, uid, value, error, onChange, disabled }: { f: RegField; uid:
             </option>
           ))}
         </select>
+      ) : f.kind === 'longtext' ? (
+        <textarea
+          id={id}
+          name={f.id}
+          rows={3}
+          maxLength={f.max ? f.max + 1 : undefined}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          disabled={disabled}
+          aria-invalid={error ? true : undefined}
+          aria-describedby={describedBy}
+          className={INPUT}
+        />
       ) : (
         <input
           id={id}
           name={f.id}
           type={f.kind === 'email' ? 'email' : f.kind === 'phone' ? 'tel' : f.kind === 'date' ? 'date' : 'text'}
-          inputMode={f.kind === 'phone' ? 'tel' : f.kind === 'email' ? 'email' : undefined}
+          inputMode={f.kind === 'phone' ? 'tel' : f.kind === 'email' ? 'email' : f.kind === 'number' ? 'numeric' : undefined}
           autoComplete={f.autoComplete}
-          maxLength={f.max ? f.max + 1 : undefined}
+          maxLength={f.kind === 'number' ? 3 : f.max ? f.max + 1 : undefined}
           max={f.kind === 'date' ? new Date().toISOString().slice(0, 10) : undefined}
           value={value}
           onChange={(e) => onChange(e.target.value)}
