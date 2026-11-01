@@ -750,3 +750,44 @@ function testRegistration() {
   console.log(JSON.stringify(result));
 }
 
+
+/* ------------------------------------------------------------------ */
+/* Missed confirmations: registrations made on the Google Form itself  */
+/* (not through the website) get no confirmation email. To send one:  */
+/* 1. Run listRecentResponses and copy the response ID from the log.  */
+/* 2. Put it in MISSED_CONFIRMATION below, save, run                  */
+/*    sendMissedConfirmation. It sends once per response, never twice. */
+/* ------------------------------------------------------------------ */
+const MISSED_CONFIRMATION = { key: 'womens', responseId: '' };
+
+function listRecentResponses() {
+  const key = MISSED_CONFIRMATION.key;
+  const props = PropertiesService.getScriptProperties();
+  form_(key).getResponses().slice(-10).forEach(function (r) {
+    const a = answersFromResponse_(key, r);
+    console.log(Utilities.formatDate(r.getTimestamp(), 'Africa/Johannesburg', 'yyyy-MM-dd HH:mm') + ' | ' + r.getId() +
+      ' | ' + (a.name || a.parentName || '?') + ' | ' + (a.email || 'no email') +
+      (props.getProperty('confirmed_' + r.getId()) ? ' | confirmation already sent' : ''));
+  });
+}
+
+function sendMissedConfirmation() {
+  const key = MISSED_CONFIRMATION.key, id = MISSED_CONFIRMATION.responseId;
+  if (!id) throw new Error('Put the response ID in MISSED_CONFIRMATION first (run listRecentResponses).');
+  const props = PropertiesService.getScriptProperties();
+  if (props.getProperty('confirmed_' + id)) { console.log('Already sent for ' + id + ': not sending again.'); return; }
+  const a = answersFromResponse_(key, form_(key).getResponse(id));
+  if (!a.email) throw new Error('That response has no email address.');
+  sendConfirmation_(key, a);
+  props.setProperty('confirmed_' + id, new Date().toISOString());
+  console.log('Confirmation sent for ' + (a.name || a.parentName) + ' (' + CLASS_TITLES[key] + ').');
+}
+
+function answersFromResponse_(key, r) {
+  const byTitle = {};
+  r.getItemResponses().forEach(function (ir) { byTitle[norm_(ir.getItem().getTitle())] = ir.getResponse(); });
+  const a = {};
+  FIELDS[key].forEach(function (f) { const v = byTitle[norm_(f.question)]; if (v !== undefined && v !== null) a[f.id] = String(v); });
+  if (!a.email) { try { a.email = r.getRespondentEmail() || ''; } catch (e) { a.email = ''; } }
+  return a;
+}
