@@ -29,7 +29,7 @@ export default function ChildrensClasses() {
         path="/childrens-classes"
         title="Children's Online Madrasah"
         description="Live Islamic classes for children aged 6–13, held three times a week via Microsoft Teams in a fun and structured environment."
-        formUrl="https://docs.google.com/forms/d/e/1FAIpQLSdmyJNXuxXONvtvW_LEeLVPgMLSYhdI8eh3ZRJWtabzwPeSzQ/viewform"
+        formUrl="https://docs.google.com/forms/d/e/1FAIpQLSd85qaL_rGHPefSE3k7IxJsDtV8mXsBdOc55iiHi-8287yslw/viewform"
         intro={
           <>
             <p>
@@ -52,6 +52,7 @@ export default function ChildrensClasses() {
           { label: 'Format', value: 'Live Online · Microsoft Teams' },
           { label: 'Schedule', value: 'Mon, Tue & Thu, 17:00–18:00' },
           { label: 'Ages', value: 'Children aged 6–13' },
+          { label: 'Starts', value: 'Monday 18 January 2027' },
           { label: 'Fee', value: 'R150 per month' },
         ]}
       >

@@ -254,5 +254,6 @@ export const PROGRAMME_SCENES: Record<string, (p: { className?: string }) => Rea
   '/childrens-classes': ChildrensScene,
   '/workshops': WorkshopsScene,
   '/quran-classes': QuranScene,
+  '/online-quran-classes': QuranScene,
   '/in-person-workshops': InPersonWorkshopsScene,
 };

@@ -27,7 +27,7 @@ export default function WomensClasses() {
         path="/womens-classes"
         title="Women's Online Madrasah"
         description="A structured, beginner-friendly Islamic studies programme for women 18+, designed to fit around your life."
-        formUrl="https://forms.gle/UQoRpDfaXptJrMXj8"
+        formUrl="https://docs.google.com/forms/d/e/1FAIpQLScVYgk20Wq9bazMfrc98pBoKyjxeSLV7_H_9pXAVeNglXlVAA/viewform"
         intro={
           <p>
             Our Women's Online Madrasah is a comprehensive, beginner-friendly Islamic studies programme for women 18 and older. Lessons are pre-recorded and uploaded to Google Classroom, allowing you to learn at your own pace, whenever and wherever suits you best.
@@ -49,8 +49,8 @@ export default function WomensClasses() {
           { label: 'Format', value: 'Online · Google Classroom (pre-recorded)' },
           { label: 'Who it\'s for', value: 'Women 18+' },
           { label: 'Access', value: 'Learn at your own pace, anytime' },
-          { label: 'Registration', value: 'Open 1 November 2026 to 1 January 2027' },
-          { label: 'Classes begin', value: 'January 2027' },
+          { label: 'Registration', value: 'Open now, closes 1 January 2027' },
+          { label: 'Classes begin', value: 'Monday 11 January 2027' },
           { label: 'Fee', value: 'R150 per month' },
         ]}
       />

@@ -23,6 +23,7 @@ const Programmes = lazy(() => import('@/pages/programmes'));
 const WomensClasses = lazy(() => import('@/pages/classes/womens-classes'));
 const InPersonWorkshops = lazy(() => import('@/pages/classes/in-person-workshops'));
 const QuranClasses = lazy(() => import('@/pages/classes/quran-classes'));
+const OnlineQuranClasses = lazy(() => import('@/pages/classes/online-quran-classes'));
 const HifdhClasses = lazy(() => import('@/pages/classes/hifdh-classes'));
 const ChildrensClasses = lazy(() => import('@/pages/classes/childrens-classes'));
 const Workshops = lazy(() => import('@/pages/classes/workshops'));
@@ -66,6 +67,7 @@ function Router() {
                 <Redirect to="/programmes/in-person-workshops" />
               </Route>
               <Route path="/programmes/quran-classes" component={QuranClasses} />
+              <Route path="/programmes/online-quran-classes" component={OnlineQuranClasses} />
               <Route path="/programmes/hifdh-classes" component={HifdhClasses} />
               <Route path="/programmes/childrens-classes" component={ChildrensClasses} />
               <Route path="/programmes/workshops" component={Workshops} />

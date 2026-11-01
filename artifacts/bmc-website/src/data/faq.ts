@@ -26,7 +26,7 @@ export const CATEGORIES = [
       },
       {
         q: 'What platform are classes held on?',
-        a: "Children's Online Madrasah and the Women's Hifdh Programme are held live via Microsoft Teams. The Women's Online Madrasah uses Google Classroom with pre-recorded lessons. Get Into Qur'an meets in person on Saturdays in Woodlands, Mitchell's Plain, and online on Tuesday evenings.",
+        a: "Children's Online Madrasah and the Women's Hifdh Programme are held live via Microsoft Teams. The Women's Online Madrasah uses Google Classroom with pre-recorded lessons. Get Into Qur'an meets in person on Saturdays in Woodlands, Mitchell's Plain, and live on Zoom on Tuesday evenings.",
       },
       {
         q: 'What if I miss a session?',

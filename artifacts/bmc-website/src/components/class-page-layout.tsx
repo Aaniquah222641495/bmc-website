@@ -4,7 +4,7 @@ import { Link } from 'wouter';
 import { ArrowRight, ChevronDown, ExternalLink } from 'lucide-react';
 import { SiWhatsapp } from 'react-icons/si';
 import { programmeByPath } from '@/data/programmes';
-import { CLASS_BY_PATH, fetchOpenStatus, REGISTER_ENDPOINT } from '@/data/registration';
+import { CLASS_BY_PATH, fetchOpenStatus, REGISTER_ENDPOINT, USE_OWN_FORMS } from '@/data/registration';
 import { RegistrationForm } from '@/components/registration-form';
 import { DetailsGrid, IncludedList, type DetailItem } from '@/components/class-page-blocks';
 import { CARD, CONTAINER, H2, H2_STYLE, SECTION_Y } from '@/components/page-shell';
@@ -65,7 +65,7 @@ export function ClassPageLayout({
   const FORM_URL = formUrl ?? DEFAULT_FORM_URL;
   // Our own form when the client's Apps Script is deployed (ADR-0031); otherwise the embedded Google Form.
   const classKey = CLASS_BY_PATH[path];
-  const ownForm = Boolean(REGISTER_ENDPOINT && classKey);
+  const ownForm = Boolean(USE_OWN_FORMS && REGISTER_ENDPOINT && classKey);
   // With our own form, her Google Form decides: open there means open here (so the waitlist email and
   // the page always agree). The CMS box is the fallback before the status arrives, or without the script.
   const [liveOpen, setLiveOpen] = useState<boolean | null>(null);

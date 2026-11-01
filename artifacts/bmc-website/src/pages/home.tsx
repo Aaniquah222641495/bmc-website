@@ -36,7 +36,7 @@ const TESTIMONIALS_PREVIEW = [
 // Programmes grouped by who they are for, so a visitor recognises herself (or her child) at a glance.
 // Content comes from content/settings/programmes.json.
 const byPath = (path: string) => ALL_PROGRAMMES.find((p) => p.path === path)!;
-const FOR_YOU = ['/womens-classes', '/quran-classes', '/hifdh-classes', '/workshops', '/in-person-workshops'].map(byPath);
+const FOR_YOU = ['/womens-classes', '/quran-classes', '/online-quran-classes', '/hifdh-classes', '/workshops', '/in-person-workshops'].map(byPath);
 const FOR_CHILD = byPath('/childrens-classes');
 
 const WHATSAPP = 'https://wa.me/27686498593';

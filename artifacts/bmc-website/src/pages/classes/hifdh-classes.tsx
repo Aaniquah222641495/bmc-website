@@ -25,8 +25,9 @@ export default function HifdhClasses() {
       />
       <ClassPageLayout
         path="/hifdh-classes"
-        // Matches the questions in the shared registration form (forms.gle/7tFCxqL8Ypgv9Jps5), read 2026-10-27.
-        formNeeds="Your full name, email, date of birth, WhatsApp number, and city and country."
+        formUrl="https://docs.google.com/forms/d/e/1FAIpQLSfCpNLMgV0T3cveTmzWKFjKMuWuS46RRr9qU2YwYZ48rEv3_Q/viewform"
+        // Her "Hifth Programme 2027" Google Form, read 2026-11-01.
+        formNeeds="Your full name, age, WhatsApp number and email, plus a few questions about your Hifdh experience and goals."
         title="Women's Hifdh Programme"
         description="A structured online Qur'an memorisation programme for women, with live guidance twice a week."
         intro={
@@ -40,7 +41,7 @@ export default function HifdhClasses() {
           </>
         }
         forYou={[
-          "You're a woman beginning or continuing Hifdh",
+          "You're a woman aged 16 or older, beginning or continuing Hifdh",
           "You can already read the Qur'an fluently",
           'You can join live on Tuesday and Thursday, 18:00 to 19:00',
           "You'd like a personal plan and someone to keep you on track",
@@ -51,7 +52,8 @@ export default function HifdhClasses() {
           { label: 'Format', value: 'Live Online · Microsoft Teams' },
           { label: 'Schedule', value: 'Tue & Thu, 18:00–19:00' },
           { label: 'Before you join', value: "You read the Qur'an fluently" },
-          { label: 'Who it\'s for', value: 'Women beginning or continuing Hifdh' },
+          { label: 'Who it\'s for', value: 'Women 16+ beginning or continuing Hifdh' },
+          { label: 'Starts', value: 'Tuesday 19 January 2027' },
           { label: 'Fee', value: 'R200 per month' },
         ]}
       >

@@ -14,7 +14,7 @@ import { IconTile, LettersIcon, MushafIcon, SeedlingIcon } from '@/components/or
 const QUICK_PICKS = [
   { Icon: SeedlingIcon, who: 'New to it all, or a revert?', name: "Women's Online Madrasah", note: 'Learn at your own pace. R150 a month.', href: '/programmes/womens-classes' },
   { Icon: LettersIcon, who: 'For your child (6 to 13)', name: "Children's Online Madrasah", note: 'Live classes three times a week. R150 a month.', href: '/programmes/childrens-classes' },
-  { Icon: MushafIcon, who: 'Rather learn in person?', name: "Get Into Qur'an", note: "For women: Saturdays in Mitchell's Plain, or online on Tuesdays. R200 a month.", href: '/programmes/quran-classes' },
+  { Icon: MushafIcon, who: 'Rather learn in person?', name: "Get Into Qur'an", note: "For women, Saturday mornings in Mitchell's Plain. R200 a month.", href: '/programmes/quran-classes' },
 ];
 
 type Tab = ProgrammeType;

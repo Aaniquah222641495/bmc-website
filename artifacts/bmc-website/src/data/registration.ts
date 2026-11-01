@@ -22,6 +22,12 @@ export interface RegField {
   max?: number;
 }
 
+/**
+ * Off since 2026-11-01: the client built her own 2027 Google Forms (more questions, sections, her own
+ * terms), so class pages embed those. Our form would need her exact questions first (ADR-0031).
+ */
+export const USE_OWN_FORMS = false;
+
 export type ClassKey = 'womens' | 'hifdh' | 'quran' | 'children';
 /** Waitlist-only lists: no registration form, people are emailed when a new workshop is published. */
 export type WorkshopListKey = 'workshops' | 'in-person-workshops';
