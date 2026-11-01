@@ -25,7 +25,7 @@ Opening and closing a class is done the usual way: in the Google Form, **Respons
 1. In the function drop-down choose **setup**, click **Run**, and allow the permissions (Advanced > Go to BMC registrations > Allow). It asks for her forms, a spreadsheet, email and triggers: that is all it uses.
 2. The log shows: the backup sheet link, the two new form links (Hifdh, Get Into Qur'an), and a line per class: `missing in form: ...` and `required but not on website: ...`.
 3. If a class says **missing in form: Consent** (her existing forms do not have it), choose **addMissingQuestions** and Run: it adds the consent tick box at the end of those forms. Anything under **required but not on website** must be made optional or renamed to match, or registrations for that class go to the backup sheet instead.
-4. Children's form: the website asks Parent or guardian's full name, Parent's email, Parent's WhatsApp number, Child's full name, Child's age, City & Country, Parent consent. Rename her questions to match (or tell us her wording and we change the website).
+4. Children's form: the website asks Parent or guardian's full name, Parent's email, Parent's WhatsApp number, Child's full name, Child's age, Child's date of birth, Emergency contact number, Medical conditions or allergies, City & Country, Parent consent. Add any of these her form is missing. Rename her questions to match (or tell us her wording and we change the website).
 
 ## Part 3: Publish
 1. **Deploy > New deployment**, gear > **Web app**. Execute as **Me**, Who has access **Anyone**. Deploy.

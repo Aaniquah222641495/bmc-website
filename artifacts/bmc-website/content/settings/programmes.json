@@ -14,39 +14,39 @@
       "when": "Your own pace",
       "where": "Google Classroom",
       "who": "Women 18+",
-      "registrationClosed": true,
-      "terms": "Class Format & Content:\nYou will receive 2 pre-recorded lessons per week via Google Classroom.\nAll homework must be submitted as part of your progress.\nExams are compulsory and must be completed within the given time frame.\n\nAttendance & Accountability:\nEven if you do not watch the videos during a particular month, but you remain enrolled, you are still liable to pay the monthly fee.\nYour progress is monitored, and homework & exam completion will be tracked.\n\nFees:\nRegistration Fee\nA non-refundable registration fee of R50 is required.\nRegistration must be paid before June 7th for your seat/spot to be secured in the class.\nStudents who do not pay the registration fee on time may lose their placement.\nMonthly Fees\nThe monthly fee is R150 per month.\nPayment Deadline\nAll fees must be paid by the 1st of each month at the latest.\nIf, for any reason, you are unable to pay on time, you must inform the Mu’allimah before the due date.\nFees are non-refundable once access to the classroom is granted.\n\nCommitment & Conduct:\nThis is a safe, non-judgmental learning space. All students must be respectful and sincere.\nAny inappropriate behaviour may result in removal from the class.\n\nPrivacy:\nAll personal information will be kept confidential.\nPlease do not share videos, content, or class materials with anyone who is not registered."
+      "registrationClosed": false,
+      "terms": "Class Format & Content:\nYou will receive 2 pre-recorded lessons per week via Google Classroom.\nAll homework must be submitted as part of your progress.\nExams are compulsory and must be completed within the given time frame.\n\nAttendance & Accountability:\nEven if you do not watch the videos during a particular month, but you remain enrolled, you are still liable to pay the monthly fee.\nYour progress is monitored, and homework & exam completion will be tracked.\n\nFees:\nRegistration Dates\nRegistration opens on 1 November 2026 and closes on 1 January 2027.\nClasses begin in January 2027.\nRegistration Fee\nA once-off, non-refundable registration fee of R50 is required.\nThe registration fee must be paid immediately after registering to secure your place in the class.\nStudents who do not pay the registration fee may lose their placement.\nMonthly Fees\nThe monthly fee is R150 per month.\nPayment Deadline\nAll fees must be paid by the 1st of each month at the latest.\nIf, for any reason, you are unable to pay on time, you must inform the Mu’allimah before the due date.\nFees are non-refundable once access to the classroom is granted.\n\nCommitment & Conduct:\nThis is a safe, non-judgmental learning space. All students must be respectful and sincere.\nAny inappropriate behaviour may result in removal from the class.\n\nPrivacy:\nAll personal information will be kept confidential.\nPlease do not share videos, content, or class materials with anyone who is not registered."
     },
     {
       "title": "Women's Hifdh Programme",
       "path": "/hifdh-classes",
-      "descShort": "Structured online Qur'an memorisation for women. Live classes Mon, Wed & Fri via Microsoft Teams.",
-      "descLong": "Structured online Qur'an memorisation for women. Live classes Mon, Wed & Fri via Microsoft Teams, covering memorisation, revision and recitation.",
+      "descShort": "Structured online Qur'an memorisation for women who already read the Qur'an fluently. Live classes Tue & Thu, 18:00 to 19:00, via Microsoft Teams.",
+      "descLong": "Structured online Qur'an memorisation for women who already read the Qur'an fluently. Live classes on Tuesday and Thursday, 18:00 to 19:00, via Microsoft Teams, covering memorisation, revision and recitation.",
       "tag": "Online · Live classes",
       "price": "R200/month",
       "type": "online",
       "image": "/assets/photo-quran-lesson.webp",
       "imagePosition": "center 40%",
       "gradient": "from-violet-800 to-violet-950",
-      "when": "Mon, Wed & Fri",
+      "when": "Tue & Thu, 18:00–19:00",
       "where": "Microsoft Teams",
-      "who": "Women",
-      "terms": "Class Format & Content:\nLive classes are held 3 times a week (Monday, Wednesday and Friday) via Microsoft Teams.\nEach class covers memorisation, revision and recitation.\n\nFees:\nMonthly Fees\nThe monthly fee is R200 per month.\nPayment Deadline\nAll fees must be paid by the 1st of each month at the latest.\nIf, for any reason, you are unable to pay on time, you must inform the Mu’allimah before the due date.\n\nCommitment & Conduct:\nThis is a safe, non-judgmental learning space. All students must be respectful and sincere.\nAny inappropriate behaviour may result in removal from the class.\n\nPrivacy:\nAll personal information will be kept confidential.\nPlease do not share videos, content, or class materials with anyone who is not registered."
+      "who": "Women who read the Qur'an fluently",
+      "terms": "Class Format & Content:\nLive classes are held twice a week (Tuesday and Thursday, 18:00 to 19:00) via Microsoft Teams.\nEach class covers memorisation, revision and recitation.\n\nEntry Requirement:\nYou must already be able to read the Qur'an fluently before joining the Hifdh programme.\n\nFees:\nRegistration Fee\nA once-off, non-refundable registration fee of R50 is required.\nThe registration fee must be paid immediately after registering to secure your place in the class.\nStudents who do not pay the registration fee may lose their placement.\nMonthly Fees\nThe monthly fee is R200 per month.\nPayment Deadline\nAll fees must be paid by the 1st of each month at the latest.\nIf, for any reason, you are unable to pay on time, you must inform the Mu’allimah before the due date.\n\nCommitment & Conduct:\nThis is a safe, non-judgmental learning space. All students must be respectful and sincere.\nAny inappropriate behaviour may result in removal from the class.\n\nPrivacy:\nAll personal information will be kept confidential.\nPlease do not share videos, content, or class materials with anyone who is not registered."
     },
     {
       "title": "Children's Online Madrasah",
       "path": "/childrens-classes",
-      "descShort": "Live online Islamic classes for children aged 6–13, three times a week via Microsoft Teams.",
-      "descLong": "Live online Islamic classes for children aged 6–13, three times a week via Microsoft Teams. Covers Qur'an, Surahs, Aqaaid, Fiqh, Akhlaaq, Islamic History & Du'as.",
+      "descShort": "Live online Islamic classes for children aged 6–13, Mon, Tue & Thu, 17:00 to 18:00, via Microsoft Teams.",
+      "descLong": "Live online Islamic classes for children aged 6–13, on Monday, Tuesday and Thursday, 17:00 to 18:00, via Microsoft Teams. Covers Qur'an, Surahs, Aqaaid, Fiqh, Akhlaaq, Islamic History & Du'as.",
       "tag": "Online · Ages 6–13",
       "price": "R150/month",
       "type": "online",
       "image": "/assets/photo-childrens-class.webp",
       "gradient": "from-sky-800 to-sky-950",
-      "when": "3 times a week",
+      "when": "Mon, Tue & Thu, 17:00–18:00",
       "where": "Microsoft Teams",
       "who": "Ages 6–13",
-      "terms": "Class Format & Content:\nLive classes are held 3 times a week (Monday, Tuesday and Thursday) via Microsoft Teams.\nThe classes are for children aged 6 to 13.\n\nFees:\nMonthly Fees\nThe monthly fee is R150 per month.\nPayment Deadline\nAll fees must be paid by the 1st of each month at the latest.\nIf, for any reason, you are unable to pay on time, you must inform the Mu’allimah before the due date.\n\nCommitment & Conduct:\nThis is a safe, non-judgmental learning space. All students must be respectful and sincere.\nAny inappropriate behaviour may result in removal from the class.\n\nPrivacy:\nAll personal information will be kept confidential.\nPlease do not share videos, content, or class materials with anyone who is not registered."
+      "terms": "Class Format & Content:\nLive classes are held 3 times a week (Monday, Tuesday and Thursday, 17:00 to 18:00) via Microsoft Teams.\nThe classes are for children aged 6 to 13. We do not offer classes for children under 6 or teenagers aged 14 to 17 at this stage.\n\nFees:\nRegistration Fee\nA once-off, non-refundable registration fee of R50 is required.\nThe registration fee must be paid immediately after registering to secure your place in the class.\nStudents who do not pay the registration fee may lose their placement.\nMonthly Fees\nThe monthly fee is R150 per month.\nPayment Deadline\nAll fees must be paid by the 1st of each month at the latest.\nIf, for any reason, you are unable to pay on time, you must inform the Mu’allimah before the due date.\n\nCommitment & Conduct:\nThis is a safe, non-judgmental learning space. All students must be respectful and sincere.\nAny inappropriate behaviour may result in removal from the class.\n\nPrivacy:\nAll personal information will be kept confidential.\nPlease do not share videos, content, or class materials with anyone who is not registered."
     },
     {
       "title": "Online Workshops & Short Courses",
@@ -62,20 +62,20 @@
       "where": "Online"
     },
     {
-      "title": "Get Into Qur'an: In Person",
+      "title": "Get Into Qur'an",
       "path": "/quran-classes",
-      "descShort": "A Qur'an programme for women who are complete beginners. Step-by-step guidance toward confidently reading the Mushaf.",
-      "descLong": "A Qur'an programme for women who are complete beginners. Step-by-step guidance toward confidently reading the Mushaf. Every Saturday morning in Mitchell's Plain, Cape Town.",
-      "tag": "In-Person · Cape Town",
+      "descShort": "A Qur'an programme for women who are complete beginners. In person in Woodlands, Mitchell's Plain, on Saturdays, or online on Tuesday evenings.",
+      "descLong": "A Qur'an programme for women who are complete beginners. Step-by-step guidance toward confidently reading the Mushaf. In person on Saturdays, 09:00 to 10:30, in Woodlands, Mitchell's Plain, or online on Tuesdays, 19:00 to 20:30.",
+      "tag": "In person & online · Women",
       "price": "R200/month",
       "type": "inperson",
       "image": "/assets/photo-quran-completion.webp",
       "imagePosition": "center 36%",
       "gradient": "from-amber-800 to-amber-950",
-      "when": "Saturday mornings",
-      "where": "Mitchell's Plain",
+      "when": "Sat 09:00–10:30 or Tue 19:00–20:30 (online)",
+      "where": "Woodlands, Mitchell's Plain, or online",
       "who": "Women, complete beginners",
-      "terms": "Class Format & Content:\nClasses are held in person every Saturday morning in Mitchell's Plain, Cape Town.\nThis programme is for women.\n\nFees:\nMonthly Fees\nThe monthly fee is R200 per month.\nPayment Deadline\nAll fees must be paid by the 1st of each month at the latest.\nIf, for any reason, you are unable to pay on time, you must inform the Mu’allimah before the due date.\n\nCommitment & Conduct:\nThis is a safe, non-judgmental learning space. All students must be respectful and sincere.\nAny inappropriate behaviour may result in removal from the class.\n\nPrivacy:\nAll personal information will be kept confidential.\nPlease do not share videos, content, or class materials with anyone who is not registered."
+      "terms": "Class Format & Content:\nIn person: every Saturday, 09:00 to 10:30, in Woodlands, Mitchell's Plain, Cape Town. The exact address is shared after you register.\nOnline: every Tuesday, 19:00 to 20:30.\nThis programme is for women.\n\nFees:\nRegistration Fee\nA once-off, non-refundable registration fee of R50 is required.\nThe registration fee must be paid immediately after registering to secure your place in the class.\nStudents who do not pay the registration fee may lose their placement.\nMonthly Fees\nThe monthly fee is R200 per month.\nPayment Deadline\nAll fees must be paid by the 1st of each month at the latest.\nIf, for any reason, you are unable to pay on time, you must inform the Mu’allimah before the due date.\n\nCommitment & Conduct:\nThis is a safe, non-judgmental learning space. All students must be respectful and sincere.\nAny inappropriate behaviour may result in removal from the class.\n\nPrivacy:\nAll personal information will be kept confidential.\nPlease do not share videos, content, or class materials with anyone who is not registered."
     },
     {
       "title": "In-Person Workshops",

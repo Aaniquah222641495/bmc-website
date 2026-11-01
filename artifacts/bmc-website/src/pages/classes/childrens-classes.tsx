@@ -36,21 +36,21 @@ export default function ChildrensClasses() {
               Give your child a strong Islamic foundation in a structured, engaging, and supportive online classroom. Our Children's Online Madrasah follows a comprehensive Maktab curriculum that covers all the essential areas of Islamic knowledge.
             </p>
             <p>
-              Classes are held live three times a week via Microsoft Teams (Monday, Tuesday, and Thursday), creating a consistent routine that children can look forward to.
+              Classes are held live three times a week via Microsoft Teams (Monday, Tuesday and Thursday, 17:00 to 18:00), creating a consistent routine that children can look forward to.
             </p>
           </>
         }
         forYou={[
           'Your child is between 6 and 13',
-          'You want a steady routine: live classes on Monday, Tuesday and Thursday',
+          'You want a steady routine: live classes on Monday, Tuesday and Thursday, 17:00 to 18:00',
           "You'd like regular feedback on how your child is doing",
           'Learning from home suits your family',
         ]}
-        questions={faqByQuestion("How do I join the Children's Classes?", "What if I miss a session?", "How do I pay for my class?")}
+        questions={faqByQuestion("How do I join the Children's Classes?", "Do you have classes for children under 6 or teenagers?", "What if I miss a session?", "How do I pay for my class?")}
         included={INCLUDED}
         details={[
           { label: 'Format', value: 'Live Online · Microsoft Teams' },
-          { label: 'Schedule', value: 'Mon, Tue & Thu (3x per week)' },
+          { label: 'Schedule', value: 'Mon, Tue & Thu, 17:00–18:00' },
           { label: 'Ages', value: 'Children aged 6–13' },
           { label: 'Fee', value: 'R150 per month' },
         ]}

@@ -230,7 +230,7 @@ function TermsSection({ text }: { text: string }) {
 
 /** Bold the money rules: rand amounts, dates like "1st of each month" or "June 7th", and "non-refundable". */
 function emphasise(line: string) {
-  const re = /(R\d[\d\s,]*(?:\.\d+)?(?:\s*per month)?|\b\d{1,2}(?:st|nd|rd|th)(?: of each month)?\b|\b(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2}(?:st|nd|rd|th)?\b|non-refundable)/gi;
+  const re = /(R\d[\d\s,]*(?:\.\d+)?(?:\s*per month)?|\b\d{1,2}(?:st|nd|rd|th)(?: of each month)?\b|\b\d{1,2}\s+(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{4}\b|\b(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2}(?:st|nd|rd|th)?\b|non-refundable)/gi;
   const parts = line.split(re);
   return parts.map((part, i) => (i % 2 === 1 ? <strong key={i} className="font-semibold text-primary">{part}</strong> : part));
 }

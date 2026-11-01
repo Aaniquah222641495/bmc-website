@@ -49,6 +49,8 @@ export default function WomensClasses() {
           { label: 'Format', value: 'Online · Google Classroom (pre-recorded)' },
           { label: 'Who it\'s for', value: 'Women 18+' },
           { label: 'Access', value: 'Learn at your own pace, anytime' },
+          { label: 'Registration', value: 'Open 1 November 2026 to 1 January 2027' },
+          { label: 'Classes begin', value: 'January 2027' },
           { label: 'Fee', value: 'R150 per month' },
         ]}
       />

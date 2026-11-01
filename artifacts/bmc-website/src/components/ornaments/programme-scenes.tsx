@@ -106,7 +106,7 @@ export function WomensScene({ className = '' }: { className?: string }) {
   );
 }
 
-/** Women's Hifdh: memorisation, live Mon, Wed & Fri. */
+/** Women's Hifdh: memorisation, live Tue & Thu. */
 export function HifdhScene({ className = '' }: { className?: string }) {
   return (
     <Frame className={className}>
@@ -128,8 +128,8 @@ export function HifdhScene({ className = '' }: { className?: string }) {
         return <circle key={k} cx={(160 + 13 * Math.cos(a)).toFixed(1)} cy={(118 + 6 * Math.sin(a)).toFixed(1)} r="2" fill="hsl(30 40% 28%)" />;
       })}
       <circle cx="146" cy="118" r="2.6" fill={GOLD} />
-      {/* Mon, Wed, Fri */}
-      <Calendar x={146} y={22} days={[true, false, true, false, true, false, false]} />
+      {/* Tue, Thu */}
+      <Calendar x={146} y={22} days={[false, true, false, true, false, false, false]} />
     </Frame>
   );
 }
@@ -204,7 +204,7 @@ export function WorkshopsScene({ className = '' }: { className?: string }) {
   );
 }
 
-/** Get Into Qur'an in person: Saturday mornings on the rug. */
+/** Get Into Qur'an: Saturday mornings on the rug (also online on Tuesdays). */
 export function QuranScene({ className = '' }: { className?: string }) {
   return <InPersonArt className={className} />;
 }

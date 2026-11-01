@@ -18,7 +18,7 @@
 
 const CONFIG = {
   // Where alerts go (problems, and a copy of each registration if ALERT_EVERY_REGISTRATION is true).
-  OWNER_EMAIL: '',
+  OWNER_EMAIL: 'beginnersmadrasah@gmail.com',
   ALERT_EVERY_REGISTRATION: false, // Google Forms can email her itself (Responses > ... > Get email notifications)
   // Edit links of the existing Google Forms (open the form, copy the address ending in /edit).
   // Leave a class empty and setup() creates its form for you.
@@ -45,7 +45,7 @@ const CONFIG = {
 const CLASS_TITLES = {
   womens: "Women's Online Madrasah",
   hifdh: "Women's Hifdh Programme",
-  quran: "Get Into Qur'an: In Person",
+  quran: "Get Into Qur'an",
   children: "Children's Online Madrasah"
 };
 
@@ -58,7 +58,7 @@ const WORKSHOP_LISTS = {
 function listTitle_(key) { return CLASS_TITLES[key] || WORKSHOP_LISTS[key]; }
 
 const ADULT_CONSENT = 'I agree that Beginners Madrasah Classes may keep these details, including my answer about my faith, to arrange my classes and contact me about them.';
-const CHILD_CONSENT = "I am this child's parent or guardian, and I agree that Beginners Madrasah Classes may keep these details to arrange my child's classes and contact me about them.";
+const CHILD_CONSENT = "I am this child's parent or guardian. I give consent for my child to join the classes, and I agree that Beginners Madrasah Classes may keep these details, including any medical conditions or allergies, to arrange my child's classes, keep my child safe and contact me about them.";
 
 // Sent only for classes whose terms are filled in on the website (site editor > Terms and conditions).
 const TERMS_FIELD = { id: 'terms', question: 'I agree to the terms and conditions', kind: 'consent', optional: true, help: 'I have read and agree to the terms and conditions on the registration form.' };
@@ -80,6 +80,9 @@ const CHILD_FIELDS = [
   { id: 'whatsapp', question: "Parent's WhatsApp number", kind: 'phone' },
   { id: 'childName', question: "Child's full name", kind: 'text', max: 100 },
   { id: 'childAge', question: "Child's age", kind: 'choice', options: ['6', '7', '8', '9', '10', '11', '12', '13'] },
+  { id: 'childDob', question: "Child's date of birth", kind: 'date' },
+  { id: 'emergency', question: 'Emergency contact number', kind: 'phone' },
+  { id: 'medical', question: 'Medical conditions or allergies', kind: 'text', max: 300 },
   { id: 'city', question: 'City & Country', kind: 'text', max: 100 },
   { id: 'consent', question: 'Parent consent', kind: 'consent', help: CHILD_CONSENT },
   TERMS_FIELD

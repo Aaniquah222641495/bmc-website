@@ -48,19 +48,23 @@ const ADULT_FIELDS: RegField[] = [
   { id: 'consent', question: 'Consent', label: ADULT_CONSENT, kind: 'consent', required: true },
 ];
 
-// Children's class: the client's form is behind a Google sign-in, so these are our proposal
-// (founder to confirm with the client). A parent registers; only the child's name and age are asked.
+// Children's class: a parent registers. Fields confirmed by the client 2026-11-01 (she added date of birth,
+// emergency contact, medical conditions or allergies, and parental consent). Medical details are special
+// personal information (POPIA): asked only to keep the child safe, covered by the consent below.
 const CHILD_FIELDS: RegField[] = [
   { id: 'parentName', question: "Parent or guardian's full name", kind: 'text', required: true, autoComplete: 'name', max: 100 },
   { id: 'email', question: "Parent's email", kind: 'email', required: true, autoComplete: 'email', max: 254 },
   { id: 'whatsapp', question: "Parent's WhatsApp number", kind: 'phone', required: true, autoComplete: 'tel', hint: 'South African, or with your country code from abroad' },
   { id: 'childName', question: "Child's full name", kind: 'text', required: true, autoComplete: 'off', max: 100 },
   { id: 'childAge', question: "Child's age", kind: 'age', required: true, options: ['6', '7', '8', '9', '10', '11', '12', '13'] },
+  { id: 'childDob', question: "Child's date of birth", kind: 'date', required: true, autoComplete: 'off' },
+  { id: 'emergency', question: 'Emergency contact number', kind: 'phone', required: true, autoComplete: 'off', hint: 'Someone we can call if we cannot reach you' },
+  { id: 'medical', question: 'Medical conditions or allergies', kind: 'text', required: true, autoComplete: 'off', max: 300, hint: 'Write "None" if there are none' },
   { id: 'city', question: 'City & Country', label: 'City and country', kind: 'text', required: true, autoComplete: 'address-level2', max: 100 },
   {
     id: 'consent',
     question: 'Parent consent',
-    label: "I am this child's parent or guardian, and I agree that Beginners Madrasah Classes may keep these details to arrange my child's classes and contact me about them.",
+    label: "I am this child's parent or guardian. I give consent for my child to join the classes, and I agree that Beginners Madrasah Classes may keep these details, including any medical conditions or allergies, to arrange my child's classes, keep my child safe and contact me about them.",
     kind: 'consent',
     required: true,
   },
