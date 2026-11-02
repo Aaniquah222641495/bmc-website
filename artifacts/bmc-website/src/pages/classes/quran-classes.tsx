@@ -39,7 +39,7 @@ export default function QuranClasses() {
           </>
         }
         forYou={[
-          "You're a woman and a complete beginner at reading the Qur'an",
+          "You're a woman aged 18 or older and a complete beginner at reading the Qur'an",
           'You learned once and want to start again from the foundations',
           "You can get to Mitchell's Plain on Saturday mornings",
           "You'd like to learn in person, with others on the same journey",
@@ -48,7 +48,7 @@ export default function QuranClasses() {
         included={INCLUDED}
         details={[
           { label: 'Format', value: 'In-Person' },
-          { label: 'Who it\'s for', value: 'Women' },
+          { label: 'Who it\'s for', value: 'Women 18+' },
           { label: 'Schedule', value: 'Saturdays, 09:00–10:30' },
           { label: 'Location', value: "Woodlands, Mitchell's Plain (address after you register)" },
           { label: 'Fee', value: 'R200 per month' },
