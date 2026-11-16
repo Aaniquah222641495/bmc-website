@@ -93,7 +93,7 @@ const WOMENS_FIELDS = [
 const CHILD_FIELDS = [
   EMAIL,
   { id: 'childName', question: "Child's full name and surname", kind: 'text', max: 100 },
-  { id: 'childAge', question: "Child's Age", kind: 'choice', options: ['6', '7', '8', '9', '10', '11', '12', '13'] },
+  { id: 'childAge', question: "Child's Age", kind: 'choice', options: ['6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16'] },
   { id: 'childDob', question: "Child's date of birth", kind: 'date' },
   { id: 'medical', question: 'Medical conditions or allergies', kind: 'text', max: 300 },
   { id: 'experience', question: 'Does your child have any previous Madrasah experience?', kind: 'choice', options: ['Yes', 'No'] },

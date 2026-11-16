@@ -285,7 +285,7 @@ export default function Home() {
 
             <div className="bmc-reveal">
               <h3 className="text-[1.5rem] leading-tight text-primary">For your child</h3>
-              <p className="mt-1.5 mb-5 text-foreground/75 text-[0.98rem]">Live online madrasah for ages 6 to 13.</p>
+              <p className="mt-1.5 mb-5 text-foreground/75 text-[0.98rem]">Live online madrasah for ages 6 to 16.</p>
               <Link
                 href={`/programmes${FOR_CHILD.path}`}
                 className="group flex flex-col rounded-[1.25rem] bg-card p-3 sm:p-4 shadow-soft ring-1 ring-[hsl(var(--bmc-gold)/0.3)] bmc-lift transition-shadow duration-500 hover:shadow-lift"

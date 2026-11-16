@@ -21,14 +21,14 @@ export default function ChildrensClasses() {
     <>
       <Seo
         title="Children's Online Madrasah"
-        description="Live Islamic classes for children aged 6-13, three times a week via Microsoft Teams — Quran, Aqaaid, Fiqh, Akhlaaq and Islamic History, R150/month."
+        description="Live Islamic classes for children aged 6-16, three times a week via Microsoft Teams — Quran, Aqaaid, Fiqh, Akhlaaq and Islamic History, R150/month."
         path="/programmes/childrens-classes"
         jsonLd={programmeJsonLd('/programmes/childrens-classes')}
       />
       <ClassPageLayout
         path="/childrens-classes"
         title="Children's Online Madrasah"
-        description="Live Islamic classes for children aged 6–13, held three times a week via Microsoft Teams in a fun and structured environment."
+        description="Live Islamic classes for children aged 6–16, held three times a week via Microsoft Teams in a fun and structured environment."
         formUrl="https://docs.google.com/forms/d/e/1FAIpQLSd85qaL_rGHPefSE3k7IxJsDtV8mXsBdOc55iiHi-8287yslw/viewform"
         intro={
           <>
@@ -41,7 +41,7 @@ export default function ChildrensClasses() {
           </>
         }
         forYou={[
-          'Your child is between 6 and 13',
+          'Your child is between 6 and 16',
           'You want a steady routine: live classes on Monday, Tuesday and Thursday, 17:00 to 18:00',
           "You'd like regular feedback on how your child is doing",
           'Learning from home suits your family',
@@ -51,7 +51,7 @@ export default function ChildrensClasses() {
         details={[
           { label: 'Format', value: 'Live Online · Microsoft Teams' },
           { label: 'Schedule', value: 'Mon, Tue & Thu, 17:00–18:00' },
-          { label: 'Ages', value: 'Children aged 6–13' },
+          { label: 'Ages', value: 'Children aged 6–16' },
           { label: 'Starts', value: 'Monday 18 January 2027' },
           { label: 'Fee', value: 'R150 per month' },
         ]}
