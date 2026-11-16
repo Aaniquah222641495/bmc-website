@@ -19,7 +19,7 @@ A warm, safe, beginner-friendly learning space, taught by Mualimah Rukeya, that 
 
 ## Operating Context
 - Pages: Home, About, Programmes (with class pages), Testimonials, FAQ, Contact.
-- Six programmes, from the site's content: Women's Online Madrasah (R150/month, self-paced), Women's Hifdh Programme (R200/month, live online), Children's Online Madrasah (R150/month, ages 6 to 13), Online Workshops & Short Courses (from R100), Get Into Qur'an: In Person (R200/month, Cape Town), In-Person Workshops (from R100).
+- Six programmes, from the site's content: Women's Online Madrasah (R150/month, self-paced), Women's Hifdh Programme (R200/month, live online), Children's Online Madrasah (R150/month, ages 6 to 16), Online Workshops & Short Courses (from R100), Get Into Qur'an: In Person (R200/month, Cape Town), In-Person Workshops (from R100).
 - Programmes and workshops are edited by the client through TinaCMS (`content/`). Prices and programme details live there and are never hard-coded from memory.
 - Hosted on Netlify. Live at https://beginnersmadrasah.co.za.
 

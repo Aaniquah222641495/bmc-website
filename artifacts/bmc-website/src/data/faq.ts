@@ -34,7 +34,7 @@ export const CATEGORIES = [
       },
       {
         q: 'Do you have classes for children under 6 or teenagers?',
-        a: "Not at this stage. The Children's Online Madrasah is for children aged 6 to 13. We do not offer classes for children under 6 or teenagers aged 14 to 17 yet.",
+        a: "Not at this stage. The Children's Online Madrasah is for children aged 6 to 16. We do not offer classes for children under 6 or teenagers aged 17 and over yet.",
       },
       {
         q: "How do I join the Children's Classes?",

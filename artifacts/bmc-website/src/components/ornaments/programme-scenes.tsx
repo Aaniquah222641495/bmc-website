@@ -134,7 +134,7 @@ export function HifdhScene({ className = '' }: { className?: string }) {
   );
 }
 
-/** Children's Online Madrasah: live classes on Teams, ages 6 to 13. */
+/** Children's Online Madrasah: live classes on Teams, ages 6 to 16. */
 export function ChildrensScene({ className = '' }: { className?: string }) {
   const tiles = [
     { x: 64, y: 40, c: 'hsl(40 34% 88%)', boy: true, skin: SKIN[0] },
